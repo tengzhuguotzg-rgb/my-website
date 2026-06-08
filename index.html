@@ -122,7 +122,24 @@
     margin: 0 0 24px; letter-spacing: -3px;
     color: var(--ink);
   }
-  h1 .dot { color: var(--accent); }
+  h1 .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    h1 .dot { animation: none; }
+  }
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
     font-size: 17px; color: var(--text-dim);

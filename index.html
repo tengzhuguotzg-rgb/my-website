@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Microsoft YaHei', '微软雅黑', 'PingFang SC', sans-serif;
+  background: #0f1923;
+  color: #e0e8f0;
+  padding: 20px;
+  width: 1200px;
+}
+h1 {
+  font-size: 36px; font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa, #38bdf8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+.subtitle { font-size: 14px; color: #94a3b8; margin-bottom: 24px; }
+.subtitle span { color: #60a5fa; -webkit-text-fill-color: #60a5fa; }
+
+.card {
+  background: linear-gradient(135deg, #1a2a3a, #1e293b);
+  border: 1px solid #2a3a4a;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: 16px; font-weight: 700; color: #60a5fa;
+  border-bottom: 1px solid #2a3a4a; padding-bottom: 10px; margin-bottom: 14px;
+}
+.card-title .tag {
+  display: inline-block; background: #0ea5e9; color: #fff;
+  font-size: 11px; font-weight: 700; padding: 0 8px; border-radius: 4px;
+  margin-right: 8px; -webkit-text-fill-color: #fff;
+}
+
+/* Chain */
+.chain-row { display: flex; align-items: stretch; gap: 8px; margin-bottom: 8px; }
+.chain-box {
+  flex: 1; text-align: center; padding: 14px 10px;
+  border-radius: 10px; position: relative;
+}
+.chain-box .label { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.chain-box .detail { font-size: 12px; color: #c0d0e0; line-height: 1.6; }
+.chain-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #60a5fa; flex: 0 0 30px;
+}
+.box-do2 { background: linear-gradient(135deg, #1e3a5f, #1a3150); border: 1px solid #2a5a8a; }
+.box-micro { background: linear-gradient(135deg, #3a2a4a, #2a1a3a); border: 1px solid #6a4a8a; }
+.box-vo2 { background: linear-gradient(135deg, #4a2a2a, #3a1a1a); border: 1px solid #8a4a4a; }
+
+/* Columns */
+.cols { display: flex; gap: 16px; }
+.col { flex: 1; min-width: 0; }
+
+/* Monitor Grid */
+.mon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mon-item {
+  background: #1e2a38; border-radius: 8px; padding: 12px 14px;
+  border-left: 3px solid #38bdf8;
+}
+.mon-item .m-label { font-size: 13px; font-weight: 600; color: #38bdf8; }
+.mon-item .m-desc { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+/* Table-like */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th { text-align: left; color: #60a5fa; font-weight: 600; padding: 6px 8px; border-bottom: 1px solid #2a3a4a; }
+.tbl td { padding: 6px 8px; border-bottom: 1px solid #1e2e3e; }
+
+.badge { display: inline-block; padding: 0 6px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.bg-blue { background: #1e40af; color: #bfdbfe; }
+.bg-purple { background: #4a1a6a; color: #d4bfff; }
+.bg-red { background: #6a1a1a; color: #ffbfbf; }
+.bg-green { background: #1a4a1a; color: #bfffbf; }
+.bg-yellow { background: #5a4a00; color: #ffecbf; }
+
+/* Tool levels */
+.level-row { display: flex; gap: 10px; margin-bottom: 8px; }
+.level-num {
+  flex: 0 0 60px; text-align: center; font-weight: 700; font-size: 22px;
+  line-height: 46px; color: #60a5fa;
+}
+.level-box { flex: 1; background: #1a2a38; border-radius: 8px; padding: 10px 14px; border-left: 3px solid #38bdf8; }
+.level-box .time { font-size: 11px; color: #64748b; }
+.level-box .content { font-size: 13px; margin-top: 2px; color: #c0d0e0; }
+
+/* Threshold */
+.threshold-box {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+}
+.thr-item {
+  background: #1e2a38; border-radius: 8px; padding: 10px 12px; text-align: center;
+}
+.thr-item .val { font-size: 20px; font-weight: 700; color: #38bdf8; }
+.thr-item .what { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+.footer { font-size: 11px; color: #475569; border-top: 1px solid #1e2e3e; padding-top: 12px; margin-top: 4px; text-align: center; }
+
+/* tree */
+.tree { font-size: 13px; line-height: 1.8; }
+.tree .arrow { color: #38bdf8; }
+.tree .indent { padding-left: 20px; }
+.tree .indent2 { padding-left: 40px; }
+
+/* Question chain */
+.q-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.q-box {
+  flex: 1; text-align: center; padding: 12px; border-radius: 8px;
+  background: #1e2a38; border: 1px solid #2a3a4a;
+}
+.q-box .qnum { font-size: 22px; font-weight: 700; color: #38bdf8; }
+.q-box .qtext { font-size: 13px; color: #c0d0e0; }
+.q-arr { font-size: 18px; color: #475569; flex: 0 0 24px; text-align: center; }
+.q-bottom { display: flex; gap: 8px; margin-top: 6px; }
+.q-bottom-item { flex: 1; text-align: center; padding: 6px; border-radius: 6px; font-size: 12px; background: #152230; color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<h1>灌 注 领 域 知 识 地 图</h1>
+<div class="subtitle">基于《实用重症医学》（刘大为主编 第2版） 已录入章节 · 第21章+第22章+第10章</div>
+
+<!-- Core Chain -->
+<div class="card">
+  <div class="card-title"><span class="tag">核心链条</span>Perfusion：从血流到代谢的完整链条</div>
+  <div class="chain-row">
+    <div class="chain-box box-do2">
+      <div class="label">① DO₂ · 氧输送</div>
+      <div class="detail">CO × CaO₂<br>心输出量 × (1.34×Hb×SaO₂ + 0.003×PaO₂)</div>
+    </div>
+    <div class="chain-arrow">▶</div>
+    <div class="chain-box box-micro">
+      <div class="label">② 微循环</div>
+      <div class="detail">气体 + 物质交换场所<br>&lt;100μm 微血管系统</div>
+    </div>
+    <div class="chain-arrow">▶</div>
+    <div class="chain-box box-vo2">
+      <div class="label">③ VO₂ · 氧消耗</div>
+      <div class="detail">CO × (CaO₂ − CvO₂)<br>O₂ER = VO₂ / DO₂</div>
+    </div>
+    <div class="chain-arrow">▶</div>
+    <div class="chain-box" style="background:linear-gradient(135deg,#2a3a1a,#1a2a0a);border:1px solid #4a6a2a;">
+      <div class="label">④ 线粒体</div>
+      <div class="detail">利用 O₂ 合成 ATP<br>休克的最终瓶颈</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:4px;">
+    <div class="q-bottom-item">供给侧</div>
+    <div style="flex:1;text-align:center;padding:6px;border-radius:6px;font-size:12px;background:#152230;color:#475569;">CO × Hb × SaO₂</div>
+    <div style="flex:1;text-align:center;padding:6px;border-radius:6px;font-size:12px;background:#152230;color:#475569;">交换 · 分流 · 屏障</div>
+    <div style="flex:1;text-align:center;padding:6px;border-radius:6px;font-size:12px;background:#152230;color:#475569;">消耗侧 · 氧摄取</div>
+    <div style="flex:1;text-align:center;padding:6px;border-radius:6px;font-size:12px;background:#152230;color:#475569;">ATP 产出</div>
+  </div>
+</div>
+
+<!-- Question Chain -->
+<div class="card">
+  <div class="card-title"><span class="tag">决策链条</span>灌注异常 → 三个问题 → 行动</div>
+  <div class="q-row">
+    <div class="q-box"><div class="qnum">Q₁</div><div class="qtext">是不是灌注不足？</div></div>
+    <div class="q-arr">→</div>
+    <div class="q-box"><div class="qnum">Q₂</div><div class="qtext">在哪个环节卡住了？</div></div>
+    <div class="q-arr">→</div>
+    <div class="q-box"><div class="qnum">Q₃</div><div class="qtext">到了哪一步？</div></div>
+  </div>
+  <div class="q-bottom">
+    <div>乳酸↑ · 花斑 · CRT↑ · ScvO₂↓ · 少尿</div>
+    <div>DO₂↓ / 微循环分流 / 线粒体障碍</div>
+    <div>缺血期 → 淤血期 → 衰竭期</div>
+  </div>
+</div>
+
+<!-- Monitoring Indicators -->
+<div class="card">
+  <div class="card-title"><span class="tag">灌注监测指标</span>四层指标体系</div>
+  <div class="mon-grid">
+    <div class="mon-item">
+      <div class="m-label">乳酸</div>
+      <div class="m-desc">组织缺氧的直接证据 · 清除率 ≥ 20%/2h 为复苏有效</div>
+    </div>
+    <div class="mon-item">
+      <div class="m-label">ScvO₂ / SvO₂</div>
+      <div class="m-desc">氧供需平衡窗口 · 正常 65%-75% · &lt;65% DO₂不足 · &gt;80% 摄氧障碍</div>
+    </div>
+    <div class="mon-item">
+      <div class="m-label">Pv-aCO₂ gap</div>
+      <div class="m-desc">组织灌注充足？ · ≥ 6 mmHg → 灌注不足</div>
+    </div>
+    <div class="mon-item">
+      <div class="m-label">CRT / 花斑 / 肢端温度</div>
+      <div class="m-desc">床边最直观 · CRT &gt; 3s 异常 · 花斑范围越广预后越差</div>
+    </div>
+  </div>
+</div>
+
+<!-- Two columns: Volume Responsiveness + Tool Levels -->
+<div class="cols">
+  <div class="col">
+    <!-- Volume Responsiveness -->
+    <div class="card">
+      <div class="card-title"><span class="tag">容量反应性评估</span>功能性血流动力学</div>
+      <table class="tbl">
+        <tr><th width="30%">方法</th><th width="35%">指标</th><th>阈值</th></tr>
+        <tr><td>被动抬腿 PLR</td><td>每搏量变化</td><td>ΔSV ≥ 10%</td></tr>
+        <tr><td>脉压变异度</td><td>PPV</td><td>≥ 13%（容量控制通气）</td></tr>
+        <tr><td>每搏量变异度</td><td>SVV</td><td>≥ 10%</td></tr>
+        <tr><td>收缩压下降</td><td>Δdown</td><td>&gt; 5 mmHg</td></tr>
+        <tr><td>呼气末阻断</td><td>脉压增加</td><td>ΔPP ≥ 5%</td></tr>
+        <tr><td>液体负荷试验</td><td>晶体 250-500ml / 30min</td><td>血压↑乳酸↓</td></tr>
+      </table>
+      <div style="font-size:11px;color:#64748b;margin-top:6px;">⚠ PPV/SVV 需条件：窦律 · 容量控制通气 · Vt≥8ml/kg · 无自主呼吸</div>
+    </div>
+
+    <!-- Shock Types -->
+    <div class="card">
+      <div class="card-title"><span class="tag">休克各类型灌注特征</span></div>
+      <table class="tbl">
+        <tr><th>类型</th><th>DO₂</th><th>ScvO₂</th><th>乳酸</th><th>微循环</th><th>治疗重心</th></tr>
+        <tr><td>低血容量性</td><td>↓↓</td><td>↓</td><td>↑↑</td><td>缺血期</td><td>补液 + 止血</td></tr>
+        <tr><td>心源性</td><td>↓↓</td><td>↓</td><td>↑↑</td><td>缺血→淤血</td><td>正性肌力 + IABP</td></tr>
+        <tr><td>梗阻性</td><td>↓↓</td><td>↓</td><td>↑↑</td><td>缺血期</td><td>解除梗阻</td></tr>
+        <tr><td>分布性（感染）</td><td>↑/正常</td><td>↑/正常</td><td>↑↑</td><td>淤血→衰竭</td><td>去甲肾上腺素 + 抗感染</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="col">
+    <!-- Tool Levels -->
+    <div class="card">
+      <div class="card-title"><span class="tag">灌注监测工具层级</span>从床边到高级</div>
+      <div class="level-row">
+        <div class="level-num">L1</div>
+        <div class="level-box">
+          <div class="time">0 分钟 · 床边查体</div>
+          <div class="content">花斑 · CRT · 肢端温度 · 脉搏 · 尿量 · 呼吸模式</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-num">L2</div>
+        <div class="level-box">
+          <div class="time">5-15 分钟 · 抽血</div>
+          <div class="content">动脉血气（乳酸+AG+PvO₂）· 中心静脉血气（ScvO₂）· 血常规 · 生化 · 凝血 · 感染指标 · 心肌标志物</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-num">L3</div>
+        <div class="level-box">
+          <div class="time">15-30 分钟 · 超声</div>
+          <div class="content">心脏（EF+RV+IVC）→ 肺（B线+胸水）→ 腹部（感染灶筛查）</div>
+        </div>
+      </div>
+      <div class="level-row">
+        <div class="level-num">L4</div>
+        <div class="level-box">
+          <div class="time">30 分钟+ · 高级监测</div>
+          <div class="content">PiCCO（GEDVI+EVLW+CFI）· PAC（PAWP+SvO₂+PVR）· 微循环/线粒体（无床旁直接法）</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thresholds -->
+    <div class="card">
+      <div class="card-title"><span class="tag">关键阈值速查</span></div>
+      <div class="threshold-box">
+        <div class="thr-item"><div class="val">&gt; 2</div><div class="what">乳酸（mmol/L）→ 警惕</div></div>
+        <div class="thr-item"><div class="val">&gt; 4</div><div class="what">乳酸（mmol/L）→ 休克代偿极限</div></div>
+        <div class="thr-item"><div class="val">&lt; 65%</div><div class="what">ScvO₂ → DO₂ 不足</div></div>
+        <div class="thr-item"><div class="val">&gt; 80%</div><div class="what">ScvO₂ → 摄氧障碍</div></div>
+        <div class="thr-item"><div class="val">≥ 6</div><div class="what">Pv-aCO₂ gap（mmHg）→ 灌注不足</div></div>
+        <div class="thr-item"><div class="val">≥ 65</div><div class="what">MAP（mmHg）→ 最低灌注压</div></div>
+        <div class="thr-item"><div class="val">&gt; 3s</div><div class="what">CRT → 灌注异常</div></div>
+        <div class="thr-item"><div class="val">≥ 13%</div><div class="what">PPV → 有容量反应性</div></div>
+        <div class="thr-item"><div class="val">≥ 10%</div><div class="what">SVV/PLR → 有容量反应性</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">来源：刘大为主编《实用重症医学》第2版(2017) · 第三篇第21章(血流动力学理论与监测)+第22章(呼吸功能与血气)+第二篇第10章(血流动力学监测技术)</div>
+</body>
+</html>

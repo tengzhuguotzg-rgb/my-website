@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>灌注评估 · 循环 · 知识地图 · Teng.ZG</title>
+<meta name="description" content="灌注领域知识地图: 从血流到代谢的完整链条、决策链、监测指标、容量反应性、休克分型、工具层级、关键阈值。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --accent-soft: rgba(231, 111, 44, 0.10);
+    --teal: #1A5E6E;
+    --teal-soft: rgba(26, 94, 110, 0.10);
+    --plum: #5A2A4A;
+    --plum-soft: rgba(90, 42, 74, 0.08);
+    --rose: #8A3A3A;
+    --rose-soft: rgba(138, 58, 58, 0.08);
+    --moss: #4A6A2A;
+    --moss-soft: rgba(74, 106, 42, 0.10);
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      radial-gradient(900px  600px at 50% 92%, rgba(31, 61, 47, 0.04) 0%, transparent 60%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+
+  /* ── Top bar ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub  {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .crumb {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .crumb a { color: var(--ink-2); }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: .4; }
+  .ver {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; color: var(--text-faint);
+    letter-spacing: 1.5px; font-weight: 500;
+    margin-left: 14px;
+  }
+  .ver::before { content: '— '; color: var(--accent); }
+
+  /* ── Hero ── */
+  .hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 64px 32px 16px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 600; line-height: 1;
+    margin: 0 0 14px; letter-spacing: -2px;
+    color: var(--ink);
+  }
+  h1 .dot { color: var(--accent); }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 1.2px;
+    color: var(--text-faint);
+    margin-top: 10px;
+  }
+  .hero-meta span strong {
+    color: var(--ink);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .hero-desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15.5px; color: var(--text-dim);
+    line-height: 1.75; max-width: 720px;
+    margin: 18px 0 0;
+  }
+
+  /* ── Section ── */
+  .section {
+    max-width: 1100px; margin: 44px auto 0;
+    padding: 0 32px;
+  }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 18px;
+  }
+  .sec-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+  }
+  .sec-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700;
+    margin: 0; color: var(--ink);
+    letter-spacing: 0.5px;
+  }
+  .sec-sub {
+    margin-left: auto;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ── Card ── */
+  .card {
+    --mx: 50%; --my: 50%;
+    position: relative;
+    background: rgba(244, 241, 234, 0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .card:hover {
+    border-color: rgba(31, 61, 47, 0.22);
+    box-shadow: 0 8px 28px rgba(31, 61, 47, 0.06);
+  }
+  .card-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px; font-weight: 700;
+    margin: 0 0 16px; color: var(--ink);
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+
+  /* ── Core Chain (DO₂ → 微循环 → VO₂ → 线粒体) ── */
+  .chain {
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr;
+    gap: 8px; align-items: stretch;
+  }
+  .chain-step {
+    padding: 16px 14px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+  }
+  .chain-step .label {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .chain-step .detail {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; color: var(--text-dim);
+    line-height: 1.55;
+  }
+  .chain-step .badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .arrow {
+    display: grid; place-items: center;
+    font-size: 18px; color: var(--accent);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .step-do2  { background: var(--teal-soft);  border: 1px solid rgba(26, 94, 110, 0.25); }
+  .step-mic  { background: var(--plum-soft);  border: 1px solid rgba(90, 42, 74, 0.25); }
+  .step-vo2  { background: var(--rose-soft);  border: 1px solid rgba(138, 58, 58, 0.25); }
+  .step-mit  { background: var(--moss-soft);  border: 1px solid rgba(74, 106, 42, 0.25); }
+  .chain-axis {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .axis-item {
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 6px 4px;
+    background: rgba(31, 61, 47, 0.04);
+    border-radius: 6px;
+  }
+  .axis-item strong { color: var(--ink-2); }
+
+  /* ── Decision Chain (Q₁ → Q₂ → Q₃) ── */
+  .qchain {
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr 28px 1fr;
+    gap: 10px; align-items: stretch;
+  }
+  .qstep {
+    background: rgba(31, 61, 47, 0.05);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .qstep .qnum {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px; font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
+  }
+  .qstep .qtext {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14.5px; font-weight: 600;
+    color: var(--ink);
+  }
+  .q-arr { display: grid; place-items: center; font-size: 18px; color: var(--accent); }
+  .q-leg {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-top: 12px;
+  }
+  .q-leg-item {
+    background: rgba(31, 61, 47, 0.04);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* ── Monitoring Indicators Grid ── */
+  .mon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .mon-item {
+    background: rgba(31, 61, 47, 0.04);
+    border-left: 3px solid var(--teal);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .mon-item .m-label {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13.5px; font-weight: 700;
+    color: var(--ink);
+  }
+  .mon-item .m-desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  /* ── 2-column layout ── */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .col { display: flex; flex-direction: column; }
+
+  /* ── Tables ── */
+  .tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+  }
+  .tbl th {
+    text-align: left;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--ink);
+    padding: 8px 10px;
+    border-bottom: 1.5px solid var(--ink);
+    letter-spacing: 0.3px;
+  }
+  .tbl td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    font-family: 'Noto Serif SC', serif;
+    color: var(--text);
+  }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl .num { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
+  .warn {
+    font-size: 11px; color: var(--text-faint);
+    margin-top: 8px; font-family: 'Noto Serif SC', serif;
+    line-height: 1.55;
+  }
+  .warn strong { color: var(--accent); }
+
+  /* ── Tool Levels ── */
+  .level-row {
+    display: flex; gap: 12px;
+    align-items: stretch;
+    margin-bottom: 10px;
+  }
+  .level-num {
+    flex: 0 0 56px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .level-box {
+    flex: 1;
+    background: rgba(31, 61, 47, 0.04);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .level-box .time {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10.5px; letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 2px;
+  }
+  .level-box .content {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* ── Threshold Grid ── */
+  .thr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .thr {
+    background: rgba(31, 61, 47, 0.04);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .thr .val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+  .thr .what {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11px; color: var(--text-dim);
+    margin-top: 4px; line-height: 1.4;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    max-width: 1100px; margin: 56px auto 0;
+    padding: 28px 32px 56px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 11.5px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.4px;
+  }
+  .footer a { color: var(--ink-2); }
+  .footer a:hover { color: var(--accent); }
+  .source {
+    max-width: 1100px; margin: 24px auto 0;
+    padding: 0 32px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11.5px; color: var(--text-faint);
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  /* ── 响应式 ── */
+  @media (max-width: 860px) {
+    .chain       { grid-template-columns: 1fr; }
+    .chain .arrow { transform: rotate(90deg); padding: 4px 0; }
+    .qchain      { grid-template-columns: 1fr; }
+    .q-arr       { transform: rotate(90deg); padding: 4px 0; }
+    .cols        { grid-template-columns: 1fr; }
+    .mon-grid    { grid-template-columns: 1fr; }
+    .thr-grid    { grid-template-columns: repeat(2, 1fr); }
+    .chain-axis  { grid-template-columns: 1fr 1fr; }
+    .brand-sub   { display: none; }
+  }
+  @media (max-width: 560px) {
+    .hero        { padding: 48px 18px 16px; }
+    .section, .source, .footer { padding-left: 18px; padding-right: 18px; }
+    .topbar      { margin: 12px 12px 0; padding: 12px 16px; }
+    .crumb       { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">重症医学科 · 遂宁市中医院</div>
+      </div>
+    </div>
+    <div class="topbar-right" style="display:flex;align-items:center;">
+      <nav class="crumb">
+        <a href="index.html">首页</a>
+        <span class="sep">/</span>
+        <a href="knowledge-map.html">知识地图</a>
+        <span class="sep">/</span>
+        <span style="color:var(--ink);">灌注评估</span>
+      </nav>
+      <span class="ver">v0.1</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow">循环 · 01 — 灌注评估</div>
+    <h1>灌注<span class="dot">.</span>评估</h1>
+    <div class="hero-meta">
+      <span>章节<strong>第21章 + 第22章 + 第10章</strong></span>
+      <span>来源<strong>《实用重症医学》刘大为主编 第2版</strong></span>
+    </div>
+    <p class="hero-desc">从血流到代谢的完整链条 — 决策三个问题 — 监测四层指标 — 容量反应性 — 休克分型 — 工具层级 — 关键阈值。</p>
+  </section>
+
+  <!-- 1. 核心链条 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">— 01 / SEVEN</span>
+      <h2 class="sec-title">核心链条</h2>
+      <span class="sec-sub">从血流到代谢</span>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">CORE CHAIN</span>
+      <h3 class="card-title">Perfusion: 从血流到代谢的完整链条</h3>
+
+      <div class="chain">
+        <div class="chain-step step-do2">
+          <div class="badge">① O₂ DELIVERY</div>
+          <div class="label">DO₂ · 氧输送</div>
+          <div class="detail">CO × CaO₂<br>CO × (1.34×Hb×SaO₂ + 0.003×PaO₂)</div>
+        </div>
+        <div class="arrow">▶</div>
+        <div class="chain-step step-mic">
+          <div class="badge">② EXCHANGE</div>
+          <div class="label">微循环</div>
+          <div class="detail">气体 + 物质交换场所<br>&lt; 100μm 微血管系统</div>
+        </div>
+        <div class="arrow">▶</div>
+        <div class="chain-step step-vo2">
+          <div class="badge">③ O₂ UPTAKE</div>
+          <div class="label">VO₂ · 氧消耗</div>
+          <div class="detail">CO × (CaO₂ − CvO₂)<br>O₂ER = VO₂ / DO₂</div>
+        </div>
+        <div class="arrow">▶</div>
+        <div class="chain-step step-mit">
+          <div class="badge">④ MITOCHONDRIA</div>
+          <div class="label">线粒体</div>
+          <div class="detail">利用 O₂ 合成 ATP<br>休克的最终瓶颈</div>
+        </div>
+      </div>
+
+      <div class="chain-axis">
+        <div class="axis-item"><strong>供给侧</strong><br>CO × Hb × SaO₂</div>
+        <div class="axis-item"><strong>交换</strong><br>分流 · 屏障</div>
+        <div class="axis-item"><strong>消耗侧</strong><br>氧摄取</div>
+        <div class="axis-item"><strong>ATP</strong><br>产出</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 决策链条 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">— 02 / SEVEN</span>
+      <h2 class="sec-title">决策链条</h2>
+      <span class="sec-sub">灌注异常 → 三个问题 → 行动</span>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">DECISION</span>
+      <h3 class="card-title">灌注异常的临床三问</h3>
+
+      <div class="qchain">
+        <div class="qstep">
+          <div class="qnum">Q₁</div>
+          <div class="qtext">是不是灌注不足?</div>
+        </div>
+        <div class="q-arr">→</div>
+        <div class="qstep">
+          <div class="qnum">Q₂</div>
+          <div class="qtext">在哪个环节卡住了?</div>
+        </div>
+        <div class="q-arr">→</div>
+        <div class="qstep">
+          <div class="qnum">Q₃</div>
+          <div class="qtext">到了哪一步?</div>
+        </div>
+      </div>
+
+      <div class="q-leg">
+        <div class="q-leg-item">乳酸 ↑ · 花斑 · CRT ↑<br>ScvO₂ ↓ · 少尿</div>
+        <div class="q-leg-item">DO₂ ↓ / 微循环分流<br>线粒体障碍</div>
+        <div class="q-leg-item">缺血期 → 淤血期<br>→ 衰竭期</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 灌注监测指标 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">— 03 / SEVEN</span>
+      <h2 class="sec-title">灌注监测指标</h2>
+      <span class="sec-sub">四层指标体系</span>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">MONITOR</span>
+      <h3 class="card-title">从乳酸到毛细血管再充盈</h3>
+
+      <div class="mon-grid">
+        <div class="mon-item">
+          <div class="m-label">乳酸</div>
+          <div class="m-desc">组织缺氧的直接证据 · 清除率 ≥ 20% / 2h 为复苏有效</div>
+        </div>
+        <div class="mon-item">
+          <div class="m-label">ScvO₂ / SvO₂</div>
+          <div class="m-desc">氧供需平衡窗口 · 正常 65%–75% · &lt;65% DO₂ 不足 · &gt;80% 摄氧障碍</div>
+        </div>
+        <div class="mon-item">
+          <div class="m-label">Pv-aCO₂ gap</div>
+          <div class="m-desc">组织灌注充足? · ≥ 6 mmHg → 灌注不足</div>
+        </div>
+        <div class="mon-item">
+          <div class="m-label">CRT / 花斑 / 肢端温度</div>
+          <div class="m-desc">床边最直观 · CRT &gt; 3s 异常 · 花斑范围越广预后越差</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4+5. 容量反应性 & 休克分型 (左) | 工具层级 & 关键阈值 (右) -->
+  <section class="section">
+    <div class="cols">
+
+      <!-- 左列 -->
+      <div class="col">
+
+        <div class="card">
+          <span class="card-tag">VOLUME</span>
+          <h3 class="card-title">容量反应性评估</h3>
+          <p style="font-family:'Noto Serif SC',serif;font-size:12px;color:var(--text-faint);margin:-8px 0 12px;">功能性血流动力学</p>
+
+          <table class="tbl">
+            <tr><th width="30%">方法</th><th width="35%">指标</th><th>阈值</th></tr>
+            <tr><td>被动抬腿 PLR</td><td>每搏量变化</td><td class="num">ΔSV ≥ 10%</td></tr>
+            <tr><td>脉压变异度</td><td>PPV</td><td class="num">≥ 13%</td></tr>
+            <tr><td>每搏量变异度</td><td>SVV</td><td class="num">≥ 10%</td></tr>
+            <tr><td>收缩压下降</td><td>Δdown</td><td class="num">&gt; 5 mmHg</td></tr>
+            <tr><td>呼气末阻断</td><td>脉压增加</td><td class="num">ΔPP ≥ 5%</td></tr>
+            <tr><td>液体负荷试验</td><td>晶体 250–500 ml / 30 min</td><td class="num">血压↑ 乳酸↓</td></tr>
+          </table>
+          <p class="warn"><strong>⚠</strong> PPV / SVV 需条件: 窦律 · 容量控制通气 · Vt ≥ 8 ml/kg · 无自主呼吸</p>
+        </div>
+
+        <div class="card">
+          <span class="card-tag">SHOCK</span>
+          <h3 class="card-title">休克各类型灌注特征</h3>
+
+          <table class="tbl">
+            <tr><th>类型</th><th>DO₂</th><th>ScvO₂</th><th>乳酸</th><th>微循环</th><th>治疗重心</th></tr>
+            <tr><td>低血容量</td><td>↓↓</td><td>↓</td><td>↑↑</td><td>缺血期</td><td>补液 + 止血</td></tr>
+            <tr><td>心源性</td><td>↓↓</td><td>↓</td><td>↑↑</td><td>缺血 → 淤血</td><td>正性肌力 + IABP</td></tr>
+            <tr><td>梗阻性</td><td>↓↓</td><td>↓</td><td>↑↑</td><td>缺血期</td><td>解除梗阻</td></tr>
+            <tr><td>分布性(感染)</td><td>↑/正常</td><td>↑/正常</td><td>↑↑</td><td>淤血 → 衰竭</td><td>去甲 + 抗感染</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- 右列 -->
+      <div class="col">
+
+        <div class="card">
+          <span class="card-tag">TOOLS</span>
+          <h3 class="card-title">灌注监测工具层级</h3>
+          <p style="font-family:'Noto Serif SC',serif;font-size:12px;color:var(--text-faint);margin:-8px 0 12px;">从床边到高级</p>
+
+          <div class="level-row">
+            <div class="level-num">L1</div>
+            <div class="level-box">
+              <div class="time">0 分钟 · 床边查体</div>
+              <div class="content">花斑 · CRT · 肢端温度 · 脉搏 · 尿量 · 呼吸模式</div>
+            </div>
+          </div>
+          <div class="level-row">
+            <div class="level-num">L2</div>
+            <div class="level-box">
+              <div class="time">5–15 分钟 · 抽血</div>
+              <div class="content">动脉血气(乳酸 + AG + PvO₂) · 中心静脉血气(ScvO₂) · 血常规 · 生化 · 凝血 · 感染指标 · 心肌标志物</div>
+            </div>
+          </div>
+          <div class="level-row">
+            <div class="level-num">L3</div>
+            <div class="level-box">
+              <div class="time">15–30 分钟 · 超声</div>
+              <div class="content">心脏(EF + RV + IVC) → 肺(B 线 + 胸水) → 腹部(感染灶筛查)</div>
+            </div>
+          </div>
+          <div class="level-row">
+            <div class="level-num">L4</div>
+            <div class="level-box">
+              <div class="time">30 分钟+ · 高级监测</div>
+              <div class="content">PiCCO(GEDVI + EVLW + CFI) · PAC(PAWP + SvO₂ + PVR) · 微循环/线粒体(无床旁直接法)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="card-tag">THRESHOLDS</span>
+          <h3 class="card-title">关键阈值速查</h3>
+
+          <div class="thr-grid">
+            <div class="thr"><div class="val">&gt; 2</div><div class="what">乳酸 (mmol/L)<br>警惕</div></div>
+            <div class="thr"><div class="val">&gt; 4</div><div class="what">乳酸 (mmol/L)<br>休克代偿极限</div></div>
+            <div class="thr"><div class="val">&lt; 65%</div><div class="what">ScvO₂<br>DO₂ 不足</div></div>
+            <div class="thr"><div class="val">&gt; 80%</div><div class="what">ScvO₂<br>摄氧障碍</div></div>
+            <div class="thr"><div class="val">≥ 6</div><div class="what">Pv-aCO₂ gap (mmHg)<br>灌注不足</div></div>
+            <div class="thr"><div class="val">≥ 65</div><div class="what">MAP (mmHg)<br>最低灌注压</div></div>
+            <div class="thr"><div class="val">&gt; 3s</div><div class="what">CRT<br>灌注异常</div></div>
+            <div class="thr"><div class="val">≥ 13%</div><div class="what">PPV<br>有容量反应性</div></div>
+            <div class="thr"><div class="val">≥ 10%</div><div class="what">SVV / PLR<br>有容量反应性</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Source -->
+  <p class="source">来源: 刘大为主编《实用重症医学》第2版(2017) · 第三篇第21章(血流动力学理论与监测)+ 第22章(呼吸功能与血气) + 第二篇第10章(血流动力学监测技术)</p>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      Tengzhuguotzg@gmail.com
+      &nbsp;·&nbsp;
+      <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div>© 2026 · Teng.ZG · Critical Care Medicine</div>
+  </footer>
+
+</body>
+</html>

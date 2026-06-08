@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>知识地图 · Teng.ZG</title>
+<meta name="description" content="重症医学科 · 40 个主题, 按器官系统分组, 每个主题: 定义、病理生理、诊断、治疗、争议、个人心得。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      radial-gradient(900px  600px at 50% 92%, rgba(31, 61, 47, 0.04) 0%, transparent 60%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  /* ── Top bar (与首页同款) ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub  {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .ver {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; color: var(--text-faint);
+    letter-spacing: 1.5px; font-weight: 500;
+  }
+  .ver::before { content: '— '; color: var(--accent); }
+  .back-link {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; color: var(--ink-2);
+    letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* ── Hero (本页标题) ── */
+  .hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 72px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 16px; letter-spacing: -2.5px;
+    color: var(--ink);
+  }
+  h1 .dot { color: var(--accent); }
+  .hero-desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 640px;
+    margin: 0 0 0;
+  }
+
+  /* ── 搜索 + 标签过滤 ── */
+  .controls {
+    max-width: 1100px; margin: 36px auto 0;
+    padding: 0 32px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .search-wrap {
+    position: relative;
+    display: flex; align-items: center;
+  }
+  .search-input {
+    width: 100%;
+    padding: 14px 48px 14px 18px;
+    font: inherit; font-size: 15px;
+    color: var(--text);
+    background: rgba(244, 241, 234, 0.75);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    outline: none;
+    transition: all .2s;
+  }
+  .search-input::placeholder { color: var(--text-faint); }
+  .search-input:focus {
+    border-color: var(--ink-2);
+    background: var(--bg);
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.08);
+  }
+  .search-clear {
+    position: absolute; right: 12px;
+    width: 28px; height: 28px;
+    display: none; place-items: center;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 50%;
+    font-size: 14px; line-height: 1;
+  }
+  .search-clear.show { display: grid; }
+  .search-clear:hover { background: var(--ink-2); }
+
+  .tag-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .tag {
+    padding: 7px 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.8px;
+    color: var(--ink-2);
+    background: rgba(244, 241, 234, 0.65);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: all .2s;
+  }
+  .tag:hover { border-color: var(--ink-2); }
+  .tag.active {
+    background: var(--ink); color: var(--bg);
+    border-color: var(--ink);
+  }
+  .tag .count {
+    margin-left: 6px;
+    font-size: 10px;
+    opacity: .65;
+  }
+
+  /* ── 器官系统区块 ── */
+  .block {
+    max-width: 1100px; margin: 40px auto 0;
+    padding: 0 32px;
+  }
+  .block-head {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .block-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+  }
+  .block-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    margin: 0; color: var(--ink);
+    letter-spacing: 0.5px;
+  }
+  .block-meta {
+    margin-left: auto;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .topic {
+    --mx: 50%; --my: 50%;
+    position: relative;
+    display: flex; flex-direction: column;
+    text-align: left;
+    padding: 18px 18px 16px;
+    background: rgba(244, 241, 234, 0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: all .25s cubic-bezier(.2,.8,.2,1);
+    overflow: hidden;
+    font-family: inherit;
+  }
+  .topic::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(280px circle at var(--mx) var(--my),
+      rgba(231, 111, 44, 0.10), transparent 55%);
+    opacity: 0; transition: opacity .25s; pointer-events: none;
+  }
+  .topic:hover { background: rgba(244, 241, 234, 0.92); transform: translateY(-2px); border-color: rgba(31, 61, 47, 0.25); box-shadow: 0 8px 24px rgba(31, 61, 47, 0.06); }
+  .topic:hover::before { opacity: 1; }
+  .topic-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; font-weight: 700;
+    margin: 0 0 4px; color: var(--ink);
+    letter-spacing: 0.3px;
+  }
+  .topic-desc {
+    font-size: 12.5px; color: var(--text-dim);
+    margin: 0; line-height: 1.5;
+  }
+  .topic-tag {
+    margin-top: 10px;
+    align-self: flex-start;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .empty {
+    max-width: 1100px; margin: 40px auto;
+    padding: 64px 32px;
+    text-align: center;
+    color: var(--text-faint);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    max-width: 1100px; margin: 64px auto 0;
+    padding: 32px 32px 56px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .footer a { color: var(--ink-2); }
+  .footer a:hover { color: var(--accent); }
+
+  /* ── 响应式 ── */
+  @media (max-width: 860px) {
+    .topic-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .topic-grid { grid-template-columns: 1fr; }
+    .hero { padding: 48px 18px 16px; }
+    .controls, .block, .footer { padding-left: 18px; padding-right: 18px; }
+    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+    .brand-sub { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">重症医学科 · 遂宁市中医院</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <a class="back-link" href="index.html">← Back</a>
+      <span class="ver">v0.1</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow">Knowledge Map</div>
+    <h1>知识<span class="dot">.</span>地图</h1>
+    <p class="hero-desc">40 个重症主题,按器官系统分组。每个主题:定义、病理生理、诊断、治疗、争议、个人心得。</p>
+  </section>
+
+  <!-- 搜索 + 标签 -->
+  <section class="controls">
+    <div class="search-wrap">
+      <input id="q" class="search-input" type="text" placeholder="搜索主题 (例: 脓毒症, ARDS, 容量管理)">
+      <button id="qClear" class="search-clear" type="button" aria-label="清空">×</button>
+    </div>
+    <div class="tag-row" id="tagRow">
+      <button class="tag active" data-tag="all">全部<span class="count" id="cntAll">16</span></button>
+      <button class="tag" data-tag="circ">循环<span class="count" id="cntCirc">4</span></button>
+      <button class="tag" data-tag="resp">呼吸<span class="count" id="cntResp">3</span></button>
+      <button class="tag" data-tag="inf">感染<span class="count" id="cntInf">3</span></button>
+      <button class="tag" data-tag="neur">神经<span class="count" id="cntNeur">2</span></button>
+      <button class="tag" data-tag="rend">肾脏<span class="count" id="cntRend">2</span></button>
+      <button class="tag" data-tag="meta">代谢 / 内分泌<span class="count" id="cntMeta">2</span></button>
+    </div>
+  </section>
+
+  <!-- 器官系统区块 -->
+  <main id="map">
+
+    <section class="block" data-block="circ">
+      <div class="block-head">
+        <span class="block-num">— 01 / SIX</span>
+        <h2 class="block-title">循环</h2>
+        <span class="block-meta">4 topics</span>
+      </div>
+      <div class="topic-grid">
+        <a class="topic" data-tags="circ" data-name="灌注评估" href="topic-perfusion.html" style="text-decoration:none;color:inherit;">
+          <div class="topic-name">灌注评估</div>
+          <div class="topic-desc">毛细血管再充盈 / 斑驳 / 乳酸 / 尿量 / SvO₂</div>
+          <span class="topic-tag">— 循环</span>
+        </a>
+        <button class="topic" data-tags="circ" data-name="休克评估与复苏">
+          <div class="topic-name">休克评估与复苏</div>
+          <div class="topic-desc">冷休克 / 暖休克 / 混合, EGDT 后的精细化</div>
+          <span class="topic-tag">— 循环</span>
+        </button>
+        <button class="topic" data-tags="circ" data-name="心源性休克">
+          <div class="topic-name">心源性休克</div>
+          <div class="topic-desc">IABP / Impella / VA-ECMO 时机</div>
+          <span class="topic-tag">— 循环</span>
+        </button>
+        <button class="topic" data-tags="circ" data-name="容量反应性">
+          <div class="topic-name">容量反应性</div>
+          <div class="topic-desc">被动抬腿 / 呼末阻塞 / 超声 IVC / SVV</div>
+          <span class="topic-tag">— 循环</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="block" data-block="resp">
+      <div class="block-head">
+        <span class="block-num">— 02 / SIX</span>
+        <h2 class="block-title">呼吸</h2>
+        <span class="block-meta">3 topics</span>
+      </div>
+      <div class="topic-grid">
+        <button class="topic" data-tags="resp" data-name="ARDS 肺保护">
+          <div class="topic-name">ARDS 肺保护</div>
+          <div class="topic-desc">小潮气量 / PEEP 滴定 / 俯卧位 / 肌松</div>
+          <span class="topic-tag">— 呼吸</span>
+        </button>
+        <button class="topic" data-tags="resp" data-name="VV-ECMO 适应证与时机">
+          <div class="topic-name">VV-ECMO 适应证与时机</div>
+          <div class="topic-desc">EOLIA 之后的再评估</div>
+          <span class="topic-tag">— 呼吸</span>
+        </button>
+        <button class="topic" data-tags="resp" data-name="拔管失败预测">
+          <div class="topic-name">拔管失败预测</div>
+          <div class="topic-desc">RSBI / 咳嗽峰流速 / 气囊漏气试验</div>
+          <span class="topic-tag">— 呼吸</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="block" data-block="inf">
+      <div class="block-head">
+        <span class="block-num">— 03 / SIX</span>
+        <h2 class="block-title">感染</h2>
+        <span class="block-meta">3 topics</span>
+      </div>
+      <div class="topic-grid">
+        <button class="topic" data-tags="inf" data-name="脓毒症 1 小时 bundle">
+          <div class="topic-name">脓毒症 1 小时 bundle</div>
+          <div class="topic-desc">血培养 / 抗菌药 / 液体 / 升压</div>
+          <span class="topic-tag">— 感染</span>
+        </button>
+        <button class="topic" data-tags="inf" data-name="难治性脓毒性休克">
+          <div class="topic-name">难治性脓毒性休克</div>
+          <div class="topic-desc">SCCM-ESICM 2024 联合声明</div>
+          <span class="topic-tag">— 感染</span>
+        </button>
+        <button class="topic" data-tags="inf" data-name="MDR 经验性覆盖">
+          <div class="topic-name">MDR 经验性覆盖</div>
+          <div class="topic-desc">CRE / CRAB / CRKP 风险分层</div>
+          <span class="topic-tag">— 感染</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="block" data-block="neur">
+      <div class="block-head">
+        <span class="block-num">— 04 / SIX</span>
+        <h2 class="block-title">神经</h2>
+        <span class="block-meta">2 topics</span>
+      </div>
+      <div class="topic-grid">
+        <button class="topic" data-tags="neur" data-name="意识障碍评估">
+          <div class="topic-name">意识障碍评估</div>
+          <div class="topic-desc">GCS / FOUR / 谵妄 CAM-ICU / ICDSC</div>
+          <span class="topic-tag">— 神经</span>
+        </button>
+        <button class="topic" data-tags="neur" data-name="高渗性脱水的剂量">
+          <div class="topic-name">高渗性脱水的剂量</div>
+          <div class="topic-desc">甘露醇 vs 高张盐,目标 ICP</div>
+          <span class="topic-tag">— 神经</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="block" data-block="rend">
+      <div class="block-head">
+        <span class="block-num">— 05 / SIX</span>
+        <h2 class="block-title">肾脏</h2>
+        <span class="block-meta">2 topics</span>
+      </div>
+      <div class="topic-grid">
+        <button class="topic" data-tags="rend" data-name="AKI 与 KDIGO 分期">
+          <div class="topic-name">AKI 与 KDIGO 分期</div>
+          <div class="topic-desc">肌酐 / 尿量 / RRT 时机</div>
+          <span class="topic-tag">— 肾脏</span>
+        </button>
+        <button class="topic" data-tags="rend" data-name="CRRT 枸橼酸抗凝">
+          <div class="topic-name">CRRT 枸橼酸抗凝</div>
+          <div class="topic-desc">后稀释 / 前后稀释 / 离子钙监测</div>
+          <span class="topic-tag">— 肾脏</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="block" data-block="meta">
+      <div class="block-head">
+        <span class="block-num">— 06 / SIX</span>
+        <h2 class="block-title">代谢 / 内分泌</h2>
+        <span class="block-meta">2 topics</span>
+      </div>
+      <div class="topic-grid">
+        <button class="topic" data-tags="meta" data-name="DKA 补钾与胰岛素">
+          <div class="topic-name">DKA 补钾与胰岛素</div>
+          <div class="topic-desc">低钾陷阱 / 阴离子间隙 / 转换期</div>
+          <span class="topic-tag">— 代谢</span>
+        </button>
+        <button class="topic" data-tags="meta" data-name="肾上腺危象">
+          <div class="topic-name">肾上腺危象</div>
+          <div class="topic-desc">应激剂量氢化可的松 / 液体复苏</div>
+          <span class="topic-tag">— 代谢</span>
+        </button>
+      </div>
+    </section>
+
+    <div id="empty" class="empty" style="display:none;">没有匹配的主题</div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      Tengzhuguotzg@gmail.com
+      &nbsp;·&nbsp;
+      <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div>© 2026 · Teng.ZG · Critical Care Medicine</div>
+  </footer>
+
+<script>
+  // 光斑
+  document.querySelectorAll('.topic').forEach(t => {
+    t.addEventListener('mousemove', e => {
+      const r = t.getBoundingClientRect();
+      t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // 过滤
+  const q = document.getElementById('q');
+  const qClear = document.getElementById('qClear');
+  const tagRow = document.getElementById('tagRow');
+  const blocks = document.querySelectorAll('.block');
+  const empty = document.getElementById('empty');
+  let currentTag = 'all';
+
+  function applyFilter() {
+    const term = q.value.trim().toLowerCase();
+    qClear.classList.toggle('show', term.length > 0);
+    let totalVisible = 0;
+    blocks.forEach(b => {
+      const blockTag = b.dataset.block;
+      const blockMatch = currentTag === 'all' || blockTag === currentTag;
+      if (!blockMatch) { b.style.display = 'none'; return; }
+      let blockHasMatch = false;
+      b.querySelectorAll('.topic').forEach(t => {
+        const name = t.dataset.name.toLowerCase();
+        const desc = t.querySelector('.topic-desc').textContent.toLowerCase();
+        const match = !term || name.includes(term) || desc.includes(term);
+        t.style.display = match ? '' : 'none';
+        if (match) { blockHasMatch = true; totalVisible++; }
+      });
+      b.style.display = blockHasMatch ? '' : 'none';
+    });
+    empty.style.display = totalVisible === 0 ? '' : 'none';
+  }
+
+  q.addEventListener('input', applyFilter);
+  qClear.addEventListener('click', () => { q.value = ''; applyFilter(); q.focus(); });
+
+  tagRow.addEventListener('click', e => {
+    const btn = e.target.closest('.tag');
+    if (!btn) return;
+    tagRow.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    currentTag = btn.dataset.tag;
+    applyFilter();
+  });
+</script>
+</body>
+</html>

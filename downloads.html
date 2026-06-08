@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Teng.ZG · 资源下载</title>
+<meta content="实用重症医学第 2 版 OCR 完整版、26 张图解、教学 PPT、临床工具。" name="description"/>
+<meta content="#F4F1EA" name="theme-color"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Serif+SC:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' rx='20' fill='%231F3D2F'/&gt;&lt;text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'&gt;T&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<style>
+  /* ═══════════════════════════════════════════
+     Teng.ZG · downloads.html — 资源下载
+     风格:与首页 v4.1 完全一致(墨绿 + 暖橘)
+     ═══════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      radial-gradient(900px  600px at 50% 92%, rgba(31, 61, 47, 0.04) 0%, transparent 60%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  /* Top bar */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name { font-weight: 600; font-size: 15px; letter-spacing: 0.2px; color: var(--ink); }
+  .brand-sub  { font-size: 12px; color: var(--text-faint); margin-top: 1px; font-family: 'Noto Serif SC', serif; letter-spacing: 0.5px; }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .ver { font-size: 11px; color: var(--text-faint); letter-spacing: 1.5px; font-weight: 500; }
+  .ver::before { content: '— '; color: var(--accent); }
+
+  /* Crumb */
+  .crumb {
+    max-width: 1100px; margin: 36px auto 0;
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 1px;
+  }
+  .crumb a { color: var(--text-dim); }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { color: var(--accent); }
+  .crumb .now { color: var(--ink); }
+
+  /* Hero */
+  .hero { max-width: 1100px; margin: 0 auto; padding: 32px 32px 12px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent); letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 20px; letter-spacing: -2.5px;
+    color: var(--ink);
+  }
+  h1 .num { color: var(--accent); font-weight: 300; }
+  .hero-desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 560px;
+    margin: 0 0 28px;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    font-size: 12px; color: var(--text-faint);
+    letter-spacing: 1px; font-family: 'Space Grotesk', sans-serif;
+  }
+  .hero-meta b { color: var(--ink); font-weight: 600; }
+  .hero-meta .sep { color: var(--accent); margin: 0 4px; }
+
+  /* Rule */
+  .rule {
+    max-width: 1100px; margin: 48px auto 0;
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .rule hr { flex: 1; border: 0; height: 1px; background: var(--line); }
+  .rule .label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ══ Layout (侧栏 + 列表) ══ */
+  .layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .sidebar {
+    position: sticky;
+    top: 84px;
+    align-self: start;
+    padding: 20px 0 24px 0;
+  }
+  .side-eyebrow {
+    font: 500 10px 'Space Grotesk', sans-serif;
+    color: var(--text-faint);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .cats {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cat {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 14px;
+    background: transparent;
+    color: var(--text-dim);
+    border: 0;
+    border-left: 2px solid transparent;
+    border-radius: 0;
+    font: 500 13px 'Space Grotesk', 'Noto Serif SC', sans-serif;
+    letter-spacing: 0.3px;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .cat:hover {
+    color: var(--ink);
+    background: rgba(31, 61, 47, 0.04);
+  }
+  .cat.active {
+    color: var(--ink);
+    background: rgba(31, 61, 47, 0.06);
+    border-left-color: var(--accent);
+    font-weight: 600;
+  }
+  .cat .cnt {
+    font: 500 11px 'Space Grotesk', sans-serif;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+  }
+  .cat.active .cnt { color: var(--accent); font-weight: 600; }
+  .cat.zero .cnt { opacity: 0.4; }
+  .side-foot {
+    margin-top: 18px;
+    padding: 10px 14px 0;
+    border-top: 1px solid var(--line);
+    font: 400 11px 'Noto Serif SC', sans-serif;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+  }
+
+  /* ══ 分类标题(在主区) ══ */
+  .cat-title {
+    display: flex; align-items: center; gap: 12px;
+    margin: 28px 0 16px;
+    padding: 0 0 14px;
+    border-bottom: 1px solid var(--line);
+    font: 700 11px 'Space Grotesk', sans-serif;
+    color: var(--accent);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    scroll-margin-top: 100px;
+  }
+  .cat-title:first-of-type { margin-top: 4px; }
+  .cat-title .bar {
+    display: inline-block;
+    width: 24px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .cat-title.empty { display: none; }
+
+  /* Resource list */
+  .list {
+    max-width: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .res {
+    --mx: 50%; --my: 50%;
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px; align-items: center;
+    padding: 22px 24px;
+    background: rgba(244, 241, 234, 0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    transition: all .3s cubic-bezier(.2,.8,.2,1);
+    overflow: hidden;
+    opacity: 0; transform: translateY(14px);
+    animation: resIn .55s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .res::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(420px circle at var(--mx) var(--my),
+      rgba(231, 111, 44, 0.10), transparent 60%);
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+  }
+  .res::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 16px; padding: 1px;
+    background: radial-gradient(220px circle at var(--mx) var(--my),
+      rgba(231, 111, 44, 0.5), transparent 55%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+  }
+  .res:hover {
+    background: rgba(244, 241, 234, 0.95);
+    transform: translateY(-2px);
+    border-color: rgba(31, 61, 47, 0.22);
+    box-shadow: 0 12px 36px rgba(31, 61, 47, 0.07);
+  }
+  .res:hover::before { opacity: 1; }
+  .res:hover::after  { opacity: 1; }
+  .res:hover .dl-btn { background: var(--ink-2); transform: translateX(2px); }
+  .res:hover .res-num { color: var(--accent); }
+
+  .res:nth-child(1) { animation-delay: .10s; }
+  .res:nth-child(2) { animation-delay: .18s; }
+  .res:nth-child(3) { animation-delay: .26s; }
+  .res:nth-child(4) { animation-delay: .34s; }
+  .res:nth-child(5) { animation-delay: .42s; }
+  .res:nth-child(6) { animation-delay: .50s; }
+  .res:nth-child(7) { animation-delay: .58s; }
+  @keyframes resIn { to { opacity: 1; transform: translateY(0); } }
+
+  /* Type badge */
+  .res-type {
+    display: grid; place-items: center;
+    width: 80px; height: 80px;
+    border-radius: 14px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.18);
+  }
+  .res-type.pdf { background: var(--ink); }
+  .res-type.ppt { background: var(--ink-2); }
+  .res-type.zip { background: var(--accent-2); }
+  .res-type.md  { background: #4A5247; }
+  .res-type .ext { font-size: 10px; letter-spacing: 1.5px; opacity: .75; display: block; margin-top: 2px; }
+
+  .res-main { min-width: 0; }
+  .res-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2px; color: var(--text-faint);
+    margin-bottom: 6px; font-weight: 500;
+    transition: color .25s ease;
+  }
+  .res-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px; font-weight: 700; color: var(--ink);
+    margin: 0 0 6px; letter-spacing: 0.3px;
+  }
+  .res-desc {
+    font-size: 13px; color: var(--text-dim);
+    margin: 0 0 8px; line-height: 1.55;
+  }
+  .res-meta {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; color: var(--text-faint);
+    letter-spacing: 0.5px;
+  }
+  .res-meta span b { color: var(--ink-2); font-weight: 600; }
+  .res-meta .sep { color: var(--accent); margin: 0 2px; }
+
+  /* DL button */
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none; border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(31, 61, 47, 0.20);
+    transition: all .25s cubic-bezier(.2,.8,.2,1);
+    white-space: nowrap;
+  }
+  .dl-btn:hover { background: var(--ink-2); box-shadow: 0 8px 22px rgba(31, 61, 47, 0.30); }
+  .dl-btn .arrow { transition: transform .25s ease; }
+  .res:hover .dl-btn .arrow { transform: translateX(2px); }
+  .dl-btn.disabled { background: var(--text-faint); box-shadow: none; cursor: not-allowed; }
+  .dl-btn.disabled:hover { background: var(--text-faint); box-shadow: none; }
+
+  /* Footer */
+  .footer {
+    max-width: 1100px; margin: 0 auto;
+    padding: 40px 32px 56px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .footer a { color: var(--ink-2); }
+  .footer a:hover { color: var(--accent); }
+
+  /* Modal */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal.open { display: flex; }
+  .modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(31, 61, 47, 0.30);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    animation: fadeIn .25s ease forwards;
+  }
+  .modal-panel {
+    position: relative;
+    max-width: 460px; width: 100%;
+    padding: 36px 32px 28px;
+    background: var(--bg);
+    border: 1px solid rgba(31, 61, 47, 0.22);
+    border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(31, 61, 47, 0.25);
+    text-align: left;
+    animation: scaleIn .3s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .modal-eyebrow {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .modal-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700; margin: 0 0 14px; color: var(--ink);
+  }
+  .modal-body {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px; line-height: 1.7; color: var(--text-dim);
+    margin: 0 0 24px;
+  }
+  .modal-close {
+    padding: 10px 24px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 999px;
+    font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(31, 61, 47, 0.25);
+    transition: all .2s ease;
+  }
+  .modal-close:hover { background: var(--ink-2); transform: translateY(-1px); }
+  @keyframes fadeIn  { to { opacity: 1; } }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(.94) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+  /* ══ Search bar ══ */
+  .search {
+    max-width: 1100px; margin: 28px auto 0;
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .search-box {
+    flex: 1;
+    position: relative;
+    display: flex; align-items: center;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 18px 0 46px;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .search-box:focus-within {
+    border-color: var(--accent);
+    background: rgba(244, 241, 234, 0.95);
+    box-shadow: 0 0 0 4px rgba(231, 111, 44, 0.12);
+  }
+  .search-box svg {
+    position: absolute; left: 18px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-faint);
+    transition: color .2s ease;
+  }
+  .search-box:focus-within svg { color: var(--accent); }
+  .search-input {
+    flex: 1; min-width: 0;
+    background: transparent; border: 0; outline: 0;
+    padding: 14px 0;
+    font: 500 14px 'Space Grotesk', 'Noto Serif SC', sans-serif;
+    color: var(--ink);
+    letter-spacing: 0.3px;
+  }
+  .search-input::placeholder {
+    color: var(--text-faint);
+    font-weight: 400;
+  }
+  .search-clear {
+    display: none; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border: 0; border-radius: 50%;
+    background: rgba(31, 61, 47, 0.10);
+    color: var(--ink-2);
+    font-size: 14px; line-height: 1; padding: 0;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .search-clear:hover { background: var(--accent); color: var(--bg); }
+  .search-clear.show { display: inline-flex; }
+  .search-count {
+    font: 500 11px 'Space Grotesk', sans-serif;
+    color: var(--text-faint);
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .search-count b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .search-count .slash { color: var(--accent); margin: 0 4px; }
+  .search-count.zero b { color: var(--accent); }
+
+  /* 资源卡过滤态 */
+  .res.filtered {
+    display: none;
+  }
+  .res.fade-out {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .16s ease, transform .16s ease;
+  }
+  .res.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity .22s ease, transform .22s ease;
+  }
+
+  /* 空结果 */
+  .empty {
+    max-width: 1100px; margin: 0 auto;
+    padding: 60px 32px 20px;
+    text-align: center;
+    display: none;
+  }
+  .empty.show { display: block; }
+  .empty-mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 56px; font-weight: 300; line-height: 1;
+    color: var(--ink);
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+  }
+  .empty-mark .accent { color: var(--accent); }
+  .empty-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px; color: var(--text-dim);
+    margin: 0 0 18px;
+  }
+  .empty-hint {
+    display: inline-block;
+    font: 500 11px 'Space Grotesk', sans-serif;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 1px dashed var(--accent);
+    padding-bottom: 2px;
+    cursor: pointer;
+  }
+  .empty-hint:hover { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; padding: 0 20px 60px; gap: 20px; }
+    .sidebar {
+      position: static;
+      padding: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 241, 234, 0.5);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+    }
+    .side-eyebrow { display: none; }
+    .cats {
+      flex-direction: row;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 12px 16px;
+      gap: 6px;
+    }
+    .cats::-webkit-scrollbar { display: none; }
+    .cat {
+      flex-shrink: 0;
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .cat.active { border-color: var(--accent); }
+    .cat .cnt { margin-left: 6px; }
+    .side-foot { display: none; }
+  }
+
+  @media (max-width: 720px) {
+    .res { grid-template-columns: 60px 1fr; gap: 14px; padding: 18px 18px; }
+    .res-type { width: 60px; height: 60px; font-size: 14px; }
+    .res-type .ext { font-size: 9px; }
+    .res .dl-btn { grid-column: 1 / -1; justify-content: center; margin-top: 4px; }
+    .hero { padding: 24px 18px 8px; }
+    .list, .rule, .crumb, .footer { padding-left: 18px; padding-right: 18px; }
+    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+    .res { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+<a class="brand" href="index.html" style="text-decoration:none;color:inherit;">
+<div class="brand-mark">T</div>
+<div class="brand-info">
+<div class="brand-name">Teng.ZG</div>
+<div class="brand-sub">重症医学 · 临床知识门户</div>
+</div>
+</a>
+<div class="topbar-right">
+<span class="ver">SECTION 06 / SIX</span>
+</div>
+</header>
+<nav class="crumb">
+<a href="index.html">首页</a>
+<span class="sep">/</span>
+<span class="now">资源下载</span>
+</nav>
+<section class="hero">
+<div class="eyebrow">Section 06 · Resources</div>
+<h1>Downloads<span class="num">.</span></h1>
+<p class="hero-desc">临床工具、参考书籍、教学幻灯片。均可下载至本地,用于晨会、查房、教学、自学。</p>
+<div class="hero-meta">
+<span><b>44</b> 资源</span>
+<span class="sep">/</span>
+<span><b>152</b> MB</span>
+<span class="sep">/</span>
+<span>持续更新</span>
+</div>
+</section>
+<div class="rule">
+<hr/><span class="label">RESOURCES</span><hr/>
+</div>
+<div class="search">
+<label class="search-box" for="q">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16">
+<circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+</svg>
+<input autocomplete="off" class="search-input" id="q" placeholder="搜索资源 · 名称 / 描述 / 类型 / 格式" spellcheck="false" type="text"/>
+<button aria-label="清除" class="search-clear" id="qClear" type="button">×</button>
+</label>
+<span class="search-count" id="qCount"><b>44</b><span class="slash">/</span>44</span>
+</div>
+<div class="layout">
+<aside aria-label="资源分类" class="sidebar">
+<div class="side-eyebrow">FILTERS</div>
+<div class="side-eyebrow" style="margin-top: 8px;">CATEGORIES</div>
+<nav class="cats" id="cats">
+<button class="cat active" data-cat="all">全部 <span class="cnt" data-cnt="all">44</span></button>
+<button class="cat" data-cat="guides">指南 · 文献 <span class="cnt" data-cnt="guides">44</span></button>
+<button class="cat" data-cat="books">书籍 · 教材 <span class="cnt" data-cnt="books">0</span></button>
+<button class="cat" data-cat="cases">病案 · 病历 <span class="cnt" data-cnt="cases">0</span></button>
+<button class="cat" data-cat="slides">幻灯 · 教案 <span class="cnt" data-cnt="slides">0</span></button>
+<button class="cat" data-cat="others">其他 <span class="cnt" data-cnt="others">0</span></button>
+</nav>
+<div class="side-foot">共 44 份 · 152 MB</div>
+</aside>
+<main class="list" id="list">
+<h2 class="cat-title" data-cat-h="guides"><span class="bar"></span>指南 · 文献</h2>
+<div class="res" data-cat="guides" data-id="d01" data-search="ICU PADIS SCCM-2018 2018 指南 ICU 镇痛镇静/谵妄/睡眠 (PADIS) ICU PADIS-SCCM-2018-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 01 / 44</div>
+<h2 class="res-name">ICU 镇痛镇静/谵妄/睡眠 (PADIS) · 指南</h2>
+<p class="res-desc">SCCM-2018 · 2018 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>447 KB</b></span><span class="sep">·</span>
+<span>SCCM-2018</span><span class="sep">·</span>
+<span>2018</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d01">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d02" data-search="ICU PADIS SCCM-2025 2025 指南 ICU 镇痛镇静/谵妄/睡眠 (PADIS) ICU PADIS-SCCM-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 02 / 44</div>
+<h2 class="res-name">ICU 镇痛镇静/谵妄/睡眠 (PADIS) · 指南</h2>
+<p class="res-desc">SCCM-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>643 KB</b></span><span class="sep">·</span>
+<span>SCCM-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d02">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d03" data-search="ICU营养治疗 ESPEN-2025 2025 指南 ICU 营养治疗 ICU营养治疗-ESPEN-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 03 / 44</div>
+<h2 class="res-name">ICU 营养治疗 · 指南</h2>
+<p class="res-desc">ESPEN-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>4.6 MB</b></span><span class="sep">·</span>
+<span>ESPEN-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d03">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d04" data-search="上消化道出血 ACG-2021 2021 指南 上消化道出血 上消化道出血-ACG-2021-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 04 / 44</div>
+<h2 class="res-name">上消化道出血 · 指南</h2>
+<p class="res-desc">ACG-2021 · 2021 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>609 KB</b></span><span class="sep">·</span>
+<span>ACG-2021</span><span class="sep">·</span>
+<span>2021</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d04">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d05" data-search="中枢神经系统感染 NICE-2024 2024 指南 细菌性脑膜炎 (CNS 感染) 中枢神经系统感染-NICE-2024-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 05 / 44</div>
+<h2 class="res-name">细菌性脑膜炎 (CNS 感染) · 指南</h2>
+<p class="res-desc">NICE-2024 · 2024 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>464 KB</b></span><span class="sep">·</span>
+<span>NICE-2024</span><span class="sep">·</span>
+<span>2024</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d05">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d06" data-search="休克 ACC-2025 2025 专家共识 循环/心源性休克 休克-ACC-2025-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 06 / 44</div>
+<h2 class="res-name">循环/心源性休克 · 专家共识</h2>
+<p class="res-desc">ACC-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>8.5 MB</b></span><span class="sep">·</span>
+<span>ACC-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d06">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d07" data-search="休克 ESICM-2025 2025 指南 循环/心源性休克 休克-ESICM-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 07 / 44</div>
+<h2 class="res-name">循环/心源性休克 · 指南</h2>
+<p class="res-desc">ESICM-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>10.5 MB</b></span><span class="sep">·</span>
+<span>ESICM-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d07">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d08" data-search="休克 欧洲心血管协会-UNKNOWN  专家共识 循环/心源性休克 休克-欧洲心血管协会-UNKNOWN-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 08 / 44</div>
+<h2 class="res-name">循环/心源性休克 · 专家共识</h2>
+<p class="res-desc">欧洲心血管协会-UNKNOWN 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.8 MB</b></span><span class="sep">·</span>
+<span>欧洲心血管协会-UNKNOWN</span><span class="sep">·</span>
+<span>—</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d08">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d09" data-search="低镁血症 中国专家共识-2026 2026 专家共识 低镁血症 低镁血症-中国专家共识-2026-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 09 / 44</div>
+<h2 class="res-name">低镁血症 · 专家共识</h2>
+<p class="res-desc">中国专家共识-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.7 MB</b></span><span class="sep">·</span>
+<span>中国专家共识-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d09">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d10" data-search="保肝药物 广东省药学会-2025 2025 专家指引 保肝药物合理用药 保肝药物-广东省药学会-2025-专家指引 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDANCE</span></div>
+<div class="res-main">
+<div class="res-num">— 10 / 44</div>
+<h2 class="res-name">保肝药物合理用药 · 专家指引</h2>
+<p class="res-desc">广东省药学会-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>577 KB</b></span><span class="sep">·</span>
+<span>广东省药学会-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d10">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d11" data-search="凝血病 中国专家共识-2025 2025 专家共识 重症凝血病 凝血病-中国专家共识-2025-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 11 / 44</div>
+<h2 class="res-name">重症凝血病 · 专家共识</h2>
+<p class="res-desc">中国专家共识-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.4 MB</b></span><span class="sep">·</span>
+<span>中国专家共识-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d11">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d12" data-search="创伤性脑损伤 Rapp-UNKNOWN  文献综述 创伤性脑损伤 (TBI) 创伤性脑损伤-Rapp-UNKNOWN-文献综述 pdf">
+<div class="res-type pdf">PDF<span class="ext">REVIEW</span></div>
+<div class="res-main">
+<div class="res-num">— 12 / 44</div>
+<h2 class="res-name">创伤性脑损伤 (TBI) · 文献综述</h2>
+<p class="res-desc">Rapp-UNKNOWN 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>339 KB</b></span><span class="sep">·</span>
+<span>Rapp-UNKNOWN</span><span class="sep">·</span>
+<span>—</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d12">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d13" data-search="医院获得性肺炎 呼吸机相关肺炎-ATS-IDSA-2016 2016 指南 医院获得性肺炎 医院获得性肺炎-呼吸机相关肺炎-ATS-IDSA-2016-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 13 / 44</div>
+<h2 class="res-name">医院获得性肺炎 · 指南</h2>
+<p class="res-desc">呼吸机相关肺炎-ATS-IDSA-2016 · 2016 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>882 KB</b></span><span class="sep">·</span>
+<span>呼吸机相关肺炎-ATS-IDSA-2016</span><span class="sep">·</span>
+<span>2016</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d13">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d14" data-search="哮喘 GINA-2026 2026 指南 哮喘 (GINA) 哮喘-GINA-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 14 / 44</div>
+<h2 class="res-name">哮喘 (GINA) · 指南</h2>
+<p class="res-desc">GINA-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>16.3 MB</b></span><span class="sep">·</span>
+<span>GINA-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d14">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d15" data-search="噬血细胞性淋巴组织细胞增生症 NEJM-2025 2025 文献综述 噬血细胞综合征 (HLH) 噬血细胞性淋巴组织细胞增生症-NEJM-2025-文献综述 pdf">
+<div class="res-type pdf">PDF<span class="ext">REVIEW</span></div>
+<div class="res-main">
+<div class="res-num">— 15 / 44</div>
+<h2 class="res-name">噬血细胞综合征 (HLH) · 文献综述</h2>
+<p class="res-desc">NEJM-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.7 MB</b></span><span class="sep">·</span>
+<span>NEJM-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d15">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d16" data-search="应激性溃疡 中国专家共识-2026 2026 指南 应激性溃疡 应激性溃疡-中国专家共识-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 16 / 44</div>
+<h2 class="res-name">应激性溃疡 · 指南</h2>
+<p class="res-desc">中国专家共识-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>716 KB</b></span><span class="sep">·</span>
+<span>中国专家共识-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d16">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d17" data-search="微循环障碍 Critical_Care-2026 2026 文献综述 微循环 / 被动抬腿试验 微循环障碍-Critical_Care-2026-文献综述 pdf">
+<div class="res-type pdf">PDF<span class="ext">REVIEW</span></div>
+<div class="res-main">
+<div class="res-num">— 17 / 44</div>
+<h2 class="res-name">微循环 / 被动抬腿试验 · 文献综述</h2>
+<p class="res-desc">Critical_Care-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>913 KB</b></span><span class="sep">·</span>
+<span>Critical_Care-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d17">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d18" data-search="微循环障碍 Jung-2024 2024 文献综述 微循环 / 被动抬腿试验 微循环障碍-Jung-2024-文献综述 pdf">
+<div class="res-type pdf">PDF<span class="ext">REVIEW</span></div>
+<div class="res-main">
+<div class="res-num">— 18 / 44</div>
+<h2 class="res-name">微循环 / 被动抬腿试验 · 文献综述</h2>
+<p class="res-desc">Jung-2024 · 2024 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.8 MB</b></span><span class="sep">·</span>
+<span>Jung-2024</span><span class="sep">·</span>
+<span>2024</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d18">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d19" data-search="心脏骤停 ERC-ESICM-2025 2025 指南 心脏骤停 / 复苏后管理 心脏骤停-ERC-ESICM-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 19 / 44</div>
+<h2 class="res-name">心脏骤停 / 复苏后管理 · 指南</h2>
+<p class="res-desc">ERC-ESICM-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.8 MB</b></span><span class="sep">·</span>
+<span>ERC-ESICM-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d19">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d20" data-search="心脏骤停 欧洲复苏委员会-2025 2025 指南 心脏骤停 / 复苏后管理 心脏骤停-欧洲复苏委员会-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 20 / 44</div>
+<h2 class="res-name">心脏骤停 / 复苏后管理 · 指南</h2>
+<p class="res-desc">欧洲复苏委员会-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>4.3 MB</b></span><span class="sep">·</span>
+<span>欧洲复苏委员会-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d20">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d21" data-search="急性冠脉综合征 ACC-AHA-2025 2025 指南 急性冠脉综合征 (ACS) 急性冠脉综合征-ACC-AHA-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 21 / 44</div>
+<h2 class="res-name">急性冠脉综合征 (ACS) · 指南</h2>
+<p class="res-desc">ACC-AHA-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>8.1 MB</b></span><span class="sep">·</span>
+<span>ACC-AHA-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d21">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d22" data-search="急性呼吸窘迫综合征 ATS-2024 2024 指南 急性呼吸窘迫综合征 (ARDS) 急性呼吸窘迫综合征-ATS-2024-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 22 / 44</div>
+<h2 class="res-name">急性呼吸窘迫综合征 (ARDS) · 指南</h2>
+<p class="res-desc">ATS-2024 · 2024 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.3 MB</b></span><span class="sep">·</span>
+<span>ATS-2024</span><span class="sep">·</span>
+<span>2024</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d22">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d23" data-search="急性呼吸窘迫综合征 ESICM-2023 2023 指南 急性呼吸窘迫综合征 (ARDS) 急性呼吸窘迫综合征-ESICM-2023-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 23 / 44</div>
+<h2 class="res-name">急性呼吸窘迫综合征 (ARDS) · 指南</h2>
+<p class="res-desc">ESICM-2023 · 2023 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.4 MB</b></span><span class="sep">·</span>
+<span>ESICM-2023</span><span class="sep">·</span>
+<span>2023</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d23">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d24" data-search="急性呼吸窘迫综合征 Matthay-2024 2024 文献综述 急性呼吸窘迫综合征 (ARDS) 急性呼吸窘迫综合征-Matthay-2024-文献综述 pdf">
+<div class="res-type pdf">PDF<span class="ext">REVIEW</span></div>
+<div class="res-main">
+<div class="res-num">— 24 / 44</div>
+<h2 class="res-name">急性呼吸窘迫综合征 (ARDS) · 文献综述</h2>
+<p class="res-desc">Matthay-2024 · 2024 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>875 KB</b></span><span class="sep">·</span>
+<span>Matthay-2024</span><span class="sep">·</span>
+<span>2024</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d24">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d25" data-search="急性慢加急性肝衰竭 APASL-2014 2014 专家共识 慢加急性肝衰竭 (ACLF) 急性慢加急性肝衰竭-APASL-2014-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 25 / 44</div>
+<h2 class="res-name">慢加急性肝衰竭 (ACLF) · 专家共识</h2>
+<p class="res-desc">APASL-2014 · 2014 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>374 KB</b></span><span class="sep">·</span>
+<span>APASL-2014</span><span class="sep">·</span>
+<span>2014</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d25">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d26" data-search="急性慢加急性肝衰竭 EASL-2023 2023 指南 慢加急性肝衰竭 (ACLF) 急性慢加急性肝衰竭-EASL-2023-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 26 / 44</div>
+<h2 class="res-name">慢加急性肝衰竭 (ACLF) · 指南</h2>
+<p class="res-desc">EASL-2023 · 2023 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>2.6 MB</b></span><span class="sep">·</span>
+<span>EASL-2023</span><span class="sep">·</span>
+<span>2023</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d26">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d27" data-search="急性缺血性卒中 AHA-ASA-2026 2026 指南 急性缺血性卒中 急性缺血性卒中-AHA-ASA-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 27 / 44</div>
+<h2 class="res-name">急性缺血性卒中 · 指南</h2>
+<p class="res-desc">AHA-ASA-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>7.3 MB</b></span><span class="sep">·</span>
+<span>AHA-ASA-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d27">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d28" data-search="急性肾损伤 KDIGO-2026 2026 指南 急性肾损伤 (AKI) 急性肾损伤-KDIGO-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 28 / 44</div>
+<h2 class="res-name">急性肾损伤 (AKI) · 指南</h2>
+<p class="res-desc">KDIGO-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>5.8 MB</b></span><span class="sep">·</span>
+<span>KDIGO-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d28">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d29" data-search="急性胰腺炎 IAP-2025 2025 指南 急性胰腺炎 急性胰腺炎-IAP-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 29 / 44</div>
+<h2 class="res-name">急性胰腺炎 · 指南</h2>
+<p class="res-desc">IAP-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.5 MB</b></span><span class="sep">·</span>
+<span>IAP-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d29">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d30" data-search="慢性阻塞性肺病 GOLD-2026 2026 指南 慢阻肺急性加重 (COPD) 慢性阻塞性肺病-GOLD-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 30 / 44</div>
+<h2 class="res-name">慢阻肺急性加重 (COPD) · 指南</h2>
+<p class="res-desc">GOLD-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>19.1 MB</b></span><span class="sep">·</span>
+<span>GOLD-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d30">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d31" data-search="泌尿感染 EAU-2025 2025 指南 泌尿系统感染 泌尿感染-EAU-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 31 / 44</div>
+<h2 class="res-name">泌尿系统感染 · 指南</h2>
+<p class="res-desc">EAU-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.0 MB</b></span><span class="sep">·</span>
+<span>EAU-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d31">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d32" data-search="液体复苏 Vanderbilt-2018 2018 RCT解读 晶体液 vs 生理盐水 (SMART) 液体复苏-Vanderbilt-2018-RCT解读 pdf">
+<div class="res-type pdf">PDF<span class="ext">RCT</span></div>
+<div class="res-main">
+<div class="res-num">— 32 / 44</div>
+<h2 class="res-name">晶体液 vs 生理盐水 (SMART) · RCT解读</h2>
+<p class="res-desc">Vanderbilt-2018 · 2018 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>305 KB</b></span><span class="sep">·</span>
+<span>Vanderbilt-2018</span><span class="sep">·</span>
+<span>2018</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d32">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d33" data-search="热射病 SCCM-2025 2025 指南 热射病 热射病-SCCM-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 33 / 44</div>
+<h2 class="res-name">热射病 · 指南</h2>
+<p class="res-desc">SCCM-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.4 MB</b></span><span class="sep">·</span>
+<span>SCCM-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d33">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d34" data-search="癫痫 NICE-2025 2025 指南 癫痫 癫痫-NICE-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 34 / 44</div>
+<h2 class="res-name">癫痫 · 指南</h2>
+<p class="res-desc">NICE-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>694 KB</b></span><span class="sep">·</span>
+<span>NICE-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d34">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d35" data-search="社区获得性肺炎 ATS-IDSA-2025 2025 指南 社区获得性肺炎 (CAP) 社区获得性肺炎-ATS-IDSA-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 35 / 44</div>
+<h2 class="res-name">社区获得性肺炎 (CAP) · 指南</h2>
+<p class="res-desc">ATS-IDSA-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.8 MB</b></span><span class="sep">·</span>
+<span>ATS-IDSA-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d35">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d36" data-search="神经重症撤机 Bureau-2021 2021 文献综述 神经重症机械通气撤机 神经重症撤机-Bureau-2021-文献综述 pdf">
+<div class="res-type pdf">PDF<span class="ext">REVIEW</span></div>
+<div class="res-main">
+<div class="res-num">— 36 / 44</div>
+<h2 class="res-name">神经重症机械通气撤机 · 文献综述</h2>
+<p class="res-desc">Bureau-2021 · 2021 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1.0 MB</b></span><span class="sep">·</span>
+<span>Bureau-2021</span><span class="sep">·</span>
+<span>2021</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d36">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d37" data-search="神经重症镇痛镇静 中国专家共识-2023 2023 专家共识 神经重症镇痛镇静 神经重症镇痛镇静-中国专家共识-2023-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 37 / 44</div>
+<h2 class="res-name">神经重症镇痛镇静 · 专家共识</h2>
+<p class="res-desc">中国专家共识-2023 · 2023 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>4.1 MB</b></span><span class="sep">·</span>
+<span>中国专家共识-2023</span><span class="sep">·</span>
+<span>2023</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d37">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d38" data-search="肺炎 NICE-2026 2026 指南 肺炎 (NICE NG250) 肺炎-NICE-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 38 / 44</div>
+<h2 class="res-name">肺炎 (NICE NG250) · 指南</h2>
+<p class="res-desc">NICE-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>311 KB</b></span><span class="sep">·</span>
+<span>NICE-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d38">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d39" data-search="脓毒症 SCCM-2024 2024 指南 脓毒症 / 严重感染 脓毒症-SCCM-2024-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 39 / 44</div>
+<h2 class="res-name">脓毒症 / 严重感染 · 指南</h2>
+<p class="res-desc">SCCM-2024 · 2024 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>987 KB</b></span><span class="sep">·</span>
+<span>SCCM-2024</span><span class="sep">·</span>
+<span>2024</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d39">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d40" data-search="脓毒症 SSC-2026 2026 指南 脓毒症 / 严重感染 脓毒症-SSC-2026-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 40 / 44</div>
+<h2 class="res-name">脓毒症 / 严重感染 · 指南</h2>
+<p class="res-desc">SSC-2026 · 2026 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>14.1 MB</b></span><span class="sep">·</span>
+<span>SSC-2026</span><span class="sep">·</span>
+<span>2026</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d40">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d41" data-search="自发性脑出血 AHA-ASA-2022 2022 指南 自发性脑出血 (ICH) 自发性脑出血-AHA-ASA-2022-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 41 / 44</div>
+<h2 class="res-name">自发性脑出血 (ICH) · 指南</h2>
+<p class="res-desc">AHA-ASA-2022 · 2022 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.6 MB</b></span><span class="sep">·</span>
+<span>AHA-ASA-2022</span><span class="sep">·</span>
+<span>2022</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d41">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d42" data-search="自发性蛛网膜下腔出血 AHA-ASA-2023 2023 指南 动脉瘤性蛛网膜下腔出血 (aSAH) 自发性蛛网膜下腔出血-AHA-ASA-2023-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 42 / 44</div>
+<h2 class="res-name">动脉瘤性蛛网膜下腔出血 (aSAH) · 指南</h2>
+<p class="res-desc">AHA-ASA-2023 · 2023 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>3.4 MB</b></span><span class="sep">·</span>
+<span>AHA-ASA-2023</span><span class="sep">·</span>
+<span>2023</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d42">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d43" data-search="血乳酸 中国急诊专家共识-2025 2025 专家共识 血乳酸监测 血乳酸-中国急诊专家共识-2025-专家共识 pdf">
+<div class="res-type pdf">PDF<span class="ext">CONSENSUS</span></div>
+<div class="res-main">
+<div class="res-num">— 43 / 44</div>
+<h2 class="res-name">血乳酸监测 · 专家共识</h2>
+<p class="res-desc">中国急诊专家共识-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>1000 KB</b></span><span class="sep">·</span>
+<span>中国急诊专家共识-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d43">下载 <span class="arrow">↓</span></button>
+</div>
+<div class="res" data-cat="guides" data-id="d44" data-search="血小板输注 AABB-ICTMG-2025 2025 指南 血小板输注 血小板输注-AABB-ICTMG-2025-指南 pdf">
+<div class="res-type pdf">PDF<span class="ext">GUIDELINE</span></div>
+<div class="res-main">
+<div class="res-num">— 44 / 44</div>
+<h2 class="res-name">血小板输注 · 指南</h2>
+<p class="res-desc">AABB-ICTMG-2025 · 2025 发布</p>
+<div class="res-meta">
+<span>PDF</span><span class="sep">·</span>
+<span><b>394 KB</b></span><span class="sep">·</span>
+<span>AABB-ICTMG-2025</span><span class="sep">·</span>
+<span>2025</span>
+</div>
+</div>
+<button class="dl-btn" data-dl="d44">下载 <span class="arrow">↓</span></button>
+</div>
+</main>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d01" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 01 / 44</div>
+<h3 class="modal-title">ICU 镇痛镇静/谵妄/睡眠 (PADIS) · 指南</h3>
+<p class="modal-body">SCCM-2018 · 2018 发布 · 447 KB<br/><br/>指南 · ICU PADIS<br/><br/>文件名: ICU PADIS-SCCM-2018-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/ICU PADIS-SCCM-2018-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d02" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 02 / 44</div>
+<h3 class="modal-title">ICU 镇痛镇静/谵妄/睡眠 (PADIS) · 指南</h3>
+<p class="modal-body">SCCM-2025 · 2025 发布 · 643 KB<br/><br/>指南 · ICU PADIS<br/><br/>文件名: ICU PADIS-SCCM-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/ICU PADIS-SCCM-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d03" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 03 / 44</div>
+<h3 class="modal-title">ICU 营养治疗 · 指南</h3>
+<p class="modal-body">ESPEN-2025 · 2025 发布 · 4.6 MB<br/><br/>指南 · ICU营养治疗<br/><br/>文件名: ICU营养治疗-ESPEN-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/ICU营养治疗-ESPEN-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d04" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 04 / 44</div>
+<h3 class="modal-title">上消化道出血 · 指南</h3>
+<p class="modal-body">ACG-2021 · 2021 发布 · 609 KB<br/><br/>指南 · 上消化道出血<br/><br/>文件名: 上消化道出血-ACG-2021-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/上消化道出血-ACG-2021-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d05" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 05 / 44</div>
+<h3 class="modal-title">细菌性脑膜炎 (CNS 感染) · 指南</h3>
+<p class="modal-body">NICE-2024 · 2024 发布 · 464 KB<br/><br/>指南 · 中枢神经系统感染<br/><br/>文件名: 中枢神经系统感染-NICE-2024-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/中枢神经系统感染-NICE-2024-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d06" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 06 / 44</div>
+<h3 class="modal-title">循环/心源性休克 · 专家共识</h3>
+<p class="modal-body">ACC-2025 · 2025 发布 · 8.5 MB<br/><br/>专家共识 · 休克<br/><br/>文件名: 休克-ACC-2025-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/休克-ACC-2025-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d07" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 07 / 44</div>
+<h3 class="modal-title">循环/心源性休克 · 指南</h3>
+<p class="modal-body">ESICM-2025 · 2025 发布 · 10.5 MB<br/><br/>指南 · 休克<br/><br/>文件名: 休克-ESICM-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/休克-ESICM-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d08" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 08 / 44</div>
+<h3 class="modal-title">循环/心源性休克 · 专家共识</h3>
+<p class="modal-body">欧洲心血管协会-UNKNOWN · ? 发布 · 3.8 MB<br/><br/>专家共识 · 休克<br/><br/>文件名: 休克-欧洲心血管协会-UNKNOWN-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/休克-欧洲心血管协会-UNKNOWN-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d09" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 09 / 44</div>
+<h3 class="modal-title">低镁血症 · 专家共识</h3>
+<p class="modal-body">中国专家共识-2026 · 2026 发布 · 1.7 MB<br/><br/>专家共识 · 低镁血症<br/><br/>文件名: 低镁血症-中国专家共识-2026-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/低镁血症-中国专家共识-2026-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d10" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 10 / 44</div>
+<h3 class="modal-title">保肝药物合理用药 · 专家指引</h3>
+<p class="modal-body">广东省药学会-2025 · 2025 发布 · 577 KB<br/><br/>专家指引 · 保肝药物<br/><br/>文件名: 保肝药物-广东省药学会-2025-专家指引.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/保肝药物-广东省药学会-2025-专家指引.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d11" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 11 / 44</div>
+<h3 class="modal-title">重症凝血病 · 专家共识</h3>
+<p class="modal-body">中国专家共识-2025 · 2025 发布 · 3.4 MB<br/><br/>专家共识 · 凝血病<br/><br/>文件名: 凝血病-中国专家共识-2025-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/凝血病-中国专家共识-2025-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d12" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 12 / 44</div>
+<h3 class="modal-title">创伤性脑损伤 (TBI) · 文献综述</h3>
+<p class="modal-body">Rapp-UNKNOWN · ? 发布 · 339 KB<br/><br/>文献综述 · 创伤性脑损伤<br/><br/>文件名: 创伤性脑损伤-Rapp-UNKNOWN-文献综述.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/创伤性脑损伤-Rapp-UNKNOWN-文献综述.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d13" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 13 / 44</div>
+<h3 class="modal-title">医院获得性肺炎 · 指南</h3>
+<p class="modal-body">呼吸机相关肺炎-ATS-IDSA-2016 · 2016 发布 · 882 KB<br/><br/>指南 · 医院获得性肺炎<br/><br/>文件名: 医院获得性肺炎-呼吸机相关肺炎-ATS-IDSA-2016-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/医院获得性肺炎-呼吸机相关肺炎-ATS-IDSA-2016-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d14" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 14 / 44</div>
+<h3 class="modal-title">哮喘 (GINA) · 指南</h3>
+<p class="modal-body">GINA-2026 · 2026 发布 · 16.3 MB<br/><br/>指南 · 哮喘<br/><br/>文件名: 哮喘-GINA-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/哮喘-GINA-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d15" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 15 / 44</div>
+<h3 class="modal-title">噬血细胞综合征 (HLH) · 文献综述</h3>
+<p class="modal-body">NEJM-2025 · 2025 发布 · 3.7 MB<br/><br/>文献综述 · 噬血细胞性淋巴组织细胞增生症<br/><br/>文件名: 噬血细胞性淋巴组织细胞增生症-NEJM-2025-文献综述.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/噬血细胞性淋巴组织细胞增生症-NEJM-2025-文献综述.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d16" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 16 / 44</div>
+<h3 class="modal-title">应激性溃疡 · 指南</h3>
+<p class="modal-body">中国专家共识-2026 · 2026 发布 · 716 KB<br/><br/>指南 · 应激性溃疡<br/><br/>文件名: 应激性溃疡-中国专家共识-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/应激性溃疡-中国专家共识-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d17" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 17 / 44</div>
+<h3 class="modal-title">微循环 / 被动抬腿试验 · 文献综述</h3>
+<p class="modal-body">Critical_Care-2026 · 2026 发布 · 913 KB<br/><br/>文献综述 · 微循环障碍<br/><br/>文件名: 微循环障碍-Critical_Care-2026-文献综述.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/微循环障碍-Critical_Care-2026-文献综述.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d18" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 18 / 44</div>
+<h3 class="modal-title">微循环 / 被动抬腿试验 · 文献综述</h3>
+<p class="modal-body">Jung-2024 · 2024 发布 · 1.8 MB<br/><br/>文献综述 · 微循环障碍<br/><br/>文件名: 微循环障碍-Jung-2024-文献综述.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/微循环障碍-Jung-2024-文献综述.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d19" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 19 / 44</div>
+<h3 class="modal-title">心脏骤停 / 复苏后管理 · 指南</h3>
+<p class="modal-body">ERC-ESICM-2025 · 2025 发布 · 3.8 MB<br/><br/>指南 · 心脏骤停<br/><br/>文件名: 心脏骤停-ERC-ESICM-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/心脏骤停-ERC-ESICM-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d20" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 20 / 44</div>
+<h3 class="modal-title">心脏骤停 / 复苏后管理 · 指南</h3>
+<p class="modal-body">欧洲复苏委员会-2025 · 2025 发布 · 4.3 MB<br/><br/>指南 · 心脏骤停<br/><br/>文件名: 心脏骤停-欧洲复苏委员会-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/心脏骤停-欧洲复苏委员会-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d21" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 21 / 44</div>
+<h3 class="modal-title">急性冠脉综合征 (ACS) · 指南</h3>
+<p class="modal-body">ACC-AHA-2025 · 2025 发布 · 8.1 MB<br/><br/>指南 · 急性冠脉综合征<br/><br/>文件名: 急性冠脉综合征-ACC-AHA-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性冠脉综合征-ACC-AHA-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d22" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 22 / 44</div>
+<h3 class="modal-title">急性呼吸窘迫综合征 (ARDS) · 指南</h3>
+<p class="modal-body">ATS-2024 · 2024 发布 · 1.3 MB<br/><br/>指南 · 急性呼吸窘迫综合征<br/><br/>文件名: 急性呼吸窘迫综合征-ATS-2024-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性呼吸窘迫综合征-ATS-2024-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d23" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 23 / 44</div>
+<h3 class="modal-title">急性呼吸窘迫综合征 (ARDS) · 指南</h3>
+<p class="modal-body">ESICM-2023 · 2023 发布 · 3.4 MB<br/><br/>指南 · 急性呼吸窘迫综合征<br/><br/>文件名: 急性呼吸窘迫综合征-ESICM-2023-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性呼吸窘迫综合征-ESICM-2023-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d24" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 24 / 44</div>
+<h3 class="modal-title">急性呼吸窘迫综合征 (ARDS) · 文献综述</h3>
+<p class="modal-body">Matthay-2024 · 2024 发布 · 875 KB<br/><br/>文献综述 · 急性呼吸窘迫综合征<br/><br/>文件名: 急性呼吸窘迫综合征-Matthay-2024-文献综述.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性呼吸窘迫综合征-Matthay-2024-文献综述.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d25" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 25 / 44</div>
+<h3 class="modal-title">慢加急性肝衰竭 (ACLF) · 专家共识</h3>
+<p class="modal-body">APASL-2014 · 2014 发布 · 374 KB<br/><br/>专家共识 · 急性慢加急性肝衰竭<br/><br/>文件名: 急性慢加急性肝衰竭-APASL-2014-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性慢加急性肝衰竭-APASL-2014-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d26" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 26 / 44</div>
+<h3 class="modal-title">慢加急性肝衰竭 (ACLF) · 指南</h3>
+<p class="modal-body">EASL-2023 · 2023 发布 · 2.6 MB<br/><br/>指南 · 急性慢加急性肝衰竭<br/><br/>文件名: 急性慢加急性肝衰竭-EASL-2023-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性慢加急性肝衰竭-EASL-2023-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d27" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 27 / 44</div>
+<h3 class="modal-title">急性缺血性卒中 · 指南</h3>
+<p class="modal-body">AHA-ASA-2026 · 2026 发布 · 7.3 MB<br/><br/>指南 · 急性缺血性卒中<br/><br/>文件名: 急性缺血性卒中-AHA-ASA-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性缺血性卒中-AHA-ASA-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d28" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 28 / 44</div>
+<h3 class="modal-title">急性肾损伤 (AKI) · 指南</h3>
+<p class="modal-body">KDIGO-2026 · 2026 发布 · 5.8 MB<br/><br/>指南 · 急性肾损伤<br/><br/>文件名: 急性肾损伤-KDIGO-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性肾损伤-KDIGO-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d29" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 29 / 44</div>
+<h3 class="modal-title">急性胰腺炎 · 指南</h3>
+<p class="modal-body">IAP-2025 · 2025 发布 · 1.5 MB<br/><br/>指南 · 急性胰腺炎<br/><br/>文件名: 急性胰腺炎-IAP-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/急性胰腺炎-IAP-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d30" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 30 / 44</div>
+<h3 class="modal-title">慢阻肺急性加重 (COPD) · 指南</h3>
+<p class="modal-body">GOLD-2026 · 2026 发布 · 19.1 MB<br/><br/>指南 · 慢性阻塞性肺病<br/><br/>文件名: 慢性阻塞性肺病-GOLD-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/慢性阻塞性肺病-GOLD-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d31" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 31 / 44</div>
+<h3 class="modal-title">泌尿系统感染 · 指南</h3>
+<p class="modal-body">EAU-2025 · 2025 发布 · 1.0 MB<br/><br/>指南 · 泌尿感染<br/><br/>文件名: 泌尿感染-EAU-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/泌尿感染-EAU-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d32" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 32 / 44</div>
+<h3 class="modal-title">晶体液 vs 生理盐水 (SMART) · RCT解读</h3>
+<p class="modal-body">Vanderbilt-2018 · 2018 发布 · 305 KB<br/><br/>RCT解读 · 液体复苏<br/><br/>文件名: 液体复苏-Vanderbilt-2018-RCT解读.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/液体复苏-Vanderbilt-2018-RCT解读.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d33" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 33 / 44</div>
+<h3 class="modal-title">热射病 · 指南</h3>
+<p class="modal-body">SCCM-2025 · 2025 发布 · 1.4 MB<br/><br/>指南 · 热射病<br/><br/>文件名: 热射病-SCCM-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/热射病-SCCM-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d34" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 34 / 44</div>
+<h3 class="modal-title">癫痫 · 指南</h3>
+<p class="modal-body">NICE-2025 · 2025 发布 · 694 KB<br/><br/>指南 · 癫痫<br/><br/>文件名: 癫痫-NICE-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/癫痫-NICE-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d35" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 35 / 44</div>
+<h3 class="modal-title">社区获得性肺炎 (CAP) · 指南</h3>
+<p class="modal-body">ATS-IDSA-2025 · 2025 发布 · 1.8 MB<br/><br/>指南 · 社区获得性肺炎<br/><br/>文件名: 社区获得性肺炎-ATS-IDSA-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/社区获得性肺炎-ATS-IDSA-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d36" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 36 / 44</div>
+<h3 class="modal-title">神经重症机械通气撤机 · 文献综述</h3>
+<p class="modal-body">Bureau-2021 · 2021 发布 · 1.0 MB<br/><br/>文献综述 · 神经重症撤机<br/><br/>文件名: 神经重症撤机-Bureau-2021-文献综述.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/神经重症撤机-Bureau-2021-文献综述.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d37" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 37 / 44</div>
+<h3 class="modal-title">神经重症镇痛镇静 · 专家共识</h3>
+<p class="modal-body">中国专家共识-2023 · 2023 发布 · 4.1 MB<br/><br/>专家共识 · 神经重症镇痛镇静<br/><br/>文件名: 神经重症镇痛镇静-中国专家共识-2023-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/神经重症镇痛镇静-中国专家共识-2023-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d38" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 38 / 44</div>
+<h3 class="modal-title">肺炎 (NICE NG250) · 指南</h3>
+<p class="modal-body">NICE-2026 · 2026 发布 · 311 KB<br/><br/>指南 · 肺炎<br/><br/>文件名: 肺炎-NICE-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/肺炎-NICE-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d39" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 39 / 44</div>
+<h3 class="modal-title">脓毒症 / 严重感染 · 指南</h3>
+<p class="modal-body">SCCM-2024 · 2024 发布 · 987 KB<br/><br/>指南 · 脓毒症<br/><br/>文件名: 脓毒症-SCCM-2024-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/脓毒症-SCCM-2024-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d40" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 40 / 44</div>
+<h3 class="modal-title">脓毒症 / 严重感染 · 指南</h3>
+<p class="modal-body">SSC-2026 · 2026 发布 · 14.1 MB<br/><br/>指南 · 脓毒症<br/><br/>文件名: 脓毒症-SSC-2026-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/脓毒症-SSC-2026-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d41" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 41 / 44</div>
+<h3 class="modal-title">自发性脑出血 (ICH) · 指南</h3>
+<p class="modal-body">AHA-ASA-2022 · 2022 发布 · 3.6 MB<br/><br/>指南 · 自发性脑出血<br/><br/>文件名: 自发性脑出血-AHA-ASA-2022-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/自发性脑出血-AHA-ASA-2022-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d42" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 42 / 44</div>
+<h3 class="modal-title">动脉瘤性蛛网膜下腔出血 (aSAH) · 指南</h3>
+<p class="modal-body">AHA-ASA-2023 · 2023 发布 · 3.4 MB<br/><br/>指南 · 自发性蛛网膜下腔出血<br/><br/>文件名: 自发性蛛网膜下腔出血-AHA-ASA-2023-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/自发性蛛网膜下腔出血-AHA-ASA-2023-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d43" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 43 / 44</div>
+<h3 class="modal-title">血乳酸监测 · 专家共识</h3>
+<p class="modal-body">中国急诊专家共识-2025 · 2025 发布 · 1000 KB<br/><br/>专家共识 · 血乳酸<br/><br/>文件名: 血乳酸-中国急诊专家共识-2025-专家共识.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/血乳酸-中国急诊专家共识-2025-专家共识.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div aria-hidden="true" aria-modal="true" class="modal" id="m-d44" role="dialog">
+<div class="modal-backdrop" data-close=""></div>
+<div class="modal-panel" role="document">
+<div class="modal-eyebrow">DOWNLOAD · 44 / 44</div>
+<h3 class="modal-title">血小板输注 · 指南</h3>
+<p class="modal-body">AABB-ICTMG-2025 · 2025 发布 · 394 KB<br/><br/>指南 · 血小板输注<br/><br/>文件名: 血小板输注-AABB-ICTMG-2025-指南.pdf</p>
+<a class="modal-dl" target="_blank" rel="noopener" download="" href="资源下载/指南文献/血小板输注-AABB-ICTMG-2025-指南.pdf">下载文件 ↓</a>
+<button class="modal-close" data-close="">CLOSE</button>
+</div>
+</div>
+<div class="empty" id="qEmpty">
+<div class="empty-mark"><span class="accent">00</span> / 44</div>
+<p class="empty-text">没找到与 <b id="qKey" style="color:var(--ink);"></b> 相关的资源</p>
+<span class="empty-hint" id="qReset">CLEAR SEARCH</span>
+</div>
+<footer class="footer">
+<div>
+<a href="mailto:Tengzhuguotzg@gmail.com">Tengzhuguotzg@gmail.com</a>
+       · 
+      <a href="https://github.com/tengzhuguotzg-rgb" rel="noopener" target="_blank">GitHub</a>
+</div>
+<div>© 2026 · Teng.ZG · Critical Care Medicine</div>
+</footer>
+
+
+
+<script>
+  (function() {
+    'use strict';
+
+    /* ── 元素 ── */
+    const $  = (s, c=document) => c.querySelector(s);
+    const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
+
+    const cats      = $$('.cat');
+    const cards     = $$('.res');
+    const titles    = $$('.cat-title');
+    const qInput    = $('#q');
+    const qClear    = $('#qClear');
+    const qCount    = $('#qCount');
+    const qEmpty    = $('#qEmpty');
+    const qKey      = $('#qKey');
+    const qReset    = $('#qReset');
+    const totalSpan = qCount.querySelector('b');
+    const slash     = qCount.querySelector('.slash');
+    const dlBtns    = $$('.dl-btn');
+    const modals    = $$('.modal');
+
+    const TOTAL = cards.length;
+    let activeCat = 'all';
+    let activeQ   = '';
+
+    /* ── 分类点击 ── */
+    cats.forEach(btn => {
+      btn.addEventListener('click', () => {
+        cats.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCat = btn.dataset.cat;
+        apply();
+      });
+    });
+
+    /* ── 搜索 ── */
+    function debounce(fn, ms) {
+      let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+    }
+    qInput.addEventListener('input', debounce(() => {
+      activeQ = qInput.value.trim().toLowerCase();
+      qClear.classList.toggle('show', activeQ.length > 0);
+      apply();
+    }, 80));
+
+    qInput.addEventListener('input', () => {
+      // 立即切换叉的可见性, 不等防抖
+      qClear.classList.toggle('show', qInput.value.length > 0);
+    });
+
+    qClear.addEventListener('click', () => {
+      qInput.value = '';
+      activeQ = '';
+      qClear.classList.remove('show');
+      apply();
+      qInput.focus();
+    });
+
+    qReset.addEventListener('click', () => {
+      qInput.value = '';
+      activeQ = '';
+      qClear.classList.remove('show');
+      apply();
+    });
+
+    /* ── 应用过滤 ── */
+    function apply() {
+      let visible = 0;
+
+
+      cards.forEach(card => {
+        const cat = card.dataset.cat;
+        const search = (card.dataset.search || '').toLowerCase();
+        const name = (card.querySelector('.res-name')?.textContent || '').toLowerCase();
+        const okCat = (activeCat === 'all') || (cat === activeCat);
+        const okQ   = !activeQ || search.includes(activeQ) || name.includes(activeQ);
+        const show  = okCat && okQ;
+        card.classList.toggle('filtered', !show);
+        if (show) visible++;
+      });
+
+      // 分类计数: all = 全部可见, 其他 = 该类下可见
+      // 侧栏分类按钮的 count 永远是该分类下"全部"数量, 不随过滤变化
+      // (已在页面加载时由 build 一次性写入)
+
+      // 标题显隐
+      titles.forEach(t => {
+        const k = t.dataset.catH;
+        // 找到第一个匹配此 cat 且可见的 card
+        const any = cards.some(c => c.dataset.cat === k && !c.classList.contains('filtered'));
+        t.classList.toggle('filtered', !any);
+      });
+
+      // 计数
+      if (visible === TOTAL) {
+        qCount.innerHTML = '<b>' + TOTAL + '</b><span class="slash">/</span>' + TOTAL;
+      } else {
+        qCount.innerHTML = '<b>' + visible + '</b><span class="slash">/</span>' + TOTAL;
+      }
+
+      // 空状态
+      qEmpty.classList.toggle('show', visible === 0);
+      if (qKey) qKey.textContent = activeQ;
+    }
+
+    /* ── 模态 ── */
+    function openModal(id) {
+      const m = document.getElementById('m-' + id);
+      if (!m) return;
+      m.setAttribute('aria-hidden', 'false');
+      m.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(m) {
+      m.setAttribute('aria-hidden', 'true');
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    dlBtns.forEach(b => {
+      b.addEventListener('click', e => {
+        // 真的下载按钮 (有 href) 走默认, 否则打开模态
+        if (b.classList.contains('disabled')) return;
+        if (b.tagName === 'A' || b.hasAttribute('href')) return;
+        const id = b.dataset.dl;
+        if (id) openModal(id);
+      });
+    });
+
+    modals.forEach(m => {
+      m.querySelectorAll('[data-close]').forEach(el => {
+        el.addEventListener('click', () => closeModal(m));
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        modals.forEach(m => {
+          if (m.getAttribute('aria-hidden') === 'false') closeModal(m);
+        });
+      }
+    });
+
+    /* ── 初始 ── */
+    apply();
+  })();
+</script></body></html>

@@ -165,7 +165,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 55px 36px 30px;
+    padding: 75px 36px 30px;
     background: rgba(244,241,234,0.88);
     overflow: hidden;
   }
@@ -502,7 +502,7 @@
     .slide-sidebar { display: none; }
     .slide-container { gap: 0; padding: 4px 8px; }
     .slide-viewport { width: 100%; height: auto; aspect-ratio: 16 / 9; }
-    .slide { padding: 18px 20px; }
+    .slide { padding: 70px 18px 18px; }
     .slide-title { font-size: 22px; }
     .slide p, .slide li { font-size: 14px; }
     .center-title { font-size: 30px; }
@@ -584,8 +584,8 @@
     /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
     .slide-container { justify-content: flex-start; padding: 0 8px; }
     .progress-wrap { display: none; }
-    .slide-viewport-wrap { justify-content: flex-start; padding-top: 4px; align-items: flex-start; }
-    .slide-img-hint { display: block; }
+    .slide-viewport-wrap { justify-content: flex-start; padding-top: 4px; align-items: flex-start; flex-direction: column; }
+    .slide-img-hint { display: block; width: 100%; text-align: center; padding: 2px 0; flex-shrink: 0; }
     .slide-viewport { margin-top: 0; }
 
     /* 点击图片可放大提示 */
@@ -1027,6 +1027,7 @@
     </div>
     </div>
     <div class="slide-img-hint">点击图片可放大</div>
+    </div>
   </div>
 
   <div class="bottom-bar">

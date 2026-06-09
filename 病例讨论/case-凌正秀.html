@@ -1044,7 +1044,7 @@
     var pd = document.getElementById('pageDisplay');
     if (pd) pd.textContent = i + 1;
     updateSidebar();
-    updateThumbStrip();
+    if (typeof updateThumbStrip === 'function') updateThumbStrip();
   }
 
   pb.addEventListener('click', function(){ go(C - 1); });
@@ -1238,26 +1238,39 @@
   function buildThumbStrip() {
     var strip = document.getElementById('thumbStrip');
     if (!strip) return;
+    // 只在手机模式（sidebar隐藏）下构建
+    var sb = document.querySelector('.slide-sidebar');
+    if (sb && sb.offsetParent !== null) { strip.style.display = 'none'; return; }
+    strip.style.display = '';
     strip.innerHTML = '';
-    if (document.querySelector('.slide-sidebar') && document.querySelector('.slide-sidebar').offsetParent !== null) return;
-    S.forEach(function(s, i) {
-      var wrap = document.createElement('div');
-      wrap.className = 'ts-thumb' + (i === 0 ? ' active' : '');
-      strip.appendChild(wrap);
-      // 克隆幻灯片内容
-      var inner = document.createElement('div');
-      inner.style.cssText = 'position:absolute;top:0;left:0;width:1000px;height:562.5px;transform-origin:0 0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:30px 36px;background:rgba(244,241,234,0.88);overflow:hidden;';
-      inner.innerHTML = s.innerHTML;
-      var tscale = (wrap.offsetWidth || 160) / 1000;
-      inner.style.transform = 'scale(' + tscale + ')';
-      wrap.appendChild(inner);
-      // 页码标
-      var num = document.createElement('div');
-      num.className = 'ts-num';
-      num.textContent = i + 1;
-      wrap.appendChild(num);
-      wrap.addEventListener('click', function(){ go(i); });
-    });
+    var S = document.querySelectorAll('#viewport .slide');
+    if (!S || !S.length) return;
+    for (var si = 0; si < S.length; si++) {
+        var s = S[si];
+        var wrap = document.createElement('div');
+        wrap.className = 'ts-thumb' + (si === 0 ? ' active' : '');
+        strip.appendChild(wrap);
+        var inner = document.createElement('div');
+        inner.style.cssText = 'position:absolute;top:0;left:0;width:1000px;height:562.5px;transform-origin:0 0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:30px 36px;background:rgba(244,241,234,0.88);overflow:hidden;';
+        inner.innerHTML = s.innerHTML;
+        var tscale = (wrap.offsetWidth || 160) / 1000;
+        inner.style.transform = 'scale(' + tscale + ')';
+        wrap.appendChild(inner);
+        var num = document.createElement('div');
+        num.className = 'ts-num';
+        num.textContent = si + 1;
+        wrap.appendChild(num);
+        wrap.addEventListener('click', (function(idx){ return function(){ go(idx); }; })(si));
+    }
+}
+
+  function updateThumbStrip() {
+    var wraps = document.querySelectorAll('.ts-thumb');
+    if (!wraps || !wraps.length) return;
+    for (var ui = 0; ui < wraps.length; ui++) {
+        wraps[ui].classList.toggle('active', ui === C);
+        if (ui === C) wraps[ui].scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
   }}
 
   function updateThumbStrip() {
@@ -1267,7 +1280,7 @@
       if (i === C) w.scrollIntoView({ block: 'nearest', inline: 'center' });
     });
   }
-  buildThumbStrip();
+  try { buildThumbStrip(); } catch(e) { console.error("thumbStrip error:", e); }
 
     /* 构建缩略图（迷你幻灯片） */
   var thumbScale = 0;

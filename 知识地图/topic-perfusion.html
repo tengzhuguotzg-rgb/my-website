@@ -47,6 +47,7 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
   a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   a:hover { color: var(--accent); }
 
@@ -84,27 +85,32 @@
     font-family: 'Noto Serif SC', serif;
     letter-spacing: 0.5px;
   }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
   .crumb {
-    display: flex; align-items: center; gap: 6px;
+    display: flex; align-items: center; gap: 8px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;
-    color: var(--text-faint);
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
   }
-  .crumb a { color: var(--ink-2); }
+  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   .crumb a:hover { color: var(--accent); }
   .crumb .sep { opacity: .4; }
-  .ver {
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; color: var(--text-faint);
-    letter-spacing: 1.5px; font-weight: 500;
-    margin-left: 14px;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
   }
-  .ver::before { content: '— '; color: var(--accent); }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
 
   /* ── Hero ── */
   .hero {
     max-width: 1100px; margin: 0 auto;
-    padding: 64px 32px 16px;
+    padding: 72px 32px 24px;
   }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
@@ -112,14 +118,13 @@
     font-size: 12px; font-weight: 500;
     color: var(--accent);
     letter-spacing: 2.5px; text-transform: uppercase;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(40px, 6vw, 72px);
-    font-weight: 600; line-height: 1;
-    margin: 0 0 14px; letter-spacing: -2px;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 16px; letter-spacing: -2.5px;
     color: var(--ink);
   }
   h1 .dot { color: var(--accent); }
@@ -137,9 +142,9 @@
   }
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
-    font-size: 15.5px; color: var(--text-dim);
-    line-height: 1.75; max-width: 720px;
-    margin: 18px 0 0;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 640px;
+    margin: 0 0 0;
   }
 
   /* ── Section ── */
@@ -482,15 +487,13 @@
         <div class="brand-sub">重症医学科 · 遂宁市中医院</div>
       </div>
     </div>
-    <div class="topbar-right" style="display:flex;align-items:center;">
+    <div class="topbar-right">
       <nav class="crumb">
-        <a href="index.html">首页</a>
-        <span class="sep">/</span>
-        <a href="knowledge-map.html">知识地图</a>
+        <a href="../knowledge-map.html">知识地图</a>
         <span class="sep">/</span>
         <span style="color:var(--ink);">灌注评估</span>
       </nav>
-      <span class="ver">v0.1</span>
+      <a href="../index.html" class="home-pill">← 返回首页</a>
     </div>
   </header>
 

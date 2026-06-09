@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CRRT 教学手册 · Teng.ZG</title>
+<meta name="description" content="CRRT 教学长文 · 原理、模式、启动时机、容量管理、抗凝、置换液、剂量。系统整理自 6 份 CRRT 课件。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --line-strong: rgba(31, 61, 47, 0.22);
+    --code-bg: rgba(31, 61, 47, 0.05);
+    --ref-bg: rgba(231, 111, 44, 0.06);
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body {
+    font-family: 'Noto Serif SC', 'Space Grotesk', serif;
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+
+  /* ── Top bar ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub  {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: .4; }
+
+  /* ── 文档容器 ── */
+  .doc {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  @media (max-width: 560px) {
+    .doc { padding: 0 18px; }
+    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+    .brand-sub { display: none; }
+    .crumb { display: none; }
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 72px 0 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 16px; letter-spacing: -2.5px;
+    color: var(--ink);
+  }
+  h1 .dot { color: var(--accent); }
+  .lede {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 640px;
+    margin: 0 0 0;
+  }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 1px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+  .meta-row b { color: var(--ink); font-weight: 600; }
+
+  /* ── 目录 ── */
+  .toc {
+    margin: 48px 0 64px;
+    padding: 28px 32px;
+    background: rgba(244, 241, 234, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+  .toc-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 16px;
+    font-weight: 500;
+  }
+  .toc ol {
+    list-style: none; padding: 0; margin: 0;
+    counter-reset: toc;
+  }
+  .toc li {
+    counter-increment: toc;
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 15px;
+  }
+  .toc li:last-child { border-bottom: none; }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px;
+    color: var(--accent); font-weight: 500;
+    min-width: 28px;
+  }
+  .toc a {
+    color: var(--text);
+    flex: 1;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc .toc-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; color: var(--text-faint);
+    letter-spacing: 1.5px;
+  }
+
+  /* ── 章节 ── */
+  section.chapter {
+    margin: 80px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  section.chapter:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .chapter-head {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 8px;
+  }
+  .chapter-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 2.5px;
+    color: var(--accent); font-weight: 500;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    min-width: 64px;
+  }
+  .chapter-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 3.5vw, 36px);
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  .chapter-subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 32px 80px;
+  }
+  @media (max-width: 560px) {
+    .chapter-subtitle { margin-left: 0; }
+  }
+
+  /* ── 标题层级 ── */
+  h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink);
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.3px;
+  }
+  h2::before {
+    content: '§';
+    color: var(--accent);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    margin-right: 10px;
+  }
+  h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--ink-2);
+    margin: 32px 0 12px;
+  }
+  h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent);
+    margin: 24px 0 10px;
+    font-weight: 500;
+  }
+
+  /* ── 段落与文本 ── */
+  p { margin: 0 0 16px; }
+  p strong, li strong { color: var(--ink); font-weight: 700; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--accent); }
+
+  /* ── 强调块 ── */
+  .callout {
+    margin: 24px 0;
+    padding: 18px 22px;
+    background: var(--ref-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── 引用(文献) ── */
+  .cite {
+    font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    word-break: break-all;
+  }
+
+  /* ── 表格 ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 28px;
+    font-size: 14.5px;
+    font-family: 'Noto Serif SC', serif;
+    background: rgba(244, 241, 234, 0.5);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  thead {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 500;
+    padding: 12px 14px;
+    text-align: left;
+  }
+  td {
+    padding: 12px 14px;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  tbody tr:nth-child(even) { background: rgba(31, 61, 47, 0.025); }
+
+  /* ── 关键术语 ── */
+  .term {
+    font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+    font-size: 14px;
+    color: var(--ink-2);
+    background: var(--code-bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* ── 分隔点 ── */
+  .divider {
+    text-align: center;
+    margin: 56px 0 0;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--accent);
+    letter-spacing: 8px;
+    font-size: 14px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    max-width: 920px; margin: 64px auto 0;
+    padding: 32px 32px 56px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .footer a { color: var(--ink-2); }
+  .footer a:hover { color: var(--accent); }
+
+  /* ── 响应式 ── */
+  @media (max-width: 560px) {
+    .toc { padding: 22px 18px; }
+    .hero { padding: 48px 0 16px; }
+    .footer { padding-left: 18px; padding-right: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">重症医学科 · 教案管理</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="crumb" aria-label="面包屑">
+        <a href="../courses.html">教案管理</a>
+        <span class="sep">/</span>
+        <span>CRRT 教学手册</span>
+      </nav>
+      <a href="../index.html" class="home-pill">← 返回首页</a>
+    </div>
+  </header>
+
+  <article class="doc">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="eyebrow">CRRT · Lesson Notes</div>
+      <h1>CRRT 教学<span class="dot">.</span>手册</h1>
+      <p class="lede">连续性肾脏替代治疗（Continuous Renal Replacement Therapy）系统梳理：从原理、模式、启动时机，到容量管理、抗凝、置换液、剂量。本笔记整合 6 份 CRRT 教学讲义，统一术语与结构，适合 ICU 进修、规培带教与日常查阅。</p>
+      <div class="meta-row">
+        <span><b>主题</b>&nbsp;&nbsp;CRRT 全流程</span>
+        <span><b>来源</b>&nbsp;&nbsp;6 份内部课件整合</span>
+        <span><b>读者</b>&nbsp;&nbsp;ICU 医师 / 进修生</span>
+        <span><b>版次</b>&nbsp;&nbsp;v1.0</span>
+      </div>
+    </section>
+
+    <!-- 目录 -->
+    <nav class="toc">
+      <h2 class="toc-title">— 目录 / Contents</h2>
+      <ol>
+        <li><a href="#ch1"><span>概念、历史与基本原理</span><span class="toc-num">01</span></a></li>
+        <li><a href="#ch2"><span>CRRT 模式：CVVH / CVVHD / CVVHDF / SCUF</span><span class="toc-num">02</span></a></li>
+        <li><a href="#ch3"><span>适应证、禁忌证与典型临床场景</span><span class="toc-num">03</span></a></li>
+        <li><a href="#ch4"><span>启动时机：流程评估与循证证据</span><span class="toc-num">04</span></a></li>
+        <li><a href="#ch5"><span>撤机时机</span><span class="toc-num">05</span></a></li>
+        <li><a href="#ch6"><span>血管通路与导管选择</span><span class="toc-num">06</span></a></li>
+        <li><a href="#ch7"><span>CRRT 剂量：定义、循证与处方</span><span class="toc-num">07</span></a></li>
+        <li><a href="#ch8"><span>容量评估与管理</span><span class="toc-num">08</span></a></li>
+        <li><a href="#ch9"><span>抗凝：枸橼酸 / 肝素 / 低分子肝素 / 无抗凝</span><span class="toc-num">09</span></a></li>
+        <li><a href="#ch10"><span>置换液：配方、选择与计算</span><span class="toc-num">10</span></a></li>
+        <li><a href="#ch11"><span>处方与初始设定、治疗模式选择</span><span class="toc-num">11</span></a></li>
+        <li><a href="#ch12"><span>自测题</span><span class="toc-num">12</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- ─────────────────────────────── 01 ─────────────────────────────── -->
+    <section class="chapter" id="ch1">
+      <div class="chapter-head">
+        <span class="chapter-num">— 01 / 12</span>
+        <h2 class="chapter-title">概念、历史与基本原理</h2>
+      </div>
+      <p class="chapter-subtitle">从血液净化到 CRRT</p>
+
+      <h2>概念</h2>
+      <p><strong>血液净化</strong>（Blood Purification）指利用净化装置通过体外循环方式清除体内代谢产物、异常血浆成分，以及蓄积在体内的药物或毒物，以纠正机体内环境紊乱的一组治疗技术。常用方式包括：血液透析（HD）、血液滤过（HF）、血液灌流（HP）、血浆置换（PE）和免疫吸附。其中 HD、HF 及 HDF 为常用的肾脏替代技术。</p>
+
+      <p><strong>CRRT</strong>（Continuous Renal Replacement Therapy，连续性肾脏替代疗法）定义：采用每日持续 24h 或接近 24h 的长时间、连续体外血液净化疗法以替代受损的肾功能，适用于治疗急性肾损伤（AKI）且因血流动力学不稳而不适于使用传统间歇性血液透析（IHD），或 IHD 无法纠正其体液或代谢问题的重症病人。</p>
+
+      <div class="callout">
+        <p class="callout-title">CRRT 经典定义（Bellomo R, Ronco C, Mehta R. 1996）</p>
+        <p><em>"Any extracorporeal blood purification therapy intended to substitute for impaired renal function over an extended period of time and applied for or aimed at being applied for 24 hours/day."</em></p>
+        <p>旨在代替长时间受损的肾功能而进行的任何体外血液净化治疗，这种治疗应该 24 小时/日持续进行。</p>
+      </div>
+
+      <h2>发展史关键节点</h2>
+      <table>
+        <thead><tr><th>年份</th><th>事件</th></tr></thead>
+        <tbody>
+          <tr><td>1943</td><td>荷兰学者 Kolff 最早将血液透析用于临床，开创肾脏替代治疗新纪元</td></tr>
+          <tr><td>1977</td><td>德国学者 Kramer 等首次应用 CAVH（连续性动-静脉血液滤过）抢救急性肾衰竭患者</td></tr>
+          <tr><td>1979</td><td>Bamauer-Bischoff 等应用 CVVH 治疗心脏术后伴血流动力学不稳定的重症肾衰竭</td></tr>
+          <tr><td>1995</td><td>首届国际 CRRT 会议在美国圣地亚哥举行，确立 CRRT 定义</td></tr>
+          <tr><td>1998</td><td>Tetta 提出 CPFA（连续性血浆滤过吸附）可清除炎症介质、细胞因子、活化补体和内毒素</td></tr>
+          <tr><td>2004</td><td>Ronco 等将 CRRT 治疗扩展为多器官支持疗法（MOST）</td></tr>
+        </tbody>
+      </table>
+
+      <h2>基本原理：三种溶质转运机制</h2>
+
+      <h3>弥散（Diffusion）</h3>
+      <p>溶质依靠<strong>浓度梯度</strong>从高浓度一侧向低浓度一侧移动的过程。驱动力：浓度梯度。用于清除<strong>小分子溶质或电解质（&lt;2000d）</strong>，如尿素氮、肌酐、钾。</p>
+      <p><em>HD 模式特点：对小分子物质（分子量 &lt; 500，尿素氮、肌酐、钾、钠等）清除率高，对炎症介质等中分子物质清除能力差。</em></p>
+
+      <h3>对流（Convection）</h3>
+      <p>在跨膜压的作用下，液体从压力高的一侧通过半透膜向压力低的一侧移动，液体中的溶质也随之通过半透膜。驱动力：压力梯度（跨膜压）。用于清除<strong>中-大分子量</strong>的溶质。</p>
+      <p><em>HF 模式特点：有利于中分子物质（分子量 500-5000）的清除，溶质随溶剂一起通过半透膜移动（"溶剂拖移"）。</em></p>
+
+      <h3>吸附（Adsorption）</h3>
+      <p>利用滤器膜的吸附能力，清除炎症介质、细胞因子等。主要见于血液灌流（HP）。</p>
+
+      <h3>超滤（Ultrafiltration）</h3>
+      <p>特殊形式的对流：利用膜两侧的压力差使液体流动（清除溶液），不能通过膜的溶质会产生胶体渗透压。是 SCUF 和 CVVH/CVVHD/CVVHDF 中控制容量的核心机制。</p>
+
+      <h3>分子量清除范围</h3>
+      <table>
+        <thead><tr><th>方式</th><th>H₂O</th><th>电解质</th><th>Glu</th><th>Cr / BUN</th><th>胆红素</th><th>化学物质</th><th>炎症介质</th><th>细胞因子</th><th>内毒素</th><th>白蛋白</th><th>免疫复合物</th></tr></thead>
+        <tbody>
+          <tr><td>血液透析（HD）</td><td>√</td><td>√</td><td>√</td><td>√</td><td></td><td>√</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>血液滤过（HF）</td><td>√</td><td>√</td><td>√</td><td>√</td><td></td><td></td><td>√</td><td></td><td></td><td></td><td></td></tr>
+          <tr><td>血液吸附（HP）</td><td></td><td></td><td></td><td></td><td>√</td><td>√</td><td>√</td><td>√</td><td>√</td><td></td><td></td></tr>
+          <tr><td>血浆置换（PE）</td><td>√</td><td>√</td><td>√</td><td>√</td><td>√</td><td>√</td><td>√</td><td>√</td><td></td><td>√</td><td>√</td></tr>
+        </tbody>
+      </table>
+
+      <h2>基本血液净化技术与原理</h2>
+      <ul>
+        <li><strong>HD（血液透析）：</strong>主要通过弥散清除溶质</li>
+        <li><strong>HF（血液滤过）：</strong>主要通过对流清除溶质</li>
+        <li><strong>HDF（血液滤过透析）：</strong>在对流基础上增加弥散，既清中分子又弥补 HF 对小分子清除效率低的不足</li>
+        <li><strong>HFD（高通量血液透析）：</strong>在 HD 基础上通过增加透析膜孔径和超滤量提高清除效力；风险：致热源入血，白蛋白、可溶性维生素、微量元素丢失</li>
+        <li><strong>PE（血浆置换）：</strong>分离血浆弃去，补充等量冰冻血浆；用于肝功能衰竭、药物中毒、血小板减少性紫癜、格林-巴利综合征、重症肌无力等</li>
+        <li><strong>HP（血液灌流）：</strong>主要通过吸附清除，常用于中毒抢救</li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────── 02 ─────────────────────────────── -->
+    <section class="chapter" id="ch2">
+      <div class="chapter-head">
+        <span class="chapter-num">— 02 / 12</span>
+        <h2 class="chapter-title">CRRT 模式：CVVH / CVVHD / CVVHDF / SCUF</h2>
+      </div>
+      <p class="chapter-subtitle">四种主流模式的工作原理与选择</p>
+
+      <h2>血液净化关键——血液滤过器</h2>
+      <p>不管何种血液净化模式，使用半通透性的<strong>中空纤维透析器</strong>进行超滤和溶质清除是标准的治疗方案。血液滤过器是主要用于替代肾脏排泄功能的血液过滤装置，也被称为"人造肾脏"。</p>
+
+      <h2>四种模式总览</h2>
+      <table>
+        <thead><tr><th>模式</th><th>机制</th><th>置换液</th><th>透析液</th><th>典型参数</th><th>主要用途</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="term">SCUF</span><br>缓慢连续性超滤</td>
+            <td>超滤</td>
+            <td>—</td>
+            <td>—</td>
+            <td>血流量 100-180 ml/min</td>
+            <td>脱水：严重水潴留、难治性心衰、急/慢性肺水肿</td>
+          </tr>
+          <tr>
+            <td><span class="term">CVVH</span><br>连续性静脉-静脉血液滤过</td>
+            <td>对流</td>
+            <td>√</td>
+            <td>—</td>
+            <td>血流量 100-250 ml/min；置换液 600-4800 ml/h；超滤率 0-6000 ml/h</td>
+            <td>清除中、小分子毒素，急/慢性肾衰，器官支持</td>
+          </tr>
+          <tr>
+            <td><span class="term">CVVHD</span><br>连续性静脉-静脉血液透析</td>
+            <td>弥散（+超滤）</td>
+            <td>—</td>
+            <td>√</td>
+            <td>血流量 150-250 ml/min；透析液 15-50 ml/min；超滤率 0-6000 ml/h</td>
+            <td>清除小分子毒素，纠正尿毒症、电解质/酸碱紊乱</td>
+          </tr>
+          <tr>
+            <td><span class="term">CVVHDF</span><br>连续性静脉-静脉血液透析滤过</td>
+            <td>对流 + 弥散</td>
+            <td>√</td>
+            <td>√</td>
+            <td>血流量 150-250 ml/min；置换液+透析液 4800 ml/h；超滤率 0-6000 ml/h</td>
+            <td>兼清中、小分子，综合最优</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>CVVH 前后稀释比较</h2>
+      <table>
+        <thead><tr><th>维度</th><th>前稀释</th><th>后稀释</th></tr></thead>
+        <tbody>
+          <tr><td>滤器内血液</td><td>稀释</td><td>无稀释</td></tr>
+          <tr><td>滤过分数</td><td>低</td><td>高</td></tr>
+          <tr><td>滤器内凝血</td><td>不易发生</td><td>易发生</td></tr>
+          <tr><td>滤过效率</td><td>低</td><td>高</td></tr>
+          <tr><td>置换液需求</td><td>高</td><td>低</td></tr>
+        </tbody>
+      </table>
+      <p><em>前稀释：进入滤器的血液被置换液稀释，可降低凝血危险；更加合适于 ↑HCT 且 ↓血流速的患者，可避免并发症（↑TMP 和滤器凝血）；前稀释量越大，小分子清除越低。</em></p>
+      <p><em>后稀释：对毒素清除更有效；滤过率应 &lt; 有效血流量 20%；实现高交换需较高血流量和好的血管通路；增加滤器凝血机会。</em></p>
+      <p class="callout"><span class="callout-title">实操建议</span>前+后稀释联合可取得较好效果，兼顾凝血风险与清除效率。</p>
+
+      <h2>影响治疗效果的主要技术因素</h2>
+      <ul>
+        <li>血流量与置换液的比率 &lt; 20% 可能导致滤器凝血</li>
+        <li>血流量与超滤率的比率</li>
+        <li>选择的置换方式（前/后稀释）</li>
+        <li>使用的抗凝剂是否合适</li>
+        <li>滤器面积的大小</li>
+        <li>血流量 &lt; 150 ml/min 会影响清除率</li>
+      </ul>
+
+      <h2>SCUF 详解</h2>
+      <p>无需透析液和置换液。SCUF 治疗时，废液袋中的液体量与超滤量相等。适用于严重水潴留，如药物治疗效果不佳的各种原因所致的严重水肿、难治性心力衰竭、急/慢性肺水肿。也可以使用 CVVH 治疗模式 600 ml/h 来减少置换液的使用量。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 03 ─────────────────────────────── -->
+    <section class="chapter" id="ch3">
+      <div class="chapter-head">
+        <span class="chapter-num">— 03 / 12</span>
+        <h2 class="chapter-title">适应证、禁忌证与典型临床场景</h2>
+      </div>
+      <p class="chapter-subtitle">CRRT 临床指征全景</p>
+
+      <h2>典型适应证</h2>
+      <p>具有下列情況之一，且合并血流动力学不稳或颅内压升高者：</p>
+      <ol>
+        <li>对药物治疗无充分反应（medically refractory）之<strong>高钾血症</strong>（hyperkalemia）</li>
+        <li>对药物治疗无充分反应之<strong>严重代谢性酸中毒</strong>（metabolic acidosis）</li>
+        <li>对利尿剂无充分反应之<strong>体液容积过载</strong>（volume overload）</li>
+        <li><strong>少尿</strong>（oliguria）或无尿</li>
+        <li><strong>尿毒症并发症</strong>（uremic complications）</li>
+        <li>某些药物<strong>中毒</strong>（some drug intoxications）</li>
+      </ol>
+
+      <h2>可能适应证</h2>
+      <p>发生 AKI 之重症病人，如存在下列问题之一者，可考虑施行 CRRT：</p>
+      <ol>
+        <li>血流动力学不稳定（hemodynamic instability）</li>
+        <li>液体失衡（因心脏衰竭或多器官衰竭）</li>
+        <li>分解代谢状态加重（如横纹肌溶解）</li>
+        <li>脓毒症</li>
+        <li>颅内压升高</li>
+        <li>电解质失衡（electrolyte imbalance）</li>
+        <li>其他可因施行 CRRT 获益的临床情况</li>
+      </ol>
+
+      <h2>病理生理指征（广义）</h2>
+      <ul>
+        <li><strong>液体过负荷</strong>——保持水平衡</li>
+        <li><strong>代谢产物堆积</strong>——清除代谢产物</li>
+        <li><strong>严重酸碱失衡</strong>——恢复酸碱平衡</li>
+        <li><strong>严重电解质紊乱</strong>——恢复电解质平衡</li>
+        <li><strong>容量治疗受限</strong>——营养支持、补充胶体</li>
+        <li><strong>严重组织器官水肿</strong></li>
+        <li><strong>炎症反应</strong>——清除或吸附炎症介质</li>
+        <li><strong>中毒</strong>——清除毒物或药物</li>
+        <li><strong>恶性高热</strong>——降温</li>
+      </ul>
+
+      <h2>非肾脏适应证</h2>
+      <table>
+        <thead><tr><th>分类</th><th>具体场景</th></tr></thead>
+        <tbody>
+          <tr><td>液体与循环</td><td>急性肺水肿、慢性心力衰竭、严重液体超负荷、严重水电解质紊乱</td></tr>
+          <tr><td>中毒</td><td>药物中毒、其他毒物中毒、严重乳酸酸中毒</td></tr>
+          <tr><td>组织破坏</td><td>横纹肌溶解综合征、肝性脑病</td></tr>
+          <tr><td>自身免疫/神经肌肉</td><td>重症肌无力、急性溶血</td></tr>
+          <tr><td>重症炎症</td><td>重症急性胰腺炎、ARDS、多器官功能衰竭、脓毒血症休克、SIRS、严重烧伤、热射病</td></tr>
+        </tbody>
+      </table>
+
+      <h2>需要紧急行 CRRT 的指征</h2>
+      <ul>
+        <li>难以纠正的心力衰竭、肺水肿</li>
+        <li>难以纠正的严重高钾血症</li>
+        <li>难以纠正的代谢性酸中毒</li>
+        <li>尿毒症一系列并发症：脑病、心包炎等</li>
+        <li>锂剂、有毒醇类中毒（尤其是乙二醇或甲醇）、二甲双胍或水杨酸盐的重度中毒</li>
+      </ul>
+      <p class="callout"><span class="callout-title">文献支撑</span><span class="cite">N Engl J Med. 2022;386(10):964-975</span></p>
+
+      <h2>绝对适应症 vs 相对适应症</h2>
+      <h3>绝对适应症（可归因于尿毒症或致命紊乱）</h3>
+      <ul>
+        <li>可归因于尿毒症的症状或体征（心包炎、脑病）</li>
+        <li>难治性肺水肿（利尿抵抗）</li>
+        <li>难治性高钾血症（钾 &gt; 6.5 mmol/L，或迅速升高，或伴心律失常）</li>
+        <li>难治性代谢性酸中毒（pH &lt; 7.2）</li>
+      </ul>
+      <h3>相对适应症</h3>
+      <ul>
+        <li>存在或预期受 AKI/液体超负荷影响的相关器官功能障碍</li>
+        <li>需要大量液体给药（即营养支持、药物或血液制品）</li>
+        <li>溶质负荷（即肿瘤溶解综合征、横纹肌溶解症、血管内溶血）</li>
+        <li>临床参数的不利演变/严重的 AKI 或少尿，肾脏快速恢复的可能性低</li>
+      </ul>
+
+      <h2>禁忌症</h2>
+      <ul>
+        <li>病人或其代理人拒绝</li>
+        <li>无法建立血管通路</li>
+        <li>缺乏 CRRT 设备或无经过培训的人员</li>
+      </ul>
+      <p><em>注：临床判断上不适合施行 CRRT 或施行 CRRT 可能无益甚至有害可视为相对禁忌症。极重症或末期疾病视为相对禁忌症。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 04 ─────────────────────────────── -->
+    <section class="chapter" id="ch4">
+      <div class="chapter-head">
+        <span class="chapter-num">— 04 / 12</span>
+        <h2 class="chapter-title">启动时机：流程评估与循证证据</h2>
+      </div>
+      <p class="chapter-subtitle">RRT 时机仍是 ICU 经典争议</p>
+
+      <h2>重症患者实施 RRT 的流程评估</h2>
+      <ol>
+        <li>首先判断有无 RRT 的<strong>绝对指征</strong></li>
+        <li>无绝对指征时，则<strong>评估 AKI</strong></li>
+        <li>当绝对指征和 AKI 都不存在时，需考虑患者是否存在脓毒症休克、重症胰腺炎等"非肾性"指征</li>
+      </ol>
+      <p><em>临床实践中，除患者病情外，何时开始 RRT 还应综合考虑当地医疗资源、治疗习惯、经济等因素。</em></p>
+
+      <h2>AKI 分期（KDIGO）</h2>
+      <table>
+        <thead><tr><th>分期</th><th>SCr</th><th>尿量</th></tr></thead>
+        <tbody>
+          <tr><td>第 1 期</td><td>上升至基础值 1.5-1.9 倍或增加 ≥0.3 mg/dL（≥26.5 μmol/L）</td><td>6-12 h 尿量 &lt;0.5 ml/kg/h</td></tr>
+          <tr><td>第 2 期</td><td>上升至基础值 2.0-2.9 倍</td><td>≥12 h 尿量 &lt;0.5 ml/kg/h</td></tr>
+          <tr><td>第 3 期</td><td>上升至基础值 3 倍以上，或 ≥4.0 mg/dL（≥353.6 μmol/L），或开始肾脏替代治疗，或 &lt;18 岁 eGFR &lt;35 ml/min/1.73 m²</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p><em>AKI 定义：48 h 内 SCr 升高 ≥0.3 mg/dL（26.5 μmol/L），或 7 天内 SCr 升至基础值 1.5 倍以上，或 6 h 尿量 &lt;0.5 ml/kg/h。</em></p>
+      <p><em>AKI 是连续性血液净化的首要适应证，但并非所有 AKI 患者都需肾脏替代治疗。应依据 SCr 上升速度、尿量对 AKI 分期，结合 APACHE II 和 SOFA 评分，综合判断是否接受 CRRT。</em></p>
+
+      <h2>启动指征：KDIGO 推荐</h2>
+      <ul>
+        <li>存在危及生命的水电解质、酸碱平衡紊乱时，紧急启动 RRT（未分级）</li>
+        <li>决策启动 RRT 时，应更全面地考虑 RRT 可改善的临床情况和一些生化检查变化趋势，而非仅取决于 BUN 和 Cr 阈值</li>
+      </ul>
+
+      <h2>循证证据：早 vs 晚？</h2>
+
+      <h3>支持早期启动</h3>
+      <p><span class="cite">Crit Care. 2016;20(1):260</span>（607 例队列）：早期 CRRT 组总体累积生存率较高（log-rank P &lt; 0.01）。调整年龄、性别、合并症后，晚期 CRRT 与早期相比死亡率更高（HR 1.35；95%CI 1.06-1.71；P=0.02）。</p>
+      <p><span class="cite">JAMA. 2016;315(20):2190-9</span>（ELAIN 试验）：在 AKI 危重患者中，与延迟 RRT 相比，早期 RRT 显著降低 90 天死亡率（HR 0.66；95%CI 0.45-0.97；P=0.03）。</p>
+
+      <h3>支持延迟启动</h3>
+      <p><span class="cite">N Engl J Med. 2016;375(2):122-133</span>（620 例 RCT）：60 天死亡率早期组 48.5% vs 延迟组 49.7%，无显著差异；延迟策略避免了相当数量患者对 RRT 的需求。</p>
+      <p><span class="cite">N Engl J Med. 2018;379(15):1431-1442</span>（477 例脓毒性休克）：早期策略 12h 组 58% vs 延迟 48h 组 54% 90 天死亡，P=0.38，无显著差异。</p>
+      <p><span class="cite">N Engl J Med. 2020;383(3):240-251</span>（1282 例）：早期组 43.9% vs 标准组 43.7% 90 天死亡（RR 1.00；95%CI 0.93-1.09；P=0.92），无差异。</p>
+      <p><span class="cite">Lancet. 2020</span>（meta 分析）：28 天无 RRT 天数、60/90 天死亡率、住院时间、出院时 RRT 依赖性均无显著性差异。</p>
+
+      <div class="callout">
+        <p class="callout-title">结论</p>
+        <p>CRRT 启动的时机并不是越早越好。早期启动并不能改善重症患者的总体预后。在存在难以纠正的高钾血症、代谢性酸中毒、肺水肿和尿毒症并发症时可立即进行 CRRT。若患者尿量恢复 &gt;500 ml/天、无容量负荷和相关并发症、K&lt;6 mmol/L、HCO₃&gt;15 mmol/L 时可尝试暂停 CRRT。</p>
+      </div>
+
+      <h2>辅助决策工具</h2>
+      <h3>呋塞米应激试验（FST）</h3>
+      <p>呋塞米 1.0 或 1.5 mg/kg，观察 2 小时尿量：</p>
+      <ul>
+        <li>2 h 尿量 &lt; 200 ml（100 ml/h）→ 预测进展至 AKI KDIGO 3 期：</li>
+        <li><strong>敏感性 87.1%，特异性 84.2%</strong></li>
+      </ul>
+      <p><em>FST 可作为肾脏损伤和功能生物标志物的辅助，与 AKI 严重程度、疾病进展结合判断启动时机。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 05 ─────────────────────────────── -->
+    <section class="chapter" id="ch5">
+      <div class="chapter-head">
+        <span class="chapter-num">— 05 / 12</span>
+        <h2 class="chapter-title">撤机时机</h2>
+      </div>
+      <p class="chapter-subtitle">停 CRRT 一样需要判断</p>
+
+      <h2>综合评估维度</h2>
+      <p>CRRT 治疗的撤机时机需根据以下因素综合考虑：</p>
+      <ul>
+        <li><strong>尿量</strong>（首要条件之一）</li>
+        <li><strong>血容量</strong>稳定性</li>
+        <li><strong>心脏功能</strong></li>
+        <li><strong>炎症状态</strong></li>
+        <li><strong>电解质和酸碱平衡紊乱</strong></li>
+        <li><strong>血流动力学稳定性</strong></li>
+      </ul>
+
+      <h2>停机指征</h2>
+      <ul>
+        <li>确认病人临床状况后，决定将病人换到另一种肾脏替代疗法时</li>
+        <li>病人的临床状况改善且尿量增加，经评估肾功能已恢复到适当水平时</li>
+        <li>经评估继续施行 CRRT 对病人可能无益，甚至有害时</li>
+      </ul>
+
+      <div class="callout">
+        <p class="callout-title">停机后需要继续观察</p>
+        <p>急危重症患者尿量恢复和血容量稳定是停止 CRRT 的首要条件。如果尿量没有恢复、血容量不稳定，停止 CRRT 可能引起心力衰竭、肺水肿、脑水肿等严重事件，后续营养液、抗生素等输注也会面临困难。</p>
+        <p>如果尿量恢复、血容量稳定，停止 CRRT 后又有新的液体补充、炎症因子清除等需求，必要时可以<strong>再次开始 CRRT</strong>。</p>
+      </div>
+
+      <h2>尝试停机条件</h2>
+      <ul>
+        <li>尿量 &gt; 500 ml/天</li>
+        <li>无容量负荷和相关并发症</li>
+        <li>K &lt; 6 mmol/L</li>
+        <li>HCO₃ &gt; 15 mmol/L</li>
+      </ul>
+      <p class="cite">Intensive Care Med. 2022;48(10):1368-1381</p>
+    </section>
+
+    <!-- ─────────────────────────────── 06 ─────────────────────────────── -->
+    <section class="chapter" id="ch6">
+      <div class="chapter-head">
+        <span class="chapter-num">— 06 / 12</span>
+        <h2 class="chapter-title">血管通路与导管选择</h2>
+      </div>
+      <p class="chapter-subtitle">优先选大口径、右侧颈内</p>
+
+      <h2>血管通路优先顺序</h2>
+      <ol>
+        <li><strong>第一顺位：</strong>右侧颈内静脉</li>
+        <li><strong>第二顺位：</strong>股静脉</li>
+        <li><strong>第三顺位：</strong>左侧颈内静脉</li>
+        <li><strong>第四顺位：</strong>锁骨下静脉</li>
+      </ol>
+
+      <h2>导管规格</h2>
+      <p>导管外径一般选择 <strong>11-14 Fr</strong>，优先选择<strong>大口径</strong>导管。为使导管尖端处于大静脉管腔中：</p>
+      <table>
+        <thead><tr><th>部位</th><th>导管长度</th></tr></thead>
+        <tbody>
+          <tr><td>右侧颈内静脉</td><td>12-15 cm</td></tr>
+          <tr><td>左侧颈内静脉</td><td>15-20 cm</td></tr>
+          <tr><td>股静脉</td><td>19-24 cm</td></tr>
+        </tbody>
+      </table>
+      <p>建议优先选择较长导管。</p>
+
+      <h2>颈内静脉 vs 股静脉</h2>
+      <table>
+        <thead><tr><th>部位</th><th>优点</th><th>缺点</th></tr></thead>
+        <tbody>
+          <tr><td>颈内静脉</td><td>操作简单、并发症少</td><td>不适合气管切开病人</td></tr>
+          <tr><td>股静脉</td><td>操作简单、血流量充分、并发症少、适用于气管切开病人</td><td>感染风险相对较高</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ─────────────────────────────── 07 ─────────────────────────────── -->
+    <section class="chapter" id="ch7">
+      <div class="chapter-head">
+        <span class="chapter-num">— 07 / 12</span>
+        <h2 class="chapter-title">CRRT 剂量：定义、循证与处方</h2>
+      </div>
+      <p class="chapter-subtitle">"够量即可"，过度追求高剂量无益</p>
+
+      <h2>剂量定义</h2>
+      <p>CRRT "剂量"定义：在 CRRT 连续 24 h 内，单位时间单位体重的<strong>液体交换和清除量</strong>（所有 CRRT 处方或废液收集的液体总量），单位 <span class="term">ml/kg/h</span>。</p>
+      <p>区分"处方剂量"和"达成剂量"，<strong>达成剂量更符合临床实际</strong>。</p>
+
+      <h2>Ronco 经典研究</h2>
+      <p class="cite">Ronco, Bellomo, et al. Lancet 2000;355:26-30</p>
+      <table>
+        <thead><tr><th>组别</th><th>剂量（ml/kg/h）</th><th>存活率</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>20</td><td>41%</td></tr>
+          <tr><td>2</td><td>35</td><td>57%</td></tr>
+          <tr><td>3</td><td>45</td><td>58%</td></tr>
+        </tbody>
+      </table>
+      <p>Ronco 提出 CRRT 剂量应分为：</p>
+      <ul>
+        <li><strong>"替代肾脏治疗的剂量"</strong>：20-35 ml/(kg·h)，用于纠正氮质血症及水、电解质、酸碱失衡</li>
+        <li><strong>"治疗脓毒症的剂量"</strong>：&gt; 45 ml/(kg·h)，用于清除脓毒症和多器官功能障碍综合征中炎症介质</li>
+      </ul>
+      <p>Ronco 亚组分析显示：对脓毒症患者，45 ml/kg/h 比 35 ml/kg/h 更具生存优势（58% vs 18% 亚组存活率，P=0.001）。</p>
+
+      <h2>当前共识</h2>
+      <ul>
+        <li>建议 AKI 达成废液剂量<strong>至少 20-25 ml/kg/h (1A)</strong>，常需给更高剂量（未分级）</li>
+        <li>成人 &lt; 2 L/h 的超滤量可能显示不出疗效（C 级），前稀释模式需要增加 15% 以上</li>
+        <li>35 ml/kg/h 可能是最低有效剂量 (1C)，该剂量也保证了足够的达成剂量</li>
+        <li>治疗脓毒症 AKI，35 ml/kg/h 是最低剂量 (1C)</li>
+        <li>需保证剂量达成率达到 85% (E 级)</li>
+        <li>建议每天评估达成剂量并持续改进保证达成率 (1A)</li>
+        <li>对 AKI 和多脏衰，剂量相当于后稀释超滤 ≥25 ml/kg/h，前稀释模式需酌情增加 (1A)</li>
+        <li>小分子溶质清除率至少为 20 ml/kg/h（实际达到剂量）</li>
+        <li>高剂量 CRRT 不是普遍推荐，只有能安全管理的团队方可考虑</li>
+      </ul>
+      <div class="callout">
+        <p class="callout-title">KDIGO 立场</p>
+        <p>KDIGO 指南不推荐 AKI 患者的 CRRT 常规采用高治疗剂量，而推荐<strong>常规剂量 20-25 mL/(kg·h)</strong>。</p>
+      </div>
+
+      <h2>影响剂量的因素</h2>
+      <ul>
+        <li><strong>模式</strong>（CVVH / CVVHD / CVVHDF / SCUF）</li>
+        <li><strong>目标溶质类型</strong>（小分子-中分子-大分子）</li>
+        <li><strong>流速</strong>：血液、废液、置换液和/或透析液</li>
+        <li><strong>稀释模式</strong>：后稀释 / 前稀释 / 后+前稀释</li>
+        <li><strong>输入通路性能</strong>（导管性能表现影响真实血流速度）</li>
+        <li><strong>真实治疗时间</strong>（实际开机小时数）</li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────── 08 ─────────────────────────────── -->
+    <section class="chapter" id="ch8">
+      <div class="chapter-head">
+        <span class="chapter-num">— 08 / 12</span>
+        <h2 class="chapter-title">容量评估与管理</h2>
+      </div>
+      <p class="chapter-subtitle">5B 原则 · 三级管理 · 容量反应性</p>
+
+      <h2>容量过负荷（FO）</h2>
+      <p>定义：过度液体复苏容易导致容量过负荷，<strong>累积的体液量或体重增加超过基线体重 10%</strong>。</p>
+      <p class="cite">J Crit Care 2015;30(4):860-867</p>
+      <p>危害：</p>
+      <ul>
+        <li>显著增加 AKI 患者院内死亡率</li>
+        <li>降低患者肾功能恢复率，延长机械辅助通气时间</li>
+      </ul>
+      <p><em>目前尚无确切的 AKI 患者最佳补液方案。</em></p>
+
+      <h2>CRRT 中水和溶质清除机制</h2>
+      <p>CRRT 治疗中水和溶质的清除通过超滤（UF）和透析液对流、弥散共同完成，CVVHDF 模式下 R = 透析液 + UF。</p>
+
+      <h2>5B 原则</h2>
+      <p>容量平衡监测的 5B 原则，是 CRRT 容量管理的核心评估框架 <span class="cite">Ronco C, et al. Semin Nephrol 2012;32(1):129-141</span>。从五个维度综合评估，缺一不可：</p>
+      <table>
+        <thead><tr><th>缩写</th><th>中文</th><th>临床意义 / 监测方法</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Blood volume</td>
+            <td>血容量</td>
+            <td>CRRT 净超滤的直接对象；通过 PICCO、超声、ITBVI 等监测循环血量变化</td>
+          </tr>
+          <tr>
+            <td>Balance of fluids</td>
+            <td>液体的平衡</td>
+            <td>24 h 出入量 = 入量（输液、营养、药物）- 出量（尿量、引流量、不显性失水）；CRRT 净超滤计入出量</td>
+          </tr>
+          <tr>
+            <td>Blood pressure</td>
+            <td>血压</td>
+            <td>MAP、CVP、PAWP 等血流动力学参数；既是容量评估指标，也是 CRRT 脱水耐受性的安全边界</td>
+          </tr>
+          <tr>
+            <td>Bioimpedance vector analysis (BIVA)</td>
+            <td>生物电矢量阻抗向量分析</td>
+            <td>无创评估身体水含量与分布（细胞内外液）；趋势变化比绝对值更有意义</td>
+          </tr>
+          <tr>
+            <td>Brain natriuretic peptide (BNP)</td>
+            <td>B 型脑钠肽</td>
+            <td>反映心室容量负荷；BNP/NT-proBNP 升高提示容量过负荷，需结合心功能综合判断</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <p class="callout-title">5B 临床应用要点</p>
+        <p>5B 原则的精髓是<strong>多维度交叉验证</strong>：任何一个 B 单独使用都可能误导决策。例如：BNP 升高≠一定是容量过负荷（心衰本身也会升高）；血压正常≠容量充足（血管张力药物掩盖了真实容量状态）。临床上需结合<strong>至少 2-3 个 B</strong>的动态变化趋势做判断。</p>
+      </div>
+
+      <h2>容量状态评估</h2>
+      <h3>传统指标</h3>
+      <ul>
+        <li>患者病史、临床症状、生命体征</li>
+        <li>出入量评估：24 h 入量、饮水量、尿量、引流量、大便量、不显性失水量</li>
+        <li>血流动力学监测指标：CVP、MAP、PAWP、胸部 X 摄片</li>
+      </ul>
+      <p>传统指标主要反映 AKI 患者<strong>静态心脏充盈压</strong>，不能准确反应容量反应性。<strong>动态评估</strong>传统容量指标变化趋势，对 CRRT 容量管理可能更有价值。</p>
+
+      <h3>早期目标导向治疗（EGDT）</h3>
+      <p>对感染性休克患者，实施 6 h 内早期目标导向液体复苏：</p>
+      <ul>
+        <li>CVP 维持 8-12 mmHg</li>
+        <li>MAP ≥ 65 mmHg</li>
+        <li>中心静脉血氧饱和度 ≥ 70%</li>
+        <li>红细胞压积 ≥ 30%</li>
+      </ul>
+      <p>可显著改善患者 28 天和 60 天预后 <span class="cite">Rivers E, et al. N Engl J Med 2001;345(19):1368-1377</span></p>
+
+      <h3>无创动态指标</h3>
+      <ul>
+        <li>被动抬腿试验（PLR）</li>
+        <li>呼气末阻塞（EEO）试验</li>
+        <li>心脏多普勒超声测量 IVC / SVC 直径变异度</li>
+        <li>每搏变异度（SVV）、脉压变异（PPV）</li>
+        <li>大动脉峰流速变异（△Vpeak）</li>
+        <li>主动脉血流速度时间积分变异（△VTI）</li>
+      </ul>
+      <p><strong>被动抬腿试验</strong>通过将机体自身容量重新分布，使回心血量和 CO 增加，产生容量负荷试验效果，是预测患者容量反应性最简单、最可靠的动态指标 <span class="cite">Ann Transl Med 2020;8(12):786</span>。判断标准：PLR 期间脉搏轮廓分析所得 ΔCO ≥ 11% 定义为容量反应阳性。</p>
+
+      <h3>PICCO 监测</h3>
+      <p>实时监测，可用于 AKI 患者容量反应性和容量状态的评估，有助于 CRRT 容量管理 <span class="cite">Aslan N, et al. Ital J Pediatr 2020;46(1):47</span>。</p>
+
+      <h3>Frank-Starling 曲线</h3>
+      <p>Frank-Starling 曲线斜率<strong>取决于心室的收缩功能</strong>。一个固定的前负荷水平并不能预测容量反应性。动态测试包括：</p>
+      <ul>
+        <li>自发的（自主呼吸变异）</li>
+        <li>机械通气诱发的（呼气末阻塞）</li>
+        <li>外源性的（被动抬腿、容量负荷试验）</li>
+      </ul>
+
+      <h2>三级容量管理</h2>
+      <p class="cite">Murugan R, et al. Blood Purif 2016;42(3):266-278</p>
+
+      <h3>一级水平</h3>
+      <p>最基本的容量管理水平：基于临床判断、超滤总量均分到小时。</p>
+
+      <h3>二级水平</h3>
+      <p>较高级的容量管理水平：避免血流动力学不稳定；根据即时的补液量调整 CRRT 脱水速度，保证每小时都达到容量平衡；将 24 h 目标超滤总量均分到每小时，确定每小时 CRRT 净超滤率。</p>
+
+      <h3>三级水平</h3>
+      <p>根据精确的血流动力学指标，随时调整 CRRT 超滤速度，达到指定的血流动力学稳定，维持有效脏器灌注和循环血容量，改善全身组织氧合。适用于：</p>
+      <ul>
+        <li>严重血流动力学不稳定患者</li>
+        <li>器官移植术后</li>
+        <li>心脏术后合并心力衰竭</li>
+        <li>严重脑水肿、肺水肿</li>
+        <li>儿科重症 AKI 患者</li>
+      </ul>
+
+      <h3>三级比较</h3>
+      <table>
+        <thead><tr><th>维度</th><th>一级</th><th>二级</th><th>三级</th></tr></thead>
+        <tbody>
+          <tr><td>操作简便性</td><td>+++</td><td>++</td><td>+</td></tr>
+          <tr><td>达到液体平衡</td><td>+</td><td>+++</td><td>+++</td></tr>
+          <tr><td>调节容量变化</td><td>+</td><td>++</td><td>+++</td></tr>
+          <tr><td>CBP 支持功能</td><td>+</td><td>++</td><td>+++</td></tr>
+          <tr><td>护理工作量</td><td>+</td><td>++</td><td>+++</td></tr>
+          <tr><td>液体平衡出错机会</td><td>+++</td><td>++</td><td>+</td></tr>
+          <tr><td>血流动力学不稳定</td><td>++</td><td>++</td><td>+</td></tr>
+          <tr><td>液体过量负荷</td><td>+++</td><td>+</td><td>+</td></tr>
+        </tbody>
+      </table>
+
+      <h2>液体复苏</h2>
+      <p>早期使用去甲肾上腺素可显著减少补液量 <span class="cite">Li et al. Critical Care 2020;24:488</span>：早期组 6 h 内静脉补液量显著低于晚期组（mean difference = -0.50；95%CI -0.68 to -0.32；P&lt;0.001），并可降低患者死亡率。</p>
+
+      <h2>严重血流动力学不稳定患者</h2>
+      <p>可采用间断 SCUF <span class="cite">Semin Nephrol 2012;32(1):129-41</span>。</p>
+
+      <h2>关注血浆滤过分数</h2>
+      <p>降低堵管风险 <span class="cite">Chawla LS, et al. Nat Rev Nephrol 2017;13(4):241-257</span>。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 09 ─────────────────────────────── -->
+    <section class="chapter" id="ch9">
+      <div class="chapter-head">
+        <span class="chapter-num">— 09 / 12</span>
+        <h2 class="chapter-title">抗凝：枸橼酸 / 肝素 / 低分子肝素 / 无抗凝</h2>
+      </div>
+      <p class="chapter-subtitle">枸橼酸是无出血风险患者的首选</p>
+
+      <h2>肝素抗凝</h2>
+      <ul>
+        <li>一般首剂 50 U/kg，维持剂量 500-2000 U/h 持续静脉输注</li>
+        <li>滤器寿命差异大，文献报道 14-56 h</li>
+      </ul>
+      <p>主要问题：</p>
+      <ul>
+        <li>出血</li>
+        <li>血小板减少（HIT）</li>
+        <li>个体差异大，可能导致蓄积</li>
+      </ul>
+
+      <h2>低分子肝素</h2>
+      <p>抗凝作用 - Ⅹa 因子。</p>
+      <ul>
+        <li>相比 UFH 减少出血风险，一般 60-80 U/kg，4-6 h 追加 30-40 U/kg</li>
+        <li>特殊监测方法 - 抗凝血酶 Ⅲ</li>
+        <li>肾脏代谢、半衰期较长：肾衰患者 - 蓄积作用</li>
+        <li>分子量小，受 CRRT 清除</li>
+        <li>不同厂家差异大，难以有统一推荐剂量</li>
+        <li><strong>不推荐常规用于 CRRT 抗凝</strong></li>
+      </ul>
+
+      <h2>枸橼酸钠抗凝（本节重点）</h2>
+
+      <div class="callout">
+        <p class="callout-title">临床场景 · 开篇思考</p>
+        <p>某患者，男性，60 岁，糖尿病规律透析状态、肝硬化门脉高压。因<strong>上消化道大出血</strong>转入 ICU，经积极输血、止血治疗后生命体征平稳转出。后因普通透析不耐受，为求 CRRT 再次转入 ICU。</p>
+        <p>作为主管医生开具 CRRT 处方，<strong>选择什么抗凝？</strong></p>
+        <p><em>提示：该患者合并肝硬化 + 出血史，枸橼酸钠抗凝是首选（详见下文）。</em></p>
+      </div>
+
+      <h3>原理</h3>
+      <p>枸橼酸能与血液中的钙、镁等离子发生螯合反应，形成稳定的枸橼酸钙/枸橼酸镁。钙离子的两个正电荷之间的距离与枸橼酸两个羧基之间的距离刚好匹配，可牢固结合成螯合物而不容易解离。镁离子也可被螯合，但要弱得多。</p>
+      <p>钙离子作为第 IV 凝血因子，参与了外源性、内源性和共同凝血通路。将枸橼酸加入血液，可迅速螯合钙离子，使血液中钙离子（游离钙）降低，从而同时阻断内源性和外源性凝血途径。</p>
+      <p>CRRT 时，血液刚被引出体外就加入枸橼酸，使<strong>体外循环中的钙离子迅速下降至 0.4 mmol/L 以下</strong>，从而保持体外循环不发生凝血。</p>
+
+      <h3>体外抗凝、体内正常</h3>
+      <ul>
+        <li><strong>体外：</strong>枸橼酸钠和钙离子反应，生成枸橼酸螯合钙，降低体外离子钙浓度</li>
+        <li><strong>体内：</strong>① 枸橼酸螯合钙释放钙离子、钙离子浓度恢复正常，不影响凝血功能；② 枸橼酸根参与三羧酸循环，最终代谢为二氧化碳并产生 ATP</li>
+      </ul>
+      <p>在体外循环的静脉端补充足量钙离子，使血液回到体内前钙离子水平升至 <strong>1.0-1.2 mmol/L</strong> 的生理水平。</p>
+      <div class="callout">
+        <p class="callout-title">核心要点</p>
+        <p>枸橼酸钠抗凝的核心是<strong>"体外抗凝、体内正常"</strong>——既保证体外循环不凝血，又维持体内正常凝血功能。</p>
+      </div>
+
+      <h3>枸橼酸钙的代谢命运</h3>
+      <p>枸橼酸根和钙离子结合形成的枸橼酸钙属于小分子物质，水溶性好，易通过滤器半透膜被清除。因治疗模式和治疗剂量的不同，约 <strong>50-60%</strong> 的枸橼酸钙会通过半透膜进入废液；未被清除的会随血液进入人体内。部分未被螯合的钙离子也会部分进入废液，导致回流体内的总钙减少，如不补充会发生严重低钙血症。</p>
+
+      <h3>适应症</h3>
+      <ul>
+        <li><strong>高出血风险患者</strong>（KDIGO 推荐）</li>
+        <li><strong>无出血风险的患者也首选枸橼酸抗凝</strong>——出血风险低，调整迅速</li>
+      </ul>
+      <p>但 <strong>贵!!且不进医保</strong>。</p>
+
+      <h3>监测：体内钙 vs 体外钙</h3>
+      <p>监测需同时关注两点：</p>
+      <ul>
+        <li>为保证抗凝的有效性，监测<strong>滤器钙离子浓度</strong>（体外/膜后）</li>
+        <li>为保证治疗的安全性，监测<strong>体内钙离子水平</strong>（体内/膜前）在生理范围，避免高/低钙血症</li>
+      </ul>
+      <table>
+        <thead><tr><th>监测部位</th><th>目标范围</th><th>意义</th></tr></thead>
+        <tbody>
+          <tr><td>滤后游离钙（体外/膜后）</td><td>0.25-0.45 mmol/L</td><td>抗凝效果（管路不易堵塞）</td></tr>
+          <tr><td>体内游离钙</td><td>1.0-1.2 mmol/L</td><td>安全性（避免高/低钙血症）</td></tr>
+        </tbody>
+      </table>
+      <p>通过血气分析监测游离钙水平。</p>
+
+      <h3>枸橼酸钠初始速度</h3>
+      <p>无钙置换液时，枸橼酸速度由血流速度决定——为血液流速的 <strong>1.2-1.5 倍</strong>：</p>
+      <ul>
+        <li>血液流速 150 ml/min，枸橼酸泵速度 180-225 ml/h</li>
+        <li>公式：<span class="term">4% 枸橼酸钠溶液 (ml/h) = 血流速 (ml/min) × 1.2</span></li>
+      </ul>
+      <p>如使用含钙置换液且前稀释，需增加枸橼酸量以螯合前置换液中的钙离子：</p>
+      <p><span class="term">4% 枸橼酸钠溶液 (ml/h) = [血泵值 (ml/min) + 前置换液 (ml/h) ÷ 60] × 1.2</span></p>
+
+      <h3>枸橼酸钠输注速度调整方案</h3>
+      <p>根据所测得的滤器钙离子浓度调整：</p>
+      <table>
+        <thead><tr><th>滤器钙离子 (mmol/L)</th><th>调整</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; 0.20</td><td>下调枸橼酸速度 10-20 ml/h</td></tr>
+          <tr><td>0.20-0.40</td><td>维持</td></tr>
+          <tr><td>0.40-0.50</td><td>上调 10 ml/h，30 min 后复测</td></tr>
+          <tr><td>&gt; 0.50</td><td>上调 20 ml/h，30 min 后复测</td></tr>
+        </tbody>
+      </table>
+      <p><em>早期充分抗凝很重要，一旦形成血栓，凝血级联放大反应很快。建议每次调整起步 10 ml/h。Mil Med Res. 2023;10(1):23</em></p>
+
+      <h3>外周补钙调整</h3>
+      <p>10% 葡萄糖酸钙输注，根据体内游离钙水平调整：维持体内游离钙 1.0-1.2 mmol/L。</p>
+
+      <h3>碳酸氢钠的关联</h3>
+      <p>枸橼酸根经肝脏代谢后转化为碳酸氢根，大量枸橼酸输注可导致代谢性碱中毒。处理：减少额外碳酸氢盐输注量，或在无额外碳酸氢盐输注时增加置换液或透析液的流速。</p>
+
+      <h3>禁忌症</h3>
+      <ul>
+        <li>对枸橼酸钠抗凝剂过敏的患者</li>
+        <li>合并<strong>严重肝功能障碍</strong>（TB &gt; 正常值 2 倍）</li>
+        <li><strong>低氧血症</strong>（PaO₂ &lt; 60 mmHg）和/或<strong>组织灌注不足</strong>（大剂量血管活性药物使用血压仍 &lt; 90/60 mmHg）</li>
+        <li><strong>代谢性碱中毒</strong></li>
+        <li><strong>高乳酸血症</strong>（Lac &gt; 4 mmol/L）</li>
+        <li><strong>高钠血症</strong></li>
+      </ul>
+
+      <h3>并发症及处理</h3>
+      <h4>代谢性碱中毒</h4>
+      <p>最常见。处理：减少额外碳酸氢盐输注量，或在无额外碳酸氢盐输注时增加置换液或透析液的流速。</p>
+      <h4>代谢性酸中毒（枸橼酸蓄积）</h4>
+      <p>枸橼酸蓄积的预警指标：</p>
+      <ul>
+        <li>总 Ca / iCa &gt; 2.25，且呈上升趋势</li>
+        <li>离子低钙血症逐渐加重</li>
+        <li>钙的补充量逐渐增加</li>
+      </ul>
+      <p>处理措施：</p>
+      <ol>
+        <li>优化血流动力学和组织灌注，纠正缺氧和休克</li>
+        <li>降低枸橼酸输注速率</li>
+        <li>若上述治疗无效，更换抗凝方法</li>
+      </ol>
+      <p><em>大量输血时也可发生枸橼酸负荷。处理参考标准：血清总 Ca / 体内游离 Ca &gt; 2.5 时，速停用枸橼酸，改用无肝素抗凝，调整碳酸氢钠用量。</em></p>
+
+      <h3>实战示例：两个患者的枸橼酸抗凝数据</h3>
+      <p>以下为真实临床场景中两个患者的枸橼酸抗凝数据对比，展示"碱中毒 vs 酸中毒"两种极端情况的处理差异：</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>指标</th>
+            <th>患者 1（酸碱平衡）</th>
+            <th>患者 2（代谢性碱中毒）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="3"><strong>动脉血气分析</strong></td></tr>
+          <tr><td>pH</td><td>7.40</td><td>7.51</td></tr>
+          <tr><td>BE</td><td>-4 mmol/L</td><td>+16 mmol/L</td></tr>
+          <tr><td>动脉 Ca²⁺</td><td>0.9 mmol/L</td><td>1.1 mmol/L</td></tr>
+          <tr><td colspan="3"><strong>静脉血气</strong></td></tr>
+          <tr><td>静脉 Ca²⁺</td><td>0.2 mmol/L</td><td>0.2 mmol/L</td></tr>
+          <tr><td colspan="3"><strong>流速参数</strong></td></tr>
+          <tr><td>血流速</td><td>150 ml/min</td><td>150 ml/min</td></tr>
+          <tr><td>枸橼酸流速</td><td>180 ml/h</td><td>200 ml/h</td></tr>
+          <tr><td>10% 葡萄糖酸钙流速</td><td>16 ml/h</td><td>14 ml/h</td></tr>
+        </tbody>
+      </table>
+      <p><strong>解读：</strong></p>
+      <ul>
+        <li>患者 1 酸碱接近平衡，枸橼酸流速 180 ml/h、钙补充 16 ml/h 即可维持稳态</li>
+        <li>患者 2 出现明显代谢性碱中毒（BE +16），需减少枸橼酸流速并加大置换液/透析液流速；若碱中毒持续，应考虑更换抗凝方式</li>
+        <li>两个患者的静脉 Ca²⁺ 均为 0.2 mmol/L（目标 &lt; 0.4 mmol/L），说明体外抗凝充分</li>
+      </ul>
+
+      <h2>无肝素抗凝的指征</h2>
+      <ul>
+        <li>PT-INR ≥ 2.5</li>
+        <li>APTT ≥ 60 s</li>
+        <li>血小板计数 ≤ 50×10³/μL</li>
+        <li>活动性出血</li>
+        <li>术后 24 h 内</li>
+      </ul>
+      <p class="cite">注：术后 24 h 是较保守阈值，部分中心按 48-72 h 把握。</p>
+
+      <h2>管路预充</h2>
+      <p>确定所有管路均已排气，且无小气泡。使用生理盐水加肝素预充（一般 3000 ml + 1.875 万 U 普通肝素）。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 10 ─────────────────────────────── -->
+    <section class="chapter" id="ch10">
+      <div class="chapter-head">
+        <span class="chapter-num">— 10 / 12</span>
+        <h2 class="chapter-title">置换液：配方、选择与计算</h2>
+      </div>
+      <p class="chapter-subtitle">重症首选碳酸氢盐配方</p>
+
+      <h2>基本概念</h2>
+      <p>置换液：滤过液中溶质浓度几乎与血浆相等，需补充与细胞外液相似的液体，称置换液。其作用：</p>
+      <ul>
+        <li>作为清除废弃物质的载体，将体内代谢产物、毒物加以清除</li>
+        <li>补充体内缺乏的物质（如碳酸氢盐等），以维持患者内环境稳定</li>
+      </ul>
+
+      <h2>置换液经过滤器的溶质去除</h2>
+      <p>除溶质特性外，溶质去除效果还取决于膜上的浓度梯度和透析液速率，速率的增加与溶质清除率的提高有关。</p>
+
+      <h2>置换液的组成原则</h2>
+      <p>根据人体细胞外液电解质成分，再加上缓冲液进行配制，使其所含电解质与血浆电解质基本一致。需关注：</p>
+      <ol>
+        <li>成分种类</li>
+        <li>成分浓度</li>
+        <li>pH 值</li>
+        <li>渗透压</li>
+      </ol>
+
+      <h2>基本成分</h2>
+      <ul>
+        <li><strong>水</strong></li>
+        <li><strong>电解质</strong>：Na、K、Ca、Mg</li>
+        <li><strong>葡萄糖</strong></li>
+        <li><strong>缓冲液</strong>：碳酸氢盐 / 乳酸盐 / 枸橼酸 / 醋酸盐</li>
+      </ul>
+      <p>推荐采用<strong>商品化置换液</strong>作为治疗的首选；血液透析滤过机也可在线生产（online 置换液）；手工配制为备选。</p>
+
+      <h2>四种缓冲液对比</h2>
+
+      <h3>醋酸盐置换液</h3>
+      <p>主要在肝脏和肌肉组织中转化为碳酸氢根离子。</p>
+      <ul>
+        <li>优点：稳定、可储存，利于商品化生产</li>
+        <li>缺点：增加 CRRT 过程中低血压、心排指数降低等心血管事件发生率</li>
+        <li><strong>目前已不推荐使用</strong></li>
+      </ul>
+
+      <h3>乳酸盐置换液</h3>
+      <p>乳酸根离子主要在肝脏转化为碳酸氢根离子。</p>
+      <ul>
+        <li>优点：稳定、可储存；与碳酸氢盐在尿毒症控制、血流动力学稳定性、血乳酸浓度、酸碱平衡等方面无显著差异</li>
+        <li>缺点：乳酸酸中毒和机体代谢乳酸能力下降（如肝功能衰竭）时，使用增加高乳酸血症几率，增加死亡率</li>
+        <li><strong>仅适用于肝功能正常患者，现已较少应用</strong></li>
+      </ul>
+      <p><em>正常肝脏代谢乳酸能力为 100 mmol/h，高流量血液滤过时仍可能导致高乳酸血症，干扰乳酸监测对患者组织灌注的评估（Ⅲ级证据）。</em></p>
+
+      <h3>碳酸氢盐置换液（首选）</h3>
+      <ul>
+        <li>优点：碳酸氢盐是体内最主要的缓冲剂，最符合生理状态，是<strong>最理想的置换液</strong>；心血管事件发生率较低（Ⅰ级证据）</li>
+        <li>缺点：不稳定，易与钙、镁离子形成结晶，不利于商品化大规模生产；需临时配制</li>
+        <li><strong>重症患者 CRRT 的置换液首选碳酸氢盐配方（B 级）</strong></li>
+      </ul>
+      <p><em>重症患者常伴肝功能不全或组织缺氧而存在高乳酸血症（&gt; 5 mmol/L），宜选用碳酸氢盐配方。</em></p>
+
+      <h3>枸橼酸盐置换液</h3>
+      <p>枸橼酸根离子在体内参与三羧酸循环并转化为 3 个碳酸氢根离子，降低局部钙离子，抑制凝血酶原转化，具有抗凝作用。</p>
+      <ul>
+        <li>可作为置换液用于<strong>高出血风险患者</strong>的 CRRT 治疗（Ⅳ级证据）</li>
+        <li>可减少枸橼酸抗凝过程中繁琐的操作步骤</li>
+        <li>一般采用<strong>前稀释方式</strong>，在滤器前直接泵入血液</li>
+      </ul>
+      <p>优点：体外循环抗凝效果确切，无肝素的全身抗凝作用，减少全身出血风险，延长滤器寿命。</p>
+      <p>缺点：可引起低钙血症、高钠血症、酸碱紊乱，严重休克及肝衰竭患者慎用（枸橼酸代谢降低）。</p>
+
+      <h2>置换液标准（配方设计原则）</h2>
+      <ul>
+        <li>血浆浓度正常的 Na、Cl、糖应接近生理浓度</li>
+        <li>血浆浓度低或不断消耗的物质（如碳酸氢根、钙、镁）应高于生理浓度</li>
+        <li>血浆浓度高或机体不断产生的物质（钾），置换液应低于生理浓度</li>
+      </ul>
+      <p>根据血电解质变化，及时更改配方，维持患者血液中的水分、电解质、酸碱及游离溶质的平衡。</p>
+
+      <h2>手工配方参考</h2>
+      <table>
+        <thead><tr><th>组分</th><th>剂量</th></tr></thead>
+        <tbody>
+          <tr><td>0.9% NaCl</td><td>3000 ml</td></tr>
+          <tr><td>H₂O</td><td>750 ml</td></tr>
+          <tr><td>5% NaHCO₃</td><td>180 ml</td></tr>
+          <tr><td>25% MgSO₄</td><td>2 ml</td></tr>
+          <tr><td>10% KCl</td><td>11 ml</td></tr>
+          <tr><td>50% GS</td><td>20 ml</td></tr>
+        </tbody>
+      </table>
+      <p>计算后离子浓度对比（示例）：</p>
+      <table>
+        <thead><tr><th>物质</th><th>血浆</th><th>自配方</th></tr></thead>
+        <tbody>
+          <tr><td>Na⁺ (mmol/L)</td><td>135-145</td><td>143.61</td></tr>
+          <tr><td>HCO₃⁻ (mmol/L)</td><td>22-27</td><td>27.03</td></tr>
+          <tr><td>K⁺ (mmol/L)</td><td>3.5-4.5</td><td>3.72</td></tr>
+          <tr><td>Mg²⁺ (mmol/L)</td><td>0.75-1.25</td><td>0.51</td></tr>
+          <tr><td>渗透压 (mmol/L)</td><td>280-310</td><td>308</td></tr>
+        </tbody>
+      </table>
+
+      <h2>常用配制计算</h2>
+
+      <h3>Na 离子</h3>
+      <ul>
+        <li>0.9% NS 100 ml 含 NaCl 0.9 g；NaCl 分子量 58.5</li>
+        <li>0.9% NS 100 ml 含 Na⁺ = 0.9 × 1000 / 58.5 = <strong>15.4 mmol</strong></li>
+        <li>5% NaHCO₃ 250 ml 含 NaHCO₃ 12.5 g；NaHCO₃ 分子量 84</li>
+        <li>5% NaHCO₃ 250 ml 含 NaHCO₃ = 12.5 × 1000 / 84 = <strong>148.8 mmol</strong></li>
+        <li>目标：Na⁺ 135-145 mmol/L</li>
+      </ul>
+
+      <h3>K 离子</h3>
+      <ul>
+        <li>10% KCl 10 ml 含 KCl 1 g；KCl 分子量 74.5</li>
+        <li>10% KCl 1 ml 含 K⁺ = 0.1 × 1000 / 74.5 = <strong>1.34 mmol</strong></li>
+        <li>每加入 10% KCl 1 ml，K⁺ 浓度增加 1.34 / 总液体量</li>
+        <li>目标：K⁺ 0-6 mmol/L</li>
+      </ul>
+
+      <h3>Mg 离子</h3>
+      <ul>
+        <li>25% MgSO₄ 10 ml 含 MgSO₄ 2.5 g；MgSO₄ 分子量 120</li>
+        <li>25% MgSO₄ 1 ml 含 Mg²⁺ = 0.25 × 1000 / 120 = <strong>2.1 mmol</strong></li>
+        <li>每加入 25% MgSO₄ 1 ml，Mg²⁺ 浓度增加 2.1 / 总液体量</li>
+        <li>目标：Mg²⁺ 0.5-0.75 mmol/L</li>
+      </ul>
+
+      <h3>Ca 离子（氯化钙）</h3>
+      <ul>
+        <li>5% CaCl₂ 1 ml 含 CaCl₂ 0.05 g；CaCl₂ 分子量 111</li>
+        <li>5% CaCl₂ 1 ml 含 Ca²⁺ = 0.05 × 1000 / 111 = <strong>0.45 mmol</strong></li>
+        <li>每加入 5% CaCl₂ 1 ml，Ca²⁺ 浓度增加 0.45 / 总液体量</li>
+      </ul>
+
+      <h3>Ca 离子（葡萄糖酸钙）</h3>
+      <ul>
+        <li>10% 葡萄糖酸钙 1 ml 含葡萄糖酸钙 0.5 g；分子量 430</li>
+        <li>10% 葡萄糖酸钙 1 ml 含 Ca²⁺ = 0.5 × 1000 / 430 = <strong>1.16 mmol</strong></li>
+        <li>每加入 10% 葡萄糖酸钙 1 ml，Ca²⁺ 浓度增加 1.16 / 总液体量</li>
+      </ul>
+
+      <h3>葡萄糖</h3>
+      <ul>
+        <li>50% GS 1 ml 含 GS 0.5 g；GS 分子量 180</li>
+        <li>50% GS 1 ml 含 GLU = 0.5 × 1000 / 180 = <strong>2.78 mmol</strong></li>
+        <li>每加入 50% GS 1 ml，GLU 浓度增加 2.78 / 总液体量</li>
+        <li>目标：GLU 5-12 mmol/L</li>
+      </ul>
+
+      <h2>血钠调整</h2>
+      <h3>长时间低钠血症</h3>
+      <ul>
+        <li>血钠 &gt; 125 mmol/L：可选标准钠浓度</li>
+        <li>血钠 &lt; 125 mmol/L：不宜选标准钠浓度，应设定<strong>高 10-15 mmol/L</strong>，经若干次治疗平稳纠正</li>
+        <li>每日血钠上升速度不宜超过 10-15 mmol/L</li>
+      </ul>
+      <h3>高钠血症</h3>
+      <ul>
+        <li>置换液钠浓度低于 3-4 mmol/L，可能增加低血压、脑水肿的危险</li>
+        <li>应设定<strong>低 2 mmol/L</strong>左右的置换液</li>
+      </ul>
+
+      <h2>血糖控制</h2>
+      <p>脓毒症、糖尿病患者使用无糖置换液有低血糖危险；过于严格控制血糖（4.5-6.5 mmol/L）低血糖发生危险增加，患者病死率也增加。<strong>高于正常但低于 10 mmol/L 为佳</strong>。</p>
+
+      <h2>小结</h2>
+      <ol>
+        <li>置换液一方面是清除废弃物质的载体，另一方面可补充体内缺乏的物质（如碳酸氢盐），维持内环境稳定</li>
+        <li>置换液应根据人体细胞外液电解质成分配制，电解质浓度保持在生理水平，渗透压保持在生理范围</li>
+        <li>除离子及酸碱水平外，还需关注不同置换液（含糖/不含糖、是否含枸橼酸）对热量及凝血功能的影响，根据治疗目标进行个体化调节</li>
+      </ol>
+    </section>
+
+    <!-- ─────────────────────────────── 11 ─────────────────────────────── -->
+    <section class="chapter" id="ch11">
+      <div class="chapter-head">
+        <span class="chapter-num">— 11 / 12</span>
+        <h2 class="chapter-title">处方与初始设定、治疗模式选择</h2>
+      </div>
+      <p class="chapter-subtitle">起步与终止的操作框架</p>
+
+      <h2>治疗模式选择流程</h2>
+      <table>
+        <thead><tr><th>临床场景</th><th>首选初始设定</th></tr></thead>
+        <tbody>
+          <tr><td>ICU 多重器官衰竭</td><td>CVVH 或 CVVHDF 25-30 ml/kg/h</td></tr>
+          <tr><td>脓毒症 AKI 伴高尿素浓度，血流动力学不稳定</td><td>CVVHD，Dialysate 1000-2000 ml/h</td></tr>
+          <tr><td>仅需清除水分</td><td>SCUF</td></tr>
+        </tbody>
+      </table>
+
+      <h2>初始处方建议</h2>
+      <ul>
+        <li>建议应使用适量肝素</li>
+        <li>病人脱水速率依病人体液负荷程度调整</li>
+        <li>若病人初始 Urea &gt; 30 mmol/L（新生儿 25-30 mmol/L），建议在前 24 h 内降低不超过 1/3，以减少不平衡综合征</li>
+      </ul>
+
+      <h2>每日监测</h2>
+      <p>宜每日监控以下数值，频率可依病况调整：</p>
+      <ul>
+        <li>体重</li>
+        <li>Intake / Output</li>
+        <li>酸碱平衡</li>
+        <li>电解质（钠、钾、镁、钙、磷）</li>
+        <li>凝血时间（APTT, ACT）</li>
+        <li>血比容（Hematocrit）</li>
+        <li>血小板</li>
+        <li>血糖</li>
+      </ul>
+
+      <h2>终止治疗</h2>
+      <ul>
+        <li>确认病人临床状况后，决定将病人换到另一种肾脏替代疗法时</li>
+        <li>病人的临床状况改善且尿量增加，经评估肾功能已恢复到适当水平时</li>
+        <li>经评估继续施行 CRRT 对病人可能无益，甚至有害时</li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────── 12 ─────────────────────────────── -->
+    <section class="chapter" id="ch12">
+      <div class="chapter-head">
+        <span class="chapter-num">— 12 / 12</span>
+        <h2 class="chapter-title">自测题</h2>
+      </div>
+      <p class="chapter-subtitle">快速检验掌握程度</p>
+
+      <h3>1. CRRT 是指什么？</h3>
+      <p>A. 容量反应性 &nbsp; B. 血流动力学 &nbsp; C. 一种治疗模式 &nbsp; D. 效果活性药物</p>
+
+      <h3>2. Frank-Starling 曲线斜率取决于以下哪个因素？</h3>
+      <p>A. 心室的收缩功能 &nbsp; B. 心室的舒张功能 &nbsp; C. 心室的充盈压力 &nbsp; D. 心室的心率</p>
+
+      <h3>3. 容量状态评估的目的是什么？</h3>
+      <p>A. 评估患者病史、临床症状、生命体征<br>
+      B. 评估 24 h 入量、饮水量、尿量、引流量、大便量、不显性失水量<br>
+      C. 评估血流动力学监测指标<br>
+      D. 评估 AKI 患者最佳的补液方案</p>
+
+      <h3>4. CRRT 容量管理策略主要包括哪些内容？</h3>
+      <p>A. 液体的平衡 &nbsp; B. 血容量 &nbsp; C. 血压 &nbsp; D. 5B 原则</p>
+
+      <div class="callout">
+        <p class="callout-title">答案提示</p>
+        <p>1. C &nbsp; 2. A &nbsp; 3. ABC（多选） &nbsp; 4. ABCD（全选，5B 原则是容量管理策略的总称）</p>
+      </div>
+    </section>
+
+    <div class="divider">· · ·</div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      Tengzhuguotzg@gmail.com
+      &nbsp;·&nbsp;
+      <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div>© 2026 · Teng.ZG · Critical Care Medicine</div>
+  </footer>
+
+</body>
+</html>

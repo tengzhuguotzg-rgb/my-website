@@ -78,19 +78,26 @@
     letter-spacing: 0.5px;
   }
   .topbar-right { display: flex; align-items: center; gap: 14px; }
-  .ver {
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; color: var(--text-faint);
-    letter-spacing: 1.5px; font-weight: 500;
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
   }
-  .ver::before { content: '— '; color: var(--accent); }
-  .back-link {
+  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: .4; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; color: var(--ink-2);
-    letter-spacing: 1px; text-transform: uppercase;
-    display: flex; align-items: center; gap: 4px;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
   }
-  .back-link:hover { color: var(--accent); }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
 
   /* ── Hero (本页标题) ── */
   .hero {
@@ -107,7 +114,6 @@
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
-    font-family: 'Space Grotesk', sans-serif;
     font-size: clamp(48px, 7vw, 88px);
     font-weight: 600; line-height: 0.95;
     margin: 0 0 16px; letter-spacing: -2.5px;
@@ -291,6 +297,7 @@
     .controls, .block, .footer { padding-left: 18px; padding-right: 18px; }
     .topbar { margin: 12px 12px 0; padding: 12px 16px; }
     .brand-sub { display: none; }
+    .crumb { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: .01ms !important; }
@@ -309,8 +316,10 @@
       </div>
     </div>
     <div class="topbar-right">
-      <a class="back-link" href="index.html">← Back</a>
-      <span class="ver">v0.1</span>
+      <nav class="crumb" aria-label="面包屑">
+        <span>知识地图</span>
+      </nav>
+      <a href="index.html" class="home-pill">← 返回首页</a>
     </div>
   </header>
 
@@ -348,7 +357,7 @@
         <span class="block-meta">4 topics</span>
       </div>
       <div class="topic-grid">
-        <a class="topic" data-tags="circ" data-name="灌注评估" href="topic-perfusion.html" style="text-decoration:none;color:inherit;">
+        <a class="topic" data-tags="circ" data-name="灌注评估" href="知识地图/topic-perfusion.html" style="text-decoration:none;color:inherit;">
           <div class="topic-name">灌注评估</div>
           <div class="topic-desc">毛细血管再充盈 / 斑驳 / 乳酸 / 尿量 / SvO₂</div>
           <span class="topic-tag">— 循环</span>

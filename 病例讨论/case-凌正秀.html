@@ -1271,14 +1271,6 @@
         wraps[ui].classList.toggle('active', ui === C);
         if (ui === C) wraps[ui].scrollIntoView({ block: 'nearest', inline: 'center' });
     }
-  }}
-
-  function updateThumbStrip() {
-    var wraps = document.querySelectorAll('.ts-thumb');
-    wraps.forEach(function(w, i) {
-      w.classList.toggle('active', i === C);
-      if (i === C) w.scrollIntoView({ block: 'nearest', inline: 'center' });
-    });
   }
   try { buildThumbStrip(); } catch(e) { console.error("thumbStrip error:", e); }
 

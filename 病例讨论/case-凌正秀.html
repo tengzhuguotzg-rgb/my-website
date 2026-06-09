@@ -165,7 +165,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 30px 36px;
+    padding: 55px 36px 30px;
     background: rgba(244,241,234,0.88);
     overflow: hidden;
   }
@@ -241,12 +241,13 @@
     flex-shrink: 0;
   }
   .slide-subtitle {
+    position: absolute;
+    top: 30px; left: 36px;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 11px; letter-spacing: 2px;
     color: var(--accent);
-    margin-bottom: 10px;
     text-transform: uppercase;
-    flex-shrink: 0;
+    z-index: 1;
   }
   .slide-title-bar {
     display: inline-block;
@@ -257,11 +258,13 @@
     flex-shrink: 0;
   }
   .meta-label {
+    position: absolute;
+    top: 30px; left: 36px;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 11px; letter-spacing: 1.5px;
     color: var(--accent);
     text-transform: uppercase;
-    flex-shrink: 0;
+    z-index: 1;
   }
   .slide p, .slide li {
     font-family: 'Noto Serif SC', serif;
@@ -400,6 +403,7 @@
   }
 
   .slide-mfs { display: none; }
+.slide-img-hint { display: none; }
 
 /* ═══ Bottom bar（导航 + 全屏按钮） ═══ */
   .bottom-bar {
@@ -578,8 +582,9 @@
     .fs .slide-mfs { display: none; }
 
     /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
-    .slide-container { justify-content: flex-start; }
-    .progress-wrap { padding: 2px 14px 1px; }
+    .slide-container { justify-content: flex-start; padding: 0 8px; }
+    .progress-wrap { display: none; }
+    .slide-viewport-wrap { justify-content: flex-start; padding-top: 4px; }
 
     /* 点击图片可放大提示 */
     .slide-img-hint {

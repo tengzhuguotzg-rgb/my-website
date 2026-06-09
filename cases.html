@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>病例讨论 · Teng.ZG</title>
+<meta name="description" content="18 个真实 ICU 病例 · 按系统分类 · 诊断 · 决策 · 争议 · 个人心得。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --line-strong: rgba(31, 61, 47, 0.20);
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      radial-gradient(900px  600px at 50% 92%, rgba(31, 61, 47, 0.04) 0%, transparent 60%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+
+  /* Topbar —— 与其他页面同款 */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub  {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: .4; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+
+  /* Hero */
+  .hero {
+    max-width: 1100px; margin: 0 auto;
+    padding: 72px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 16px; letter-spacing: -2.5px;
+    color: var(--ink);
+  }
+  h1 .dot { color: var(--accent); }
+  .hero-desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 640px;
+    margin: 0 0 0;
+  }
+
+  /* Section */
+  section.list {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink);
+  }
+  .section-meta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 2px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  /* 病例卡片网格 */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .card-link {
+    display: block;
+    text-decoration: none; color: inherit;
+  }
+  .card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px 26px 24px;
+    transition: all .3s ease;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .35s ease;
+  }
+  .card-link:hover .card {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(31, 61, 47, 0.08);
+  }
+  .card-link:hover .card::before { transform: scaleY(1); }
+
+  .card-tag {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px;
+    color: var(--accent);
+    background: rgba(231, 111, 44, 0.08);
+    border: 1px solid rgba(231, 111, 44, 0.20);
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin: 0 0 10px;
+  }
+  .card .desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px; line-height: 1.7;
+    color: var(--text-dim);
+    margin: 0 0 20px;
+    min-height: 48px;
+  }
+  .card-meta {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .card-meta span { display: inline-flex; align-items: center; gap: 5px; }
+  .card-meta .v { color: var(--ink); font-weight: 500; }
+  .card-arrow {
+    position: absolute;
+    bottom: 26px; right: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 500;
+    color: var(--accent);
+    transition: transform .3s ease;
+  }
+  .card-link:hover .card-arrow { transform: translateX(4px); }
+
+  /* 即将添加占位 */
+  .placeholder {
+    background: rgba(255, 255, 255, 0.30);
+    border: 1px dashed var(--line);
+    border-radius: 18px;
+    padding: 36px 26px;
+    text-align: center;
+    color: var(--text-faint);
+  }
+  .placeholder .ph-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+  .placeholder .ph-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .placeholder .ph-sub {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+
+  /* Footer */
+  footer.foot {
+    border-top: 1px solid var(--line);
+    padding: 28px 32px;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 0.5px;
+    color: var(--text-faint);
+  }
+  footer.foot a { color: var(--text-dim); }
+
+  @media (max-width: 560px) {
+    .hero { padding: 48px 18px 16px; }
+    .grid { grid-template-columns: 1fr; }
+    .card .desc { min-height: 0; }
+    .crumb { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="index.html" class="brand" aria-label="返回首页">
+    <div class="brand-mark">T</div>
+    <div class="brand-info">
+      <div class="brand-name">Teng.ZG</div>
+      <div class="brand-sub">Critical Care Medicine</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <nav class="crumb" aria-label="面包屑">
+      <span>病例讨论</span>
+    </nav>
+    <a href="index.html" class="home-pill">← 返回首页</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Case Discussion</div>
+    <h1>病例<span class="dot">.</span>讨论</h1>
+    <p class="hero-desc">18 个真实 ICU 病例,涵盖 ARDS、ECMO、免疫检查点抑制剂心脏骤停、颅内感染、狼疮肠系膜血管炎、气肿型肾盂肾炎等。每个病例:诊疗决策复盘、疑点争点、个人心得。</p>
+  </section>
+
+  <section class="list">
+    <div class="section-head">
+      <h2 class="section-title">全部病例</h2>
+      <span class="section-meta">ALL CASES</span>
+    </div>
+
+    <div class="grid">
+
+      <a href="病例讨论/case-凌正秀.html" class="card-link">
+        <article class="card">
+          <div class="card-tag">脓毒症 · 肾盂肾炎</div>
+          <h3>肾盂肾炎致脓毒症休克</h3>
+          <p class="desc">泌尿系结石 → 肾盂肾炎 → 脓毒症休克/ARDS/DIC/心脏骤停——从感染控制到器官支持的全程决策复盘。</p>
+          <div class="card-meta">
+            <span><span class="v">34</span> 页</span>
+            <span><span class="v">45</span> 张图片</span>
+            <span><span class="v">v1.0</span></span>
+          </div>
+          <span class="card-arrow">→</span>
+        </article>
+      </a>
+
+      <a href="病例讨论/case-vv-ecmo.html" class="card-link">
+        <article class="card">
+          <div class="card-tag">呼吸 · ECMO</div>
+          <h3>VV-ECMO 桥接治疗</h3>
+          <p class="desc">EOLIA 之后,什么时候上、什么时候撤。一例重症病毒性肺炎的 ECMO 全程管理。</p>
+          <div class="card-meta">
+            <span><span class="v">8</span> 章</span>
+            <span><span class="v">32</span> 张幻灯片</span>
+            <span><span class="v">v1.0</span></span>
+          </div>
+          <span class="card-arrow">→</span>
+        </article>
+      </a>
+
+      <a href="病例讨论/case-ici-myocarditis.html" class="card-link">
+        <article class="card">
+          <div class="card-tag">循环 · 罕见</div>
+          <h3>免疫检查点抑制剂相关心脏骤停</h3>
+          <p class="desc">ICI 心肌炎暴发,大剂量激素冲击 + IABP 支持,抢救诊疗得失分析。</p>
+          <div class="card-meta">
+            <span><span class="v">5</span> 章</span>
+            <span><span class="v">20</span> 张幻灯片</span>
+            <span><span class="v">v1.0</span></span>
+          </div>
+          <span class="card-arrow">→</span>
+        </article>
+      </a>
+
+      <a href="病例讨论/case-mycoplasma-intracranial.html" class="card-link">
+        <article class="card">
+          <div class="card-tag">神经 · 罕见</div>
+          <h3>人型支原体颅内感染</h3>
+          <p class="desc">少见颅内病原感染,多黏菌素联合鞘内注射治疗决策,影像与腰穿动态监测。</p>
+          <div class="card-meta">
+            <span><span class="v">4</span> 章</span>
+            <span><span class="v">16</span> 张幻灯片</span>
+            <span><span class="v">v1.0</span></span>
+          </div>
+          <span class="card-arrow">→</span>
+        </article>
+      </a>
+
+      <a href="病例讨论/case-lupus-mesenteric.html" class="card-link">
+        <article class="card">
+          <div class="card-tag">消化 · 鉴别</div>
+          <h3>狼疮肠系膜血管炎</h3>
+          <p class="desc">以急腹症起病的不典型 SLE 表现,SLE 肠系膜血管炎的影像特征与激素策略。</p>
+          <div class="card-meta">
+            <span><span class="v">4</span> 章</span>
+            <span><span class="v">18</span> 张幻灯片</span>
+            <span><span class="v">v1.0</span></span>
+          </div>
+          <span class="card-arrow">→</span>
+        </article>
+      </a>
+
+      <a href="病例讨论/case-emphysematous-pyelonephritis.html" class="card-link">
+        <article class="card">
+          <div class="card-tag">感染 · 泌尿</div>
+          <h3>气肿型肾盂肾炎</h3>
+          <p class="desc">DKA 合并气肿型肾盂肾炎(EPAN),急诊手术 + 引流联合抗感染的时机把握。</p>
+          <div class="card-meta">
+            <span><span class="v">4</span> 章</span>
+            <span><span class="v">15</span> 张幻灯片</span>
+            <span><span class="v">v1.0</span></span>
+          </div>
+          <span class="card-arrow">→</span>
+        </article>
+      </a>
+
+      <div class="placeholder" role="status" aria-label="更多病例即将上线">
+        <div class="ph-icon">＋</div>
+        <div class="ph-title">更多病例整理中</div>
+        <div class="ph-sub">当前 6 / 18 · 脓毒症 · 容量复苏 · 凝血 · 镇静 · ...</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  © 2026 · Teng.ZG · 病例讨论板块
+  &nbsp;·&nbsp;
+  <a href="index.html">返回首页</a>
+</footer>
+
+</body>
+</html>

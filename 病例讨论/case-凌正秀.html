@@ -1287,7 +1287,6 @@
         num.className = 'ts-num';
         num.textContent = si + 1;
         wrap.appendChild(num);
-        wrap.addEventListener('click', (function(idx){ return function(){ go(idx); }; })(si));
         // 触摸：只有点击（不滑动）才跳转
         (function(idx){
           var tx = 0, ty = 0;

@@ -1272,7 +1272,7 @@
     strip.innerHTML = '';
     var S = document.querySelectorAll('#viewport .slide');
     if (!S || !S.length) return;
-    for (var si = 0; si < S.length; si++) {
+    for (let si = 0; si < S.length; si++) {
         var s = S[si];
         var wrap = document.createElement('div');
         wrap.className = 'ts-thumb' + (si === 0 ? ' active' : '');

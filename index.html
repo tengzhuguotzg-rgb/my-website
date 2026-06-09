@@ -96,13 +96,6 @@
     max-width: 1100px; margin: 0 auto;
     padding: 96px 32px 24px;
   }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 48px;
-    align-items: end;
-  }
-  .hero-main {}
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: 'Space Grotesk', sans-serif;
@@ -143,34 +136,8 @@
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
     font-size: 17px; color: var(--text-dim);
-    line-height: 1.7; max-width: 520px;
-    margin: 2lh 0 28px;
-  }
-  .hero-meta {
-    display: flex; flex-wrap: wrap; gap: 14px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; color: var(--text-faint);
-    letter-spacing: 1px;
-  }
-  .hero-meta span b { color: var(--ink); font-weight: 600; }
-  .hero-meta .sep { color: var(--accent); margin: 0 4px; }
-
-  /* 右侧编号列 */
-  .hero-side {
-    display: flex; flex-direction: column;
-    align-items: flex-end; gap: 8px;
-    padding-bottom: 6px;
-  }
-  .hero-side .num {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 88px; font-weight: 300; line-height: 1;
-    color: var(--ink);
-    letter-spacing: -3px;
-  }
-  .hero-side .lbl {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--text-faint);
+    line-height: 1.7; max-width: 640px;
+    margin: 0;
   }
 
   /* ── 分割线 ── */
@@ -344,8 +311,7 @@
 
   /* ── 响应式 ── */
   @media (max-width: 860px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
-    .hero-side { align-items: flex-start; }
+
     .grid { grid-template-columns: repeat(2, 1fr); }
     .stats { grid-template-columns: repeat(2, 1fr); }
   }
@@ -383,17 +349,9 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-grid">
-      <div class="hero-main">
-        <div class="eyebrow">Critical Care Medicine</div>
-        <h1>Teng<span class="dot">.</span>ZG</h1>
-        <p class="hero-desc">重症医学科医师。把每个 ICU 早晨的临床判断,沉淀成可复用、可索引、可被检索的知识网络。</p>
-      </div>
-      <div class="hero-side">
-        <div class="num">06</div>
-        <div class="lbl">SECTIONS</div>
-      </div>
-    </div>
+    <div class="eyebrow">Critical Care Medicine</div>
+    <h1>Teng<span class="dot">.</span>ZG</h1>
+    <p class="hero-desc">重症医学科医师。把每个 ICU 早晨的临床判断,沉淀成可复用、可索引、可被检索的知识网络。</p>
   </section>
 
   <!-- 分割线 -->

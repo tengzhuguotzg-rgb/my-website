@@ -472,14 +472,25 @@
   .page-input[type=number] { -moz-appearance: textfield; }
   #pageTotal { vertical-align: middle; }
 
-  @media (max-width: 680px) {
+  @media (max-width: 768px) {
+    .slide-sidebar { display: none; }
+    .slide-container { gap: 0; padding: 4px 8px; }
     .slide { padding: 18px 20px; }
     .slide-title { font-size: 22px; }
     .slide p, .slide li { font-size: 14px; }
     .center-title { font-size: 30px; }
     .center-sub { font-size: 18px; }
-    .bottom-bar { gap: 10px; }
+    .topbar { margin: 8px 8px 0; padding: 8px 14px; }
+    .brand-mark { width: 30px; height: 30px; font-size: 14px; }
+    .brand-name { font-size: 13px; }
+    .brand-sub { font-size: 11px; }
     .crumb { display: none; }
+    .home-pill { padding: 5px 10px; font-size: 11px; }
+    .bottom-bar { gap: 6px; padding: 4px 8px 10px; }
+    .nav-btn { padding: 6px 12px; font-size: 13px; }
+    .nav-counter { font-size: 13px; min-width: 60px; }
+    .fs-btn { padding: 6px 10px; font-size: 13px; }
+    .page-box { width: 1.5em; height: 1.4em; }
   }
   @media (prefers-reduced-motion: reduce) {
     .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }

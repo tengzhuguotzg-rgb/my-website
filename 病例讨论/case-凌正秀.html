@@ -586,21 +586,13 @@
 
     /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
     .slide-container { flex: 0 0 auto; justify-content: flex-start; padding: 0 8px; }
+    .fs .slide-container { flex: 1; padding: 0; }
     .progress-wrap { display: none; }
     .slide-viewport-wrap { justify-content: flex-start; padding-top: 4px; align-items: flex-start; }
     .slide-img-hint { display: block; text-align: center; padding: 0 0 24px; font-size: 11px; color: var(--text-faint); opacity: 0.7; }
     .slide-viewport { margin-top: 0; }
+    .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
 
-    /* 点击图片可放大提示 */
-    .slide-img-hint {
-        display: block;
-        text-align: center;
-        font-family: 'Noto Serif SC', serif;
-        font-size: 11px;
-        color: var(--text-faint);
-        padding: 4px 0 2px;
-        opacity: 0.7;
-    }
   }
   @media (prefers-reduced-motion: reduce) {
     .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }
@@ -1167,15 +1159,24 @@
       // 全屏完成后强制横屏
       function doLock() {
         try {
+          // 优先使用 Screen Orientation API
           if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('landscape-primary').catch(function(){});
+            screen.orientation.lock('landscape').catch(function(){});
+          } else if (screen.lockOrientation) {
+            screen.lockOrientation('landscape');
+          } else if (screen.mozLockOrientation) {
+            screen.mozLockOrientation('landscape');
+          } else if (screen.msLockOrientation) {
+            screen.msLockOrientation('landscape');
           }
-        } catch(e) {}
+        } catch(e) {
+          console.log('orientation lock failed:', e);
+        }
       }
       if (fsPromise && fsPromise.then) {
-        fsPromise.then(doLock).catch(function(){});
+        fsPromise.then(function(){ doLock(); }).catch(function(){});
       } else {
-        setTimeout(doLock, 200);
+        setTimeout(doLock, 300);
       }
       setTimeout(scaleViewport, 100);
     } else {

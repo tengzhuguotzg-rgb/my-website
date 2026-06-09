@@ -609,14 +609,46 @@
       transform: translate(-50%, -50%) rotate(90deg);
       transform-origin: center center;
     }
-    /* 退出按钮：物理屏幕右侧中央 = 视觉屏幕底部中央 */
+    /* 退出按钮：物理屏幕右侧中央 = 视觉屏幕底部中央
+       不旋转——按钮在 viewport 外面，旋转会让文字倒立。
+       用户看到的是：横屏内容 + 屏幕右侧中央的“退出全屏”按钮（正立） */
     .fs.fs-rotated .fs-exit-btn {
       right: 2.5vh;
       left: auto;
       top: 50%;
       bottom: auto;
-      transform: translateY(-50%) rotate(-90deg);
+      transform: translateY(-50%);
       transform-origin: center center;
+    }
+
+    /* Lightbox：fs-rotated 模式下跟隨视觉横屏
+       viewport 顺时针转了 90°，lightbox 也用同样的技巧旋转
+       stage 旋转后，图片作为子元素跟着转——不需要额外旋转，视觉上正立 */
+    .fs.fs-rotated .lb-stage {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 100vh;   /* 旋转后“宽” = 物理屏幕高 */
+      height: 100vw;  /* 旋转后“高” = 物理屏幕宽 */
+      margin: 0;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+    .fs.fs-rotated .lightbox img {
+      width: 95vh;   /* 视觉横屏的高 */
+      height: 95vw;  /* 视觉横屏的宽 */
+      max-width: 95vh;
+      max-height: 95vw;
+      object-fit: contain;
+    }
+    /* 提示文字：跟随视觉横屏，物理屏幕左侧中央 = 视觉顶部中央 */
+    .fs.fs-rotated .lightbox-hint {
+      top: 50% !important;
+      left: 16px !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: translateY(-50%);
+      transform-origin: center center;
+      white-space: nowrap;
     }
 
   }

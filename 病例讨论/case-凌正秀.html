@@ -595,6 +595,30 @@
     .slide-viewport { margin-top: 0; }
     .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
 
+    /* ═══ 视觉横屏：screen.orientation.lock 失败时的兜底 ═══
+       物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
+       把用户视觉体验变成横屏。退出按钮同步反向旋转 */
+    .fs.fs-rotated .slide-viewport-wrap { padding: 0; }
+    .fs.fs-rotated .slide-viewport {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 100vh;   /* 旋转后"宽"=物理屏幕高 */
+      height: 100vw;  /* 旋转后"高"=物理屏幕宽 */
+      margin: 0;
+      aspect-ratio: auto;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+    /* 退出按钮：物理屏幕右侧中央 = 视觉屏幕底部中央 */
+    .fs.fs-rotated .fs-exit-btn {
+      right: 2.5vh;
+      left: auto;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center center;
+    }
+
   }
   @media (prefers-reduced-motion: reduce) {
     .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }
@@ -1141,6 +1165,8 @@
 
   /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
   function scaleViewport() {
+    // 视觉横屏模式下由 CSS 接管 transform，不再做等比缩放
+    if (document.body.classList.contains('fs-rotated')) return;
     var ct = document.querySelector('.slide-container');
     var cw = ct.clientWidth, ch = ct.clientHeight;
     var sw = (vp.offsetWidth > 100 ? vp.offsetWidth : 1000), sh = (vp.offsetHeight > 100 ? vp.offsetHeight : 562.5);
@@ -1148,6 +1174,42 @@
     if (s >= 0.95 && s <= 1.05) { vp.style.transform = ''; return; }
     vp.style.transform = 'scale(' + s + ')';
     vp.style.transformOrigin = 'center center';
+  }
+
+  /* ═══ 强制横屏：先尝试 Screen Orientation API（物理锁屏），
+       失败时给 body 加 .fs-rotated → CSS 视觉旋转 viewport 90° ═══ */
+  function doLock() {
+    // 桌面或已经是横屏（window 宽 > 高）→ 不需要任何旋转
+    var isPortrait = window.matchMedia('(orientation: portrait)').matches;
+    if (!isPortrait) {
+      document.body.classList.remove('fs-rotated');
+      return;
+    }
+    // 竖屏状态：先尝试物理锁屏
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape')
+          .then(function() {
+            // 锁成功 → 物理横屏，不需要 CSS 视觉旋转
+            document.body.classList.remove('fs-rotated');
+          })
+          .catch(function(e) {
+            // 锁失败（iOS Safari / 桌面 Chrome / 非 PWA 等）→ 视觉旋转兜底
+            console.log('orientation.lock rejected, fallback to CSS rotate:', e);
+            document.body.classList.add('fs-rotated');
+          });
+      } else if (screen.lockOrientation) {
+        var ok = screen.lockOrientation('landscape');
+        if (!ok) document.body.classList.add('fs-rotated');
+        else document.body.classList.remove('fs-rotated');
+      } else {
+        // API 都没有 → 直接视觉旋转
+        document.body.classList.add('fs-rotated');
+      }
+    } catch(e) {
+      console.log('orientation lock threw, fallback to CSS rotate:', e);
+      document.body.classList.add('fs-rotated');
+    }
   }
 
   function toggleFS() {
@@ -1158,25 +1220,8 @@
       document.body.classList.add('fs');
       FS = true;
       fsBtn.textContent = '⛶ 退出';
-      // 全屏完成后强制横屏
-      function doLock() {
-        try {
-          // 优先使用 Screen Orientation API
-          if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('landscape').catch(function(){});
-          } else if (screen.lockOrientation) {
-            screen.lockOrientation('landscape');
-          } else if (screen.mozLockOrientation) {
-            screen.mozLockOrientation('landscape');
-          } else if (screen.msLockOrientation) {
-            screen.msLockOrientation('landscape');
-          }
-        } catch(e) {
-          console.log('orientation lock failed:', e);
-        }
-      }
       if (fsPromise && fsPromise.then) {
-        fsPromise.then(function(){ doLock(); }).catch(function(){});
+        fsPromise.then(function(){ doLock(); }).catch(function(){ doLock(); });
       } else {
         setTimeout(doLock, 300);
       }
@@ -1185,6 +1230,7 @@
       if (document.exitFullscreen) document.exitFullscreen();
       else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
       document.body.classList.remove('fs');
+      document.body.classList.remove('fs-rotated');
       FS = false;
       fsBtn.textContent = '⛶ 全屏';
       setTimeout(scaleViewport, 100);
@@ -1194,8 +1240,19 @@
 
   function onFSChange() {
     var inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
-    if (!inFS && FS) { document.body.classList.remove('fs'); FS = false; fsBtn.textContent = '⛶ 全屏'; }
-    else if (inFS && !FS) { document.body.classList.add('fs'); FS = true; fsBtn.textContent = '⛶ 退出'; }
+    if (!inFS && FS) {
+      document.body.classList.remove('fs');
+      document.body.classList.remove('fs-rotated');
+      FS = false;
+      fsBtn.textContent = '⛶ 全屏';
+    }
+    else if (inFS && !FS) {
+      document.body.classList.add('fs');
+      FS = true;
+      fsBtn.textContent = '⛶ 退出';
+      // 系统级退出后再进入，重新评估旋转策略
+      doLock();
+    }
     setTimeout(scaleViewport, 150);
   }
   document.addEventListener('fullscreenchange', onFSChange);

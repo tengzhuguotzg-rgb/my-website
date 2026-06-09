@@ -408,6 +408,26 @@
     transition: opacity .3s;
   }
   .fs .bottom-bar { opacity: 0; pointer-events: none; }
+  /* 全屏悬浮退出按钮 */
+  .fs-exit-btn {
+    display: none;
+  }
+  .fs .fs-exit-btn {
+    display: flex; align-items: center; gap: 6px;
+    position: fixed; bottom: 2.5vh; left: 50%; transform: translateX(-50%);
+    z-index: 300;
+    padding: 8px 20px;
+    background: rgba(31,61,47,0.35);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 999px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .fs .fs-exit-btn:hover { background: rgba(31,61,47,0.55); color: #fff; }
   .nav-btn {
     padding: 9px 24px;
     background: var(--ink); color: var(--bg);
@@ -895,6 +915,8 @@
     <button class="nav-btn" id="nextBtn">下一页 →</button>
   </div>
 
+  <button class="fs-exit-btn" id="fsExitBtn">⛶ 退出全屏</button>
+
   <div class="lightbox" id="lightbox">
     <div class="lightbox-bg"></div>
     <div class="lb-stage">
@@ -988,6 +1010,9 @@
 
   var vp = document.getElementById('viewport');
   var fsBtn = document.getElementById('fsBtn');
+
+  /* 全屏退出按钮 */
+  document.getElementById('fsExitBtn').addEventListener('click', function(){ toggleFS(); });
 
   /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
   function scaleViewport() {

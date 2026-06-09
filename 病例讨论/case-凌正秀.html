@@ -507,11 +507,72 @@
     .brand-sub { font-size: 11px; }
     .crumb { display: none; }
     .home-pill { padding: 5px 10px; font-size: 11px; }
-    .bottom-bar { gap: 6px; padding: 2px 8px 6px; }
-    .nav-btn { padding: 6px 12px; font-size: 13px; }
-    .nav-counter { font-size: 13px; min-width: 60px; }
-    .fs-btn { padding: 6px 10px; font-size: 13px; }
-    .page-box { width: 1.5em; height: 1.4em; }
+    .bottom-bar { display: none; }
+    .page-box, #pageTotal { display: none; }
+
+    /* 横向缩略图条 */
+    .thumb-strip {
+        display: flex; gap: 6px;
+        padding: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-shrink: 0;
+        background: rgba(244,241,234,0.7);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+        -webkit-overflow-scrolling: touch;
+    }
+    .thumb-strip::-webkit-scrollbar { height: 2px; }
+    .thumb-strip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+    .thumb-strip .ts-thumb {
+        flex-shrink: 0;
+        width: 80px;
+        aspect-ratio: 16 / 9;
+        border-radius: 6px;
+        border: 2px solid var(--line);
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        background: rgba(244,241,234,0.88);
+        transition: border-color .15s;
+    }
+    .thumb-strip .ts-thumb:hover { border-color: var(--ink-2); }
+    .thumb-strip .ts-thumb.active { border-color: var(--accent); }
+    .thumb-strip .ts-thumb .ts-num {
+        position: absolute; top: 2px; left: 2px;
+        z-index: 2;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 8px; font-weight: 600;
+        color: white;
+        background: rgba(31,61,47,0.6);
+        padding: 1px 4px;
+        border-radius: 3px;
+        line-height: 1.3;
+    }
+    .thumb-strip .ts-thumb canvas {
+        width: 100%; height: 100%;
+        display: block;
+    }
+
+    /* 幻灯片内浮动全屏按钮 */
+    .slide-mfs {
+        display: flex;
+        position: absolute; top: 8px; right: 8px;
+        z-index: 10;
+        width: 32px; height: 32px;
+        align-items: center; justify-content: center;
+        background: rgba(31,61,47,0.35);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 50%;
+        color: rgba(255,255,255,0.7);
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .slide-mfs:hover { background: rgba(31,61,47,0.55); color: #fff; }
+    .fs .slide-mfs { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }
@@ -559,6 +620,7 @@
 
       <!-- 2: 主要内容 -->
       <div class="slide" data-index="1">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-title-bar"></div>
         <div class="slide-title">主要内容</div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
@@ -579,6 +641,7 @@
 
       <!-- 3: 病史 + CT -->
       <div class="slide" data-index="2">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">History · CT</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">病史简介</div>
@@ -594,6 +657,7 @@
 
       <!-- 4: 入院查体 -->
       <div class="slide" data-index="3">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Admission</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">入院查体 &amp; 诊断</div>
@@ -604,6 +668,7 @@
 
       <!-- 5: 病情变化 -->
       <div class="slide" data-index="4">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Deterioration</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">病情变化</div>
@@ -614,6 +679,7 @@
 
       <!-- 6: 检验结果 -->
       <div class="slide" data-index="5">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Lab Results</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">8.5 / 8.6 检验结果</div>
@@ -625,6 +691,7 @@
 
       <!-- 7: 初始治疗 -->
       <div class="slide" data-index="6">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Initial Management</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">初始治疗</div>
@@ -637,6 +704,7 @@
 
       <!-- 8: 心脏骤停 -->
       <div class="slide" data-index="7">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Critical Event</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">心脏骤停 · 抢救</div>
@@ -647,6 +715,7 @@
 
       <!-- 9: 床旁 DR -->
       <div class="slide" data-index="8">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Imaging</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">8月6日 床旁DR</div>
@@ -655,6 +724,7 @@
 
       <!-- 10: 复查 CT -->
       <div class="slide" data-index="9">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Imaging</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">2025-08-07 复查CT</div>
@@ -669,6 +739,7 @@
 
       <!-- 11: 治疗过程 -->
       <div class="slide" data-index="10">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Treatment Timeline</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">治疗过程</div>
@@ -681,6 +752,7 @@
 
       <!-- 12: 8月8日 -->
       <div class="slide" data-index="11">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Day +3</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">8月8日 治疗</div>
@@ -693,6 +765,7 @@
 
       <!-- 13: 后续治疗 -->
       <div class="slide" data-index="12">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Day +4 ~ +13</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">后续治疗</div>
@@ -706,6 +779,7 @@
 
       <!-- 14: 趋势1 -->
       <div class="slide" data-index="13">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Trends</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">实验室趋势 ①</div>
@@ -719,6 +793,7 @@
 
       <!-- 15: 趋势2 -->
       <div class="slide" data-index="14">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Trends</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">实验室趋势 ②</div>
@@ -732,6 +807,7 @@
 
       <!-- 16: 趋势3 -->
       <div class="slide" data-index="15">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Trends</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">实验室趋势 ③</div>
@@ -744,6 +820,7 @@
 
       <!-- 17: 体温单 -->
       <div class="slide" data-index="16">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Vital Signs</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">体温单</div>
@@ -755,6 +832,7 @@
 
       <!-- 18: 诊断 -->
       <div class="slide" data-index="17">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Final Diagnosis</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">诊断</div>
@@ -766,6 +844,7 @@
 
       <!-- 19: 分隔 讨论 -->
       <div class="slide" data-index="18">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-image-only">
           <div class="center-title">讨论</div>
           <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
@@ -775,6 +854,7 @@
 
       <!-- 20: 脓毒症定义 -->
       <div class="slide" data-index="19">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Sepsis</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">脓毒症定义 (Sepsis 1.0–3.0)</div>
@@ -787,6 +867,7 @@
 
       <!-- 21: 宿主反应 -->
       <div class="slide" data-index="20">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Host Response</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">宿主反应</div>
@@ -797,18 +878,21 @@
 
       <!-- 22-24: 宿主反应图 -->
       <div class="slide" data-index="21">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Host Response</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">宿主反应（续）</div>
         <div class="img-grid c1"><div class="img-wrap"><img src="images/case-凌正秀/slide26_d55d1e6e.png" alt="宿主1" loading="lazy"></div></div>
       </div>
       <div class="slide" data-index="22">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Host Response</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">宿主反应（续）</div>
         <div class="img-grid c1"><div class="img-wrap"><img src="images/case-凌正秀/slide27_25e7135e.png" alt="宿主2" loading="lazy"></div></div>
       </div>
       <div class="slide" data-index="23">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">Host Response</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">宿主反应（续）</div>
@@ -817,6 +901,7 @@
 
       <!-- 25: 感染控制 -->
       <div class="slide" data-index="24">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Source Control</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">感染的控制</div>
@@ -826,6 +911,7 @@
 
       <!-- 26: 亚硝酸盐 -->
       <div class="slide" data-index="25">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Urinalysis</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">亚硝酸盐</div>
@@ -834,6 +920,7 @@
 
       <!-- 27: 抗感染策略 -->
       <div class="slide" data-index="26">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Antibiotics</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">抗感染策略</div>
@@ -843,6 +930,7 @@
 
       <!-- 28: 器官支持 -->
       <div class="slide" data-index="27">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Organ Support</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">器官功能支持</div>
@@ -851,6 +939,7 @@
 
       <!-- 29: 免疫调节 -->
       <div class="slide" data-index="28">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Immunomodulation</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">免疫调节</div>
@@ -860,6 +949,7 @@
 
       <!-- 30: 炎症因子吸附 -->
       <div class="slide" data-index="29">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · Hemoadsorption</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">炎症因子吸附</div>
@@ -870,6 +960,7 @@
 
       <!-- 31: ARDS -->
       <div class="slide" data-index="30">
+    <button class="slide-mfs">⛶</button>
         <div class="meta-label">Discussion · ARDS</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">急性呼吸窘迫综合征</div>
@@ -879,6 +970,7 @@
 
       <!-- 32: ARDS 病理生理 -->
       <div class="slide" data-index="31">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">ARDS</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">ARDS 病理生理</div>
@@ -887,6 +979,7 @@
 
       <!-- 33: ARDS 机械通气 -->
       <div class="slide" data-index="32">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-subtitle">ARDS</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">ARDS 机械通气</div>
@@ -895,6 +988,7 @@
 
       <!-- 34: 结尾 -->
       <div class="slide" data-index="33">
+    <button class="slide-mfs">⛶</button>
         <div class="slide-image-only">
           <div class="center-title">请各位老师批评指正</div>
           <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
@@ -1126,11 +1220,69 @@
     }
   });
 
+  /* 绑定幻灯片内全屏按钮 */
+  document.querySelectorAll('.slide-mfs').forEach(function(btn) {
+    btn.addEventListener('click', function(e) { e.stopPropagation(); toggleFS(); });
+  });
+
   /* 窗口变化时重新缩放 */
   window.addEventListener('resize', scaleViewport);
 
   /* 构建侧栏缩略图 */
-  /* 构建缩略图（迷你幻灯片） */
+  /* 构建手机横向缩略图 */
+  function buildThumbStrip() {
+    var strip = document.getElementById('thumbStrip');
+    if (!strip) return;
+    strip.innerHTML = '';
+    // 检测是否为手机（隐藏了sidebar）
+    if (document.querySelector('.slide-sidebar') && document.querySelector('.slide-sidebar').offsetParent !== null) return;
+    S.forEach(function(s, i) {
+      var wrap = document.createElement('div');
+      wrap.className = 'ts-thumb' + (i === 0 ? ' active' : '');
+      var num = document.createElement('div');
+      num.className = 'ts-num';
+      num.textContent = i + 1;
+      // 用 canvas 绘制缩略图（简化版本：显示页码和标题）
+      var canvas = document.createElement('canvas');
+      canvas.width = 160;
+      canvas.height = 90;
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#F4F1EA';
+      ctx.fillRect(0, 0, 160, 90);
+      ctx.fillStyle = '#1F3D2F';
+      ctx.font = 'bold 11px Space Grotesk, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('' + (i + 1), 6, 16);
+      // 提取简短标题
+      var titleEl = s.querySelector('.slide-title, .center-title, .slide-subtitle, .meta-label');
+      var txt = '';
+      if (titleEl) txt = titleEl.textContent.trim().substring(0, 12);
+      if (!txt) {
+        var p = s.querySelector('p');
+        if (p) txt = p.textContent.trim().substring(0, 12);
+      }
+      if (txt) {
+        ctx.font = '9px "Noto Serif SC", serif';
+        ctx.fillStyle = '#4A5247';
+        ctx.fillText(txt, 6, 32);
+      }
+      wrap.appendChild(canvas);
+      wrap.appendChild(num);
+      wrap.addEventListener('click', function(){ go(i); });
+      strip.appendChild(wrap);
+    });
+  }
+
+  function updateThumbStrip() {
+    var wraps = document.querySelectorAll('.ts-thumb');
+    wraps.forEach(function(w, i) {
+      w.classList.toggle('active', i === C);
+      if (i === C) w.scrollIntoView({ block: 'nearest', inline: 'center' });
+    });
+  }
+  buildThumbStrip();
+
+    /* 构建缩略图（迷你幻灯片） */
   var thumbScale = 0;
   function buildSidebar() {
     var sb = document.getElementById('sidebar');

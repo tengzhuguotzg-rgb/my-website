@@ -475,6 +475,7 @@
   @media (max-width: 768px) {
     .slide-sidebar { display: none; }
     .slide-container { gap: 0; padding: 4px 8px; }
+    .slide-viewport { width: 100%; height: auto; aspect-ratio: 16 / 9; }
     .slide { padding: 18px 20px; }
     .slide-title { font-size: 22px; }
     .slide p, .slide li { font-size: 14px; }
@@ -992,9 +993,9 @@
   function scaleViewport() {
     var ct = document.querySelector('.slide-container');
     var cw = ct.clientWidth, ch = ct.clientHeight;
-    var sw = 1000, sh = 562.5;
+    var sw = (vp.offsetWidth > 100 ? vp.offsetWidth : 1000), sh = (vp.offsetHeight > 100 ? vp.offsetHeight : 562.5);
     var s = Math.min(cw / sw, ch / sh);
-    if (s < 0.3) s = 0.3;
+    if (s >= 0.95 && s <= 1.05) { vp.style.transform = ''; return; }
     vp.style.transform = 'scale(' + s + ')';
     vp.style.transformOrigin = 'center center';
   }

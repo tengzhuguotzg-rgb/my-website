@@ -399,7 +399,9 @@
     pointer-events: none;
   }
 
-  /* ═══ Bottom bar（导航 + 全屏按钮） ═══ */
+  .slide-mfs { display: none; }
+
+/* ═══ Bottom bar（导航 + 全屏按钮） ═══ */
   .bottom-bar {
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
@@ -574,6 +576,21 @@
     }
     .slide-mfs:hover { background: rgba(31,61,47,0.55); color: #fff; }
     .fs .slide-mfs { display: none; }
+
+    /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
+    .slide-container { justify-content: flex-start; }
+    .progress-wrap { padding: 2px 14px 1px; }
+
+    /* 点击图片可放大提示 */
+    .slide-img-hint {
+        display: block;
+        text-align: center;
+        font-family: 'Noto Serif SC', serif;
+        font-size: 11px;
+        color: var(--text-faint);
+        padding: 4px 0 2px;
+        opacity: 0.7;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }

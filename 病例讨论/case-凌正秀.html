@@ -250,12 +250,12 @@
     z-index: 1;
   }
   .slide-title-bar {
-    display: inline-block;
+    position: absolute;
+    top: 30px; left: 36px;
     width: 36px; height: 3px;
     background: var(--accent);
     border-radius: 2px;
-    margin-bottom: 10px;
-    flex-shrink: 0;
+    z-index: 1;
   }
   .meta-label {
     position: absolute;
@@ -584,7 +584,9 @@
     /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
     .slide-container { justify-content: flex-start; padding: 0 8px; }
     .progress-wrap { display: none; }
-    .slide-viewport-wrap { justify-content: flex-start; padding-top: 4px; }
+    .slide-viewport-wrap { justify-content: flex-start; padding-top: 4px; align-items: flex-start; }
+    .slide-img-hint { display: block; }
+    .slide-viewport { margin-top: 0; }
 
     /* 点击图片可放大提示 */
     .slide-img-hint {
@@ -1024,8 +1026,8 @@
 
     </div>
     </div>
-    </div>
   </div>
+  <div class="slide-img-hint">点击图片可放大</div>
 
   <div class="bottom-bar">
     <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>
@@ -1114,6 +1116,8 @@
   (function(){
     var tx = 0, ty = 0;
     document.addEventListener('touchstart', function(e){
+      // 忽略滑块条上的触摸（避免与横向滚动冲突）
+      if (e.target.closest('.thumb-strip')) return;
       tx = e.changedTouches[0].screenX;
       ty = e.changedTouches[0].screenY;
     });

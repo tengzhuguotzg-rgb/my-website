@@ -251,7 +251,7 @@
   }
   .slide-title-bar {
     position: absolute;
-    top: 30px; left: 36px;
+    top: 50px; left: 36px;
     width: 36px; height: 3px;
     background: var(--accent);
     border-radius: 2px;
@@ -1026,8 +1026,8 @@
 
     </div>
     </div>
+    <div class="slide-img-hint">点击图片可放大</div>
   </div>
-  <div class="slide-img-hint">点击图片可放大</div>
 
   <div class="bottom-bar">
     <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>
@@ -1287,6 +1287,7 @@
         num.textContent = si + 1;
         wrap.appendChild(num);
         wrap.addEventListener('click', (function(idx){ return function(){ go(idx); }; })(si));
+      wrap.addEventListener('touchend', function(e){ e.preventDefault(); go(si); });
     }
 }
 

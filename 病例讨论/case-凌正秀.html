@@ -1288,7 +1288,16 @@
         num.textContent = si + 1;
         wrap.appendChild(num);
         wrap.addEventListener('click', (function(idx){ return function(){ go(idx); }; })(si));
-      wrap.addEventListener('touchend', function(e){ e.preventDefault(); go(si); });
+        // 触摸：只有点击（不滑动）才跳转
+        (function(idx){
+          var tx = 0, ty = 0;
+          wrap.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].screenX; ty = e.changedTouches[0].screenY; });
+          wrap.addEventListener('touchend', function(e){
+            var dx = Math.abs(tx - e.changedTouches[0].screenX);
+            var dy = Math.abs(ty - e.changedTouches[0].screenY);
+            if (dx < 10 && dy < 10) { e.preventDefault(); go(idx); }
+          });
+        })(si);
     }
 }
 

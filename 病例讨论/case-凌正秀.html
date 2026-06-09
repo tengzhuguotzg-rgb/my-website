@@ -1123,9 +1123,11 @@
       ty = e.changedTouches[0].screenY;
     });
     document.addEventListener('touchend', function(e){
+      // 忽略滑块条区域
+      if (e.target.closest('.thumb-strip')) return;
       var dx = tx - e.changedTouches[0].screenX;
       var dy = ty - e.changedTouches[0].screenY;
-      // 优先检测垂直滑动（手机上下滑动切换）
+      // 优先检测垂直滑动
       if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
         if (dy > 0) go(C + 1); else go(C - 1);
       } else if (Math.abs(dx) > 70) {

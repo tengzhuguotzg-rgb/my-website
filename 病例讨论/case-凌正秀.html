@@ -597,6 +597,21 @@
     .slide-viewport { margin-top: 0; }
     .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
 
+    /* ═══ 视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ═══
+       物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
+       让 slide 内容视觉上变横屏。退出按钮是圆形图标 + fixed 定位，不参与此旋转 */
+    .fs.fs-rotated .slide-viewport-wrap { padding: 0; }
+    .fs.fs-rotated .slide-viewport {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 100vh;
+      height: 100vw;
+      margin: 0;
+      aspect-ratio: auto;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+
     /* ═══ Lightbox：fs-rotated 模式下跟随视觉横屏 ═══
        用同样的技巧旋转 lb-stage，图片作为子元素跟着转，
        视觉上以横屏方式显示（95vh × 95vw）

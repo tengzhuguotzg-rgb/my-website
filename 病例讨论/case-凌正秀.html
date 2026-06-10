@@ -1303,7 +1303,7 @@
 
   /* 滚轮翻页（全屏和未全屏均生效） */
   document.addEventListener('wheel', function(e) {
-    if (e.target.closest('.img-wrap') || e.target.closest('.lightbox') || e.target.closest('input') || e.target.closest('.slide-sidebar')) return;
+    if (e.target.closest('.lightbox') || e.target.closest('input') || e.target.closest('.slide-sidebar')) return;
     e.preventDefault();
     if (e.deltaY > 0) go(C + 1); else go(C - 1);
   }, { passive: false });

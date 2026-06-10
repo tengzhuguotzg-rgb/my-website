@@ -957,13 +957,6 @@
      <p>管理</p>
      <p>Jentzer JC, . Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</p>
       </div>
-          <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
-          <div class="center-sub small">肾盂肾炎 · 脓毒症休克 · ARDS · DIC</div>
-        </div>
-      </div>
-
-    </div>
-    </div>
     </div>
     <div class="slide-img-hint">点击图片可放大</div>
   </div>
@@ -989,6 +982,7 @@
 (function(){
   var S = document.querySelectorAll('#viewport .slide');
   var N = S.length, C = 0, FS = false;
+  document.getElementById('pageTotal').textContent = ' / ' + N;
   var ctr = document.getElementById('counter');
   var pb = document.getElementById('prevBtn'), nb = document.getElementById('nextBtn');
   var pf = document.getElementById('progressFill');

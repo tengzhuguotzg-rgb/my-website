@@ -1225,37 +1225,24 @@
   /* ═══ 强制横屏：先尝试 Screen Orientation API（物理锁屏），
        失败时给 body 加 .fs-rotated → CSS 视觉旋转 viewport 90° ═══ */
   function doLock() {
-    // 桌面或已经是横屏（window 宽 > 高）→ 不需要任何旋转
+    // 桌面或已经是横屏 → 不需要旋转
     var isPortrait = window.matchMedia('(orientation: portrait)').matches;
     if (!isPortrait) {
       document.body.classList.remove('fs-rotated');
       return;
     }
-    // 竖屏状态：先尝试物理锁屏
+    // 竖屏全屏：始终加 fs-rotated 视觉旋转（CSS rotate 90°）
+    // 部分浏览器（Chrome Android） orientation.lock 会成功但物理横屏
+    // 后内容布局不对，统一用 CSS 旋转保证所有设备视觉一致。
+    document.body.classList.add('fs-rotated');
+    // 可选地尝试锁屏（给系统提示横幅用），结果不影响视觉
     try {
       if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape')
-          .then(function() {
-            // 锁成功 → 物理横屏，不需要 CSS 视觉旋转
-            document.body.classList.remove('fs-rotated');
-          })
-          .catch(function(e) {
-            // 锁失败（iOS Safari / 桌面 Chrome / 非 PWA 等）→ 视觉旋转兜底
-            console.log('orientation.lock rejected, fallback to CSS rotate:', e);
-            document.body.classList.add('fs-rotated');
-          });
+        screen.orientation.lock('landscape').catch(function(){});
       } else if (screen.lockOrientation) {
-        var ok = screen.lockOrientation('landscape');
-        if (!ok) document.body.classList.add('fs-rotated');
-        else document.body.classList.remove('fs-rotated');
-      } else {
-        // API 都没有 → 直接视觉旋转
-        document.body.classList.add('fs-rotated');
+        screen.lockOrientation('landscape');
       }
-    } catch(e) {
-      console.log('orientation lock threw, fallback to CSS rotate:', e);
-      document.body.classList.add('fs-rotated');
-    }
+    } catch(e) {}
   }
 
   function toggleFS() {

@@ -544,8 +544,8 @@
 
     /* 横向缩略图条 */
     .thumb-strip {
-        display: flex; gap: 6px;
-        padding: 6px;
+        display: flex; gap: 9px;
+        padding: 9px;
         overflow-x: auto;
         overflow-y: hidden;
         flex-shrink: 0;
@@ -558,7 +558,7 @@
     .thumb-strip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
     .thumb-strip .ts-thumb {
         flex-shrink: 0;
-        width: 160px;
+        width: 240px;
         position: relative;
         aspect-ratio: 16 / 9;
         border-radius: 6px;
@@ -572,10 +572,10 @@
     .thumb-strip .ts-thumb:hover { border-color: var(--ink-2); }
     .thumb-strip .ts-thumb.active { border-color: var(--accent); }
     .thumb-strip .ts-thumb .ts-num {
-        position: absolute; top: 2px; left: 2px;
+        position: absolute; top: 3px; left: 3px;
         z-index: 2;
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 8px; font-weight: 600;
+        font-size: 12px; font-weight: 600;
         color: white;
         background: rgba(31,61,47,0.6);
         padding: 1px 4px;

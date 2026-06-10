@@ -416,24 +416,26 @@
     transition: opacity .3s;
   }
   .fs .bottom-bar { opacity: 0; pointer-events: none; }
-  /* 全屏悬浮退出按钮 */
+  /* 全屏悬浮退出按钮 —— 圆形对称图标，固定在物理屏幕右下角
+     物理屏幕右下角 = viewport 旋转90° 后视觉横屏的右上角
+     圆形图标旋转90° 视觉无差别，无需反向旋转抵消 */
   .fs-exit-btn {
     display: none;
   }
   .fs .fs-exit-btn {
-    display: flex; align-items: center; gap: 6px;
-    position: fixed; bottom: 2.5vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; bottom: 16px; right: 16px;
     z-index: 300;
-    padding: 8px 20px;
+    width: 32px; height: 32px;
     background: rgba(31,61,47,0.35);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 999px;
+    border-radius: 50%;
     color: rgba(255,255,255,0.7);
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px; font-weight: 500;
+    font-size: 15px;
     cursor: pointer;
-    transition: all .3s;
+    transition: background .2s;
   }
   .fs .fs-exit-btn:hover { background: rgba(31,61,47,0.55); color: #fff; }
   .nav-btn {
@@ -595,41 +597,15 @@
     .slide-viewport { margin-top: 0; }
     .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
 
-    /* ═══ 视觉横屏：screen.orientation.lock 失败时的兜底 ═══
-       物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
-       把用户视觉体验变成横屏。退出按钮同步反向旋转 */
-    .fs.fs-rotated .slide-viewport-wrap { padding: 0; }
-    .fs.fs-rotated .slide-viewport {
-      position: fixed;
-      top: 50%; left: 50%;
-      width: 100vh;   /* 旋转后"宽"=物理屏幕高 */
-      height: 100vw;  /* 旋转后"高"=物理屏幕宽 */
-      margin: 0;
-      aspect-ratio: auto;
-      transform: translate(-50%, -50%) rotate(90deg);
-      transform-origin: center center;
-    }
-    /* 退出按钮：物理屏幕左侧中央 = 视觉屏幕底部中央
-       (viewport 顺时针旋转 90° 后，视觉的“下” = 物理的“左”)
-       不旋转——按钮在 viewport 外面，旋转会让文字倒立。
-       用户看到的是：横屏内容 + 屏幕左侧中央的“退出全屏”按钮（正立） */
-    .fs.fs-rotated .fs-exit-btn {
-      left: 2.5vh;
-      right: auto;
-      top: 50%;
-      bottom: auto;
-      transform: translateY(-50%);
-      transform-origin: center center;
-    }
-
-    /* Lightbox：fs-rotated 模式下跟隨视觉横屏
-       viewport 顺时针转了 90°，lightbox 也用同样的技巧旋转
-       stage 旋转后，图片作为子元素跟着转——不需要额外旋转，视觉上正立 */
+    /* ═══ Lightbox：fs-rotated 模式下跟随视觉横屏 ═══
+       用同样的技巧旋转 lb-stage，图片作为子元素跟着转，
+       视觉上以横屏方式显示（95vh × 95vw）
+       退出按钮改为圆形图标固定在屏幕右下角 = 视觉右上角 */
     .fs.fs-rotated .lb-stage {
       position: fixed;
       top: 50%; left: 50%;
-      width: 100vh;   /* 旋转后“宽” = 物理屏幕高 */
-      height: 100vw;  /* 旋转后“高” = 物理屏幕宽 */
+      width: 100vh;   /* 旋转后"宽" = 物理屏幕高 */
+      height: 100vw;  /* 旋转后"高" = 物理屏幕宽 */
       margin: 0;
       transform: translate(-50%, -50%) rotate(90deg);
       transform-origin: center center;
@@ -641,12 +617,11 @@
       max-height: 95vw;
       object-fit: contain;
     }
-    /* 提示文字：跟随视觉横屏，物理屏幕右侧中央 = 视觉顶部中央
-       (viewport 顺时针旋转 90° 后，视觉的“上” = 物理的“右”) */
+    /* 提示文字：物理屏幕左侧中央（不旋转，圆形图标不需要方向） */
     .fs.fs-rotated .lightbox-hint {
       top: 50% !important;
-      right: 16px !important;
-      left: auto !important;
+      left: 16px !important;
+      right: auto !important;
       bottom: auto !important;
       transform: translateY(-50%);
       transform-origin: center center;
@@ -1093,7 +1068,7 @@
     <button class="nav-btn" id="nextBtn">下一页 →</button>
   </div>
 
-  <button class="fs-exit-btn" id="fsExitBtn">⛶ 退出全屏</button>
+  <button class="fs-exit-btn" id="fsExitBtn" aria-label="退出全屏">⛶</button>
 
   <div class="lightbox" id="lightbox">
     <div class="lightbox-bg"></div>

@@ -520,7 +520,13 @@
     .meta-label { top: 8px; left: 18px; font-size: 10px; }
     .slide-subtitle { top: 8px; left: 18px; font-size: 10px; }
     .slide-title-bar { top: 22px; left: 18px; width: 28px; }
-    .slide-title { font-size: 22px; }
+    .slide-title {
+      /* mobile 下恢复 static,跟 subtitle(8) + titleBar(22) 不冲突。
+         桌面端 (上面默认规则) 用 absolute top:78。 */
+      position: static;
+      margin: 30px 0 0;
+      font-size: 22px;
+    }
     .slide p, .slide li { font-size: 14px; }
     .center-title { font-size: 30px; }
     .center-sub { font-size: 18px; }

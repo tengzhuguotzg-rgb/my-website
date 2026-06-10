@@ -1208,9 +1208,8 @@
 
   /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
   function scaleViewport() {
-    // 全屏/视觉横屏模式下由 CSS 接管 transform，不再做等比缩放
-    // （CSS inline style 优先级高于样式表，因此必须主动跳过避免覆盖 rotate）
-    if (document.body.classList.contains('fs') || document.body.classList.contains('fs-rotated')) return;
+    // 视觉横屏模式下由 CSS 接管 transform（CSS rotate 需无 inline transform 冲突）
+    if (document.body.classList.contains('fs-rotated')) return;
     // 必须用 .slide-viewport-wrap（不含 sidebar 的可用区域），
     // 用 .slide-container 会把 sidebar 宽度也算进缩放基准，
     // 导致 vp 视觉尺寸溢出 viewport-wrap，被 sidebar 遮挡。
@@ -1233,8 +1232,9 @@
       return;
     }
     // 竖屏全屏：始终加 fs-rotated 视觉旋转（CSS rotate 90°）
-    // 部分浏览器（Chrome Android） orientation.lock 会成功但物理横屏
-    // 后内容布局不对，统一用 CSS 旋转保证所有设备视觉一致。
+    // 必先清 vp inline transform（scaleViewport 可能已写入），否则 inline scale
+    // 会覆盖样式表的 rotate(90deg)，华为上旋转不生效。
+    vp.style.transform = '';
     document.body.classList.add('fs-rotated');
     // 可选地尝试锁屏（给系统提示横幅用），结果不影响视觉
     try {

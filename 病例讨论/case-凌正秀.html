@@ -518,7 +518,7 @@
       --slide-h: 225px;
     }
     .slide-sidebar { display: none; }
-    .slide-container { gap: 0; padding: 4px 8px; flex-direction: column; position: relative; }
+    .slide-container { gap: 0; padding: 4px 8px; flex-direction: column; }
     .slide-viewport { max-width: none; max-height: none; }
     .slide-viewport-wrap { flex: 0 0 auto; }
     .slide { padding: 50px 14px 12px; }
@@ -608,11 +608,11 @@
     .fs .slide-mfs { display: none; }
 
     /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
-    .slide-container { flex: 1; justify-content: flex-start; padding: 0 8px; flex-direction: column; }
+    .slide-container { flex: 0 0 auto; justify-content: flex-start; padding: 0 8px; flex-direction: column; }
     .fs .slide-container { flex: 1; padding: 0; }
     .progress-wrap { display: none; }
-    .slide-viewport-wrap { justify-content: center; align-items: flex-start; padding-top: 30px; flex: 0 0 auto; }
-    .slide-img-hint { display: block; text-align: center; padding: 6px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; position: absolute; bottom: 0; left: 0; right: 0; }
+    .slide-viewport-wrap { justify-content: center; align-items: flex-start; padding-top: 0; flex: 0 0 auto; }
+    .slide-img-hint { display: block; text-align: center; padding: 10px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; flex-shrink: 0; }
     .slide-viewport { margin-top: 0; }
     .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
 

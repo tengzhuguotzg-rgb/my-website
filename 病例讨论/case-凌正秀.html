@@ -517,14 +517,14 @@
     .slide-container { gap: 0; padding: 4px 8px; }
     .slide-viewport { width: 100%; height: auto; aspect-ratio: 16 / 9; }
     .slide { padding: 35px 18px 10px; }
-    .meta-label { top: 8px; left: 18px; font-size: 10px; }
-    .slide-subtitle { top: 8px; left: 18px; font-size: 10px; }
+    .meta-label { top: 8px; left: 18px; font-size: clamp(8px, 2.5vw, 13px); }
+    .slide-subtitle { top: 8px; left: 18px; font-size: clamp(8px, 2.5vw, 13px); }
     .slide-title-bar { top: 22px; left: 18px; width: 28px; }
     .slide-title {
       position: static;
-      font-size: 15px;
+      font-size: clamp(12px, 4vw, 22px);
     }
-    .slide p, .slide li { font-size: 13px; }
+    .slide p, .slide li { font-size: clamp(10px, 3.2vw, 17px); }
     .center-title { font-size: 30px; }
     .center-sub { font-size: 18px; }
     .topbar { margin: 8px 8px 0; padding: 8px 14px; }

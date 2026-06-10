@@ -1191,8 +1191,11 @@
   function scaleViewport() {
     // 视觉横屏模式下由 CSS 接管 transform，不再做等比缩放
     if (document.body.classList.contains('fs-rotated')) return;
-    var ct = document.querySelector('.slide-container');
-    var cw = ct.clientWidth, ch = ct.clientHeight;
+    // 必须用 .slide-viewport-wrap（不含 sidebar 的可用区域），
+    // 用 .slide-container 会把 sidebar 宽度也算进缩放基准，
+    // 导致 vp 视觉尺寸溢出 viewport-wrap，被 sidebar 遮挡。
+    var wrap = document.querySelector('.slide-viewport-wrap');
+    var cw = wrap.clientWidth, ch = wrap.clientHeight;
     var sw = (vp.offsetWidth > 100 ? vp.offsetWidth : 1000), sh = (vp.offsetHeight > 100 ? vp.offsetHeight : 562.5);
     var s = Math.min(cw / sw, ch / sh);
     if (s >= 0.95 && s <= 1.05) { vp.style.transform = ''; return; }

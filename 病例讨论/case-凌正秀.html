@@ -211,7 +211,11 @@
     backdrop-filter: saturate(180%) blur(8px);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 30px 36px;
+    /* 顶部 130px 留给 absolute 定位的页眉组
+       (subtitle@30 + titleBar@50 + title@78 + 标题高度 ≈ 130)，
+       避免 flex 流元素 (img-grid / p / highlight-box)
+       从顶部开始撑满 slide 时覆盖页眉。 */
+    padding: 130px 36px 30px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -236,10 +240,16 @@
 
   /* ═══ 内部排版（固定 px 尺寸） ═══ */
   .slide-title {
+    /* absolute 定位，跟 .slide-subtitle / .slide-title-bar
+       组成统一的“页眉组”。避免 flex justify-content: center
+       在内容少的 slide 上把 title 推到顶部，跟 subtitle 重叠。 */
+    position: absolute;
+    top: 78px; left: 36px; right: 36px;
     font-family: 'Noto Serif SC', serif;
     font-size: 28px; font-weight: 700;
     color: var(--ink);
-    margin: 0 0 6px;
+    line-height: 1.3;
+    margin: 0;
     flex-shrink: 0;
   }
   .slide-subtitle {

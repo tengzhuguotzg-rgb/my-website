@@ -518,7 +518,7 @@
       --slide-h: 225px;
     }
     .slide-sidebar { display: none; }
-    .slide-container { gap: 0; padding: 4px 8px; }
+    .slide-container { gap: 0; padding: 4px 8px; flex-direction: column; }
     .slide-viewport { max-width: none; max-height: none; }
     .slide { padding: 50px 14px 12px; }
     .meta-label { top: 12px; left: 14px; font-size: 10px; }
@@ -607,11 +607,11 @@
     .fs .slide-mfs { display: none; }
 
     /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
-    .slide-container { flex: 1; justify-content: flex-start; padding: 0 8px; }
+    .slide-container { flex: 1; justify-content: flex-start; padding: 0 8px; flex-direction: column; }
     .fs .slide-container { flex: 1; padding: 0; }
     .progress-wrap { display: none; }
     .slide-viewport-wrap { justify-content: center; align-items: flex-start; padding-top: 30px; }
-    .slide-img-hint { display: block; text-align: center; padding: 0 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; }
+    .slide-img-hint { display: block; text-align: center; padding: 6px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; flex-shrink: 0; }
     .slide-viewport { margin-top: 0; }
     .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
 
@@ -1091,8 +1091,8 @@
     </div>
     </div>
     </div>
+    <div class="slide-img-hint">点击图片可放大</div>
   </div>
-  <div class="slide-img-hint">点击图片可放大</div>
 
   <div class="bottom-bar">
     <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>病例讨论·双下肢动脉闭塞·电风暴·Teng.ZG</title>
+<meta name="description" content="双下肢动脉闭塞伴坏疽·冠脉三支病变·PCI术后电风暴——从血管开通到电风暴抢救。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --slide-w: 1000px;
+    --slide-h: 562.5px;
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex; flex-direction: column;
+    height: 100vh; overflow: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); }
+
+  /* ═══ Topbar ═══ */
+  .topbar {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: opacity .3s, transform .3s;
+  }
+  .fs .topbar { opacity: 0; pointer-events: none; transform: translateY(-60px); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+  .crumb a { color: var(--ink-2); }
+  .crumb .sep { opacity: .4; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    transition: background .2s;
+    text-decoration: none;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+
+  /* ═══ Progress ═══ */
+  .progress-wrap {
+    flex-shrink: 0;
+    padding: 6px 16px 2px;
+    transition: opacity .3s;
+  }
+  .fs .progress-wrap { opacity: 0; }
+  .progress {
+    width: 100%; max-width: 1000px; margin: 0 auto;
+    height: 3px; background: var(--line); border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--accent); transition: width .35s ease; }
+
+  /* ═══ Slide Container ═══ */
+  .slide-container {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    padding: 6px 16px 6px 8px;
+    overflow: hidden;
+    position: relative;
+    gap: 8px;
+  }
+
+  .slide-sidebar {
+    flex-shrink: 0;
+    width: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(244,241,234,0.75);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 6px;
+    transition: opacity .3s;
+  }
+  .slide-sidebar::-webkit-scrollbar { width: 3px; }
+  .slide-sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+  /* ── 缩略图（类似PPT左侧预览） ── */
+  .thumb-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 2px solid var(--line);
+    margin-bottom: 8px;
+    cursor: pointer;
+    background: rgba(244,241,234,0.88);
+    transition: border-color .15s;
+  }
+  .thumb-wrap:hover { border-color: var(--ink-2); }
+  .thumb-wrap.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .thumb-inner {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1000px;
+    height: 562.5px;
+    transform-origin: 0 0;
+    pointer-events: none;
+    opacity: 0.85;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 90px 40px 30px;
+    background: rgba(244,241,234,0.88);
+    overflow: hidden;
+  }
+  .thumb-num {
+    position: absolute;
+    top: 3px; left: 3px;
+    z-index: 2;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    color: white;
+    background: rgba(31,61,47,0.65);
+    padding: 1px 5px;
+    border-radius: 4px;
+    line-height: 1.4;
+  }
+
+  .slide-viewport-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .slide-viewport {
+    position: relative;
+    width: var(--slide-w);
+    height: var(--slide-h);
+    flex-shrink: 0;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* ═══ 固定 1000×562.5 画布 ═══ */
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(244, 241, 234, 0.88);
+    backdrop-filter: saturate(180%) blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    /* 顶部 130px 留给 absolute 定位的页眉组
+       (subtitle@30 + titleBar@50 + title@78 + 标题高度 ≈ 130)，
+       避免 flex 流元素 (img-grid / p / highlight-box)
+       从顶部开始撑满 slide 时覆盖页眉。 */
+    padding: 130px 36px 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.exit-left { opacity: 0; }
+
+  /* ═══ 全屏：整个画布等比例放大 ═══ */
+  .fs .slide-container { padding: 0; }
+  .fs .slide-viewport {
+    max-width: none;
+    max-height: none;
+  }
+  .fs .slide { border-radius: 0; border: none; }
+  .fs .slide-sidebar { opacity: 0; pointer-events: none; }
+  .fs .thumb-strip { display: none; }
+  .fs .slide-img-hint { display: none; }
+
+  /* ═══ 内部排版（固定 px 尺寸） ═══ */
+  .slide-title {
+    /* absolute 定位，跟 .slide-subtitle / .slide-title-bar
+       组成统一的“页眉组”。避免 flex justify-content: center
+       在内容少的 slide 上把 title 推到顶部，跟 subtitle 重叠。 */
+    position: absolute;
+    top: 78px; left: 36px; right: 36px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .slide-subtitle {
+    position: absolute;
+    top: 30px; left: 36px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    z-index: 1;
+  }
+  .slide-title-bar {
+    position: absolute;
+    top: 50px; left: 36px;
+    width: 36px; height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    z-index: 1;
+  }
+  .meta-label {
+    position: absolute;
+    top: 30px; left: 36px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    z-index: 1;
+  }
+  .slide p, .slide li {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+  .slide ul { padding-left: 18px; margin: 4px 0; }
+  .highlight-box {
+    padding: 10px 14px;
+    background: rgba(231,111,44,0.06);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .highlight-box p { font-size: 14px; margin: 0; }
+  .key-tag {
+    display: inline-flex;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(231,111,44,0.08);
+    border: 1px solid rgba(231,111,44,0.18);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin: 3px 3px 0 0;
+    flex-shrink: 0;
+  }
+  .ref {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; color: var(--text-faint);
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px dashed var(--line);
+    flex-shrink: 0;
+  }
+  .center-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .center-sub {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; color: var(--text-dim);
+    text-align: center;
+    margin-top: 4px;
+  }
+  .center-sub.small { font-size: 16px; }
+
+  /* ═══ 图片网格 ═══ */
+  .img-grid {
+    display: grid;
+    gap: 8px;
+    margin-top: 6px;
+    width: 100%;
+    min-height: 0;
+    flex: 1;
+  }
+  .img-grid .img-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(31,61,47,0.03);
+    border: 1px solid var(--line);
+    cursor: zoom-in;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .img-grid .img-wrap img {
+    display: block; width: 100%; height: 100%;
+    object-fit: contain;
+  }
+  .img-grid.c1 { grid-template-columns: 1fr; }
+  .img-grid.c2 { grid-template-columns: 1fr 1fr; }
+  .img-grid.c3 { grid-template-columns: 1fr 1fr 1fr; }
+  .img-grid.c4 { grid-template-columns: 1fr 1fr; }
+  .img-grid.c5 { grid-template-columns: 3fr 2fr; }
+  .img-grid.c5 .img-wrap:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .img-grid.c5 .img-wrap:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .img-grid.c5 .img-wrap:nth-child(3) { grid-column: 2; grid-row: 2; }
+  .img-grid.c5 .img-wrap:nth-child(4) { grid-column: 1; grid-row: 3; }
+  .img-grid.c5 .img-wrap:nth-child(5) { grid-column: 2; grid-row: 3; }
+
+  .slide-image-only {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex: 1; gap: 4px;
+  }
+
+  /* ═══ Lightbox ═══ */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 500;
+    display: none; align-items: center; justify-content: center;
+    padding: 16px; cursor: zoom-out;
+    overflow: hidden;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-bg {
+    position: absolute; inset: 0;
+    background: rgba(31,61,47,0.92);
+    backdrop-filter: blur(16px);
+  }
+  .lb-stage {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox img {
+    display: block;
+    width: 95vw;
+    height: 95vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    cursor: zoom-out;
+    pointer-events: none;
+  }
+  .lightbox img.zoomed {
+    cursor: zoom-out;
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+    /* 不设具体尺寸，用 JS 获取原始尺寸 */
+  }
+  .lightbox-hint {
+    position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 501;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 1px;
+    color: rgba(255,255,255,0.55);
+    background: rgba(31,61,47,0.5);
+    padding: 6px 14px;
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .slide-mfs { display: none; }
+.slide-img-hint { display: none; }
+
+/* ═══ Bottom bar（导航 + 全屏按钮） ═══ */
+  .bottom-bar {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    gap: 24px;
+    padding: 8px 16px 14px;
+    transition: opacity .3s;
+  }
+  .fs .bottom-bar { opacity: 0; pointer-events: none; }
+  /* 全屏悬浮退出按钮 —— 圆形对称图标，固定在物理屏幕右下角
+     物理屏幕右下角 = viewport 旋转90° 后视觉横屏的右上角
+     圆形图标旋转90° 视觉无差别，无需反向旋转抵消 */
+  .fs-exit-btn {
+    display: none;
+  }
+  .fs .fs-exit-btn {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; bottom: 16px; right: 16px;
+    z-index: 300;
+    width: 32px; height: 32px;
+    background: rgba(31,61,47,0.35);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .fs .fs-exit-btn:hover { background: rgba(31,61,47,0.55); color: #fff; }
+  .nav-btn {
+    padding: 9px 24px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 500;
+    transition: background .2s;
+    cursor: pointer;
+  }
+  .nav-btn:hover { background: var(--ink-2); }
+  .nav-btn:disabled { opacity: .3; cursor: default; background: var(--text-faint); }
+  .nav-counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; color: var(--text-dim);
+    letter-spacing: 1px;
+    min-width: 90px; text-align: center;
+  }
+  .nav-counter .current { color: var(--ink); font-weight: 600; }
+  .fs-btn {
+    padding: 9px 22px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 500;
+    transition: background .2s;
+    cursor: pointer;
+  }
+  .fs-btn:hover { background: var(--ink-2); }
+  /* 页码方框 */
+  .page-box {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.6em; height: 1.5em;
+    border: 2px solid var(--ink);
+    vertical-align: middle;
+    position: relative; top: -1px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .15s;
+    user-select: none;
+    vertical-align: middle;
+  }
+  .page-box:hover { background: rgba(31,61,47,0.06); }
+  .page-input {
+    width: 1.6em; height: 1.5em;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: inherit;
+    font-weight: 600;
+    color: var(--ink);
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    background: var(--bg);
+    outline: none;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .page-input:focus { box-shadow: 0 0 0 2px rgba(231,111,44,0.25); }
+  /* 去掉数字输入框的上下箭头 */
+  .page-input::-webkit-outer-spin-button,
+  .page-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .page-input[type=number] { -moz-appearance: textfield; }
+  #pageTotal { vertical-align: middle; }
+
+  @media (max-width: 900px) {
+    :root {
+      --slide-w: 400px;
+      --slide-h: 225px;
+    }
+    .slide-sidebar { display: none; }
+    .slide-container { gap: 0; padding: 4px 8px; flex-direction: column; }
+    .slide-viewport { max-width: none; max-height: none; }
+    .slide-viewport-wrap { flex: 0 0 auto; padding: 0 32px; }
+    .slide { padding: 50px 14px 12px; }
+    .meta-label { top: 12px; left: 14px; font-size: 10px; }
+    .slide-subtitle { top: 12px; left: 14px; font-size: 10px; }
+    .slide-title-bar { top: 28px; left: 14px; width: 14px; }
+    .slide-title {
+      position: absolute;
+      top: 32px; left: 14px; right: 14px;
+      font-size: 16px;
+    }
+    .slide p, .slide li { font-size: 14px; }
+    .center-title { font-size: 30px; }
+    .center-sub { font-size: 18px; }
+    .topbar { margin: 8px 8px 0; padding: 8px 14px; }
+    .brand-mark { width: 30px; height: 30px; font-size: 14px; }
+    .brand-name { font-size: 13px; }
+    .brand-sub { font-size: 11px; }
+    .crumb { display: none; }
+    .home-pill { padding: 5px 10px; font-size: 11px; }
+    .bottom-bar { display: none; }
+    .page-box, #pageTotal { display: none; }
+
+    /* 横向缩略图条 */
+    .thumb-strip {
+        display: flex; gap: 9px;
+        padding: 9px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-shrink: 0;
+        background: rgba(244,241,234,0.7);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+        -webkit-overflow-scrolling: touch;
+    }
+    .thumb-strip::-webkit-scrollbar { height: 2px; }
+    .thumb-strip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+    .thumb-strip .ts-thumb {
+        flex-shrink: 0;
+        width: 240px;
+        position: relative;
+        aspect-ratio: 16 / 9;
+        border-radius: 6px;
+        border: 2px solid var(--line);
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        background: rgba(244,241,234,0.88);
+        transition: border-color .15s;
+    }
+    .thumb-strip .ts-thumb:hover { border-color: var(--ink-2); }
+    .thumb-strip .ts-thumb.active { border-color: var(--accent); }
+    .thumb-strip .ts-thumb .ts-num {
+        position: absolute; top: 3px; left: 3px;
+        z-index: 2;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 12px; font-weight: 600;
+        color: white;
+        background: rgba(31,61,47,0.6);
+        padding: 1px 4px;
+        border-radius: 3px;
+        line-height: 1.3;
+    }
+    .thumb-strip .ts-thumb .thumb-mini {
+        width: 100%; height: 100%;
+        display: block;
+    }
+
+    /* 幻灯片内浮动全屏按钮 */
+    .slide-mfs {
+        display: flex;
+        position: absolute; top: 8px; right: 8px;
+        z-index: 10;
+        width: 32px; height: 32px;
+        align-items: center; justify-content: center;
+        background: rgba(31,61,47,0.35);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 50%;
+        color: rgba(255,255,255,0.7);
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .slide-mfs:hover { background: rgba(31,61,47,0.55); color: #fff; }
+    .fs .slide-mfs { display: none; }
+
+    /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
+    .slide-container { flex: 0 0 auto; justify-content: flex-start; padding: 0 8px; flex-direction: column; }
+    .fs .slide-container { flex: 1; padding: 0; }
+    .progress-wrap { display: none; }
+    .slide-viewport-wrap { justify-content: center; align-items: flex-start; padding: 30px 32px 0; flex: 0 0 auto; }
+    .slide-img-hint { display: block; text-align: center; padding: 10px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; flex-shrink: 0; }
+    .slide-viewport { margin-top: 0; }
+    .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
+
+    /* ═══ 视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ═══
+       物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
+       让 slide 内容视觉上变横屏。退出按钮是圆形图标 + fixed 定位，不参与此旋转 */
+    .fs.fs-rotated .slide-viewport-wrap { padding: 0; }
+    .fs.fs-rotated .slide-viewport {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: calc(100vh - 64px);
+      height: calc(100vw - 64px);
+      margin: 0;
+      aspect-ratio: auto;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+
+    /* ═══ Lightbox：fs-rotated 模式下跟随视觉横屏 ═══
+       用同样的技巧旋转 lb-stage，图片作为子元素跟着转，
+       视觉上以横屏方式显示（95vh × 95vw）
+       退出按钮改为圆形图标固定在屏幕右下角 = 视觉右上角 */
+    .fs.fs-rotated .lb-stage {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 100vh;   /* 旋转后"宽" = 物理屏幕高 */
+      height: 100vw;  /* 旋转后"高" = 物理屏幕宽 */
+      margin: 0;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+    .fs.fs-rotated .lightbox img {
+      width: 95vh;   /* 视觉横屏的高 */
+      height: 95vw;  /* 视觉横屏的宽 */
+      max-width: 95vh;
+      max-height: 95vw;
+      object-fit: contain;
+    }
+    /* 提示文字：物理屏幕左侧中央（不旋转，圆形图标不需要方向） */
+    .fs.fs-rotated .lightbox-hint {
+      top: 50% !important;
+      left: 16px !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: translateY(-50%);
+      transform-origin: center center;
+      white-space: nowrap;
+    }
+
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">Critical Care Medicine</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="crumb" aria-label="面包屑">
+        <a href="../cases.html">病例讨论</a>
+        <span class="sep">/</span>
+        <span>张建中</span>
+      </nav>
+      <a href="../cases.html" class="home-pill">← 返回</a>
+    </div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress"><div class="progress-fill" id="progressFill" style="width:2.9%"></div></div>
+  </div>
+
+  <div class="thumb-strip" id="thumbStrip"></div>
+
+
+  <div class="slide-container">
+    <div class="slide-sidebar" id="sidebar"></div>
+    <div class="slide-viewport-wrap">
+    <div class="slide-viewport" id="viewport">
+
+      <!-- 1: 封面 -->
+      <div class="slide active" data-index="0">
+        <button class="slide-mfs">⛶</button>
+        <div class="slide-image-only">
+          <div class="center-title">病例讨论</div>
+          <div class="center-sub">张建中</div>
+          <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
+          <div class="center-sub small">2025年06月19日</div>
+        </div>
+      </div>
+
+            <!-- 2: 基础情况 -->
+      <div class="slide" data-index="1">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Baseline</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">基础情况</div>
+        <p>张建中，男性，62岁，因"<strong>双下肢疼痛3月，溃疡2月</strong>"拟双下肢动脉硬化闭塞症伴坏疽2025-05-27收入血管外科。</p>
+     <div class="highlight-box" style="margin-top:8px;">
+       <p><strong>基础疾病：</strong>高血压20年（未服药）· 糖尿病20年（瑞格列奈）· 慢性肾衰竭3年（规律透析）</p>
+     </div>
+     <p style="margin-top:8px;"><strong>入院心超：</strong>左室壁运动欠协调、心尖部搏幅稍减低。ECG：不定型室内阻滞伴ST-T改变。BNP前体＞35000，TnI 0.143</p>
+      </div>
+      <!-- 3: 入院相关检查（心脏） -->
+      <div class="slide" data-index="2">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Admission</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">入院相关检查（心脏）</div>
+        <p><strong>心超：</strong>左室壁运动欠协调、心尖部搏幅稍减低。EF 51%</p>
+     <p><strong>ECG：</strong>不定型室内阻滞伴ST-T改变，ST段：II、III、avF、V5、V6压低≥0.05mV</p>
+     <p><strong>BNP前体＞35000，TnI 0.143</strong></p>
+     <div class="highlight-box">
+       <p><strong>心血管二科会诊：</strong></p>
+       <p>慢性心力衰竭（射血分数保留型，EF51%）心功能II~III级</p>
+       <p>高血压性心脏病 · 可疑冠心病——建议冠脉造影</p>
+       <p style="font-size:12px;">控制入量＜1500ml/d · 目标BP＜130/80mmHg</p>
+     </div>
+     <p><strong>实验室：</strong>Cr 568μmol/L · BUN 18mmol/L · ALT 736U/L · AST 698U/L · D-Dimer 1.4</p>
+      </div>
+      <!-- 4: 入院CT -->
+      <div class="slide" data-index="3">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">CT Findings</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">入院CT</div>
+        <div class="highlight-box">
+       <p><strong>头胸腹CT（2025-05-27）：</strong></p>
+       <p>• 双侧基底节区腔隙性脑梗塞 · 脑萎缩 · 双侧颈内/椎动脉钙化</p>
+       <p>• 慢支炎、肺气肿 · 双肺散在小结节（中低危）</p>
+       <p>• 心脏增大 · 主动脉及冠状动脉多发钙化</p>
+       <p>• 双肾萎缩并多发囊肿 · 左侧肾上腺增粗</p>
+       <p>• 双侧胸膜腔少量积液 · 肝内小钙化灶</p>
+     </div>
+      </div>
+      <!-- 5: 血管介入 -->
+      <div class="slide" data-index="4">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Angiography</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">血管介入</div>
+        <p><strong>2025-05-28 下肢动脉造影：</strong></p>
+     <p>右侧髂外动脉多处中-重度狭窄，右股浅动脉起始部纤细→以下闭塞，股深动脉代偿</p>
+     <p>左侧股浅动脉上段纤细→以下闭塞</p>
+     <div class="highlight-box">
+       <p><strong>2025-05-30 冠脉造影：</strong></p>
+       <p>LAD近-中段最重60%狭窄 · LCX中段最重60%狭窄</p>
+       <p><strong>RCA近-中段最重75%狭窄，中远段最重99%次全闭塞，TIMI 1级</strong></p>
+       <p>有冠脉手术指征</p>
+     </div>
+      </div>
+      <!-- 6: 转入ICU · PCI -->
+      <div class="slide" data-index="5">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">ICU Stay</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">转入ICU · PCI</div>
+        <p><strong>2025-05-30</strong></p>
+     <p><strong>14:36</strong> 转入ICU监护治疗</p>
+     <p><strong>16:00</strong> 行经皮冠状动脉旋磨术+PTCA</p>
+     <p>术后入ICU行CRRT及监护治疗</p>
+     <div class="highlight-box" style="margin-top:8px;">
+       <p><strong>药物治疗：</strong>头孢呋辛 · 法莫替丁 · 多烯磷脂酰胆碱</p>
+       <p>CRRT · 吲哚布芬+氯吡格雷双抗 · 普伐他汀</p>
+       <p>沙库巴曲缬沙坦 · 右美托咪定+氟哌啶醇镇静</p>
+     </div>
+     <p><strong>2025-05-31 17:30</strong> 患者不配合，强行转出</p>
+     <p><strong>2025-06-02</strong> 早上查房：神志嗜睡，精神差。神内会诊诊断：代谢性脑病？</p>
+      </div>
+      <!-- 7: 意识障碍 -->
+      <div class="slide" data-index="6">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Consciousness</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">意识障碍</div>
+        <p><strong>2025-06-02 13:00</strong> 透析前突发意识丧失</p>
+     <p>右侧瞳孔散大(5mm) vs 左侧(3mm)，光反应迟钝</p>
+     <p>约2分钟后呼之可应，无抽搐凝视</p>
+     <div class="highlight-box">
+       <p><strong>讨论：意识障碍，应做如何诊断？</strong></p>
+     </div>
+     <p>神内会诊：意识丧失待查：癫痫？建议复查头CT、排除心脏病变</p>
+     <p><strong>再次转入ICU</strong></p>
+     <p>入科诊断：意识障碍原因待查（完整诊断20项）</p>
+      </div>
+      <!-- 8: 室颤 · 电风暴 -->
+      <div class="slide" data-index="7">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">VF Storm</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">室颤 · 电风暴</div>
+        <p><strong>2025-06-02 15:14</strong> 突发呼之不应，面色苍白，四肢厥冷</p>
+     <p>BP/SpO₂测不出 <strong>HR 250bpm</strong> ECG示：室颤</p>
+     <div class="highlight-box">
+       <p><strong>抢救经过：</strong></p>
+       <p>CPR · 肾上腺素1mg · 双向同步电除颤200J</p>
+       <p>恢复窦律后<strong>反复室颤7次</strong>（15:14-16:00）</p>
+       <p>反复CPR+电除颤+肾上腺素+利多卡因+胺碘酮+硫酸镁+极化液</p>
+       <p>气管插管+有创呼吸机 · 床旁CRRT</p>
+     </div>
+     <p><strong>18:50、21:04</strong> 再次室颤，CPR+电除颤后恢复</p>
+     <p><strong>24h动态心电图：</strong>室速172阵（最快247bpm）· 室早4566次 · 最长RR 1.724s</p>
+      </div>
+      <!-- 9: 电风暴后治疗 -->
+      <div class="slide" data-index="8">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Post-VF Care</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">电风暴后治疗</div>
+        <div class="highlight-box">
+       <p><strong>心内科会诊意见：</strong></p>
+       <p>补充诊断：频发室性期前收缩</p>
+       <p>艾司洛尔+胺碘酮泵入防电风暴</p>
+       <p>纠正电解质紊乱（K⁺维持在4.5-5.0mmol/L）</p>
+       <p>病情稳定后择期冠脉支架+ICD植入</p>
+     </div>
+     <p><strong>06-03</strong> 停利多卡因后频发室早二联律，加用后消失</p>
+     <p><strong>06-04</strong> QT间期延长，停用胺碘酮</p>
+     <p><strong>06-05</strong> 富马酸比索洛尔2.5mg · 拔除气管插管</p>
+     <p><strong>06-08</strong> 转入普通病房</p>
+     <p><strong>06-12</strong> 出院</p>
+      </div>
+      <!-- 10: 电风暴（Electrical Storm, ES） -->
+      <div class="slide" data-index="9">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Concept</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">电风暴（Electrical Storm, ES）</div>
+        <p>一种危及生命的心脏电不稳定状态，特征为短时间内反复发作的持续性室性心律失常</p>
+     <div class="highlight-box">
+       <p><strong>临床标准：</strong>24h内出现<strong>≥3次</strong>持续性室性心律失常（含ICD放电），每次间隔≥5min</p>
+     </div>
+     <p>多为单形性室速（MMVT），也可为多形性室速（PMVT）和室颤（VF）</p>
+     <p style="margin-top:6px;font-size:12px;color:var(--text-faint);">Jentzer JC, J Am Coll Cardiol. 2023;81(22):2189-2206</p>
+      </div>
+      <!-- 11: 危险因素 -->
+      <div class="slide" data-index="10">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Risk Factors</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">危险因素</div>
+        <p>77%-94%的ES患者存在<strong>基础结构性心脏病</strong>（多为晚期心肌病）</p>
+     <div class="highlight-box">
+       <p><strong>危险因素：</strong></p>
+       <p>LVEF降低 · 高龄 · QRS波时限延长</p>
+       <p>未接受规范GDMT · 慢性肾脏病</p>
+       <p>既往室性心律失常史（尤其单形性室速为首发心律）</p>
+     </div>
+     <p style="margin-top:6px;font-size:12px;color:var(--text-faint);">Jentzer JC, J Am Coll Cardiol. 2023;81(22):2189-2206</p>
+      </div>
+      <!-- 12: 病理生理学 -->
+      <div class="slide" data-index="11">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Pathophysiology</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">病理生理学</div>
+        <p>在存在解剖/电学异常基质（心肌瘢痕）的个体中：</p>
+     <div class="highlight-box">
+       <p><strong>触发因素</strong>（缺血、炎症、血流动力学失代偿、药物、电解质紊乱）</p>
+       <p>⟶ <strong>自主神经失衡</strong> ⟶ 持续性室性心律失常</p>
+     </div>
+     <p>① 折返机制（reentry）</p>
+     <p>② 后除极触发活动（after depolarizations）</p>
+     <p>③ <strong>持续化恶性循环：</strong>触发因素+交感过度激活→VA反复→电风暴</p>
+     <p style="margin-top:6px;font-size:12px;color:var(--text-faint);">Jentzer JC, J Am Coll Cardiol. 2023;81(22):2189-2206</p>
+      </div>
+      <!-- 13: 诊断性评估 -->
+      <div class="slide" data-index="12">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Diagnosis</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">诊断性评估</div>
+        <p><strong>初始评估：</strong>评估心律失常 · 识别触发因素 · 了解心脏基质 · 血流动力学 · 风险分层</p>
+     <div class="highlight-box">
+       <p><strong>高风险VA特征：</strong></p>
+       <p>VF/PMVT · 更快心室率 · 频繁/持续VA发作</p>
+       <p>退化为VF倾向 · ICD治疗失败 · 短偶联PVC触发</p>
+     </div>
+     <p>从ICD询问和遥测中获取VA发作频率/持续时间信息</p>
+     <p>连续12导联ECG监测</p>
+     <p style="margin-top:6px;font-size:12px;color:var(--text-faint);">Jentzer JC, J Am Coll Cardiol. 2023;81(22):2189-2206</p>
+      </div>
+      <!-- 14: 识别触发因素 -->
+      <div class="slide" data-index="13">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Triggers</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">识别触发因素</div>
+        <div class="highlight-box">
+       <p><strong>潜在触发因素：</strong></p>
+       <p>心肌缺血 · 心力衰竭/容量过负荷 · 发热</p>
+       <p>药物毒性/QT延长 · 交感/副交感失衡</p>
+       <p>非心脏器官衰竭 · 甲状腺毒症</p>
+       <p><strong>电解质紊乱</strong>（低/高K⁺ · 低Mg²⁺）</p>
+     </div>
+     <p><strong>初始实验室：</strong>电解质 · 乳酸 · 肾/肝/甲状腺功能 · 心脏标志物</p>
+     <p><strong>已确诊CAD/ICM患者必须排除心肌缺血</strong></p>
+     <p style="margin-top:6px;font-size:12px;color:var(--text-faint);">Jentzer JC, J Am Coll Cardiol. 2023;81(22):2189-2206</p>
+      </div>
+      <!-- 15: 管理 -->
+      <div class="slide" data-index="14">
+    <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Management</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">管理</div>
+        <div class="img-grid c1">
+       <div class="img-wrap"><img src="images/case-张建中/es-management.png" alt="电风暴管理流程图" loading="lazy"></div>
+     </div>
+     <p style="margin-top:6px;font-size:12px;color:var(--text-faint);">Jentzer JC, J Am Coll Cardiol. 2023;81(22):2189-2206</p>
+      </div>
+          <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
+          <div class="center-sub small">肾盂肾炎 · 脓毒症休克 · ARDS · DIC</div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    </div>
+    <div class="slide-img-hint">点击图片可放大</div>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>
+    <button class="nav-btn" id="homeBtn" disabled style="padding:6px 12px;">◉ 首页</button>
+    <span class="nav-counter" id="counter"><span class="page-box" id="pageBox"><span class="current" id="pageDisplay">1</span></span><span id="pageTotal"> / 34</span></span>
+    <button class="fs-btn" id="fsBtn">⛶ 全屏</button>
+    <button class="nav-btn" id="nextBtn">下一页 →</button>
+  </div>
+
+  <button class="fs-exit-btn" id="fsExitBtn" aria-label="退出全屏">⛶</button>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-bg"></div>
+    <div class="lb-stage">
+      <img id="lbImg" src="" alt="">
+    </div>
+  </div>
+
+<script>
+(function(){
+  var S = document.querySelectorAll('#viewport .slide');
+  var N = S.length, C = 0, FS = false;
+  var ctr = document.getElementById('counter');
+  var pb = document.getElementById('prevBtn'), nb = document.getElementById('nextBtn');
+  var pf = document.getElementById('progressFill');
+
+  function go(i) {
+    if (i < 0 || i >= N) return;
+    S.forEach(function(s, t) {
+      s.classList.remove('active', 'exit-left');
+      if (t === i) s.classList.add('active');
+      else if (t < i) s.classList.add('exit-left');
+    });
+    C = i;
+    pb.disabled = i === 0; nb.disabled = i === N - 1; hb.disabled = i === 0;
+    pf.style.width = ((i + 1) / N * 100) + '%';
+    var pd = document.getElementById('pageDisplay');
+    if (pd) pd.textContent = i + 1;
+    updateSidebar();
+    if (typeof updateThumbStrip === 'function') updateThumbStrip();
+  }
+
+  pb.addEventListener('click', function(){ go(C - 1); });
+  nb.addEventListener('click', function(){ go(C + 1); });
+
+  /* 首页按钮 */
+  var hb = document.getElementById('homeBtn');
+  hb.addEventListener('click', function(){ go(0); });
+
+  /* 页码方框点击 → 内联输入 */
+  var pageBox = document.getElementById('pageBox');
+  pageBox.addEventListener('click', function(e) {
+    if (e.target.tagName === 'INPUT') return;
+    var input = document.createElement('input');
+    input.type = 'number';
+    input.min = 1;
+    input.max = N;
+    input.className = 'page-input';
+    input.value = C + 1;
+    pageBox.innerHTML = '';
+    pageBox.appendChild(input);
+    input.focus();
+    input.select();
+    function finish() {
+      var val = parseInt(input.value, 10);
+      if (!isNaN(val) && val >= 1 && val <= N) go(val - 1);
+      pageBox.innerHTML = '<span class="current" id="pageDisplay">' + (C + 1) + '</span>';
+    }
+    input.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); finish(); }
+      if (ev.key === 'Escape') {
+        pageBox.innerHTML = '<span class="current" id="pageDisplay">' + (C + 1) + '</span>';
+      }
+    });
+    input.addEventListener('blur', finish);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(C - 1); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(C + 1); }
+    if (e.key === 'Escape' && FS) { toggleFS(); }
+  });
+
+  /* 触摸滑动翻页（手机上用垂直滑动，桌面触控板用水平） */
+  (function(){
+    var tx = 0, ty = 0;
+    document.addEventListener('touchstart', function(e){
+      // 忽略滑块条上的触摸（避免与横向滚动冲突）
+      if (e.target.closest('.thumb-strip')) return;
+      tx = e.changedTouches[0].screenX;
+      ty = e.changedTouches[0].screenY;
+    });
+    document.addEventListener('touchend', function(e){
+      // 忽略滑块条区域
+      if (e.target.closest('.thumb-strip')) return;
+      var dx = tx - e.changedTouches[0].screenX;
+      var dy = ty - e.changedTouches[0].screenY;
+      // 优先检测垂直滑动
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
+        if (dy > 0) go(C + 1); else go(C - 1);
+      } else if (Math.abs(dx) > 70) {
+        if (dx > 0) go(C + 1); else go(C - 1);
+      }
+    });
+  })();
+
+  var vp = document.getElementById('viewport');
+  var fsBtn = document.getElementById('fsBtn');
+
+  /* 全屏退出按钮 */
+  document.getElementById('fsExitBtn').addEventListener('click', function(){ toggleFS(); });
+
+  /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
+  function scaleViewport() {
+    // 视觉横屏模式下由 CSS 接管 transform（CSS rotate 需无 inline transform 冲突）
+    if (document.body.classList.contains('fs-rotated')) return;
+    // 必须用 .slide-viewport-wrap（不含 sidebar 的可用区域），
+    // 用 .slide-container 会把 sidebar 宽度也算进缩放基准，
+    // 导致 vp 视觉尺寸溢出 viewport-wrap，被 sidebar 遮挡。
+    var wrap = document.querySelector('.slide-viewport-wrap');
+    var cw = wrap.clientWidth, ch = wrap.clientHeight;
+    var sw = (vp.offsetWidth > 100 ? vp.offsetWidth : 1000), sh = (vp.offsetHeight > 100 ? vp.offsetHeight : 562.5);
+    var s = Math.min(cw / sw, ch / sh);
+    if (s >= 0.95 && s <= 1.05) { vp.style.transform = ''; return; }
+    vp.style.transform = 'scale(' + s + ')';
+    vp.style.transformOrigin = 'center center';
+  }
+
+  /* ═══ 强制横屏：先尝试 Screen Orientation API（物理锁屏），
+       失败时给 body 加 .fs-rotated → CSS 视觉旋转 viewport 90° ═══ */
+  function doLock() {
+    // 桌面或已经是横屏 → 不需要旋转
+    var isPortrait = window.matchMedia('(orientation: portrait)').matches;
+    if (!isPortrait) {
+      document.body.classList.remove('fs-rotated');
+      return;
+    }
+    // 竖屏全屏：始终加 fs-rotated 视觉旋转（CSS rotate 90°）
+    // 必先清 vp inline transform（scaleViewport 可能已写入），否则 inline scale
+    // 会覆盖样式表的 rotate(90deg)，华为上旋转不生效。
+    vp.style.transform = '';
+    document.body.classList.add('fs-rotated');
+    // 可选地尝试锁屏（给系统提示横幅用），结果不影响视觉
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(function(){});
+      } else if (screen.lockOrientation) {
+        screen.lockOrientation('landscape');
+      }
+    } catch(e) {}
+  }
+
+  function toggleFS() {
+    if (!FS) {
+      var fsPromise = null;
+      if (document.documentElement.requestFullscreen) { fsPromise = document.documentElement.requestFullscreen(); }
+      else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); }
+      document.body.classList.add('fs');
+      FS = true;
+      fsBtn.textContent = '⛶ 退出';
+      if (fsPromise && fsPromise.then) {
+        fsPromise.then(function(){ doLock(); }).catch(function(){ doLock(); });
+      } else {
+        setTimeout(doLock, 300);
+      }
+      setTimeout(scaleViewport, 100);
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      document.body.classList.remove('fs');
+      document.body.classList.remove('fs-rotated');
+      FS = false;
+      fsBtn.textContent = '⛶ 全屏';
+      setTimeout(scaleViewport, 100);
+    }
+  }
+  fsBtn.addEventListener('click', toggleFS);
+
+  function onFSChange() {
+    var inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    if (!inFS && FS) {
+      document.body.classList.remove('fs');
+      document.body.classList.remove('fs-rotated');
+      FS = false;
+      fsBtn.textContent = '⛶ 全屏';
+    }
+    else if (inFS && !FS) {
+      document.body.classList.add('fs');
+      FS = true;
+      fsBtn.textContent = '⛶ 退出';
+      // 系统级退出后再进入，重新评估旋转策略
+      doLock();
+    }
+    setTimeout(scaleViewport, 150);
+  }
+  document.addEventListener('fullscreenchange', onFSChange);
+  document.addEventListener('webkitfullscreenchange', onFSChange);
+
+  /* 全屏翻页 */
+  document.addEventListener('click', function(e) {
+    if (!FS) return;
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.img-wrap') || e.target.closest('.lightbox')) return;
+    var sel = window.getSelection();
+    if (sel && sel.toString().trim().length > 0) { sel.removeAllRanges(); return; }
+    if (e.clientX < window.innerWidth / 2) go(C - 1); else go(C + 1);
+  });
+
+  /* 滚轮翻页（全屏和未全屏均生效） */
+  document.addEventListener('wheel', function(e) {
+    if (e.target.closest('.lightbox') || e.target.closest('input') || e.target.closest('.slide-sidebar')) return;
+    e.preventDefault();
+    if (e.deltaY > 0) go(C + 1); else go(C - 1);
+  }, { passive: false });
+
+  /* Lightbox */
+  var lb = document.getElementById('lightbox'), li = document.getElementById('lbImg');
+  var lbGroup = [];
+  var lbIndex = 0;
+
+  function lbOpen(imgEl) {
+    var grid = imgEl.closest('.img-grid');
+    lbGroup = grid ? Array.prototype.slice.call(grid.querySelectorAll('img')) : [imgEl];
+    lbIndex = lbGroup.indexOf(imgEl);
+    lbShow();
+    lb.classList.add('open');
+  }
+
+  /* 在 lightbox 中显示图片——已限定到屏幕内，避免超大图溢出 */
+  function lbShow() {
+    li.src = lbGroup[lbIndex].src;
+    var stage = li.parentElement;
+    if (stage) { stage.scrollLeft = 0; stage.scrollTop = 0; }
+  }
+
+  function lbClose() {
+    lb.classList.remove('open');
+    lbGroup = [];
+  }
+
+  /* 点击 lightbox 任意位置关闭 */
+  lb.addEventListener('click', function(e) {
+    lbClose();
+  });
+
+  document.addEventListener('click', function(e){
+    var img = e.target.closest('.img-wrap img');
+    if (img && !e.target.closest('.lightbox')) { lbOpen(img); return; }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') { lbClose(); }
+      else if (e.key === 'ArrowLeft' && lbGroup.length > 1) { lbIndex = (lbIndex - 1 + lbGroup.length) % lbGroup.length; lbShow(); }
+      else if (e.key === 'ArrowRight' && lbGroup.length > 1) { lbIndex = (lbIndex + 1) % lbGroup.length; lbShow(); }
+    }
+  });
+
+  /* 绑定幻灯片内全屏按钮 */
+  document.querySelectorAll('.slide-mfs').forEach(function(btn) {
+    btn.addEventListener('click', function(e) { e.stopPropagation(); toggleFS(); });
+  });
+
+  /* 窗口变化时重新缩放 */
+  window.addEventListener('resize', scaleViewport);
+
+  /* 构建侧栏缩略图 */
+  /* 构建手机横向缩略图 */
+  function buildThumbStrip() {
+    var strip = document.getElementById('thumbStrip');
+    if (!strip) return;
+    // 只在手机模式（sidebar隐藏）下构建
+    var sb = document.querySelector('.slide-sidebar');
+    if (sb && sb.offsetParent !== null) { strip.style.display = 'none'; return; }
+    strip.style.display = '';
+    strip.innerHTML = '';
+    var S = document.querySelectorAll('#viewport .slide');
+    if (!S || !S.length) return;
+    for (let si = 0; si < S.length; si++) {
+        var s = S[si];
+        var wrap = document.createElement('div');
+        wrap.className = 'ts-thumb' + (si === 0 ? ' active' : '');
+        strip.appendChild(wrap);
+        var inner = document.createElement('div');
+        inner.style.cssText = 'position:absolute;top:0;left:0;width:1000px;height:562.5px;transform-origin:0 0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:30px 36px;background:rgba(244,241,234,0.88);overflow:hidden;';
+        inner.innerHTML = s.innerHTML;
+        var tscale = (wrap.offsetWidth || 160) / 1000;
+        inner.style.transform = 'scale(' + tscale + ')';
+        wrap.appendChild(inner);
+        var num = document.createElement('div');
+        num.className = 'ts-num';
+        num.textContent = si + 1;
+        wrap.appendChild(num);
+        // 触摸：只有点击（不滑动）才跳转
+        (function(idx){
+          var tx = 0, ty = 0;
+          wrap.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].screenX; ty = e.changedTouches[0].screenY; });
+          wrap.addEventListener('touchend', function(e){
+            var dx = Math.abs(tx - e.changedTouches[0].screenX);
+            var dy = Math.abs(ty - e.changedTouches[0].screenY);
+            if (dx < 10 && dy < 10) { e.preventDefault(); go(idx); }
+          });
+        })(si);
+    }
+}
+
+  function updateThumbStrip() {
+    var wraps = document.querySelectorAll('.ts-thumb');
+    if (!wraps || !wraps.length) return;
+    for (var ui = 0; ui < wraps.length; ui++) {
+        wraps[ui].classList.toggle('active', ui === C);
+        if (ui === C) wraps[ui].scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+  }
+  try { buildThumbStrip(); } catch(e) { console.error("thumbStrip error:", e); }
+
+    /* 构建缩略图（迷你幻灯片） */
+  var thumbScale = 0;
+  function buildSidebar() {
+    var sb = document.getElementById('sidebar');
+    sb.innerHTML = '';
+    // 计算缩放比例
+    var sbW = sb.clientWidth - 4;
+    thumbScale = sbW / 1000;
+    S.forEach(function(s, i) {
+      var wrap = document.createElement('div');
+      wrap.className = 'thumb-wrap' + (i === 0 ? ' active' : '');
+      // 克隆幻灯片内容到缩略图
+      var inner = document.createElement('div');
+      inner.className = 'thumb-inner';
+      inner.innerHTML = s.innerHTML;
+      inner.style.transform = 'scale(' + thumbScale + ')';
+      // 页码标
+      var num = document.createElement('div');
+      num.className = 'thumb-num';
+      num.textContent = i + 1;
+      wrap.appendChild(inner);
+      wrap.appendChild(num);
+      wrap.addEventListener('click', function(){ go(i); });
+      sb.appendChild(wrap);
+    });
+  }
+
+  /* 更新缩略图高亮 */
+  function updateSidebar() {
+    var wraps = document.querySelectorAll('.thumb-wrap');
+    wraps.forEach(function(w, i) {
+      w.classList.toggle('active', i === C);
+      if (i === C) w.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  buildSidebar();
+  go(0);
+  scaleViewport();
+})();
+</script>
+</body>
+</html>

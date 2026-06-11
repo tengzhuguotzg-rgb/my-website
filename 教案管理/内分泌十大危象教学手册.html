@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>内分泌十大危象教学手册 · Teng.ZG</title>
+<meta name="description" content="内分泌十大危象教学长文 · 垂体/肾上腺/甲亢/甲减/嗜铬/类癌/高钙/低血糖/DKA/HHS。系统整合自 10 份重症医学教学视频。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --line-strong: rgba(31, 61, 47, 0.22);
+    --code-bg: rgba(31, 61, 47, 0.05);
+    --ref-bg: rgba(231, 111, 44, 0.06);
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body {
+    font-family: 'Noto Serif SC', 'Space Grotesk', serif;
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+
+  /* ── Top bar ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub  {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: .4; }
+
+  /* ── 文档容器 ── */
+  .doc {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  @media (max-width: 560px) {
+    .doc { padding: 0 18px; }
+    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+    .brand-sub { display: none; }
+    .crumb { display: none; }
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 72px 0 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 16px; letter-spacing: -2.5px;
+    color: var(--ink);
+  }
+  h1 .dot { color: var(--accent); }
+  .lede {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 640px;
+    margin: 0 0 0;
+  }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 1px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+  .meta-row b { color: var(--ink); font-weight: 600; }
+
+  /* ── 目录 ── */
+  .toc {
+    margin: 48px 0 64px;
+    padding: 28px 32px;
+    background: rgba(244, 241, 234, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+  .toc-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 16px;
+    font-weight: 500;
+  }
+  .toc ol {
+    list-style: none; padding: 0; margin: 0;
+    counter-reset: toc;
+  }
+  .toc li {
+    counter-increment: toc;
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 15px;
+  }
+  .toc li:last-child { border-bottom: none; }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px;
+    color: var(--accent); font-weight: 500;
+    min-width: 28px;
+  }
+  .toc a {
+    color: var(--text);
+    flex: 1;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc .toc-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; color: var(--text-faint);
+    letter-spacing: 1.5px;
+  }
+
+  /* ── 章节 ── */
+  section.chapter {
+    margin: 80px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  section.chapter:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .chapter-head {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 8px;
+  }
+  .chapter-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 2.5px;
+    color: var(--accent); font-weight: 500;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    min-width: 64px;
+  }
+  .chapter-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 3.5vw, 36px);
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  .chapter-subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 32px 80px;
+  }
+  @media (max-width: 560px) {
+    .chapter-subtitle { margin-left: 0; }
+  }
+
+  /* ── 标题层级 ── */
+  h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink);
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.3px;
+  }
+  h2::before {
+    content: '§';
+    color: var(--accent);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    margin-right: 10px;
+  }
+  h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--ink-2);
+    margin: 32px 0 12px;
+  }
+  h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent);
+    margin: 24px 0 10px;
+    font-weight: 500;
+  }
+
+  /* ── 段落与文本 ── */
+  p { margin: 0 0 16px; }
+  p strong, li strong { color: var(--ink); font-weight: 700; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--accent); }
+
+  /* ── 强调块 ── */
+  .callout {
+    margin: 24px 0;
+    padding: 18px 22px;
+    background: var(--ref-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── 引用(文献) ── */
+  .cite {
+    font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    word-break: break-all;
+  }
+
+  /* ── 表格 ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 28px;
+    font-size: 14.5px;
+    font-family: 'Noto Serif SC', serif;
+    background: rgba(244, 241, 234, 0.5);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  thead {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 500;
+    padding: 12px 14px;
+    text-align: left;
+  }
+  td {
+    padding: 12px 14px;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  tbody tr:nth-child(even) { background: rgba(31, 61, 47, 0.025); }
+
+  /* ── 关键术语 ── */
+  .term {
+    font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+    font-size: 14px;
+    color: var(--ink-2);
+    background: var(--code-bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* ── 分隔点 ── */
+  .divider {
+    text-align: center;
+    margin: 56px 0 0;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--accent);
+    letter-spacing: 8px;
+    font-size: 14px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    max-width: 920px; margin: 64px auto 0;
+    padding: 32px 32px 56px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .footer a { color: var(--ink-2); }
+  .footer a:hover { color: var(--accent); }
+
+  /* ── 响应式 ── */
+  @media (max-width: 560px) {
+    .toc { padding: 22px 18px; }
+    .hero { padding: 48px 0 16px; }
+    .footer { padding-left: 18px; padding-right: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">重症医学科 · 教案管理</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="crumb" aria-label="面包屑">
+        <a href="../courses.html">教案管理</a>
+        <span class="sep">/</span>
+        <span>内分泌十大危象教学手册</span>
+      </nav>
+      <a href="../index.html" class="home-pill">← 返回首页</a>
+    </div>
+  </header>
+
+  <article class="doc">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="eyebrow">Endocrine Crises · Lesson Notes</div>
+      <h1>内分泌十大危象<span class="dot">.</span>教学手册</h1>
+      <p class="lede">内分泌危象 = 激素绝对或相对不足 → 急性危及生命的代谢崩溃。本手册系统梳理十大危象：垂体、肾上腺、甲亢、甲减、嗜铬细胞瘤、类癌、高钙、低血糖、DKA、HHS。整合自 10 份重症医学教学视频，统一术语与结构，适合 ICU 进修、规培带教与日常查阅。</p>
+      <div class="meta-row">
+        <span><b>主题</b>&nbsp;&nbsp;内分泌十大危象</span>
+        <span><b>来源</b>&nbsp;&nbsp;10 份教学视频整合</span>
+        <span><b>读者</b>&nbsp;&nbsp;ICU 医师 / 进修生</span>
+        <span><b>版次</b>&nbsp;&nbsp;v1.0</span>
+      </div>
+    </section>
+
+    <!-- 目录 -->
+    <nav class="toc">
+      <h2 class="toc-title">— 目录 / Contents</h2>
+      <ol>
+        <li><a href="#ch0"><span>内分泌危象总论</span><span class="toc-num">00</span></a></li>
+        <li><a href="#ch1"><span>垂体危象</span><span class="toc-num">01</span></a></li>
+        <li><a href="#ch2"><span>肾上腺危象</span><span class="toc-num">02</span></a></li>
+        <li><a href="#ch3"><span>甲亢危象</span><span class="toc-num">03</span></a></li>
+        <li><a href="#ch4"><span>甲减危象</span><span class="toc-num">04</span></a></li>
+        <li><a href="#ch5"><span>嗜铬细胞瘤危象</span><span class="toc-num">05</span></a></li>
+        <li><a href="#ch6"><span>类癌危象</span><span class="toc-num">06</span></a></li>
+        <li><a href="#ch7"><span>高钙危象</span><span class="toc-num">07</span></a></li>
+        <li><a href="#ch8"><span>低血糖危象</span><span class="toc-num">08</span></a></li>
+        <li><a href="#ch9"><span>糖尿病酮症酸中毒（DKA）</span><span class="toc-num">09</span></a></li>
+        <li><a href="#ch10"><span>高血糖高渗状态（HHS）</span><span class="toc-num">10</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- 总论 -->
+    <section class="chapter" id="ch0">
+      <div class="chapter-head">
+        <span class="chapter-num">— 00 /</span>
+        <h2 class="chapter-title">内分泌危象总论</h2>
+      </div>
+      <p class="chapter-subtitle">四大内分泌轴 · 共同临床特征</p>
+
+      <h2>定义</h2>
+      <p><strong>内分泌危象</strong>（Endocrine Crisis）= 激素绝对或相对不足 → 急性危及生命的代谢崩溃。核心救治原则：<strong>早期识别 + 及时激素替代 = 救治成功关键</strong>。延误治疗，病死率急剧上升。</p>
+
+      <h2>四大内分泌轴</h2>
+      <table>
+        <thead><tr><th>#</th><th>轴</th><th>激素</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>下丘脑-垂体-肾上腺轴</td><td>ACTH → 皮质醇</td></tr>
+          <tr><td>2</td><td>下丘脑-垂体-甲状腺轴</td><td>TSH → T3/T4</td></tr>
+          <tr><td>3</td><td>肾上腺髓质/交感系统</td><td>肾上腺素/去甲肾上腺素</td></tr>
+          <tr><td>4</td><td>胰源性内分泌</td><td>胰岛素/胰高糖素</td></tr>
+        </tbody>
+      </table>
+
+      <h2>共同临床特征</h2>
+      <ul>
+        <li><strong>意识障碍 / 昏迷</strong></li>
+        <li><strong>血流动力学不稳定</strong>（低血压/高血压）</li>
+        <li><strong>体温异常</strong>（高热/低温）</li>
+        <li><strong>电解质紊乱</strong>（低钠/高钾/低钾/低钙）</li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────────── 01 ─────────────────────────────── -->
+    <section class="chapter" id="ch1">
+      <div class="chapter-head">
+        <span class="chapter-num">— 01 / 10</span>
+        <h2 class="chapter-title">垂体危象</h2>
+      </div>
+      <p class="chapter-subtitle">内分泌总指挥部断电</p>
+
+      <h2>核心机制</h2>
+      <p>垂体 = 身体激素的<strong>「总指挥中心」</strong>。指挥中断 → 所有激素断供：</p>
+      <ul>
+        <li><strong>ACTH → 皮质醇断供 → 肾上腺危象</strong></li>
+        <li><strong>TSH → 甲状腺素断供 → 甲减危象</strong></li>
+        <li><strong>ADH → 尿崩 + 低钠</strong></li>
+      </ul>
+
+      <h2>常见病因</h2>
+      <h3>慢性衰竭遭打击（被震垮）</h3>
+      <p>基础病变（席汉综合征、垂体瘤术后）+ 最后一根稻草（感染、创伤、随意停药、镇静麻醉、低血糖、寒冷）。</p>
+      <h3>急性物理摧毁（直接遭袭）</h3>
+      <ul>
+        <li><strong>产后大出血（席汉综合征）：</strong>孕期垂体肥大，血供需求特别高，休克后直接缺血性坏死 → <strong>最经典线索！</strong></li>
+        <li><strong>垂体卒中：</strong>垂体瘤内部出血或缺血坏死</li>
+        <li><strong>颅脑损伤：</strong>外伤、颅底骨折、垂体手术/放疗后</li>
+      </ul>
+
+      <h2>五种临床分型</h2>
+      <table>
+        <thead><tr><th>类型</th><th>核心表现</th><th>接诊关键动作</th></tr></thead>
+        <tbody>
+          <tr><td>低血糖型</td><td>意识障碍、出冷汗、抽搐昏迷</td><td>第一时间测血糖</td></tr>
+          <tr><td>低体温型</td><td>体温&lt;35°C，淡漠、嗜睡、昏迷</td><td>体温计可能量不到</td></tr>
+          <tr><td>休克型</td><td>顽固低血压，补液反应极差</td><td>给激素才升压</td></tr>
+          <tr><td>水中毒型</td><td>严重低钠血症，精神症状、脑水肿</td><td>查血钠掉得厉害</td></tr>
+          <tr><td>混合型（最常见）</td><td>以上几种同时出现</td><td>低糖+低温+低压+低钠</td></tr>
+        </tbody>
+      </table>
+
+      <h2>三条线同时崩溃</h2>
+      <h3>肾上腺线（最致命）</h3>
+      <p>垂体不分泌 ACTH → 肾上腺皮质罢工 → 糖皮质激素+盐皮质激素全无 → 顽固性低血压（补液升不了压）、严重低血糖、电解质崩盘（低钠高钾）。<strong>这是垂体危象最常见的死因！</strong></p>
+      <h3>甲状腺线</h3>
+      <p>垂体不分泌 TSH → 甲状腺不产 T3/T4 → 代谢"火种"熄灭 → 低体温（可低至32-33°C）、意识障碍加重。</p>
+      <h3>抗利尿激素线（ADH）</h3>
+      <p>ADH 缺乏 → 尿崩症（大量稀尿、血钠飙升、脱水）。垂体卒中时可能先大量释放，随后极度缺乏。</p>
+
+      <div class="callout">
+        <p class="callout-title">四低昏迷状态</p>
+        <p><strong>低血糖 + 低体温 + 低血压 + 低血钠</strong> — 四者同时出现是垂体危象的经典组合。</p>
+      </div>
+
+      <h2>四条诊断线索</h2>
+      <ol>
+        <li><strong>病史：</strong>产后大出血史？垂体瘤手术史？长期吃优甲乐/强的松？</li>
+        <li><strong>体征：</strong>顽固低血压（补液无效）+ 低血糖 + 低体温 + 低血钠</li>
+        <li><strong>昏迷：</strong>不明原因昏迷，尤其是伴随低体温和低血糖</li>
+        <li><strong>痕迹：</strong>腋毛/阴毛稀疏、皮肤苍白细腻、乳晕色淡（慢性垂体功能减退的体征）</li>
+      </ol>
+
+      <div class="callout">
+        <p class="callout-title">诊断铁律</p>
+        <p>这个病——<strong>你想到它，才能诊断它</strong>。临床高度怀疑就要马上动手抢救，绝不能死等化验结果回来。</p>
+      </div>
+
+      <h2>抢救顺序（铁律）</h2>
+      <table>
+        <thead><tr><th>步骤</th><th>行动</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>先补糖</strong></td><td>50%葡萄糖 40ml 静推，随后 10% 葡萄糖持续静滴</td></tr>
+          <tr><td>2</td><td><strong>再补糖皮质激素（最关键）</strong></td><td>氢化可的松 100mg 静推，随后每 6h 100mg 或持续泵入，首日总量 200-300mg</td></tr>
+          <tr><td>3</td><td>补液纠正电解质</td><td>生理盐水或高渗盐水；低钠血症别纠正太快，防脑桥中央髓鞘溶解</td></tr>
+          <tr><td>4</td><td>糖皮质激素给上去了，血压稳住了，再补甲状腺素</td><td>左甲状腺素或 T3，从小剂量开始</td></tr>
+          <tr><td>5</td><td>消除诱因</td><td>抗感染、停镇静药；复温只用保暖，<strong>严禁热水袋直接体表加温</strong></td></tr>
+          <tr><td>6</td><td>监控尿崩</td><td>严密监测出入量，必要时用去氨加压素 (DDAVP)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="callout-title">致命禁忌</p>
+        <p>为什么<strong>绝对不能先补甲状腺素</strong>？在糖皮质激素严重不足时，先给甲状腺素 = 强逼一个断粮绝弹的士兵发起冲锋，会直接诱发<strong>急性肾上腺危象</strong>，加速死亡。顺序搞反，不是救人是害人。</p>
+      </div>
+
+      <h2>口诀</h2>
+      <p><em>垂体断电三军乱，低糖低温血压瘫。先推糖来再激素，甲状腺素放最后。产后大出血记心间，想到才能过鬼关。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 02 ─────────────────────────────── -->
+    <section class="chapter" id="ch2">
+      <div class="chapter-head">
+        <span class="chapter-num">— 02 / 10</span>
+        <h2 class="chapter-title">肾上腺危象</h2>
+      </div>
+      <p class="chapter-subtitle">特种部队覆没</p>
+
+      <h2>核心机制</h2>
+      <p>肾上腺皮质 = 体内一支<strong>「特种部队」</strong>：</p>
+      <ul>
+        <li><strong>突击兵（糖皮质激素）：</strong>升血压、升血糖、抗炎、抗过敏</li>
+        <li><strong>后勤兵（盐皮质激素）：</strong>保钠排钾、维持电解质平衡</li>
+      </ul>
+      <p><strong>肾上腺危象 = 特种部队被敌人一锅端</strong>，指挥部（垂体）还在正常发令（ACTH 正常），但没人执行了——突击兵没了（血糖血压垮），后勤兵没了（低钠高钾），所有防线同时崩溃。</p>
+
+      <h2>病因</h2>
+      <h3>第一种：慢性肾上腺皮质功能减退急性发作（最常见）</h3>
+      <p>患者本身只剩"残兵"（Addison 病或长期激素导致自身部队萎缩），遭遇感染、腹泻呕吐、手术，或擅自停用了长期口服激素 → 残兵被一击打穿。</p>
+      <h3>第二种：急性原发破坏（最凶险）</h3>
+      <p><strong>Waterhouse-Friderichsen 综合征：</strong>细菌（脑膜炎球菌最典型）直接出血性破坏双侧肾上腺，爆发性紫癜+休克。</p>
+      <h3>第三种：药物抑制</h3>
+      <p><strong>依托咪酯（Etomidate）：</strong>麻醉科最怕的一种，强力抑制皮质醇合成。</p>
+
+      <h2>诊断三联征</h2>
+      <div class="callout">
+        <p class="callout-title">肾上腺危象特征性签名</p>
+        <p><strong>① 低血压难以纠正</strong>（补液不升压）+ <strong>② 低钠</strong>（钠 &lt; 120mmol/L）+ <strong>③ 高钾</strong>（钾 &gt; 6.0mmol/L）。低钠高钾组合是肾上腺危象区别于其他所有休克的特征性签名。</p>
+      </div>
+
+      <h2>原发性 vs 继发性</h2>
+      <table>
+        <thead><tr><th>线索</th><th>原发性（Addison 病）</th><th>继发性（垂体功能减退）</th></tr></thead>
+        <tbody>
+          <tr><td>皮肤颜色</td><td>色素沉着（棕褐色）</td><td>皮肤苍白</td></tr>
+          <tr><td>病史</td><td>Addison 病？长期口服泼尼松？</td><td>垂体/下丘脑手术史，放射治疗史</td></tr>
+          <tr><td>诱因</td><td>感染、创伤、手术、擅自停激素</td><td>同左</td></tr>
+        </tbody>
+      </table>
+
+      <h2>治疗</h2>
+      <h3>第一步：立刻静推糖皮质激素（先于一切！）</h3>
+      <p><strong>首选：氢化可的松（Hydrocortisone）100mg 静推</strong>，然后每 6 小时 100mg 或持续泵入，第 1 天总量 200~300mg。</p>
+      <table>
+        <thead><tr><th>药物</th><th>糖皮质活性</th><th>盐皮质活性</th></tr></thead>
+        <tbody>
+          <tr><td><strong>氢化可的松</strong></td><td>✅ 有</td><td>✅ 有（一个药搞定）</td></tr>
+          <tr><td>地塞米松</td><td>✅ 有</td><td>❌ 无（不作首选）</td></tr>
+        </tbody>
+      </table>
+      <h3>第二步：补液纠正休克+电解质</h3>
+      <p>生理盐水快速滴注。肾上腺危象的休克<strong>既缺激素也缺容量</strong>，两者必须同时补。</p>
+      <h3>第三步：纠正低血糖</h3>
+      <p>推 50% 葡萄糖，然后 10% 葡萄糖维持。</p>
+      <h3>第四步：处理诱因</h3>
+      <p>感染 → 抗感染；创伤 → 处理创伤；停掉可疑药物（依托咪酯等）。</p>
+      <h3>第五步：长期替代</h3>
+      <p>氢化可的松口服：上午 20mg + 下午 10mg（模仿生理节律）。若有低钠 → 加氟氢可的松。</p>
+
+      <div class="callout">
+        <p class="callout-title">与垂体危象的鉴别</p>
+        <p>肾上腺危象 = 肾上腺皮质直接失能（ACTH 正常但肾上腺本身衰竭），只需氢化可的松兜底。垂体危象 = 垂体指挥中心断电（三线全崩），还多一条铁律：先糖后激素最后甲状腺素。</p>
+      </div>
+
+      <h2>口诀</h2>
+      <p><em>特种部队一锅端，血压垮掉钠低钾。低钠高钾是特征，晦涩皮肤是线索。氢考一推血压起，补液不糖又因除。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 03 ─────────────────────────────── -->
+    <section class="chapter" id="ch3">
+      <div class="chapter-head">
+        <span class="chapter-num">— 03 / 10</span>
+        <h2 class="chapter-title">甲亢危象</h2>
+      </div>
+      <p class="chapter-subtitle">油门卡死</p>
+
+      <h2>核心机制</h2>
+      <p>甲状腺激素 = 身体的<strong>油门</strong>。正常时想走就走想停就停。<strong>甲亢危象 = 油门被异物脚踩到底，然后彻底卡死。</strong>转速表瞬间打爆红区，所有发动机（心脏/大脑/肝脏/肌肉）开始在极限转速下疯狂空转。</p>
+
+      <h2>六大诱因</h2>
+      <ul>
+        <li><strong>感染</strong>（最常见）</li>
+        <li>手术/创伤</li>
+        <li>放射性碘治疗</li>
+        <li>骤停抗甲状腺药</li>
+        <li>心梗/肺栓塞</li>
+        <li>妊娠/分娩</li>
+      </ul>
+
+      <h2>五大临床表现</h2>
+      <h3>1. 心脏（最早崩溃）</h3>
+      <p>心率从 120→140→冲到 180 甚至 200，快速房颤。<strong>致命矛盾：</strong>心跳快到几乎无舒张期 → 冠脉根本来不及灌注 → 心肌自己在缺氧。进展链条：心绞痛→急性心衰→肺水肿→心源性休克。</p>
+      <h3>2. 高热风暴</h3>
+      <p>体温飙升到 39°→40°→41°，一身接一身的大汗。高热加大汗 → 严重脱水 → 血液浓缩 → 循环更难维持。</p>
+      <h3>3. 神志障碍（危象分水岭！）</h3>
+      <p>早期极度烦躁焦虑 → 胡言乱语 → 谵妄→昏迷→抽搐。<strong>这是区分"重症甲亢"与"甲亢危象"最核心的标志！</strong></p>
+      <h3>4. 消化系统</h3>
+      <p>恶心、剧烈呕吐、腹痛（极易误诊为外科急腹症！），严重黄疸。</p>
+      <h3>5. 肝脏损伤</h3>
+      <p>黄疸、肝酶飙升，肝脏在高温下直接被烧毁。</p>
+
+      <h2>诊断铁律</h2>
+      <div class="callout">
+        <p class="callout-title">Burch-Wartofsky 评分</p>
+        <p>综合评估体温、心血管、中枢、胃肠及诱因。<strong>临床高度怀疑→必须立刻按危象启动抢救！绝对禁止等待 TSH/T3/T4 化验结果！</strong>等 TSH 回来人可能已经没了。</p>
+      </div>
+
+      <h2>抢救流程（四步）</h2>
+      <h3>第一步：PTU 阻断新燃料（最紧急）</h3>
+      <p><strong>丙硫氧嘧啶（PTU）</strong>首剂 500-1000mg，然后 250mg q4h。深入甲状腺阻断所有新激素的合成，同时在外周组织阻断 T4 转化为活性更强的 T3。神志不清无法口服者，必须原地立即插胃管！</p>
+      <h3>第二步：等 1 小时</h3>
+      <p>必须等待至少 1 小时，让 PTU 把新的激素合成切断后，再给碘剂。<strong>如果顺序反了（先给碘剂），碘会成为合成更多甲状腺激素的现成原料，火上浇油！</strong></p>
+      <h3>第三步：黄金三角同时卸载</h3>
+      <table>
+        <thead><tr><th>管线</th><th>药物</th><th>机制</th></tr></thead>
+        <tbody>
+          <tr><td>阀门 A</td><td><strong>碘剂（卢戈氏液）</strong></td><td>彻底锁死甲状腺仓库大门，禁止已存在的激素释放入血</td></tr>
+          <tr><td>阀门 B</td><td><strong>氢化可的松</strong></td><td>抑制 T4→T3 转化，同时补充应激状态下耗尽的皮质醇</td></tr>
+          <tr><td>阀门 C</td><td><strong>β受体阻滞剂</strong>（普萘洛尔/艾司洛尔）</td><td>强效降低心率，极速减少心肌耗氧</td></tr>
+        </tbody>
+      </table>
+      <h3>第四步：对症支持+终极底牌</h3>
+      <p>物理降温、强效补液扩容、控制心衰、积极抗感染。退热仅可用<strong>对乙酰氨基酚</strong>，<strong>绝对禁止用阿司匹林</strong>（会把结合态激素挤出来，火上浇油）。终极底牌：<strong>血浆置换</strong>。</p>
+
+      <h2>口诀</h2>
+      <p><em>油门卡死转速红，新烧脑乱高烧浓，PTU加点和激素，普萘洛尔把速松，血浆置换最后路，三天定命ICU中。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 04 ─────────────────────────────── -->
+    <section class="chapter" id="ch4">
+      <div class="chapter-head">
+        <span class="chapter-num">— 04 / 10</span>
+        <h2 class="chapter-title">甲减危象</h2>
+      </div>
+      <p class="chapter-subtitle">锅炉熄火</p>
+
+      <h2>核心机制</h2>
+      <p>将身体比作一座温室大棚：<strong>甲状腺 = 中央供暖锅炉</strong>。正常时锅炉稳定燃烧，温度恒定。<strong>甲减危象 = 锅炉彻底熄灭了</strong>，不是慢性甲减那种游泳的代谢低，而是急性代谢衰竭，锅炉里最后一颗火星熄灭。</p>
+      <p><strong>与甲亢危象的对比：</strong>甲亢危象是油门卡死发动机烧毁（火太多）；甲减危象是锅炉熄火温室冻僵（火没了）。两个极端，互为镜像。</p>
+
+      <h2>病因</h2>
+      <ul>
+        <li><strong>感染</strong>（最常见）— 甲减患者感染了可能根本不发烧，甚至表现为低温</li>
+        <li>应激（创伤、手术、分娩）</li>
+        <li>寒冷暴露</li>
+        <li>药物抑制（麻醉药、镇静安眠药、阿片类、碳酸锂、胺碘酮）</li>
+        <li>自行停药</li>
+      </ul>
+
+      <h2>招牌体征</h2>
+      <h3>核心低温</h3>
+      <p>体温跌到 <strong>35°C 以下</strong>，甚至 28°C。常规体温计刻度最低只有 35°C，<strong>必须换低体温专用温度计</strong>。</p>
+      <h3>意识障碍（最安静的一种昏迷）</h3>
+      <p>没有烦躁，没有谵妄，没有抽搐。病人从淡漠→嗜睡→昏睡→昏迷，一步一步安静地沉下去。腱反射松弛期显著延长。</p>
+      <h3>呼吸系统（最主要的死因）</h3>
+      <p>呼吸中枢对二氧化碳的敏感性被低温"冻没了"。CO₂ 越来越高，呼吸中枢却无动于衷。呼吸越来越浅、越来越慢，最终 CO₂ 麻醉。</p>
+      <h3>循环系统</h3>
+      <p>心动过缓（心率 40-50 次/分），心音遥远。心包积液、胸腔积液均可出现。</p>
+      <h3>黏液性水肿（非凹陷性）</h3>
+      <p>面部虚肿、舌体肥大、全身皮肤粗糙蜡黄干燥。看上去"虚肿"但按下去没有坑。</p>
+
+      <h2>快速识别：五条线索</h2>
+      <table>
+        <thead><tr><th>线索</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>病史</td><td>已知甲减，或自行停药，或甲减面容</td></tr>
+          <tr><td>经典三联征</td><td><strong>低体温 + 意识障碍 + 呼吸浅慢</strong></td></tr>
+          <tr><td>反差签名</td><td>明确感染却不发烧，甚至是低温</td></tr>
+          <tr><td>颈前刀疤</td><td>甲状腺切除术后</td></tr>
+          <tr><td>查体</td><td>腱反射松弛期显著延长</td></tr>
+        </tbody>
+      </table>
+
+      <h2>治疗（保护性三步点火法）</h2>
+      <h3>第一步：甲状腺激素（T4 + T3 双激素）</h3>
+      <p><strong>T4（左甲状腺素）：</strong>200-400μg 静注或口服，然后每天 100-200μg 维持。<strong>T3：</strong>10-20μg 每 8-12 小时一次。T3 先把火点起来，T4 后续跟上维持。有冠心病的老人要减量。</p>
+      <h3>第二步：糖皮质激素兜底（必须先给）</h3>
+      <p><strong>氢化可的松 100mg 静注</strong>，然后每 6-8 小时一次。甲减危象往往合并肾上腺皮质功能相对不全，甲状腺激素一上去全身组织都在喊"我要能量"，肾上腺没有储备直接崩溃。</p>
+      <h3>第三步：被动复温+对症支持</h3>
+      <ul>
+        <li><strong>被动复温：</strong>盖毛毯，把房间弄暖和（22-24°C）。<strong>禁止主动加热</strong>（热水袋/烤灯）——外周血管突然加热会急剧扩张，核心温度不升反降。</li>
+        <li><strong>呼吸支持：</strong>呼吸浅慢 + CO₂ 潴留 → 尽早气管插管。</li>
+        <li><strong>纠正电解质：</strong>低钠血症纠正要慢。</li>
+        <li><strong>抗感染：</strong>有感染的尽早覆盖抗生素。</li>
+      </ul>
+
+      <div class="callout">
+        <p class="callout-title">甲亢 vs 甲减危象镜像对比</p>
+        <p>甲亢：高热 39-41°C / 心率 140-200 / 烦躁谵妄 / 急促呼吸 / 治疗：让它"凉下来"（PTU/碘剂/普萘洛尔）</p>
+        <p>甲减：低体温 28-35°C / 心率 40-60 / 安静淡漠 / 浅慢呼吸 / 治疗：让它"暖起来"（T4+T3+激素兜底）</p>
+      </div>
+
+      <h2>口诀</h2>
+      <p><em>过冷熄火温室冻，低温昏迷呼吸重。T4点火T3助，激素兜底别让崩。复温要慢莫心急，甲减危象稳中胜。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 05 ─────────────────────────────── -->
+    <section class="chapter" id="ch5">
+      <div class="chapter-head">
+        <span class="chapter-num">— 05 / 10</span>
+        <h2 class="chapter-title">嗜铬细胞瘤危象</h2>
+      </div>
+      <p class="chapter-subtitle">失控压力泵</p>
+
+      <h2>核心机制</h2>
+      <p>嗜铬细胞瘤 = <strong>「隐藏在肾上腺上的非法压力泵」</strong>。平时安静，一旦启动——往血管里打高压冲击波——血压几分钟内从 120 冲到 300 mmHg，脑血管随时爆裂，心脏在超高压下被击垮。</p>
+      <h3>三步演化</h3>
+      <ol>
+        <li><strong>疯狂释放：</strong>肿瘤开闸放水，巨量释放儿茶酚胺</li>
+        <li><strong>极度收缩：</strong>全身血管产生强烈痉挛收缩</li>
+        <li><strong>空间锐减：</strong>血管总容量瞬间缩小，管道压力突破 200→250→300 mmHg</li>
+      </ol>
+
+      <h2>六大触发因素</h2>
+      <ul>
+        <li><strong>体位变化：</strong>弯腰捡东西、翻身从床上坐起</li>
+        <li><strong>麻醉诱导：</strong>麻醉科医生最怕的隐藏炸弹</li>
+        <li>排便/分娩（腹压增加）</li>
+        <li>特定食物/药物：奶酪、红酒（酪胺）、MAOIs、三环类</li>
+        <li>肿瘤内部出血坏死</li>
+      </ul>
+
+      <h2>诊断五线索</h2>
+      <table>
+        <thead><tr><th>#</th><th>线索</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>阵发性高血压</strong></td><td>不是持续高，而是突然冲上去</td></tr>
+          <tr><td>2</td><td><strong>经典四联征</strong></td><td>剧烈头痛 + 浑身大汗 + 心慌心悸 + 面色苍白</td></tr>
+          <tr><td>3</td><td><strong>年轻难治患者</strong></td><td>&lt;50岁，常规降压药完全无效</td></tr>
+          <tr><td>4</td><td><strong>特定场景发作</strong></td><td>麻醉诱导、翻身、排便时血压瞬间突爆</td></tr>
+          <tr><td>5</td><td><strong>影像学偶发</strong></td><td>CT/MRI 偶然发现肾上腺占位</td></tr>
+        </tbody>
+      </table>
+
+      <h2>靶器官损伤</h2>
+      <p><strong>心脏：</strong>儿茶酚胺心肌病→急性左心衰。冠脉痉挛：造影正常但心肌梗死。<strong>大脑：</strong>高血压脑病→脑出血。代谢：无菌性高热+高血糖。<strong>经典四高并存：</strong>高血压+高热+高血糖+高白细胞。</p>
+
+      <h2>治疗铁律：先α后β，绝对不能颠倒</h2>
+      <div class="callout">
+        <p class="callout-title">抢救铁律</p>
+        <p><strong>先α后β，绝对不能颠倒。</strong>α受体让血管收缩，β受体让血管扩张。如果先阻断β→唯一的扩张刹车被卸掉→只剩α全部收缩→血压不降反爆→脑血管当场爆裂。</p>
+      </div>
+      <ol>
+        <li><strong>α受体阻滞剂先降压：</strong>酚妥拉明/乌拉地尔，打开全身泄压阀</li>
+        <li><strong>稳定后β受体阻滞剂：</strong>控制心动过速</li>
+        <li><strong>补液扩容：</strong>长期血管收缩→管道里的水总量其实是少的</li>
+        <li><strong>择期手术：</strong>唯一根治方法，术前准备至少 10-14 天</li>
+      </ol>
+
+      <h2>口诀</h2>
+      <p><em>压力泵藏肾上腺，一触即发血压飙。头痛大汗心要跳，先α再β是铁律。酚妥拉明先降压，补液扩容再手术刀。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 06 ─────────────────────────────── -->
+    <section class="chapter" id="ch6">
+      <div class="chapter-head">
+        <span class="chapter-num">— 06 / 10</span>
+        <h2 class="chapter-title">类癌危象</h2>
+      </div>
+      <p class="chapter-subtitle">消化道非法喷射阀</p>
+
+      <h2>核心机制</h2>
+      <p>将身体比作一套精细化工厂的管道网络。<strong>类癌肿瘤</strong>（神经内分泌肿瘤）= 一个<strong>不该存在的非法喷射阀</strong>。它会自己合成并释放多种强效化学溶剂：5-羟色胺（血管收缩）、缓激肽（血管扩张）、组胺（气道痉挛、潮红）、前列腺素。</p>
+      <p>平时只是慢慢低剂量滴漏（慢性类癌综合征）。一旦触发，<strong>阀门突然全开</strong>，大量化学溶剂瞬间涌入管道 → <strong>血流动力学过山车</strong>。</p>
+
+      <h2>触发场景</h2>
+      <table>
+        <thead><tr><th>触发场景</th><th>机制</th></tr></thead>
+        <tbody>
+          <tr><td><strong>麻醉诱导</strong>（最经典）</td><td>麻醉药一推，激素疯狂释放</td></tr>
+          <tr><td>手术当中</td><td>外科医生碰到/挤压肿瘤</td></tr>
+          <tr><td>肝脏转移灶破裂出血</td><td>一次大释放</td></tr>
+          <tr><td>饮食/喝酒</td><td>进食刺激肠道蠕动，间接挤压肿瘤</td></tr>
+          <tr><td>升压药（多巴胺/去甲肾上腺素等）</td><td>这些药本身可能就是类癌的触发器</td></tr>
+        </tbody>
+      </table>
+
+      <h2>临床表现：管道系统的全面崩溃</h2>
+      <h3>血压过山车</h3>
+      <p>血压从正常 122 mmHg 一两分钟内掉到 60/40 mmHg（休克），赶紧推升压药→血压冲到 200+ mmHg→把升压药调慢→血压又砸回 50 mmHg。</p>
+      <h3>气道+皮肤+肠道全面失控</h3>
+      <table>
+        <thead><tr><th>系统</th><th>症状</th><th>机制</th></tr></thead>
+        <tbody>
+          <tr><td>呼吸系统</td><td>严重支气管痉挛、哮鸣音</td><td>组胺+缓激肽导致气道平滑肌剧烈收缩</td></tr>
+          <tr><td>皮肤</td><td>面部、颈部、前胸突然剧烈潮红</td><td>血管极度扩张</td></tr>
+          <tr><td>肠道</td><td>大量水样腹泻、剧烈腹痛</td><td>5-羟色胺把肠道分泌和蠕动推到极限</td></tr>
+        </tbody>
+      </table>
+
+      <h2>类癌性心脏病</h2>
+      <p>长期释放 5-羟色胺，把<strong>右侧瓣膜</strong>（三尖瓣+肺动脉瓣）腐蚀了。为什么只有右侧？5-羟色胺经过肺循环时被分解了。病人既有<strong>右心瓣膜病</strong>，又有<strong>发作性潮红腹泻</strong> → 这个组合几乎就是类癌的签名。</p>
+
+      <h2>快速识别：五条线索</h2>
+      <ol>
+        <li>已知类癌或神经内分泌肿瘤病史</li>
+        <li>慢性发作性潮红+腹泻+哮鸣的病史</li>
+        <li><strong>麻醉或手术中出现顽固性低血压+支气管痉挛</strong>，按过敏处理完全无效</li>
+        <li>血压像过山车一样来回剧烈波动</li>
+        <li>肝脏 CT/MRI 发现多发转移灶</li>
+      </ol>
+
+      <h2>抢救：四步走</h2>
+      <div class="callout">
+        <p class="callout-title">类癌危象最大的不同</p>
+        <p><strong>它有特效药。</strong>诊断正确并用对药，几分钟内即可扭转战局。</p>
+      </div>
+      <ol>
+        <li><strong>奥曲肽（Octreotide）——一键关停喷射阀（最重要）：</strong>类癌肿瘤表面高表达生长抑素受体，奥曲肽一结合，肿瘤立刻停止分泌所有血管活性物质。100-500μg 皮下或静注。</li>
+        <li><strong>对抗已喷入的化学溶剂：</strong>抗组胺药（苯海拉明）、糖皮质激素（氢化可的松）、支气管扩张剂。</li>
+        <li><strong>容量复苏+循环支持：</strong>大量补液，首选去甲肾上腺素。避免多巴胺和肾上腺素（可能刺激类癌肿瘤）。</li>
+        <li><strong>择期手术：</strong>术前必须预防性使用奥曲肽。</li>
+      </ol>
+
+      <h2>口诀</h2>
+      <p><em>非法喷射管道，潮红腹泻哮鸣级。血压过山车失控，奥曲肽来关阀门。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 07 ─────────────────────────────── -->
+    <section class="chapter" id="ch7">
+      <div class="chapter-head">
+        <span class="chapter-num">— 07 / 10</span>
+        <h2 class="chapter-title">高钙危象</h2>
+      </div>
+      <p class="chapter-subtitle">管道灌满石灰水</p>
+
+      <h2>核心机制</h2>
+      <p>将人体比作一套精密的热水管道系统。<strong>钙 = 石灰</strong>，正常时浓度 2.1-2.6 mmol/L。<strong>骨骼 = 石灰仓库</strong>（99% 的钙储存在此），<strong>PTH = 仓库管理员</strong>，<strong>肾脏 = 污水过滤器</strong>。</p>
+      <p><strong>高钙危象 = 石灰仓库失控</strong>，大量石灰涌入血液，校正血钙 &gt; 3.5 mmol/L 或游离钙 &gt; 1.6 mmol/L。</p>
+      <ul>
+        <li><strong>神经：</strong>先兴奋后抑制（先烦躁焦虑→淡漠/嗜睡→昏迷）</li>
+        <li><strong>肌肉：</strong>全身无力，累及膈肌</li>
+        <li><strong>心脏：</strong><strong>QT 间期缩短</strong>（最特征性 ECG 改变）→ 随时停跳</li>
+        <li><strong>肾脏：</strong>多尿→脱水→恶性循环→肾小管钙沉积→急性肾损伤</li>
+      </ul>
+
+      <h2>病因</h2>
+      <h3>第一类：仓库管理员发疯（原发性甲旁亢）</h3>
+      <p>PTH 不受控大量分泌，把骨骼里的钙"倒腾"进血液。</p>
+      <h3>第二类：外人直接砸仓库（最常见）</h3>
+      <p><strong>恶性肿瘤骨转移</strong>（乳腺癌、肺癌、前列腺癌）或分泌 PTHrP；维生素 D 中毒；噻嗪类利尿剂；长期卧床。</p>
+
+      <h2>床旁三看一查</h2>
+      <table>
+        <thead><tr><th>看什么</th><th>发现</th></tr></thead>
+        <tbody>
+          <tr><td><strong>看意识</strong></td><td>从淡漠迅速滑向昏迷</td></tr>
+          <tr><td><strong>看心电图</strong></td><td>QT 间期缩短（特异性极高），心脏随时可能停搏</td></tr>
+          <tr><td><strong>看脱水</strong></td><td>皮肤黏膜极度干燥、眼窝凹陷、尿量骤减</td></tr>
+        </tbody>
+      </table>
+      <p><strong>诊断标准：</strong>校正血清钙 &gt; 3.5 mmol/L 或游离钙 &gt; 1.6 mmol/L。校正钙公式：实测钙 − (0.02 × 白蛋白) + 0.8。</p>
+
+      <h2>四步抢救流程</h2>
+      <ol>
+        <li><strong>大量补液（最紧急）：</strong>猛灌生理盐水，200-500 mL/h，24 小时总补液量可达 4-6 L。绝对不能在脱水状态下先用利尿剂。</li>
+        <li><strong>利尿剂排水（补足液体之后）：</strong>呋塞米（速尿）把尿钙排出去。<strong>先灌足水，再开排水口。</strong></li>
+        <li><strong>药物关闸门：</strong>双膦酸盐（唑来膦酸/帕米膦酸）直接抑制破骨细胞，24-48h 起效；降钙素快速但 2-3 天后失效；地舒单抗备选。</li>
+        <li><strong>血液透析：</strong>适用于肾衰竭不能补液、心衰水灌不进。使用低钙透析液，一小时内血钙即可下降。</li>
+      </ol>
+
+      <h2>口诀</h2>
+      <p><em>石灰仓库失了控，血变石灰全身堵。先灌盐水猛冲洗，再利尿来排石毒。双膦酸盐关闸门，最后血滤把命赎。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 08 ─────────────────────────────── -->
+    <section class="chapter" id="ch8">
+      <div class="chapter-head">
+        <span class="chapter-num">— 08 / 10</span>
+        <h2 class="chapter-title">低血糖危象</h2>
+      </div>
+      <p class="chapter-subtitle">大脑突然断电</p>
+
+      <h2>核心机制</h2>
+      <p>大脑 = <strong>永不停机的总控中心</strong>，只吃葡萄糖，不能用脂肪酸/酮体替代能源。<strong>血糖 = 大脑的唯一电力</strong>，断糖即断电。两股力量动态平衡：拉电闸的手 = 胰岛素；推电闸的手 = 升糖激素（胰高血糖素/肾上腺素/甲状腺素/皮质醇）。</p>
+
+      <h2>四层断电顺序</h2>
+      <table>
+        <thead><tr><th>断电顺序</th><th>大脑分区</th><th>临床表现</th></tr></thead>
+        <tbody>
+          <tr><td>第一层</td><td><strong>皮层</strong>（最精密，最先灭）</td><td>胡言乱语、注意力涣散、反应迟钝</td></tr>
+          <tr><td>第二层</td><td><strong>基底节</strong>（管行为和运动）</td><td>躁动、幻觉、摸索动作、癫痫</td></tr>
+          <tr><td>第三层</td><td><strong>间脑</strong>（管一时开关）</td><td>嗜睡、昏睡</td></tr>
+          <tr><td>第四层</td><td><strong>脑干</strong>（管呼吸心跳）</td><td>呼吸停止→不可逆脑损伤/死亡</td></tr>
+        </tbody>
+      </table>
+
+      <h2>两阶段断电</h2>
+      <h3>阶段一：交感神经警报</h3>
+      <p>手抖、心慌、出冷汗、极度饥饿。此时病人完全清醒，只需要<strong>吃糖</strong>。15-20g 快速碳水→15 分钟后复测。</p>
+      <h3>阶段二：大脑自己开始断电</h3>
+      <p>错过警报→皮层陷灭→基底节灭→间脑灭→脑干灭。凌晨送来的躁动/胡言乱语病人，一定先测血糖——他可能不是精神病，是低血糖。</p>
+
+      <div class="callout">
+        <p class="callout-title">无声断电（最危险）</p>
+        <p>长期血糖控制不佳的糖尿病患者，尤其是有自主神经病变者，警报系统坏了。血糖 2.0 mmol/L 了还没感觉，<strong>直接跳过第一阶段进入第二阶段</strong>。</p>
+      </div>
+
+      <h2>诊断金标准：Whipple 三联征</h2>
+      <ol>
+        <li>血糖测出来 <strong>&lt; 2.8 mmol/L</strong></li>
+        <li>有低血糖的临床症状</li>
+        <li>补充葡萄糖之后症状<strong>迅速缓解</strong></li>
+      </ol>
+
+      <h2>抢修：紧急送电</h2>
+      <h3>清醒能吞咽</h3>
+      <p>15-20g 快速碳水（葡萄糖水、糖块、含糖饮料），15 分钟后复测。</p>
+      <h3>昏迷/不能吞咽</h3>
+      <p><strong>50% 葡萄糖 50ml 静注</strong>（= 25g 纯葡萄糖），推完复测。然后挂 10% 葡萄糖持续输入维持，防止反跳。<strong>绝对不要给昏迷病人经口喂任何东西！</strong>吞咽反射没了，灌进去的糖水直接进气管→误吸→窒息。</p>
+      <h3>推完糖≠治疗结束——必须找病因</h3>
+      <p>药物（胰岛素/黄脲类）？空腹喝酒？肝病？肾上腺皮质功能不全？胰岛素瘤？</p>
+
+      <h2>口诀</h2>
+      <p><em>大脑断电血糖崩，冷汗心慌先报警。能吞给糖不能吞推50高糖就救命，推完还要持续泵，找病因来防反跳。</em></p>
+    </section>
+
+    <!-- ─────────────────────────────── 09 ─────────────────────────────── -->
+    <section class="chapter" id="ch9">
+      <div class="chapter-head">
+        <span class="chapter-num">— 09 / 10</span>
+        <h2 class="chapter-title">糖尿病酮症酸中毒（DKA）</h2>
+      </div>
+      <p class="chapter-subtitle">低钾陷阱</p>
+
+      <h2>核心机制</h2>
+      <p>胰岛素缺乏 → 糖不能进细胞 → 脂肪分解 → 酮体积聚 → 代谢性酸中毒。DKA 三重灾难：高血糖（渗透性利尿→脱水）+ 酮症（代谢性酸中毒）+ 脱水和酸中毒共同作用。</p>
+
+      <h2>诊断三要素</h2>
+      <table>
+        <thead><tr><th>要素</th><th>标准</th></tr></thead>
+        <tbody>
+          <tr><td>高血糖</td><td>往往 &gt; 16.7mmol/L</td></tr>
+          <tr><td>AG性酸中毒</td><td>pH &lt; 7.3，HCO₃⁻ &lt; 15</td></tr>
+          <tr><td>酮血症/酮尿</td><td>血酮 &gt; 3mmol/L</td></tr>
+        </tbody>
+      </table>
+
+      <h2>低钾的临床陷阱（重要）</h2>
+      <div class="callout">
+        <p class="callout-title">冰山模型</p>
+        <p>DKA 时总体钾大量丢失（渗透性利尿+呕吐），但血钾往往正常或升高（酸中毒把 K⁺ 从细胞内挤出来）。<strong>胰岛素治疗后 K⁺ 进入细胞→血钾骤降→心脏骤停！</strong>看似正常（如 5.1 mmol/L）的血钾，实际缺钾可能已达 300-500 mmol。</p>
+      </div>
+
+      <h2>低钾血症的红绿灯法则</h2>
+      <table>
+        <thead><tr><th>区域</th><th>血钾范围</th><th>行动</th></tr></thead>
+        <tbody>
+          <tr><td>🔴 红灯</td><td>&lt; 2.5 mmol/L</td><td><strong>立即停胰岛素</strong>，优先大量补钾（20 mmol/h），开通中心静脉</td></tr>
+          <tr><td>🟡 黄灯</td><td>2.5–5.2 mmol/L</td><td>继续胰岛素 <strong>+ 同步补钾</strong>（10-20 mmol/h）</td></tr>
+          <tr><td>🟢 暗绿灯</td><td>&gt; 5.2 mmol/L</td><td>暂不补钾，每 2 小时复查</td></tr>
+        </tbody>
+      </table>
+
+      <h2>抢救五步</h2>
+      <ol>
+        <li><strong>补液：</strong>生理盐水，第 1 小时 15-20 ml/kg。血糖 &lt; 13.9 后换 5% GS+胰岛素。<strong>治疗开始时不能用含糖液体。</strong></li>
+        <li><strong>胰岛素：</strong>小剂量正规胰岛素静滴（0.1 U/kg/h）。若 K⁺ &lt; 2.5 立即停用。</li>
+        <li><strong>补钾：</strong>血钾 &lt; 5.2 且有尿时加（每升+1.5-3g KCl）。<strong>见尿补钾。</strong></li>
+        <li><strong>纠酸：</strong>pH &lt; 6.9 可考虑小量碳酸氢钠。</li>
+        <li><strong>去诱因：</strong>感染/心梗/胰岛素泵障碍等。</li>
+      </ol>
+
+      <div class="callout">
+        <p class="callout-title">治疗终点</p>
+        <p>阴离子间隙正常 + 血酮转阴 + 能进食。DKA 治疗从开始的那一刻起，监测就不能停。</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 10 ─────────────────────────────── -->
+    <section class="chapter" id="ch10">
+      <div class="chapter-head">
+        <span class="chapter-num">— 10 / 10</span>
+        <h2 class="chapter-title">高血糖高渗状态（HHS）</h2>
+      </div>
+      <p class="chapter-subtitle">血液变糖浆</p>
+
+      <h2>核心机制</h2>
+      <p>将身体比作一座城市的供水管网。<strong>血糖被倒入成吨白糖</strong>，飙到 33-50 mmol/L 以上，血液从清水变成一锅黏稠的虎魄色糖浆，渗透压飙到 &gt; 320 mOsm/L。糖浆把水从细胞里吸出来——整个病理生理就一个字：<strong>吸</strong>。</p>
+
+      <h2>三要素同时具备才会发生</h2>
+      <table>
+        <thead><tr><th>#</th><th>要素</th><th>意义</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>胰岛素极度缺乏或效力差</strong></td><td>二型糖尿病残留一点胰岛素，刚好压住酮体但不降血糖</td></tr>
+          <tr><td>2</td><td><strong>大量糖分涌入血液</strong></td><td>感染/心梗/脑梗/手术最常见诱因</td></tr>
+          <tr><td>3</td><td><strong>肾脏排糖能力被摧毁</strong></td><td>脱水→肾灌注不足→排糖能力断崖式下降</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="callout-title">为什么 HHS 通常无明显酮症？</p>
+        <p>残留的胰岛素比 DKA 多一点点→刚好能压住酮体→但远不够降血糖。DKA：无胰岛素；HHS：有一点胰岛素。</p>
+      </div>
+
+      <h2>死亡螺旋</h2>
+      <p>渗透性利尿→全身严重脱水→血容量下降→肾灌注不足→排糖能力进一步下降→血糖更高→更严重脱水。越脱水血糖越高，血糖越高越脱水——<strong>第一受害者就是大脑</strong>。</p>
+
+      <h2>诊断标准</h2>
+      <table>
+        <thead><tr><th>指标</th><th>HHS 数值</th></tr></thead>
+        <tbody>
+          <tr><td>血糖</td><td>通常 &gt; 33 mmol/L（经常 40-50+）</td></tr>
+          <tr><td>血渗透压</td><td>&gt; 320 mOsm/L（经常冲 350）</td></tr>
+          <tr><td>动脉血 pH</td><td>&gt; 7.3（区别于 DKA）</td></tr>
+          <tr><td>尿酮</td><td>阴性或弱阳性</td></tr>
+          <tr><td>脱水程度</td><td>极其严重，可达 10L 以上</td></tr>
+        </tbody>
+      </table>
+
+      <h2>HHS vs DKA</h2>
+      <table>
+        <thead><tr><th></th><th>DKA</th><th>HHS</th></tr></thead>
+        <tbody>
+          <tr><td>机制</td><td>血液变酸液，酮体堆满全身</td><td>血液变糖浆，几乎没有酮体</td></tr>
+          <tr><td>血糖</td><td>16-33 mmol/L</td><td>33-50+ mmol/L</td></tr>
+          <tr><td>血渗透压</td><td>&lt; 320 mOsm/L</td><td>&gt; 320 mOsm/L</td></tr>
+          <tr><td>呼吸</td><td>深大呼吸（代酸）</td><td>平平静静</td></tr>
+          <tr><td>病死率</td><td>约 1-5%</td><td><strong>5-20%，远高于 DKA</strong></td></tr>
+          <tr><td>常见人群</td><td>年轻 1 型糖尿病</td><td>老年 2 型糖尿病</td></tr>
+        </tbody>
+      </table>
+
+      <h2>五步抢救铁律</h2>
+      <div class="callout">
+        <p class="callout-title">铁律</p>
+        <p><strong>先猛灌水，再慢慢降糖。顺序绝对不能反。</strong></p>
+      </div>
+      <ol>
+        <li><strong>大流量补液（绝对的优先级）：</strong>等渗生理盐水大量灌入，初始 1000 ml/h，头 2 小时 2-3L，头 24 小时可达 8-12L。</li>
+        <li><strong>小剂量胰岛素（必须延后并限速）：</strong>等补液开始之后再给。降糖速度绝不能超过每小时 5-6.7 mmol/L。血糖降至 16.7 mmol/L 时换用 5% 葡萄糖+胰岛素。</li>
+        <li><strong>前置补钾：</strong>补液一旦开始，隐匿的低钾马上现形。血钾 &lt; 5.5 mmol/L 且有尿→即可开始补钾。</li>
+        <li><strong>处理诱因：</strong>感染是最常见诱因。停用所有生糖药物。</li>
+        <li><strong>预防性抗凝：</strong>HHS 血液黏稠得像糖浆，是血栓极高危状态。无禁忌症者常规使用低分子肝素。</li>
+      </ol>
+
+      <div class="callout">
+        <p class="callout-title">脑水肿陷阱</p>
+        <p>HHS 时脑细胞长期处于高渗环境，会产生保护性渗透活性物质。如果血糖降太快→血渗透压骤降→但脑细胞内溶质还在→水全部灌进脑细胞→<strong>脑水肿、脑疝</strong>。血糖降到 16.7→果断换糖+胰岛素。如果血糖在降、意识反而再恶化→立刻想到脑水肿。</p>
+      </div>
+
+      <h2>口诀</h2>
+      <p><em>血液糖浆把水吸，细胞脱水脑纷乱。先猛灌水稀释糖，再慢降糖莫心急。补钾抗凝治感染，渗透压稳命可期。</em></p>
+    </section>
+
+    <div class="divider">· · ·</div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      Tengzhuguotzg@gmail.com
+      &nbsp;·&nbsp;
+      <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div>© 2026 · Teng.ZG · Critical Care Medicine</div>
+  </footer>
+
+</body>
+</html>

@@ -626,7 +626,8 @@
     .slide-viewport-wrap { justify-content: center; align-items: center; padding: 0 32px; flex: 0 0 auto; aspect-ratio: 16 / 9; width: 100%; max-width: 100%; }
     .slide-img-hint { display: block; text-align: center; padding: 10px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; flex-shrink: 0; }
     .slide-viewport { margin-top: 0; }
-    .fs .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
+    .fs:not(.fs-rotated) .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
+    .fs .slide-viewport-wrap { aspect-ratio: auto; flex: 1; padding: 0; }
 
     /* ═══ 视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ═══
        物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
@@ -635,11 +636,7 @@
     .fs.fs-rotated .slide-viewport {
       position: fixed;
       top: 50%; left: 50%;
-      width: calc(100vh - 64px);
-      height: calc(100vw - 64px);
       margin: 0;
-      aspect-ratio: auto;
-      transform: translate(-50%, -50%) rotate(90deg);
       transform-origin: center center;
     }
 
@@ -1469,17 +1466,20 @@
 
   /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
   function scaleViewport() {
-    // 视觉横屏模式下由 CSS 接管 transform（CSS rotate 需无 inline transform 冲突）
-    if (document.body.classList.contains('fs-rotated')) return;
-    // 必须用 .slide-viewport-wrap（不含 sidebar 的可用区域），
-    // 用 .slide-container 会把 sidebar 宽度也算进缩放基准，
-    // 导致 vp 视觉尺寸溢出 viewport-wrap，被 sidebar 遮挡。
     var wrap = document.querySelector('.slide-viewport-wrap');
     var cw = wrap.clientWidth, ch = wrap.clientHeight;
-    var sw = 1000, sh = 562.5;
-    var s = Math.min(cw / sw, ch / sh);
-    if (s >= 0.95 && s <= 1.05) { vp.style.transform = ''; return; }
-    vp.style.transform = 'scale(' + s + ')';
+    var vpW = vp.offsetWidth || 1000, vpH = vp.offsetHeight || 562.5;
+    var isFsR = document.body.classList.contains('fs-rotated');
+    var s;
+    if (isFsR) {
+      // rotate 90° 后：视觉宽 = vpH×s, 视觉高 = vpW×s
+      s = Math.min(cw / vpH, ch / vpW);
+    } else {
+      s = Math.min(cw / vpW, ch / vpH);
+    }
+    if (s >= 0.95 && s <= 1.05 && !isFsR) { vp.style.transform = ''; return; }
+    var pre = isFsR ? 'translate(-50%, -50%) rotate(90deg) ' : '';
+    vp.style.transform = pre + 'scale(' + s + ')';
     vp.style.transformOrigin = 'center center';
   }
 
@@ -1654,7 +1654,7 @@
           wrap.addEventListener('touchend', function(e){
             var dx = Math.abs(tx - e.changedTouches[0].screenX);
             var dy = Math.abs(ty - e.changedTouches[0].screenY);
-            if (dx < 10 && dy < 10) { e.preventDefault(); go(idx); }
+            if (dx < 10 && dy < 10) { e.preventDefault(); go(idx + 1); }
           });
         })(si);
     }

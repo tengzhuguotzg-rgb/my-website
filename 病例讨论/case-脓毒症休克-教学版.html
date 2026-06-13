@@ -54,7 +54,7 @@
     border-radius: 999px;
     transition: opacity .3s, transform .3s;
   }
-  .fs .topbar { opacity: 0; pointer-events: none; transform: translateY(-60px); }
+  .fs .topbar { display: none; }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
     width: 38px; height: 38px;
@@ -103,7 +103,7 @@
     padding: 6px 16px 2px;
     transition: opacity .3s;
   }
-  .fs .progress-wrap { opacity: 0; }
+  .fs .progress-wrap { display: none; }
   .progress {
     width: 100%; max-width: 1000px; margin: 0 auto;
     height: 3px; background: var(--line); border-radius: 2px; overflow: hidden;
@@ -234,7 +234,7 @@
     max-height: none;
   }
   .fs .slide { border-radius: 0; border: none; }
-  .fs .slide-sidebar { opacity: 0; pointer-events: none; }
+  .fs .slide-sidebar { display: none; }
   .fs .thumb-strip { display: none; }
   .fs .slide-img-hint { display: none; }
 
@@ -440,7 +440,7 @@
     padding: 8px 16px 14px;
     transition: opacity .3s;
   }
-  .fs .bottom-bar { opacity: 0; pointer-events: none; }
+  .fs .bottom-bar { display: none; }
   /* 全屏悬浮退出按钮 —— 圆形对称图标，固定在物理屏幕右下角
      物理屏幕右下角 = viewport 旋转90° 后视觉横屏的右上角
      圆形图标旋转90° 视觉无差别，无需反向旋转抵消 */
@@ -626,7 +626,7 @@
     .slide-viewport-wrap { justify-content: center; align-items: center; padding: 0 32px; flex: 0 0 auto; aspect-ratio: 16 / 9; width: 100%; max-width: 100%; }
     .slide-img-hint { display: block; text-align: center; padding: 10px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; flex-shrink: 0; }
     .slide-viewport { margin-top: 0; }
-    .fs:not(.fs-rotated) .slide-viewport { width: 100vw; height: 100vh; aspect-ratio: auto; }
+    .fs:not(.fs-rotated) .slide-viewport { width: 100vw; height: 100vh; height: 100dvh; aspect-ratio: auto; }
     .fs .slide-viewport-wrap { aspect-ratio: auto; flex: 1; padding: 0; }
 
     /* ═══ 视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ═══
@@ -1473,7 +1473,14 @@
   /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
   function scaleViewport() {
     var wrap = document.querySelector('.slide-viewport-wrap');
-    var cw = wrap.clientWidth, ch = wrap.clientHeight;
+    var cw, ch;
+    if (FS && window.screen && screen.width && screen.height) {
+      cw = screen.width;
+      ch = screen.height;
+    } else {
+      cw = wrap.clientWidth;
+      ch = wrap.clientHeight;
+    }
     var vpW = vp.offsetWidth || 1000, vpH = vp.offsetHeight || 562.5;
     var isFsR = document.body.classList.contains('fs-rotated');
     var s;

@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>医学计算器 · Teng.ZG</title>
+<meta name="description" content="ICU 常用医学计算器: 肌酐清除率、eGFR、平均动脉压、氧合指数、校正血钠、SOFA 评分。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  /* ═══════════════════════════════════════════
+     Teng.ZG — 医学计算器
+     配色:墨绿 #1F3D2F / 暖橘 #E76F2C / 米白 #F4F1EA
+     字体:Space Grotesk(拉丁) + Noto Serif SC(中文) + JetBrains Mono(数字)
+     ═══════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --danger: #B1452A;
+    --warn: #C8881A;
+    --ok: #3D6B4F;
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      radial-gradient(900px  600px at 50% 92%, rgba(31, 61, 47, 0.04) 0%, transparent 60%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  /* ── Top bar (与首页同款) ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub  {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+
+  /* ── Hero ── */
+  .hero {
+    max-width: 1200px; margin: 0 auto;
+    padding: 64px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 600; line-height: 1;
+    margin: 0 0 16px; letter-spacing: -2px;
+    color: var(--ink);
+  }
+  h1 .dot { color: var(--accent); }
+  .hero-desc {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.7; max-width: 720px;
+    margin: 0;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    max-width: 1200px; margin: 36px auto 0;
+    padding: 0 32px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .tab {
+    padding: 9px 18px;
+    background: rgba(244, 241, 234, 0.65);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-2);
+    transition: all .2s;
+  }
+  .tab:hover { border-color: var(--ink-2); }
+  .tab.active {
+    background: var(--ink); color: var(--bg);
+    border-color: var(--ink);
+  }
+  .tab .tab-en {
+    font-size: 11px;
+    opacity: .7;
+    margin-left: 6px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Pane 容器 ── */
+  .pane-wrap {
+    max-width: 1200px;
+    margin: 32px auto 0;
+    padding: 0 32px;
+  }
+  .pane { display: none; }
+  .pane.active { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; align-items: start; }
+
+  .pane-head {
+    grid-column: 1 / -1;
+    margin-bottom: 8px;
+  }
+  .pane-head h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: 0.3px;
+  }
+  .pane-head .sub {
+    font-size: 14px; color: var(--text-dim);
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  /* ── 输入卡 ── */
+  .inputs {
+    position: sticky; top: 100px;
+    padding: 24px;
+    background: rgba(244, 241, 234, 0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+  .inputs h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 16px; font-weight: 500;
+  }
+  .field { margin-bottom: 14px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field label {
+    display: block;
+    font-size: 13px; color: var(--text);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .field .help { font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+  .field input[type=number] {
+    width: 100%;
+    padding: 11px 14px;
+    font: inherit; font-size: 15px;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    outline: none;
+    transition: all .15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .field input:focus {
+    border-color: var(--ink-2);
+    box-shadow: 0 0 0 3px rgba(31, 61, 47, 0.08);
+  }
+  .field .unit {
+    font-size: 12px; color: var(--text-faint);
+    margin-left: 6px; font-weight: 400;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  /* radio / checkbox 风格的性别/选项 */
+  .opt-group {
+    display: flex; gap: 6px;
+  }
+  .opt {
+    flex: 1;
+    padding: 9px 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-2);
+    transition: all .15s;
+  }
+  .opt:hover { border-color: var(--ink-2); }
+  .opt.on {
+    background: var(--ink); color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  /* ── 结果区 ── */
+  .result-card {
+    padding: 32px 28px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    text-align: left;
+  }
+  .result-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-faint); margin-bottom: 8px;
+  }
+  .result-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 56px; font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .result-value .unit {
+    font-size: 18px;
+    color: var(--text-faint);
+    font-weight: 400;
+    margin-left: 6px;
+    letter-spacing: 0;
+  }
+  .result-value.empty { color: var(--text-faint); font-size: 32px; }
+  .result-tier {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 500;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .tier-ok    { background: rgba(61, 107, 79, 0.12); color: var(--ok); }
+  .tier-warn  { background: rgba(200, 136, 26, 0.14); color: var(--warn); }
+  .tier-danger{ background: rgba(177, 69, 42, 0.14); color: var(--danger); }
+  .tier-info  { background: rgba(31, 61, 47, 0.10); color: var(--ink-2); }
+  .result-foot {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .result-foot strong { color: var(--ink); font-weight: 600; }
+
+  /* ── 4 段元信息 ── */
+  .meta {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .meta-card {
+    padding: 22px 22px 20px;
+    background: rgba(244, 241, 234, 0.55);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .meta-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 10px; font-weight: 600;
+  }
+  .meta-card p, .meta-card li {
+    font-size: 13.5px; color: var(--text-dim);
+    line-height: 1.7; margin: 0;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .meta-card ul { padding-left: 18px; margin: 0; }
+  .meta-card li { margin-bottom: 4px; }
+  .meta-card a { color: var(--ink-2); border-bottom: 1px solid var(--line); }
+  .meta-card a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── Footer ── */
+  .footer {
+    max-width: 1200px; margin: 64px auto 0;
+    padding: 32px 32px 56px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-faint);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .footer a { color: var(--ink-2); }
+  .footer a:hover { color: var(--accent); }
+
+  /* ── 响应式 ── */
+  @media (max-width: 860px) {
+    .pane.active { grid-template-columns: 1fr; }
+    .inputs { position: static; }
+    .meta { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .hero { padding: 48px 18px 16px; }
+    .pane-wrap, .tabs, .footer { padding-left: 18px; padding-right: 18px; }
+    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+    .brand-sub { display: none; }
+    .result-value { font-size: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">重症医学科 · 遂宁市中医院</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" class="home-pill">← 返回首页</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow">Medical Calculators</div>
+    <h1>医学<span class="dot">.</span>计算器</h1>
+    <p class="hero-desc">ICU 床旁最常用的 6 个计算器: 肌酐清除率、eGFR、平均动脉压、氧合指数、校正血钠、SOFA 评分。输入即算,结果下方附 4 段元信息: 用法、临床坑、为什么用、证据来源。</p>
+  </section>
+
+  <!-- Tabs -->
+  <nav class="tabs" id="tabs" role="tablist" aria-label="计算器">
+    <button class="tab active" data-tab="crcl"   role="tab">CrCl <span class="tab-en">Cockcroft-Gault</span></button>
+    <button class="tab"        data-tab="gfr"    role="tab">eGFR <span class="tab-en">CKD-EPI 2021</span></button>
+    <button class="tab"        data-tab="map"    role="tab">MAP <span class="tab-en">平均动脉压</span></button>
+    <button class="tab"        data-tab="sf"     role="tab">S/F <span class="tab-en">SpO₂/FiO₂</span></button>
+    <button class="tab"        data-tab="na"     role="tab">Na 校正 <span class="tab-en">高血糖</span></button>
+    <button class="tab"        data-tab="sofa"   role="tab">SOFA <span class="tab-en">器官衰竭</span></button>
+  </nav>
+
+  <div class="pane-wrap">
+
+    <!-- ═══ 1. CrCl (Cockcroft-Gault) ═══ -->
+    <section class="pane active" id="pane-crcl" role="tabpanel">
+      <div class="pane-head">
+        <h2>肌酐清除率 (Cockcroft-Gault)</h2>
+        <div class="sub">用于药物剂量调整,特别是经肾代谢的抗生素 (万古霉素、氨基糖苷类、头孢类等)。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— Inputs</h3>
+
+        <div class="field">
+          <label>性别</label>
+          <div class="opt-group" data-name="crcl-sex">
+            <div class="opt on" data-val="male">男</div>
+            <div class="opt" data-val="female">女</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>年龄 <span class="unit">岁</span></label>
+            <input type="number" id="crcl-age" value="65" min="1" max="120" step="1">
+          </div>
+          <div class="field">
+            <label>体重 <span class="unit">kg</span></label>
+            <input type="number" id="crcl-wt" value="70" min="1" max="300" step="0.1">
+            <div class="help">肥胖患者用 IBW + 0.4×(实际-IBW)</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>血肌酐 <span class="unit">µmol/L</span></label>
+          <input type="number" id="crcl-cr" value="120" min="10" max="2000" step="1">
+          <div class="help">mg/dL × 88.4 = µmol/L</div>
+        </div>
+
+        <div class="field">
+          <label>身高 <span class="unit">cm (可选, 算 BMI)</span></label>
+          <input type="number" id="crcl-ht" placeholder="170" min="50" max="250" step="1">
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="crcl-out"><span class="unit">mL/min</span></div>
+        <div id="crcl-tier" class="result-tier tier-info">—</div>
+        <div class="result-foot" id="crcl-foot">输入参数后计算。</div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>用于<strong>稳定肾功能</strong>患者的药物剂量调整。急性肾损伤时 CrCl 高估真实 GFR。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Pearls / Pitfalls 临床坑</h4>
+          <ul>
+            <li><strong>肌酐盲区</strong>: Scr 从 1.0 升到 2.0, GFR 已掉一半;但 CrCl 公式对低值不敏感,临床趋势要看 24h 变化</li>
+            <li><strong>肥胖患者</strong>: 用 <strong>调整体重</strong> = IBW + 0.4 × (实际体重 − IBW),直接用实际体重会高估</li>
+            <li><strong>老年人 + 低体重</strong>: 公式系数固定,容易高估,建议乘 0.85 打折</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>Cockcroft-Gault 是 FDA 药物剂量调整的<strong>参考标准</strong>(新药上市时基于此公式做剂量验证)。CKD-EPI 反映肾<strong>分期</strong>更准,但药代动力学数据<strong>几乎全部用 CrCl</strong>。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>Cockcroft DW, Gault MH. <em>Nephron</em>. 1976;16(1):31-41.<br>KDIGO 2012 CKD 指南推荐<strong>同时报告</strong> eGFR 和 CrCl。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 2. CKD-EPI 2021 GFR ═══ -->
+    <section class="pane" id="pane-gfr" role="tabpanel">
+      <div class="pane-head">
+        <h2>eGFR (CKD-EPI 2021)</h2>
+        <div class="sub">CKD 分期、肾科会诊、慢性肾病随访。基于 2021 race-free 公式,无需种族系数。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— Inputs</h3>
+
+        <div class="field">
+          <label>性别</label>
+          <div class="opt-group" data-name="gfr-sex">
+            <div class="opt on" data-val="male">男</div>
+            <div class="opt" data-val="female">女</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>年龄 <span class="unit">岁</span></label>
+            <input type="number" id="gfr-age" value="65" min="1" max="120" step="1">
+          </div>
+          <div class="field">
+            <label>血肌酐 <span class="unit">µmol/L</span></label>
+            <input type="number" id="gfr-cr" value="120" min="10" max="2000" step="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="gfr-out"><span class="unit">mL/min/1.73m²</span></div>
+        <div id="gfr-tier" class="result-tier tier-info">—</div>
+        <div class="result-foot" id="gfr-foot">输入参数后计算。</div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>成人 <strong>≥ 18 岁</strong>。eGFR &lt; 60 持续 3 个月 → CKD; &lt; 15 → 肾衰竭,评估 RRT。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Pearls / Pitfalls 临床坑</h4>
+          <ul>
+            <li><strong>不适用</strong>: 急性肾损伤、儿童、孕妇、截肢、肌肉萎缩(截瘫/长期卧床)</li>
+            <li><strong>Scr 极低</strong> (营养不良、恶病质): 公式不准确,会高估 GFR</li>
+            <li><strong>药物剂量</strong> 不要用 eGFR 调,要用 CrCl</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>2021 race-free 公式去除了<strong>种族系数</strong> (因临床决策不应基于种族)。是当前<strong>国际通用</strong>的 CKD 分期基础。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>Inker LA, et al. <em>N Engl J Med</em>. 2021;385(19):1737-1749.<br>KDIGO 2024 CKD 指南推荐此公式。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 3. MAP ═══ -->
+    <section class="pane" id="pane-map" role="tabpanel">
+      <div class="pane-head">
+        <h2>平均动脉压 (MAP)</h2>
+        <div class="sub">休克复苏目标。MAP ≥ 65 mmHg 是 SSC 2021 脓毒症初始目标;但有高血压病史者常需更高。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— Inputs</h3>
+
+        <div class="field-row">
+          <div class="field">
+            <label>收缩压 SBP <span class="unit">mmHg</span></label>
+            <input type="number" id="map-sbp" value="95" min="40" max="280" step="1">
+          </div>
+          <div class="field">
+            <label>舒张压 DBP <span class="unit">mmHg</span></label>
+            <input type="number" id="map-dbp" value="55" min="20" max="180" step="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="map-out"><span class="unit">mmHg</span></div>
+        <div id="map-tier" class="result-tier tier-info">—</div>
+        <div class="result-foot" id="map-foot">输入参数后计算。</div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>MAP = (SBP + 2×DBP) / 3。动脉血压是压力波,2/3 时间在舒张期,所以 DBP 权重高 2 倍。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Pearls / Pitfalls 临床坑</h4>
+          <ul>
+            <li><strong>目标 65</strong> 是平均参考,不是绝对阈值。慢性高血压者常需 MAP 80-90 才能维持器官灌注</li>
+            <li><strong>有创动脉</strong>: 升压药滴定时, 看<strong>有创 MAP</strong> 而不是袖带,袖带在低血压时不准</li>
+            <li><strong>心律失常</strong> (房颤): IABP 监测的 MAP 不准,要用动脉波形目测</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>MAP 是<strong>器官灌注压</strong>的近似: 脑灌注 CPP = MAP - ICP; 肾灌注 RPP = MAP - CVP。临床终点常用 MAP 而非 SBP。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>Evans L, et al. <em>Crit Care Med</em>. 2021;49(11):e1063-e1143. (SCCM-ESICM 脓毒症指南)<br>SEPSISPAM 2014: 高 MAP 目标 (80-85) 对慢性高血压者减少 RRT。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 4. S/F Ratio ═══ -->
+    <section class="pane" id="pane-sf" role="tabpanel">
+      <div class="pane-head">
+        <h2>SpO₂/FiO₂ 比值 (S/F Ratio)</h2>
+        <div class="sub">无血气时评估氧合, 替代 PaO₂/FiO₂ (P/F) 用于 ARDS 筛查。床头 1 秒钟算完。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— Inputs</h3>
+
+        <div class="field-row">
+          <div class="field">
+            <label>SpO₂ <span class="unit">%</span></label>
+            <input type="number" id="sf-spo2" value="94" min="50" max="100" step="1">
+          </div>
+          <div class="field">
+            <label>FiO₂ <span class="unit">0.21 - 1.0</span></label>
+            <input type="number" id="sf-fio2" value="0.50" min="0.21" max="1.0" step="0.01">
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="sf-out"><span class="unit">S/F</span></div>
+        <div id="sf-tier" class="result-tier tier-info">—</div>
+        <div class="result-foot" id="sf-foot">输入参数后计算。</div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>S/F = SpO₂ / FiO₂。SpO₂ ≤ 97% 时 S/F 与 P/F 相关性最好 (r=0.9); SpO₂ 100% 出现"天花板"效应,会高估氧合。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Pearls / Pitfalls 临床坑</h4>
+          <ul>
+            <li><strong>SpO₂ 100%</strong> = 公式失真, 此时无论 FiO₂ 多高, S/F 都被压在上限。要参考 SpO₂ 100% 时 P/F 至少 200</li>
+            <li><strong>末梢循环差</strong> (休克、低温): SpO₂ 测不准, 改用血气</li>
+            <li><strong>CO 中毒 / 高铁血红蛋白</strong>: SpO₂ 假性正常, 不能用</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>ARDS 柏林定义要求 P/F, 但床旁无血气时 S/F 是 Kigali 修改版 (2016) 推荐的<strong>替代</strong>。特别适合资源有限、儿科、转运途中。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>Riviello ED, et al. <em>Ann Am Thorac Soc</em>. 2016;13(12):2247-2254. (Kigali 修改版)<br>ARDS Definition Task Force. <em>JAMA</em>. 2012;307(23):2526-2533.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 5. 校正血钠 ═══ -->
+    <section class="pane" id="pane-na" role="tabpanel">
+      <div class="pane-head">
+        <h2>校正血钠 (高血糖)</h2>
+        <div class="sub">高血糖时血浆被稀释, 实测 Na⁺ 偏低。按血糖校正后才是真实血钠, 指导补液和胰岛素方案。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— Inputs</h3>
+
+        <div class="field-row">
+          <div class="field">
+            <label>实测血钠 <span class="unit">mmol/L</span></label>
+            <input type="number" id="na-na" value="128" min="100" max="180" step="1">
+          </div>
+          <div class="field">
+            <label>血糖 <span class="unit">mg/dL</span></label>
+            <input type="number" id="na-glu" value="450" min="50" max="1500" step="1">
+            <div class="help">mmol/L × 18 = mg/dL</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Result</div>
+        <div class="result-value" id="na-out"><span class="unit">mmol/L</span></div>
+        <div id="na-tier" class="result-tier tier-info">—</div>
+        <div class="result-foot" id="na-foot">输入参数后计算。</div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>校正 Na⁺ = 实测 Na⁺ + 1.6 × (血糖 − 100) / 100。<br>血糖 &gt; 400 mg/dL 时, 每升高 100 mg/dL, 实测 Na⁺ 降低约 1.6 mmol/L。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Pearls / Pitfalls 临床坑</h4>
+          <ul>
+            <li><strong>1.6 vs 2.4</strong>: 经典 Hillier 公式用 1.6, 一些新研究建议 2.4 (DKA/高渗状态用 2.4 更准); 此处用 1.6</li>
+            <li><strong>不要纠钠过快</strong>: 校正后血钠 ≥ 正常 → 提示真性低钠, 24h 内升高 &lt; 8-10 mmol/L 防脑桥中央髓鞘溶解</li>
+            <li><strong>甘露醇 / 造影剂</strong> 高渗时不能用此公式</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>不校正会<strong>误判</strong>为低钠血症 → 错误补高张盐 → 血糖下降后出现高钠血症。DKA / HHS 处理前<strong>必须</strong>先校正。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>Hillier TA, et al. <em>Diabetes Care</em>. 1999;22(7):1131-1132.<br>ADA 2024 DKA 指南推荐使用此公式。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 6. SOFA ═══ -->
+    <section class="pane" id="pane-sofa" role="tabpanel">
+      <div class="pane-head">
+        <h2>SOFA 评分 (序贯器官衰竭)</h2>
+        <div class="sub">评估 6 大器官系统, 0-4 分/系统, 总分 0-24。SSC 2021 用 SOFA ≥ 2 + 感染 = 脓毒症。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— Inputs</h3>
+
+        <div class="field">
+          <label>① 呼吸 (PaO₂/FiO₂)</label>
+          <div class="field-row">
+            <div class="field"><label style="font-weight:400;font-size:12px;">PaO₂ <span class="unit">mmHg</span></label>
+              <input type="number" id="sofa-pao2" value="80" min="20" max="600" step="1"></div>
+            <div class="field"><label style="font-weight:400;font-size:12px;">FiO₂</label>
+              <input type="number" id="sofa-fio2" value="0.40" min="0.21" max="1.0" step="0.01"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>② 凝血 (血小板)</label>
+          <input type="number" id="sofa-plt" value="120" min="0" max="600" step="1">
+          <div class="help">×10⁹/L</div>
+        </div>
+
+        <div class="field">
+          <label>③ 肝脏 (胆红素)</label>
+          <input type="number" id="sofa-bil" value="20" min="0" max="500" step="0.1">
+          <div class="help">µmol/L · mg/dL × 17.1 = µmol/L</div>
+        </div>
+
+        <div class="field">
+          <label>④ 心血管</label>
+          <div class="field-row">
+            <div class="field"><label style="font-weight:400;font-size:12px;">MAP <span class="unit">mmHg</span></label>
+              <input type="number" id="sofa-map" value="70" min="20" max="200" step="1"></div>
+            <div class="field"><label style="font-weight:400;font-size:12px;">升压药</label>
+              <div class="opt-group" data-name="sofa-vaso">
+                <div class="opt on" data-val="none">无</div>
+                <div class="opt" data-val="dopa">多巴 ≤15</div>
+                <div class="opt" data-val="dopaHi">多巴 &gt;15</div>
+                <div class="opt" data-val="nore">NE/AD</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>⑤ 神经 (GCS)</label>
+          <input type="number" id="sofa-gcs" value="15" min="3" max="15" step="1">
+          <div class="help">3-15 分 (已用镇静者用评估前 GCS)</div>
+        </div>
+
+        <div class="field">
+          <label>⑥ 肾脏</label>
+          <div class="field-row">
+            <div class="field"><label style="font-weight:400;font-size:12px;">肌酐 <span class="unit">µmol/L</span></label>
+              <input type="number" id="sofa-cr" value="100" min="10" max="1500" step="1"></div>
+            <div class="field"><label style="font-weight:400;font-size:12px;">尿量 <span class="unit">mL/d</span></label>
+              <input type="number" id="sofa-ur" value="800" min="0" max="5000" step="50"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">SOFA Total</div>
+        <div class="result-value" id="sofa-out"><span class="unit">/ 24</span></div>
+        <div id="sofa-tier" class="result-tier tier-info">—</div>
+        <div class="result-foot" id="sofa-foot">输入参数后计算。</div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>每系统最差值计入。基线 SOFA 假设 0, 感染后 SOFA ≥ 2 → 脓毒症 (Sepsis-3)。SOFA ≥ 2 同时需乳酸 ≥ 2 → 脓毒性休克高危。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Pearls / Pitfalls 临床坑</h4>
+          <ul>
+            <li><strong>GCS 受镇静影响</strong>: 用镇静前的评分, 否则会误判为脑衰竭</li>
+            <li><strong>肌酐盲区</strong>: 尿量足够可掩盖早期 AKI, 肌酐可能滞后 24-48h</li>
+            <li><strong>FiO₂ 计算</strong>: 鼻导管 FiO₂ ≈ 21 + 4×流量 (L/min); Venturi 面罩按刻度</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>Sepsis-3 (2016) 用 SOFA 替代 SIRS, 预测 ICU 死亡率更准。SSC 2021 推荐每小时动态评估, 2h 内增加 ≥ 2 分 → 高死亡风险。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>Vincent JL, et al. <em>Intensive Care Med</em>. 1996;22(7):707-710. (SOFA 原始论文)<br>Singer M, et al. <em>JAMA</em>. 2016;315(8):801-810. (Sepsis-3)</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      Tengzhuguotzg@gmail.com
+      &nbsp;·&nbsp;
+      <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div>© 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+  </footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   Tab 切换
+   ═══════════════════════════════════════════ */
+(function() {
+  const tabs = document.querySelectorAll('.tab');
+  const panes = document.querySelectorAll('.pane');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      panes.forEach(p => p.classList.remove('active'));
+      t.classList.add('active');
+      const id = 'pane-' + t.dataset.tab;
+      document.getElementById(id).classList.add('active');
+      // 切到新 tab 时, 重新触发计算
+      recompute(t.dataset.tab);
+      // 滚到结果区
+      document.getElementById('pane-' + t.dataset.tab).scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════════
+   通用: opt-group 选择 + 数值绑定
+   ═══════════════════════════════════════════ */
+document.querySelectorAll('.opt-group').forEach(g => {
+  g.addEventListener('click', e => {
+    const opt = e.target.closest('.opt');
+    if (!opt) return;
+    g.querySelectorAll('.opt').forEach(o => o.classList.remove('on'));
+    opt.classList.add('on');
+    const name = g.dataset.name;
+    if (name) recompute(name.replace(/-sex$|-vaso$/, ''));
+  });
+});
+document.querySelectorAll('input[type=number]').forEach(i => {
+  i.addEventListener('input', () => {
+    const id = i.id.split('-')[0];
+    recompute(id);
+  });
+});
+
+/* ═══════════════════════════════════════════
+   计算函数
+   ═══════════════════════════════════════════ */
+function getOpt(name) {
+  const g = document.querySelector(`.opt-group[data-name="${name}"]`);
+  if (!g) return null;
+  const on = g.querySelector('.opt.on');
+  return on ? on.dataset.val : null;
+}
+function getVal(id) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? null : v;
+}
+function setOut(id, val, unit) {
+  const el = document.getElementById(id);
+  if (val === null || val === undefined || isNaN(val)) {
+    el.innerHTML = '<span class="unit">—</span>';
+    el.classList.add('empty');
+  } else {
+    el.innerHTML = val.toFixed(1).replace(/\.0$/, '') + (unit ? '<span class="unit">'+unit+'</span>' : '');
+    el.classList.remove('empty');
+  }
+}
+function setTier(id, text, cls) {
+  const el = document.getElementById(id);
+  el.className = 'result-tier ' + cls;
+  el.textContent = text;
+}
+function setFoot(id, html) {
+  document.getElementById(id).innerHTML = html;
+}
+
+/* ── CrCl ── */
+function calcCrCl() {
+  const sex = getOpt('crcl-sex');
+  const age = getVal('crcl-age');
+  const wt  = getVal('crcl-wt');
+  const cr  = getVal('crcl-cr');
+  if ([age, wt, cr].some(v => v === null)) { setOut('crcl-out', null, 'mL/min'); setTier('crcl-tier', '请填写必填项', 'tier-info'); setFoot('crcl-foot', '需要年龄、体重、肌酐。'); return; }
+  // µmol/L → mg/dL
+  const crMg = cr / 88.4;
+  let crcl = ((140 - age) * wt) / (72 * crMg);
+  if (sex === 'female') crcl *= 0.85;
+  setOut('crcl-out', crcl, 'mL/min');
+  // 分级
+  let tier, cls, foot;
+  if (crcl >= 90) { tier = '正常'; cls = 'tier-ok'; foot = '<strong>≥ 90</strong> 肾功能正常, 多数药物无需调整剂量。'; }
+  else if (crcl >= 60) { tier = '轻度下降'; cls = 'tier-ok'; foot = '<strong>60-89</strong> CKD G2 期, 大多数药物无需调整, 注意监测。'; }
+  else if (crcl >= 30) { tier = '中度下降'; cls = 'tier-warn'; foot = '<strong>30-59</strong> CKD G3 期, 经肾药物<strong>需调整剂量</strong>。'; }
+  else if (crcl >= 15) { tier = '重度下降'; cls = 'tier-warn'; foot = '<strong>15-29</strong> CKD G4 期, 多数药物需减量 50%+ 或停用。'; }
+  else { tier = '肾衰竭'; cls = 'tier-danger'; foot = '<strong>&lt; 15</strong> CKD G5 期, 评估 RRT; 剂量调整需个体化。'; }
+  setTier('crcl-tier', tier, cls);
+  setFoot('crcl-foot', foot);
+}
+
+/* ── eGFR (CKD-EPI 2021 race-free) ── */
+function calcGfr() {
+  const sex = getOpt('gfr-sex');
+  const age = getVal('gfr-age');
+  const cr  = getVal('gfr-cr');
+  if ([age, cr].some(v => v === null)) { setOut('gfr-out', null, 'mL/min/1.73m²'); setTier('gfr-tier', '请填写必填项', 'tier-info'); return; }
+  const crMg = cr / 88.4; // µmol/L → mg/dL
+  const isFemale = sex === 'female';
+  const kappa = isFemale ? 0.7 : 0.9;
+  const alpha = isFemale ? -0.241 : -0.302;
+  const factor = isFemale ? 1.012 : 1.0;
+  const scrK = crMg / kappa;
+  const termMin = Math.pow(Math.min(scrK, 1), alpha);
+  const termMax = Math.pow(Math.max(scrK, 1), -1.200);
+  const egfr = 142 * termMin * termMax * Math.pow(0.9938, age) * factor;
+  setOut('gfr-out', egfr, 'mL/min/1.73m²');
+  let tier, cls, foot;
+  if (egfr >= 90) { tier = 'G1 正常或偏高'; cls = 'tier-ok'; foot = '<strong>≥ 90</strong> 正常, 无需处理。'; }
+  else if (egfr >= 60) { tier = 'G2 轻度下降'; cls = 'tier-ok'; foot = '<strong>60-89</strong> 轻度下降, 评估有无蛋白尿、高血压。'; }
+  else if (egfr >= 45) { tier = 'G3a 轻-中度'; cls = 'tier-warn'; foot = '<strong>45-59</strong> 监测肾功能 + 蛋白尿, 控制血压。'; }
+  else if (egfr >= 30) { tier = 'G3b 中-重度'; cls = 'tier-warn'; foot = '<strong>30-44</strong> <strong>建议肾科会诊</strong>, 评估 CKD 病因。'; }
+  else if (egfr >= 15) { tier = 'G4 重度'; cls = 'tier-warn'; foot = '<strong>15-29</strong> <strong>必须肾科会诊</strong>, 准备 RRT 通路。'; }
+  else { tier = 'G5 肾衰竭'; cls = 'tier-danger'; foot = '<strong>&lt; 15</strong> 肾衰竭, 启动 RRT。'; }
+  setTier('gfr-tier', tier, cls); setFoot('gfr-foot', foot);
+}
+
+/* ── MAP ── */
+function calcMap() {
+  const sbp = getVal('map-sbp');
+  const dbp = getVal('map-dbp');
+  if ([sbp, dbp].some(v => v === null)) { setOut('map-out', null, 'mmHg'); setTier('map-tier', '请填写', 'tier-info'); return; }
+  const map = (sbp + 2 * dbp) / 3;
+  setOut('map-out', map, 'mmHg');
+  let tier, cls, foot;
+  if (map < 65) { tier = '低于目标'; cls = 'tier-danger'; foot = '<strong>&lt; 65</strong> 器官灌注不足, 需<strong>立即复苏</strong>。SSC 2021 初始目标 65。'; }
+  else if (map < 75) { tier = '达标下界'; cls = 'tier-ok'; foot = '<strong>65-75</strong> 多数患者达标。慢性高血压者可能需 80-90。'; }
+  else if (map < 100) { tier = '正常'; cls = 'tier-ok'; foot = '<strong>75-100</strong> 正常范围。'; }
+  else { tier = '过高'; cls = 'tier-warn'; foot = '<strong>≥ 100</strong> 警惕高血压急症, 评估降压。'; }
+  setTier('map-tier', tier, cls); setFoot('map-foot', foot);
+}
+
+/* ── S/F Ratio ── */
+function calcSf() {
+  const spo2 = getVal('sf-spo2');
+  const fio2 = getVal('sf-fio2');
+  if ([spo2, fio2].some(v => v === null)) { setOut('sf-out', null, 'S/F'); setTier('sf-tier', '请填写', 'tier-info'); return; }
+  const ratio = spo2 / fio2;
+  setOut('sf-out', ratio, 'S/F');
+  // 临床分级 (Rice 2007 / Kigali)
+  let tier, cls, foot;
+  if (spo2 >= 99) { tier = 'SpO₂ 100% 失真'; cls = 'tier-warn'; foot = 'SpO₂ ≥ 99% 时公式出现<strong>"天花板"效应</strong>, 需参考 SpO₂ 100% 时 P/F 至少 200。'; }
+  else if (ratio >= 235) { tier = '无 ARDS'; cls = 'tier-ok'; foot = '<strong>≥ 235</strong> 氧合基本正常。'; }
+  else if (ratio >= 148) { tier = '轻度 ARDS (P/F 100-200 等效)'; cls = 'tier-warn'; foot = '<strong>148-234</strong> 中度 ARDS, 肺保护通气 (小潮气量 6mL/kg, PEEP 滴定)。'; }
+  else { tier = '重度 ARDS (P/F < 100 等效)'; cls = 'tier-danger'; foot = '<strong>&lt; 148</strong> 重度 ARDS, 评估<strong>俯卧位</strong>、肌松、VV-ECMO。'; }
+  setTier('sf-tier', tier, cls); setFoot('sf-foot', foot);
+}
+
+/* ── 校正血钠 ── */
+function calcNa() {
+  const na  = getVal('na-na');
+  const glu = getVal('na-glu');
+  if ([na, glu].some(v => v === null)) { setOut('na-out', null, 'mmol/L'); setTier('na-tier', '请填写', 'tier-info'); return; }
+  // 1.6 公式
+  const corrected = na + 1.6 * (glu - 100) / 100;
+  setOut('na-out', corrected, 'mmol/L');
+  const delta = corrected - na;
+  let tier, cls, foot;
+  if (corrected < 125) { tier = '真性低钠'; cls = 'tier-danger'; foot = `校正后 <strong>&lt; 125</strong>, 真性低钠。需 24h 升高 &lt; 8-10 mmol/L 防脑桥脱髓鞘。`; }
+  else if (corrected < 135) { tier = '轻度低钠'; cls = 'tier-warn'; foot = `校正后 <strong>125-134</strong>, 轻度低钠。糖尿病控制后真实值会上升, 不可过度补钠。`; }
+  else if (corrected <= 145) { tier = '正常'; cls = 'tier-ok'; foot = `校正后 <strong>135-145</strong>, 正常。实测 ${na} 因高血糖稀释, 不必按"低钠"补。`; }
+  else { tier = '高钠'; cls = 'tier-danger'; foot = `校正后 <strong>&gt; 145</strong>, 高钠。逐步降至 145 需 ≥ 48h。`; }
+  setTier('na-tier', tier, cls); setFoot('na-foot', foot + `<br>Δ = +${delta.toFixed(1)} mmol/L (血糖稀释效应)`);
+}
+
+/* ── SOFA ── */
+function sofaResp(pf) {
+  if (pf >= 400) return 0;
+  if (pf >= 300) return 1;
+  if (pf >= 200) return 2;
+  if (pf >= 100) return 3;
+  return 4;
+}
+function sofaCoag(plt) {
+  if (plt >= 150) return 0;
+  if (plt >= 100) return 1;
+  if (plt >=  50) return 2;
+  if (plt >=  20) return 3;
+  return 4;
+}
+function sofaLiver(bil) {
+  if (bil <  20.5) return 0;  // < 1.2 mg/dL
+  if (bil <  34.2) return 1;  // 1.2-1.9
+  if (bil < 102.6) return 2;  // 2.0-5.9
+  if (bil < 205.2) return 3;  // 6.0-11.9
+  return 4;
+}
+function sofaCardio(map, vaso) {
+  if (vaso === 'none' && map >= 70) return 0;
+  if (vaso === 'none' && map < 70) return 1;
+  if (vaso === 'dopa' || vaso === 'dopaHi' || vaso === 'nore') {
+    if (vaso === 'dopa') return 2;  // ≤ 5
+    if (vaso === 'dopaHi') return 3; // > 5
+    return 4; // NE ≤ 0.1 / AD ≤ 0.08; 此处统一定为 4
+  }
+  return 0;
+}
+function sofaNeuro(gcs) {
+  if (gcs >= 15) return 0;
+  if (gcs >= 13) return 1;
+  if (gcs >= 10) return 2;
+  if (gcs >=  6) return 3;
+  return 4;
+}
+function sofaRenal(crUm, ur) {
+  // cr µmol/L → mg/dL
+  const cr = crUm / 88.4;
+  let byCr;
+  if (cr < 1.2) byCr = 0;
+  else if (cr < 1.9) byCr = 1;
+  else if (cr < 3.5) byCr = 2;
+  else if (cr < 5.0) byCr = 3;
+  else byCr = 4;
+  // 尿量 5
+  const byUr = (ur < 500) ? 4 : (ur < 200 ? 0 : 0); // < 200 mL/d = 4 (简化: 其他情况不扣)
+  // 实际 SOFA: 肌酐和尿量取较高
+  return Math.max(byCr, byUr);
+}
+function calcSofa() {
+  const pao2 = getVal('sofa-pao2');
+  const fio2 = getVal('sofa-fio2');
+  const plt  = getVal('sofa-plt');
+  const bil  = getVal('sofa-bil');
+  const map  = getVal('sofa-map');
+  const vaso = getOpt('sofa-vaso');
+  const gcs  = getVal('sofa-gcs');
+  const cr   = getVal('sofa-cr');
+  const ur   = getVal('sofa-ur');
+  const all = [pao2, fio2, plt, bil, map, vaso, gcs, cr, ur];
+  if (all.some(v => v === null)) { setOut('sofa-out', null, '/ 24'); setTier('sofa-tier', '请填写', 'tier-info'); return; }
+  const pf = pao2 / fio2;
+  const r = sofaResp(pf);
+  const c = sofaCoag(plt);
+  const l = sofaLiver(bil);
+  const cv = sofaCardio(map, vaso);
+  const n = sofaNeuro(gcs);
+  const k = sofaRenal(cr, ur);
+  const total = r + c + l + cv + n + k;
+  setOut('sofa-out', total, '/ 24');
+  let tier, cls, foot;
+  if (total <= 1) { tier = '器官功能正常'; cls = 'tier-ok'; foot = `<strong>0-1</strong> ICU 死亡率 ≈ 0%, 感染 → 单纯感染。`; }
+  else if (total <= 3) { tier = '轻度器官衰竭'; cls = 'tier-warn'; foot = `<strong>2-3</strong> ICU 死亡率 ≈ 6%。Sepsis-3: 感染 + SOFA ≥ 2 = 脓毒症。`; }
+  else if (total <= 5) { tier = '中度'; cls = 'tier-warn'; foot = `<strong>4-5</strong> 死亡率 ≈ 20%。需密切监测。`; }
+  else if (total <= 9) { tier = '重度'; cls = 'tier-danger'; foot = `<strong>6-9</strong> 死亡率 ≈ 50%。评估升级治疗, 与家属沟通预后。`; }
+  else if (total <= 12) { tier = '极重度'; cls = 'tier-danger'; foot = `<strong>10-12</strong> 死亡率 ≈ 75%。多器官衰竭。`; }
+  else { tier = '濒死'; cls = 'tier-danger'; foot = `<strong>&gt; 12</strong> 死亡率 &gt; 90%。多学科评估治疗目标。`; }
+  setTier('sofa-tier', tier, cls);
+  setFoot('sofa-foot', foot + `<br>— 呼吸 ${r} · 凝血 ${c} · 肝脏 ${l} · 心血管 ${cv} · 神经 ${n} · 肾脏 ${k}`);
+}
+
+/* ═══════════════════════════════════════════
+   recompute 路由
+   ═══════════════════════════════════════════ */
+const CALCS = {
+  crcl: calcCrCl,
+  gfr:  calcGfr,
+  map:  calcMap,
+  sf:   calcSf,
+  na:   calcNa,
+  sofa: calcSofa,
+};
+function recompute(which) {
+  if (!which) {
+    Object.values(CALCS).forEach(fn => fn());
+    return;
+  }
+  // tab 名为 'crcl' / 'gfr' / 'map' / 'sf' / 'na' / 'sofa' / 'crcl-sex' / 'crcl-vaso' 等
+  const key = which.replace(/-sex$|-vaso$/, '');
+  if (CALCS[key]) CALCS[key]();
+}
+
+// 初始全部算一次 (默认显示的会显示, 其余 hidden 不算)
+calcCrCl();
+</script>
+</body>
+</html>

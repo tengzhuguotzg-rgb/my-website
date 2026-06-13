@@ -84,12 +84,17 @@
     letter-spacing: 0.5px;
   }
   .topbar-right { display: flex; align-items: center; gap: 14px; }
-  .ver {
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; color: var(--text-faint);
-    letter-spacing: 1.5px; font-weight: 500;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: background .2s;
   }
-  .ver::before { content: '— '; color: var(--accent); }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
 
   /* ── Hero ── */
   .hero {
@@ -343,7 +348,7 @@
       </div>
     </div>
     <div class="topbar-right">
-      <span class="ver">v4.1</span>
+      <a href="calculators.html" class="home-pill">医学计算器</a>
     </div>
   </header>
 

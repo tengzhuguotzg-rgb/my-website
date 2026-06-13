@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>病例讨论·电风暴·Teng.ZG</title>
+<meta name="description" content="电风暴病例讨论：冠脉三支病变PCI术后突发室颤、电风暴抢救及ICD植入的诊疗复盘。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --slide-w: 1000px;
+    --slide-h: 562.5px;
+  }
+  body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex; flex-direction: column;
+    height: 100vh; overflow: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); }
+
+  /* ═══ Topbar ═══ */
+  .topbar {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: opacity .3s, transform .3s;
+  }
+  .fs .topbar { display: none; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
+    color: var(--ink);
+  }
+  .brand-sub {
+    font-size: 12px; color: var(--text-faint); margin-top: 1px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0.5px;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+  .crumb a { color: var(--ink-2); }
+  .crumb .sep { opacity: .4; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    transition: background .2s;
+    text-decoration: none;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+
+  /* ═══ Progress ═══ */
+  .progress-wrap {
+    flex-shrink: 0;
+    padding: 6px 16px 2px;
+    transition: opacity .3s;
+  }
+  .fs .progress-wrap { display: none; }
+  .progress {
+    width: 100%; max-width: 1000px; margin: 0 auto;
+    height: 3px; background: var(--line); border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; background: var(--accent); transition: width .35s ease; }
+
+  /* ═══ Slide Container ═══ */
+  .slide-container {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    padding: 6px 16px 6px 8px;
+    overflow: hidden;
+    position: relative;
+    gap: 8px;
+  }
+
+  .slide-sidebar {
+    flex-shrink: 0;
+    width: 270px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(244,241,234,0.75);
+    backdrop-filter: saturate(180%) blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 6px;
+    transition: opacity .3s;
+  }
+  .slide-sidebar::-webkit-scrollbar { width: 3px; }
+  .slide-sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+  /* ── 缩略图（类似PPT左侧预览） ── */
+  .thumb-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 2px solid var(--line);
+    margin-bottom: 8px;
+    cursor: pointer;
+    background: rgba(244,241,234,0.88);
+    transition: border-color .15s;
+  }
+  .thumb-wrap:hover { border-color: var(--ink-2); }
+  .thumb-wrap.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .thumb-inner {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1000px;
+    height: 562.5px;
+    transform-origin: 0 0;
+    pointer-events: none;
+    opacity: 0.85;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 90px 40px 30px;
+    background: rgba(244,241,234,0.88);
+    overflow: hidden;
+  }
+  .thumb-num {
+    position: absolute;
+    top: 3px; left: 3px;
+    z-index: 2;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    color: white;
+    background: rgba(31,61,47,0.65);
+    padding: 1px 5px;
+    border-radius: 4px;
+    line-height: 1.4;
+  }
+
+  .slide-viewport-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .slide-viewport {
+    position: relative;
+    width: var(--slide-w);
+    height: var(--slide-h);
+    flex-shrink: 0;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* ═══ 固定 1000×562.5 画布 ═══ */
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(244, 241, 234, 0.88);
+    backdrop-filter: saturate(180%) blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 130px 36px 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .12s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.exit-left { opacity: 0; }
+
+  /* ═══ 全屏：整个画布等比例放大 ═══ */
+  .fs .slide-container { padding: 0; }
+  .fs .slide-viewport {
+    max-width: none;
+    max-height: none;
+  }
+  .fs .slide { border-radius: 0; border: none; }
+  .fs .slide-sidebar { display: none; }
+  .fs .thumb-strip { display: none; }
+  .fs .slide-img-hint { display: none; }
+
+  /* ═══ 内部排版（固定 px 尺寸） ═══ */
+  .slide-title {
+    position: absolute;
+    top: 78px; left: 36px; right: 36px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .slide-subtitle {
+    position: absolute;
+    top: 30px; left: 36px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    z-index: 1;
+  }
+  .slide-title-bar {
+    position: absolute;
+    top: 50px; left: 36px;
+    width: 36px; height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    z-index: 1;
+  }
+  .meta-label {
+    position: absolute;
+    top: 30px; left: 36px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; letter-spacing: 1.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    z-index: 1;
+  }
+  .slide p, .slide li {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; line-height: 1.6;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+  .slide ul { padding-left: 18px; margin: 4px 0; }
+  .highlight-box {
+    padding: 10px 14px;
+    background: rgba(231,111,44,0.06);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .highlight-box p { font-size: 14px; margin: 0; }
+  .key-tag {
+    display: inline-flex;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(231,111,44,0.08);
+    border: 1px solid rgba(231,111,44,0.18);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin: 3px 3px 0 0;
+    flex-shrink: 0;
+  }
+  .ref {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; color: var(--text-faint);
+    margin-top: 6px; padding-top: 6px;
+    border-top: 1px dashed var(--line);
+    flex-shrink: 0;
+  }
+  .center-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .center-sub {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; color: var(--text-dim);
+    text-align: center;
+    margin-top: 4px;
+  }
+  .center-sub.small { font-size: 16px; }
+
+  /* ═══ 图片网格 ═══ */
+  .img-grid {
+    display: grid;
+    gap: 8px;
+    margin-top: 6px;
+    width: 100%;
+    min-height: 0;
+    flex: 1;
+  }
+  .img-grid .img-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(31,61,47,0.03);
+    border: 1px solid var(--line);
+    cursor: zoom-in;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .img-grid .img-wrap img {
+    display: block; width: 100%; height: 100%;
+    object-fit: contain;
+  }
+  .img-grid.c1 { grid-template-columns: 1fr; }
+  .img-grid.c2 { grid-template-columns: 1fr 1fr; }
+  .img-grid.c3 { grid-template-columns: 1fr 1fr 1fr; }
+  .img-grid.c4 { grid-template-columns: 1fr 1fr; }
+  .img-grid.c5 { grid-template-columns: 3fr 2fr; }
+  .img-grid.c5 .img-wrap:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .img-grid.c5 .img-wrap:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .img-grid.c5 .img-wrap:nth-child(3) { grid-column: 2; grid-row: 2; }
+  .img-grid.c5 .img-wrap:nth-child(4) { grid-column: 1; grid-row: 3; }
+  .img-grid.c5 .img-wrap:nth-child(5) { grid-column: 2; grid-row: 3; }
+
+  .slide-image-only {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex: 1; gap: 4px;
+  }
+
+  /* ═══ Lightbox ═══ */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 500;
+    display: none; align-items: center; justify-content: center;
+    padding: 16px; cursor: zoom-out;
+    overflow: hidden;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-bg {
+    position: absolute; inset: 0;
+    background: rgba(31,61,47,0.92);
+    backdrop-filter: blur(16px);
+  }
+  .lb-stage {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox img {
+    display: block;
+    width: 95vw;
+    height: 95vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    cursor: zoom-out;
+    pointer-events: none;
+  }
+  .lightbox img.zoomed {
+    cursor: zoom-out;
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
+  }
+  .lightbox-hint {
+    position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 501;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; letter-spacing: 1px;
+    color: rgba(255,255,255,0.55);
+    background: rgba(31,61,47,0.5);
+    padding: 6px 14px;
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .slide-mfs { display: none; }
+.slide-img-hint { display: none; }
+
+/* ═══ Bottom bar（导航 + 全屏按钮） ═══ */
+  .bottom-bar {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    gap: 24px;
+    padding: 8px 16px 14px;
+    transition: opacity .3s;
+  }
+  .fs .bottom-bar { display: none; }
+  .fs-exit-btn {
+    display: none;
+  }
+  .fs .fs-exit-btn {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; bottom: 16px; right: 16px;
+    z-index: 300;
+    width: 44px; height: 44px;
+    background: rgba(31,61,47,0.35);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .fs .fs-exit-btn:hover { background: rgba(31,61,47,0.55); color: #fff; }
+  .nav-btn {
+    padding: 9px 24px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 500;
+    transition: background .2s;
+    cursor: pointer;
+  }
+  .nav-btn:hover { background: var(--ink-2); }
+  .nav-btn:disabled { opacity: .3; cursor: default; background: var(--text-faint); }
+  .nav-counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; color: var(--text-dim);
+    letter-spacing: 1px;
+    min-width: 90px; text-align: center;
+  }
+  .nav-counter .current { color: var(--ink); font-weight: 600; }
+  .fs-btn {
+    padding: 9px 22px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 500;
+    transition: background .2s;
+    cursor: pointer;
+  }
+  .fs-btn:hover { background: var(--ink-2); }
+  .page-box {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.6em; height: 1.5em;
+    border: 2px solid var(--ink);
+    vertical-align: middle;
+    position: relative; top: -1px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .15s;
+    user-select: none;
+    vertical-align: middle;
+  }
+  .page-box:hover { background: rgba(31,61,47,0.06); }
+  .page-input {
+    width: 1.6em; height: 1.5em;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: inherit;
+    font-weight: 600;
+    color: var(--ink);
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    background: var(--bg);
+    outline: none;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .page-input:focus { box-shadow: 0 0 0 2px rgba(231,111,44,0.25); }
+  .page-input::-webkit-outer-spin-button,
+  .page-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .page-input[type=number] { -moz-appearance: textfield; }
+  #pageTotal { vertical-align: middle; }
+
+  @media (max-width: 900px) {
+    .slide-sidebar { display: none; }
+    .slide-container { gap: 0; padding: 4px 0; flex-direction: column; align-items: center; }
+    .slide-viewport { max-width: none; max-height: none; }
+    .slide-viewport-wrap { flex: 0 0 auto; padding: 0 32px; aspect-ratio: 16 / 9; width: 100%; max-width: 100%; }
+    .slide-img-hint { width: 100%; align-self: stretch; }
+    .topbar { margin: 8px 8px 0; padding: 8px 14px; }
+    .brand-mark { width: 30px; height: 30px; font-size: 14px; }
+    .brand-name { font-size: 13px; }
+    .brand-sub { font-size: 11px; }
+    .crumb { display: none; }
+    .home-pill { padding: 5px 10px; font-size: 11px; }
+    .bottom-bar { display: none; }
+    .page-box, #pageTotal { display: none; }
+
+    .thumb-strip {
+        display: flex; gap: 9px;
+        padding: 9px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-shrink: 0;
+        background: rgba(244,241,234,0.7);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+        -webkit-overflow-scrolling: touch;
+    }
+    .thumb-strip::-webkit-scrollbar { height: 2px; }
+    .thumb-strip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+    .thumb-strip .ts-thumb {
+        flex-shrink: 0;
+        width: 240px;
+        position: relative;
+        aspect-ratio: 16 / 9;
+        border-radius: 6px;
+        border: 2px solid var(--line);
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        background: rgba(244,241,234,0.88);
+        transition: border-color .15s;
+    }
+    .thumb-strip .ts-thumb:hover { border-color: var(--ink-2); }
+    .thumb-strip .ts-thumb.active { border-color: var(--accent); }
+    .thumb-strip .ts-thumb .ts-num {
+        position: absolute; top: 3px; left: 3px;
+        z-index: 2;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 12px; font-weight: 600;
+        color: white;
+        background: rgba(31,61,47,0.6);
+        padding: 1px 4px;
+        border-radius: 3px;
+        line-height: 1.3;
+    }
+    .thumb-strip .ts-thumb .thumb-mini {
+        width: 100%; height: 100%;
+        display: block;
+    }
+
+    .slide-mfs {
+        display: flex;
+        position: fixed; top: 12px; right: 12px;
+        z-index: 100;
+        width: 48px; height: 48px;
+        align-items: center; justify-content: center;
+        background: rgba(31,61,47,0.5);
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 50%;
+        color: rgba(255,255,255,0.8);
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .slide-mfs:hover { background: rgba(31,61,47,0.55); color: #fff; }
+    .fs .slide-mfs { display: flex; }
+
+    .slide-container { flex: 0 0 auto; justify-content: flex-start; padding: 0; flex-direction: column; }
+    .fs .slide-container { flex: 1; padding: 0; }
+    .progress-wrap { display: none; }
+    .slide-viewport-wrap { justify-content: center; align-items: center; padding: 0 32px; flex: 0 0 auto; aspect-ratio: 16 / 9; width: 100%; max-width: 100%; }
+    .slide-img-hint { display: block; text-align: center; padding: 10px 24px 12px; font-size: 11px; color: var(--text-faint); opacity: 0.7; flex-shrink: 0; }
+    .slide-viewport { margin-top: 0; }
+    .fs:not(.fs-rotated) .slide-viewport { width: 100vw; height: 100vh; height: 100dvh; aspect-ratio: auto; }
+    .fs .slide-viewport-wrap { aspect-ratio: auto; flex: 1; padding: 0; }
+    
+    .fs .slide-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 400;
+      background: var(--bg);
+    }
+
+    .fs.fs-rotated .slide-viewport-wrap { padding: 0; }
+    .fs.fs-rotated .slide-viewport {
+      position: fixed;
+      top: 50%; left: 50%;
+      margin: 0;
+      transform-origin: center center;
+    }
+
+    .fs.fs-rotated .lb-stage {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 100vh;
+      height: 100vw;
+      margin: 0;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center center;
+    }
+    .fs.fs-rotated .lightbox img {
+      width: 95vh;
+      height: 95vw;
+      max-width: 95vh;
+      max-height: 95vw;
+      object-fit: contain;
+    }
+    .fs.fs-rotated .lightbox-hint {
+      top: 50% !important;
+      left: 16px !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: translateY(-50%);
+      transform-origin: center center;
+      white-space: nowrap;
+    }
+
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .progress-fill, .topbar, .bottom-bar, .progress-wrap { transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">Critical Care Medicine</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="crumb" aria-label="面包屑">
+        <a href="../cases.html">病例讨论</a>
+        <span class="sep">/</span>
+        <span>电风暴</span>
+      </nav>
+      <a href="../cases.html" class="home-pill">← 返回</a>
+    </div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress"><div class="progress-fill" id="progressFill" style="width:2.9%"></div></div>
+  </div>
+
+  <div class="thumb-strip" id="thumbStrip"></div>
+
+
+  <div class="slide-container">
+    <div class="slide-sidebar" id="sidebar"></div>
+    <div class="slide-viewport-wrap">
+    <div class="slide-viewport" id="viewport">
+
+<div class="slide active" data-index="1">
+        <button class="slide-mfs">⛶</button>
+        <div class="slide-image-only">
+          <div class="center-title">病例讨论</div>
+          <div class="center-sub">电风暴</div>
+          <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
+          <div class="center-sub small">重症医学科 · 2025年06月19日</div>
+        </div>
+      </div>
+
+<div class="slide" data-index="2">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Baseline</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">基础情况</div>
+
+        <div class="content-block">
+          <span class="num-tag">1</span>
+          <p>张某，男性，62岁，因"双下肢疼痛3月，溃疡2月"拟双下肢动脉硬化闭塞症伴坏疽2025-05-27收入血管外科。</p>
+        </div>
+        <div class="content-block">
+          <span class="num-tag">2</span>
+          <p>高血压20年，未口服药物控制，自诉平素血压控制在100/60mmHg左右；糖尿病20年，口服瑞格列奈，血糖控制可。慢性肾衰竭3年，左前臂人工动静脉瘘成形术，规律透析（一、三、五）。</p>
+        </div>
+        <div class="content-block">
+          <span class="num-tag">3</span>
+          <p>2025-05-27心超：左室壁运动欠协调、心尖部搏幅稍减低。心电图：不定型室内阻滞伴ST-T改变，ST段：II、III、avF、V5、V6压低≥0.05mV。T波：II、III、avF、V7-V9平坦。BNP前体＞35000，TnI0.143。</p>
+        </div>
+      </div>
+
+<div class="slide" data-index="3">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Labs</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">完善入院相关检查</div>
+
+        <div class="img-grid c1">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide03_01.png" alt="入院检验检查" loading="lazy"></div>
+        </div>
+      </div>
+
+<div class="slide" data-index="4">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Cardiac</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">完善入院相关检查：心脏方面</div>
+
+        <p><strong>心脏方面：</strong>2025-05-27心超：左室壁运动欠协调、心尖部搏幅稍减低。心电图：不定型室内阻滞伴ST-T改变，ST段：II、III、avF、V5、V6压低≥0.05mV。T波：II、III、avF、V7-V9平坦。</p>
+        <p>BNP前体＞35000，TnI0.143。</p>
+        <div class="highlight-box">
+          <p><strong>心血管二科会诊（2025-05-28）诊断：</strong>慢性心力衰竭（射血分数保留型，EF51%）心功能II~III级，高血压性心脏病，高血压，可疑冠心病观察；余诊断同贵科。</p>
+          <p><strong>处理：</strong>低盐低脂低嘌呤糖尿病饮食，记出入量，控制每日总入量＜1500ml及输液速度，维持出入量平衡；维持电解质平衡；监测血压，目标血压＜130/80mmHg；控制血糖达标，尿酸＜360umol/l，减少动脉硬化风险；鉴于患者心血管易患因素多，已合并外周动脉闭塞，结合心电图提示"心肌缺血"及心彩超"左室壁运动欠协调、心尖部搏幅稍减低"改变，建议行冠脉造影术评估病情；完善HCY评估病情，指导诊治。我科随访。 谢邀！</p>
+        </div>
+        <p><strong>其他方面：</strong>血肌酐568 μmol/L，尿素氮18 mmol/L，谷氨酸脱氢酶＞300，ALT 736 U/L，AST 698 U/L，APTT:47，D-D:1.4。</p>
+      </div>
+
+<div class="slide" data-index="5">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">CT</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">完善入院相关检查：头胸腹CT</div>
+
+        <p><strong>头胸腹CT（2025-05-27）：</strong></p>
+        <ol class="num-list">
+          <li>双侧基底节区、侧脑室旁散在腔隙性脑梗塞灶，请结合MRI扫描。</li>
+          <li>脑萎缩、脑白质脱髓鞘改变。</li>
+          <li>扫及鼻窦炎；双侧颈内动脉及椎动脉颅内段局部管壁钙化。</li>
+          <li>慢性支气管炎，肺气肿征象；双肺少许纤维灶及炎性灶。</li>
+          <li>双肺散在少许实性及磨玻璃样小结节、部分已钙化，提示中低危，请随访。</li>
+          <li>心脏增大，主动脉及冠状动脉多发钙化。</li>
+          <li>双侧胸膜增厚，双侧胸膜腔少量积液。</li>
+          <li>扫及双侧腋窝较多淋巴结显示，无明显增大。</li>
+          <li>肝内少许小钙化灶；左侧肾上腺增粗，双肾萎缩并多发囊肿，部分囊壁伴钙化可能。</li>
+          <li>胆囊壁稍厚。</li>
+          <li>结、直肠内容物密度升高。</li>
+        </ol>
+      </div>
+
+<div class="slide" data-index="6">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Angio</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">治疗经过：下肢动脉造影 + 冠脉造影</div>
+
+        <p><strong>2025-05-28 下肢动脉造影：</strong>腹主动脉下段通畅，管壁毛糙，双侧髂总动脉通畅，右侧髂外动脉可见多处短段中-重度狭窄，左侧髂外动脉通畅。右侧股总动脉通畅，股浅动脉起始部纤细，以下部分闭塞，股深动脉代偿、侧枝形成，腘动脉P1段部分经侧枝显影浅淡，以下部分闭塞，膝下胫前、胫后、腓动脉远端经侧枝显影浅淡，近端闭塞。左侧股浅动脉上段纤细，以下部分闭塞，股深动脉代偿、侧枝形成，腘动脉P3段经侧枝显影浅淡，其余部分闭塞，胫前动脉通畅，胫后、腓动脉闭塞。</p>
+        <p><strong>2025-05-30 09:50 冠脉造影：</strong>冠脉供血呈右冠优势型。左、右冠脉开口正常。沿右冠脉走形可见钙化影。</p>
+        <ul>
+          <li>左冠状动脉：左主干未见明显异常，前降支近段至中段可见最重约60%弥漫性偏心性狭窄，回旋支中段可见最重约60%弥漫性偏心性狭窄，余未见明显异常。</li>
+          <li>右冠状动脉：近段至中段可见最重约75%弥漫性偏心性狭窄，中远段可见最重约99%次全闭塞，远端血流速度TIMI1级，余未见明显异常。</li>
+        </ul>
+        <p>考虑有冠脉手术指征。</p>
+      </div>
+
+<div class="slide" data-index="7">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">PCI</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">治疗经过：转入ICU + PCI</div>
+
+        <p><strong>2025-05-30 14:36</strong> 转入我科监护治疗。</p>
+        <p><strong>2025-05-30 16:00</strong> 外出行经皮冠状动脉旋磨术、2.经皮冠状动脉腔内血管成形术[PTCA]。术后转入我科行CRRT及监护治疗。</p>
+        <p>入我科后完善相关检查：</p>
+        <div class="img-grid c3">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_02.png" alt="PCI图像1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_03.png" alt="PCI图像2" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_04.png" alt="PCI图像3" loading="lazy"></div>
+        </div>
+      </div>
+
+<div class="slide" data-index="8">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Labs</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">入科后相关检验检查</div>
+
+        <p><strong>治疗上，</strong>予头孢呋辛抗感染，法莫替丁抑酸护胃，多烯磷脂酰胆碱护肝，床旁CRRT降肌酐，术后予吲哚布芬、氯吡格雷抗板，普伐他汀降脂稳斑，地佐辛镇痛，盐酸右美托咪定注射液、氟哌啶醇浅镇静，沙库巴曲缬沙坦钠片降压，注射用人促红素改善肾性贫血等对症支持治疗。后患者不配合，强行要求转科，于2025-05-31 17:30转出。</p>
+        <div class="img-grid c2">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide08_05.png" alt="入科后检验1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide08_06.png" alt="入科后检验2" loading="lazy"></div>
+        </div>
+      </div>
+
+<div class="slide" data-index="9">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Event</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">治疗经过：意识障碍发作</div>
+
+        <p><strong>2025-06-02 早上查房：</strong>患者神志嗜睡，精神差，未诉特殊不适主诉，生命体征平稳。</p>
+        <div class="highlight-box">
+          <p><strong>神内急会诊（08:52）：</strong>上午床旁查看病人，嗜睡，可配合完成抬手、伸舌等指令，双眼光反应迟钝（家属诉左眼因糖尿病病变视力明显下降），鼻唇沟对称，伸舌居中，双上肢肌力3-4级对称，双下肢因疼痛配合欠佳，病理征未引出。皮肤黏膜未见出血点。急诊完善头颅CT未见出血、可见腔隙性脑梗。</p>
+          <p>目前诊断：代谢性脑病？建议：1.维持内环境稳定，会诊时患者咳嗽，注意感染情况。2.密切观察患者皮肤黏膜及大便情况。必要时复查头颅CT或MRI MRA。 谢邀。</p>
+        </div>
+        <p><strong>2025-06-02 13:00</strong> 患者透析前突发意识丧失，透析室医师告知患者透析前突发呼之不应，查看患者右侧瞳孔变大直径约5mm、左侧瞳孔直径约3mm，双侧光反应均迟钝，约2分钟后患者呼之可应，未发现四肢抽搐、凝视等。</p>
+      </div>
+
+<div class="slide" data-index="10">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Discussion</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">讨论1</div>
+
+        <div class="highlight-box">
+          <p style="font-size:22px;text-align:center;padding:60px 0;">讨论1：患者出现意识障碍，应当做如何诊断？</p>
+        </div>
+      </div>
+
+<div class="slide" data-index="11">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Diagnosis</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">治疗经过：会诊与入科诊断</div>
+
+        <p><strong>神内会诊：</strong>目前诊断：意识丧失待查：癫痫？建议：1.复查头颅CT，排除出血等新发情况。2.排除心脏新发病变。3.ICU会诊，维持生命体征平稳。</p>
+        <p><strong>我科会诊：</strong>患者嗜睡，呼之可应，言语不清，瞳孔等大，直径约2mm，对光反射迟钝。心电监护示：P 88次/分，SPO2 99%（面罩吸氧10L/min），BP 90/50mmHg。结合病史及辅助检查，考虑诊断：意识障碍原因待查。遂转入我科监护治疗。</p>
+        <div class="highlight-box">
+          <p><strong>入科诊断：</strong></p>
+          <ol class="num-list compact">
+            <li>意识障碍原因待查</li>
+            <li>双下肢动脉硬化闭塞症伴坏疽</li>
+            <li>冠状动脉粥样硬化性心脏病 三支病变（累及前降支、回旋支、右冠脉）</li>
+            <li>慢性肾衰竭 肾性贫血</li>
+            <li>血液透析状态</li>
+            <li>高血压 高血压性心脏病</li>
+            <li>2型糖尿病</li>
+            <li>2型糖尿病伴有多个并发症</li>
+            <li>2型糖尿病足病</li>
+            <li>肝功能不全</li>
+            <li>肝钙化灶</li>
+            <li>慢性心力衰竭（射血分数保留型，EF51%）心功能Ⅱ--Ⅲ级（NYHA分级）</li>
+            <li>双侧基底节区、侧脑室旁散在腔隙性脑梗塞灶</li>
+            <li>脑萎缩</li>
+            <li>双侧颈内动脉钙化</li>
+            <li>双侧椎动脉钙化</li>
+            <li>慢性支气管炎伴肺气肿</li>
+            <li>双肺少许纤维灶及炎性灶</li>
+            <li>双肺散在少许实性、磨玻璃样小结节（中低危）</li>
+            <li>双侧胸膜腔少量积液</li>
+          </ol>
+        </div>
+      </div>
+
+<div class="slide" data-index="12">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Labs</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">入科完善相关检验检查</div>
+
+        <div class="img-grid c5">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_07.png" alt="检验1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_08.png" alt="检验2" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_09.png" alt="检验3" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_10.png" alt="检验4" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_11.png" alt="检验5" loading="lazy"></div>
+        </div>
+      </div>
+
+<div class="slide" data-index="13">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">VF Storm</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">治疗经过：电风暴发作（室颤）</div>
+
+        <p><strong>2025-06-02（15:14）</strong> 患者突发呼之不应，面色苍白，四肢厥冷，血压及氧饱和度测不出，HR 250次/分，ECG示：室颤。立即胸外心脏按压，静推肾上腺素1mg，床旁双向同步电极除颤200J。</p>
+        <p>恢复窦性心律后，多次发生室颤（15:23）、（15:30）、（15:36）、（15:50）、（15:53）、（16:00），期间反复予心肺复术、电除颤、肾上腺素、利多卡因、胺碘酮、硫酸镁、极化液等抢救治疗，后予气管插管术有创呼吸机辅助通气。生命体征平稳后行床旁CRRT治疗（18:02）。</p>
+        <div class="highlight-box">
+          <p><strong>余治疗：</strong>吲哚布芬、氯吡格雷抗板，瑞芬太尼、丙泊酚镇痛镇静。哌拉西林钠他唑巴坦钠抗感染，法莫替丁抑酸护胃，多烯磷脂酰胆碱护肝，达格列净、螺内酯抗心衰。</p>
+        </div>
+        <p>夜间（18:50）、（21:04）再次发生室颤，予心肺复苏术及电除颤后室颤消失。</p>
+      </div>
+
+<div class="slide" data-index="14">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Labs</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">抢救期间相关检验检查</div>
+
+        <div class="img-grid c1">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide14_12.png" alt="抢救期间检验" loading="lazy"></div>
+        </div>
+      </div>
+
+<div class="slide" data-index="15">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Holter</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">24小时动态心电图</div>
+
+        <p><strong>24小时动态心电图示：</strong>窦性心律、异位心律，记录总时间23小时54分钟，记录总心室搏数103456次，最高心室率249次/分，为短阵室速，发生于06-02 18:42:23，最低心律为窦性心动过缓、交界性逸搏心律，发生于06.02 15:50:31，平均心室率为73次/分；最长RR间期1.724秒，为短阵室速后代偿间歇。</p>
+        <ul>
+          <li>房性早搏总数165次，占总心搏数的0.16%，有119次单发房早，23对成对房早，三联律2阵</li>
+          <li>室性早搏总数4566次，占总心搏数的4.41%，有556次单发室早，526次成对室早，二联律12阵，三联律19阵</li>
+          <li><strong>室速172阵</strong>（最快247次/分，最长室性心搏数632）</li>
+          <li>交界性逸搏总数6次，交界性逸搏心律1珍</li>
+        </ul>
+        <p>T波：II、III、aVF、V3-6低平或切迹；部分时间U波增高，T-U融合波，请结合临床，心率变异性降低。</p>
+        <div class="highlight-box">
+          <p><strong>心内科会诊意见：</strong>补充诊断：1.频发室性期前收缩；2.余同贵科。</p>
+          <p>建议：1.继续予艾司洛尔、胺碘酮泵入预防电风暴；2.积极纠正电解质紊乱，可给予钾镁液，将血钾维持在4.5-5.0mmol/L之间；3.待病情稳定后，择期行冠脉内支架植入术；4.择期行ICD植入；5.我科随诊。 谢邀！</p>
+        </div>
+      </div>
+
+<div class="slide" data-index="16">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Recovery</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">治疗经过：后续进程</div>
+
+        <ul class="timeline">
+          <li><strong>2025-06-03</strong> 白天上午未见室早，中午停用利多卡因，下午见频发室早二联律，加用利多卡因后室早消失。</li>
+          <li><strong>2025-06-04 上午</strong> 停用利多卡因，未见室性心律失常。</li>
+          <li><strong>2025-06-04 16:50</strong> 心电图提示QT间期延长，停用胺碘酮。</li>
+          <li><strong>2025-06-05 09:24</strong> 予富马酸比索洛尔片2.5mg控制心室率，预防心电风暴。</li>
+          <li><strong>2025-06-05 14:30</strong> 气管插管拔除。</li>
+          <li><strong>2025-06-08</strong> 转入普通病房（血管外科）。</li>
+          <li><strong>2025-06-12</strong> 出院。</li>
+        </ul>
+      </div>
+
+<div class="slide" data-index="17">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Definition</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">电风暴·定义</div>
+
+        <p style="margin-top:8px;"><strong>电风暴（Electrical Storm, ES）</strong>是一种危及生命的心脏电不稳定状态，其特征为短时间内反复发作的持续性室性心律失常（Ventricular Arrhythmias, VA）。这些室性心律失常多为单形性室性心动过速（Monomorphic VT, MMVT），但也可能包括多形性室性心动过速（Polymorphic VT, PMVT）和心室颤动（Ventricular Fibrillation, VF）。</p>
+        <div class="highlight-box">
+          <p>尽管部分室性心律失常可自行终止，但若患者未植入功能性植入式心律转复除颤器（ICD），通常需药物干预或体外除颤治疗。</p>
+          <p><strong>ES的临床标准定义：</strong>24小时内出现3次或以上持续性室性心律失常发作（包括ICD恰当放电），且每次发作间隔至少5分钟。</p>
+        </div>
+        <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>
+      </div>
+
+<div class="slide" data-index="18">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Risk Factors</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">危险因素</div>
+
+        <p>电风暴（ES）患者中，<strong>77%-94%</strong>存在基础结构性心脏病，其中多数为晚期心肌病（缺血性或非缺血性）。少数ES患者心脏宏观结构正常但存在分子水平异常（如离子通道病）。由于心肌病本身即是植入式心律转复除颤器（ICD）的适应证，且ICD能在ES发作时终止心源性猝死（SCD），因此多数ES患者在发病前已植入ICD，这使得患者能够存活至入院。</p>
+        <p><strong>已报道的ES危险因素包括：</strong></p>
+        <ul>
+          <li>左心室射血分数（LVEF）降低</li>
+          <li>高龄</li>
+          <li>QRS波时限延长</li>
+          <li>未接受规范的指南导向药物治疗（GDMT）</li>
+          <li>慢性肾脏病</li>
+          <li>既往室性心律失常发作史（尤其以单形性室速作为首发心律者）</li>
+        </ul>
+        <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>
+      </div>
+
+<div class="slide" data-index="19">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Pathophysiology</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">病理生理学</div>
+
+        <div class="img-grid c1">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide19_14.png" alt="病理生理学" loading="lazy"></div>
+        </div>
+        <p style="margin-top:8px;"><strong>电风暴（ES）致心律失常机制解析：</strong></p>
+        <p>在存在解剖或电学异常基质（如心肌瘢痕）的个体中，<strong>触发因素</strong>（心肌缺血、炎症、血流动力学失代偿、药物及电解质紊乱）常伴随自主神经失衡，通过以下途径导致持续性室性心律失常（VA）：</p>
+        <ul>
+          <li><strong>折返机制</strong>（reentry）</li>
+          <li><strong>后除极触发活动</strong>（after depolarizations）</li>
+          <li><strong>持续化机制：</strong>初始触发因素与继发的交感神经过度激活形成恶性循环，促使VA反复发作，最终演变为电风暴。</li>
+        </ul>
+        <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>
+      </div>
+
+<div class="slide" data-index="20">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Diagnosis</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">诊断性评估和风险分层</div>
+
+        <div class="img-grid c1">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide20_15.png" alt="诊断性评估" loading="lazy"></div>
+        </div>
+        <p style="margin-top:8px;">ES患者的初始诊断评估侧重于评估心律失常、识别触发因素、了解心脏基质、评估血流动力学状态和进行风险分层。应从ICD询问和心脏遥测（如果有）中寻找有关VA发作频率和持续时间的信息，并且开始连续（最好是12导联）心电图监测非常有价值。</p>
+        <div class="highlight-box">
+          <p><strong>可能证明更积极初始策略的高风险VA特征：</strong>VF/PMVT、更快的心室率、更频繁或持续的VA发作、退化为VF的倾向、ICD治疗失败以及由短偶联PVC触发的VA。</p>
+          <p>患者的VA病史和既往治疗（包括AAD或导管消融术）将有助于预测治疗成功的可能性。</p>
+        </div>
+        <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>
+      </div>
+
+<div class="slide" data-index="21">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Triggers</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">识别触发因素</div>
+
+        <p><strong>潜在的触发因素</strong>包括心肌缺血、心力衰竭恶化或容量负荷过重、伴有发热的急性疾病、近期用药或药物变化导致的药物毒性或QT间期延长、交感神经和副交感神经活动失衡、非心脏器官衰竭、甲状腺毒症以及电解质紊乱（尤其是低钾血症或高钾血症和低镁血症）。</p>
+        <p>识别并停用致心律失常药物至关重要。交感神经张力升高和肾上腺素能亢进具有致心律失常作用，常常诱发ES。初步实验室检查应包括电解质、乳酸、肾/肝/甲状腺功能以及心脏标志物。如果可能的话，应在患者自身心律和室性心动过速（VT）期间获取12导联心电图。</p>
+        <p>对于已确诊冠状动脉疾病（CAD）或缺血性心肌病（ICM）的患者，必须排除心肌缺血，同时要认识到非缺血性过程也可能使血清心肌肌钙蛋白水平升高。</p>
+        <p>冠状动脉造影常用于识别可能引发心肌缺血的阻塞性冠状动脉疾病，即使患者没有急性心肌梗死的明确证据。</p>
+        <p>对于临床怀疑程度较低的特定稳定患者，可考虑进行计算机断层扫描冠状动脉造影。</p>
+        <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>
+      </div>
+
+<div class="slide" data-index="22">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">Management</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">管理</div>
+
+        <div class="img-grid c1">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide22_16.png" alt="管理" loading="lazy"></div>
+        </div>
+        <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>
+      </div>
+
+    </div>
+    </div>
+    <div class="slide-img-hint">点击图片可放大</div>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>
+    <button class="nav-btn" id="homeBtn" disabled style="padding:6px 12px;">◉ 首页</button>
+    <span class="nav-counter" id="counter"><span class="page-box" id="pageBox"><span class="current" id="pageDisplay">1</span></span><span id="pageTotal"></span></span>
+    <button class="fs-btn" id="fsBtn">⛶ 全屏</button>
+    <button class="nav-btn" id="nextBtn">下一页 →</button>
+  </div>
+
+  <button class="fs-exit-btn" id="fsExitBtn" aria-label="退出全屏">⛶</button>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-bg"></div>
+    <div class="lb-stage">
+      <img id="lbImg" src="" alt="">
+    </div>
+  </div>
+
+<script>
+(function(){
+  var S = document.querySelectorAll('#viewport .slide');
+  var N = S.length, C = 1, FS = false;
+  var ctr = document.getElementById('counter');
+  var pb = document.getElementById('prevBtn'), nb = document.getElementById('nextBtn');
+  var pf = document.getElementById('progressFill');
+
+  function go(i) {
+    if (i < 1 || i > N) return;
+    S.forEach(function(s, t) {
+      s.classList.remove('active', 'exit-left');
+      if (t + 1 === i) s.classList.add('active');
+      else if (t + 1 < i) s.classList.add('exit-left');
+    });
+    C = i;
+    pb.disabled = i === 1; nb.disabled = i === N; hb.disabled = i === 1;
+    pf.style.width = (i / N * 100) + '%';
+    var pd = document.getElementById('pageDisplay');
+    if (pd) pd.textContent = i;
+    updateSidebar();
+    if (typeof updateThumbStrip === 'function') updateThumbStrip();
+  }
+
+  pb.addEventListener('click', function(){ go(C - 1); });
+  nb.addEventListener('click', function(){ go(C + 1); });
+
+  var hb = document.getElementById('homeBtn');
+  hb.addEventListener('click', function(){ go(1); });
+
+  var pageBox = document.getElementById('pageBox');
+  pageBox.addEventListener('click', function(e) {
+    if (e.target.tagName === 'INPUT') return;
+    var input = document.createElement('input');
+    input.type = 'number';
+    input.min = 1;
+    input.max = N;
+    input.className = 'page-input';
+    input.value = C;
+    pageBox.innerHTML = '';
+    pageBox.appendChild(input);
+    input.focus();
+    input.select();
+    function finish() {
+      var val = parseInt(input.value, 10);
+      if (!isNaN(val) && val >= 1 && val <= N) go(val);
+      pageBox.innerHTML = '<span class="current" id="pageDisplay">' + C + '</span>';
+    }
+    input.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); finish(); }
+      if (ev.key === 'Escape') {
+        pageBox.innerHTML = '<span class="current" id="pageDisplay">' + C + '</span>';
+      }
+    });
+    input.addEventListener('blur', finish);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(C - 1); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(C + 1); }
+    if (e.key === 'Escape' && FS) { toggleFS(); }
+  });
+
+  (function(){
+    var tx = 0, ty = 0;
+    document.addEventListener('touchstart', function(e){
+      if (e.target.closest('.thumb-strip')) return;
+      tx = e.changedTouches[0].screenX;
+      ty = e.changedTouches[0].screenY;
+    });
+    document.addEventListener('touchend', function(e){
+      if (e.target.closest('.thumb-strip')) return;
+      var dx = tx - e.changedTouches[0].screenX;
+      var dy = ty - e.changedTouches[0].screenY;
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
+        if (dy > 0) go(C + 1); else go(C - 1);
+      } else if (Math.abs(dx) > 70) {
+        var isFsR = document.body.classList.contains('fs-rotated');
+        if (isFsR) {
+          if (dx > 0) go(C - 1); else go(C + 1);
+        } else {
+          if (dx > 0) go(C + 1); else go(C - 1);
+        }
+      }
+    });
+  })();
+
+  var vp = document.getElementById('viewport');
+  var fsBtn = document.getElementById('fsBtn');
+
+  document.getElementById('fsExitBtn').addEventListener('click', function(){ toggleFS(); });
+
+  function scaleViewport() {
+    var wrap = document.querySelector('.slide-viewport-wrap');
+    var cw, ch;
+    if (FS) {
+      cw = window.innerWidth;
+      ch = window.innerHeight;
+    } else {
+      cw = wrap.clientWidth;
+      ch = wrap.clientHeight;
+    }
+    var vpW = vp.offsetWidth || 1000, vpH = vp.offsetHeight || 562.5;
+    var isFsR = document.body.classList.contains('fs-rotated');
+    var s;
+    if (isFsR) {
+      s = Math.min(cw / vpH, ch / vpW);
+    } else {
+      s = Math.min(cw / vpW, ch / vpH);
+    }
+    if (s >= 0.95 && s <= 1.05 && !isFsR) { vp.style.transform = ''; return; }
+    var pre = isFsR ? 'translate(-50%, -50%) rotate(90deg) ' : '';
+    vp.style.transform = pre + 'scale(' + s + ')';
+    vp.style.transformOrigin = 'center center';
+  }
+
+  function doLock() {
+    var isPortrait = window.matchMedia('(orientation: portrait)').matches;
+    if (!isPortrait) {
+      document.body.classList.remove('fs-rotated');
+      return;
+    }
+    vp.style.transform = '';
+    document.body.classList.add('fs-rotated');
+    try {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(function(){});
+      } else if (screen.lockOrientation) {
+        screen.lockOrientation('landscape');
+      }
+    } catch(e) {}
+  }
+
+  function toggleFS() {
+    if (!FS) {
+      var fsSupported = document.documentElement.requestFullscreen || 
+                        document.documentElement.webkitRequestFullscreen;
+      
+      if (fsSupported) {
+        var fsPromise = null;
+        if (document.documentElement.requestFullscreen) { fsPromise = document.documentElement.requestFullscreen(); }
+        else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); }
+        document.body.classList.add('fs');
+        FS = true;
+        fsBtn.textContent = '⛶ 退出';
+        if (fsPromise && fsPromise.then) {
+          fsPromise.then(function(){ doLock(); }).catch(function(){ doLock(); });
+        } else {
+          setTimeout(doLock, 300);
+        }
+      } else {
+        document.body.classList.add('fs');
+        FS = true;
+        fsBtn.textContent = '⛶ 退出';
+        doLock();
+      }
+      setTimeout(scaleViewport, 100);
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      document.body.classList.remove('fs');
+      document.body.classList.remove('fs-rotated');
+      FS = false;
+      fsBtn.textContent = '⛶ 全屏';
+      setTimeout(scaleViewport, 100);
+    }
+  }
+  fsBtn.addEventListener('click', toggleFS);
+
+  function onFSChange() {
+    var inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    if (!inFS && FS) {
+      document.body.classList.remove('fs');
+      document.body.classList.remove('fs-rotated');
+      FS = false;
+      fsBtn.textContent = '⛶ 全屏';
+    }
+    else if (inFS && !FS) {
+      document.body.classList.add('fs');
+      FS = true;
+      fsBtn.textContent = '⛶ 退出';
+      doLock();
+    }
+    setTimeout(scaleViewport, 150);
+  }
+  document.addEventListener('fullscreenchange', onFSChange);
+  document.addEventListener('webkitfullscreenchange', onFSChange);
+
+  document.addEventListener('click', function(e) {
+    if (!FS) return;
+    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.img-wrap') || e.target.closest('.lightbox')) return;
+    var sel = window.getSelection();
+    if (sel && sel.toString().trim().length > 0) { sel.removeAllRanges(); return; }
+    if (e.clientX < window.innerWidth / 2) go(C - 1); else go(C + 1);
+  });
+
+  document.addEventListener('wheel', function(e) {
+    if (e.target.closest('.lightbox') || e.target.closest('input') || e.target.closest('.slide-sidebar')) return;
+    e.preventDefault();
+    if (e.deltaY > 0) go(C + 1); else go(C - 1);
+  }, { passive: false });
+
+  var lb = document.getElementById('lightbox'), li = document.getElementById('lbImg');
+  var lbGroup = [];
+  var lbIndex = 0;
+
+  function lbOpen(imgEl) {
+    var grid = imgEl.closest('.img-grid');
+    lbGroup = grid ? Array.prototype.slice.call(grid.querySelectorAll('img')) : [imgEl];
+    lbIndex = lbGroup.indexOf(imgEl);
+    lbShow();
+    lb.classList.add('open');
+  }
+
+  function lbShow() {
+    li.src = lbGroup[lbIndex].src;
+    var stage = li.parentElement;
+    if (stage) { stage.scrollLeft = 0; stage.scrollTop = 0; }
+  }
+
+  function lbClose() {
+    lb.classList.remove('open');
+    lbGroup = [];
+  }
+
+  lb.addEventListener('click', function(e) {
+    lbClose();
+  });
+
+  document.addEventListener('click', function(e){
+    var img = e.target.closest('.img-wrap img');
+    if (img && !e.target.closest('.lightbox')) { lbOpen(img); return; }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (lb.classList.contains('open')) {
+      if (e.key === 'Escape') { lbClose(); }
+      else if (e.key === 'ArrowLeft' && lbGroup.length > 1) { lbIndex = (lbIndex - 1 + lbGroup.length) % lbGroup.length; lbShow(); }
+      else if (e.key === 'ArrowRight' && lbGroup.length > 1) { lbIndex = (lbIndex + 1) % lbGroup.length; lbShow(); }
+    }
+  });
+
+  document.querySelectorAll('.slide-mfs').forEach(function(btn) {
+    btn.addEventListener('click', function(e) { e.stopPropagation(); toggleFS(); });
+  });
+
+  window.addEventListener('resize', scaleViewport);
+
+  function buildThumbStrip() {
+    var strip = document.getElementById('thumbStrip');
+    if (!strip) return;
+    var sb = document.querySelector('.slide-sidebar');
+    if (sb && sb.offsetParent !== null) { strip.style.display = 'none'; return; }
+    strip.style.display = '';
+    strip.innerHTML = '';
+    var S = document.querySelectorAll('#viewport .slide');
+    if (!S || !S.length) return;
+    for (let si = 0; si < S.length; si++) {
+        var s = S[si];
+        var wrap = document.createElement('div');
+        wrap.className = 'ts-thumb' + (si === 0 ? ' active' : '');
+        strip.appendChild(wrap);
+        var inner = document.createElement('div');
+        inner.style.cssText = 'position:absolute;top:0;left:0;width:1000px;height:562.5px;transform-origin:0 0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:30px 36px;background:rgba(244,241,234,0.88);overflow:hidden;';
+        inner.innerHTML = s.innerHTML;
+        var tscale = (wrap.offsetWidth || 160) / 1000;
+        inner.style.transform = 'scale(' + tscale + ')';
+        wrap.appendChild(inner);
+        var num = document.createElement('div');
+        num.className = 'ts-num';
+        num.textContent = si + 1;
+        wrap.appendChild(num);
+        (function(idx){
+          var tx = 0, ty = 0;
+          wrap.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].screenX; ty = e.changedTouches[0].screenY; });
+          wrap.addEventListener('touchend', function(e){
+            var dx = Math.abs(tx - e.changedTouches[0].screenX);
+            var dy = Math.abs(ty - e.changedTouches[0].screenY);
+            if (dx < 10 && dy < 10) { e.preventDefault(); go(idx + 1); }
+          });
+        })(si);
+    }
+}
+
+  function updateThumbStrip() {
+    var wraps = document.querySelectorAll('.ts-thumb');
+    if (!wraps || !wraps.length) return;
+    for (var ui = 0; ui < wraps.length; ui++) {
+        wraps[ui].classList.toggle('active', ui + 1 === C);
+        if (ui + 1 === C) wraps[ui].scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+  }
+  try { buildThumbStrip(); } catch(e) { console.error("thumbStrip error:", e); }
+
+  var thumbScale = 0;
+  function buildSidebar() {
+    var sb = document.getElementById('sidebar');
+    sb.innerHTML = '';
+    var sbW = sb.clientWidth - 4;
+    thumbScale = sbW / 1000;
+    S.forEach(function(s, i) {
+      var wrap = document.createElement('div');
+      wrap.className = 'thumb-wrap' + (i === 0 ? ' active' : '');
+      var inner = document.createElement('div');
+      inner.className = 'thumb-inner';
+      inner.innerHTML = s.innerHTML;
+      inner.style.transform = 'scale(' + thumbScale + ')';
+      var num = document.createElement('div');
+      num.className = 'thumb-num';
+      num.textContent = i + 1;
+      wrap.appendChild(inner);
+      wrap.appendChild(num);
+      wrap.addEventListener('click', function(){ go(i + 1); });
+      sb.appendChild(wrap);
+    });
+  }
+
+  function updateSidebar() {
+    var wraps = document.querySelectorAll('.thumb-wrap');
+    wraps.forEach(function(w, i) {
+      w.classList.toggle('active', i + 1 === C);
+      if (i + 1 === C) w.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  buildSidebar();
+  go(1);
+  scaleViewport();
+  document.getElementById('pageTotal').textContent = ' / ' + N;
+})();
+</script>
+</body>
+</html>

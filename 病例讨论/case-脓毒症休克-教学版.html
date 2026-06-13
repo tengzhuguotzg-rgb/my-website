@@ -726,34 +726,69 @@
       </div>
 <div class="slide" data-index="2">
         <button class="slide-mfs">⛶</button>
-        <div class="meta-label">Outline</div>
+        <div class="meta-label">目录</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">主要内容</div>
-        <div class="outline-list">
-          <div class="outline-item"><span class="outline-num">壹</span><span class="outline-text">病史汇报</span></div>
-          <div class="outline-item"><span class="outline-num">贰</span><span class="outline-text">讨论</span></div>
-          <div class="outline-item"><span class="outline-num">叁</span><span class="outline-text">总结</span></div>
+        <div class="outline-list" style="display:flex;justify-content:space-around;align-items:flex-start;margin:70px 60px 30px;gap:40px;">
+          <div class="outline-item" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 12px;border-top:3px solid var(--accent);">
+            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">壹</div>
+            <div class="outline-text" style="font-size:24px;font-weight:600;color:var(--ink-2);margin-top:24px;letter-spacing:4px;">病史汇报</div>
+          </div>
+          <div class="outline-item" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 12px;border-top:3px solid var(--accent);">
+            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">贰</div>
+            <div class="outline-text" style="font-size:24px;font-weight:600;color:var(--ink-2);margin-top:24px;letter-spacing:4px;">讨论</div>
+          </div>
+          <div class="outline-item" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 12px;border-top:3px solid var(--accent);">
+            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">叁</div>
+            <div class="outline-text" style="font-size:24px;font-weight:600;color:var(--ink-2);margin-top:24px;letter-spacing:4px;">总结</div>
+          </div>
         </div>
       </div>
-<div class="slide chapter-title" data-index="3">
-  <button class="slide-mfs">⛶</button>
-  <div class="slide-image-only">
-    <div class="center-title">壹</div>
-    <div class="center-sub">病史汇报</div>
-  </div>
-</div>
+<div class="slide" data-index="3">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">病史</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">壹 · 病史汇报</div>
+
+        <div class="highlight-box" style="padding:60px 0;text-align:center;">
+          <p style="font-size:20px;">以下为该病例涉及的核心病史信息</p>
+        </div>
+      </div>
 <div class="slide" data-index="4">
         <button class="slide-mfs">⛶</button>
         <div class="meta-label">病史</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">病史简介</div>
         
-        <p><strong>李某，女性，62岁。</strong></p>
-        <p><strong>主诉：</strong>发现肾结石30+年，加重伴腰痛1+天。</p>
-        <p><strong>现病史：</strong>30年前无明显诱因出现左侧腰部胀痛，于外院诊断为泌尿系结石，予体外冲击波碎石术，后患者上述症状反复发作；5月前患者左侧腰痛明显加重，于当地医院就诊予体外冲击波碎石术治疗后缓解，2+月前患者左侧腰痛反复出现，于外院行"经尿道输尿管镜左侧输尿管结石钬激光碎石取石术+双J管置入术"（具体不详），术后1月行"经尿道输尿管镜双J管取出术"。</p>
-        <p>1天前患者出现左腰痛，伴呕吐，外院查血示：血小板：16.00×10⁹/L，遂转至我院急诊就诊。</p>
-        <p><strong>下腹部+盆腔CT（2025-08-05）：</strong>右肾盂-盏内结石；左肾盂-盏内考虑结石；左侧输尿管下段结石影，左输尿管及左肾积水；左肾周筋膜增厚，左输尿管壁增厚，提示炎性病变。</p>
-        <p><strong>入院症见：</strong>神清神可，左侧腰部胀痛加重，持续低热、呕吐。</p>
+        <div class="patient-card" style="display:flex;align-items:center;gap:20px;background:rgba(31,61,47,0.06);padding:12px 18px;border-radius:6px;margin-bottom:12px;">
+          <div style="font-size:32px;font-weight:700;color:var(--ink);letter-spacing:2px;">李某</div>
+          <div style="display:flex;gap:14px;font-size:14px;color:var(--text-dim);align-items:baseline;">
+            <span>女</span>
+            <span style="color:var(--text-faint);">·</span>
+            <span style="color:var(--accent);font-weight:600;font-size:20px;">62岁</span>
+          </div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">主　诉</div>
+          <div style="font-size:15px;color:var(--text);line-height:1.6;">发现肾结石<span style="color:var(--accent);font-weight:600;"> 30+年</span>，加重伴腰痛 1+ 天</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">现 病 史</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">30年前无明显诱因出现左侧腰部胀痛，于外院诊断为泌尿系结石，予体外冲击波碎石术，后患者上述症状反复发作；5月前患者左侧腰痛明显加重，于当地医院就诊予体外冲击波碎石术治疗后缓解，2+月前患者左侧腰痛反复出现，于外院行"经尿道输尿管镜左侧输尿管结石钬激光碎石取石术+双J管置入术"（具体不详），术后1月行"经尿道输尿管镜双J管取出术"。</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>1天前</strong>患者出现左腰痛，伴呕吐，外院查血示：血小板：<span style="color:var(--accent);font-weight:600;">16.00×10⁹/L</span>，遂转至我院急诊就诊。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">CT · 2025-08-05</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.6;">右肾盂-盏内结石；左肾盂-盏内考虑结石；左侧输尿管下段结石影，左输尿管及左肾积水；左肾周筋膜增厚，左输尿管壁增厚，提示炎性病变。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">入 院 症 见</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.6;">神清神可，左侧腰部胀痛加重，持续低热、呕吐。</div>
+        </div>
       </div>
 <div class="slide" data-index="5">
         <button class="slide-mfs">⛶</button>
@@ -775,12 +810,32 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">入院查体与初步诊断</div>
         
-        <p><strong>查体：</strong>T 36.5℃　P 125次/分　R 21次/分　BP 105/58mmHg。</p>
-        <p>左侧肾区叩击痛，右肾区无叩击痛，左侧输尿管移行区压痛，右侧输尿管移行区无压痛，膀胱区无叩浊。</p>
-        <div class="highlight-box">
-          <p><strong>初步诊断：</strong></p>
-          <p><strong>中医：</strong>石淋（湿热蕴结证）</p>
-          <p><strong>西医：</strong>1.肾结石（双肾结石）2.输尿管结石伴有积水和感染（左侧输尿管结石伴有积水和感染）3.脂肪肝</p>
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">生 命 体 征</div>
+          <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:baseline;">
+            <span style="font-size:13px;">T <span style="font-size:20px;font-weight:600;color:var(--accent);">36.5</span>℃</span>
+            <span style="font-size:13px;">P <span style="font-size:20px;font-weight:600;color:var(--accent);">125</span>次/分</span>
+            <span style="font-size:13px;">R <span style="font-size:20px;font-weight:600;color:var(--accent);">21</span>次/分</span>
+            <span style="font-size:13px;">BP <span style="font-size:20px;font-weight:600;color:var(--accent);">105/58</span>mmHg</span>
+          </div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">查 体</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.6;">左侧肾区叩击痛，右肾区无叩击痛，左侧输尿管移行区压痛，右侧输尿管移行区无压痛，膀胱区无叩浊。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:8px 14px;background:rgba(231,111,44,0.04);">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">初 步 诊 断</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.7;">
+            <div style="margin-bottom:6px;"><strong>中医：</strong>石淋（湿热蕴结证）</div>
+            <div><strong>西医：</strong></div>
+            <ol style="margin:4px 0 0 24px;line-height:1.7;">
+              <li>肾结石（双肾结石）</li>
+              <li>输尿管结石伴有积水和感染（左侧）</li>
+              <li>脂肪肝</li>
+            </ol>
+          </div>
         </div>
       </div>
 <div class="slide" data-index="7">
@@ -789,7 +844,15 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">病情变化</div>
         
-        <p><strong>2025-08-05 22:34</strong> 患者烦躁，发热，寒战，呼吸急促，氧饱和度91%，最高体温40.8℃，降钙素原（PCT）34.05 ng/ml；请我科会诊，与患者及家属沟通后，急诊行双侧输尿管支架置入术后转入我科。</p>
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">2025-08-05　22:34</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">患者烦躁，发热，寒战，呼吸急促，
+            <span style="color:var(--accent);font-weight:600;">氧饱和度 91%</span>，
+            <span style="color:var(--accent);font-weight:600;">最高体温 40.8℃</span>，
+            <span style="color:var(--accent);font-weight:600;">降钙素原（PCT）34.05 ng/ml</span>；
+            请我科会诊，与患者及家属沟通后，急诊行双侧输尿管支架置入术后转入我科。
+          </div>
+        </div>
       </div>
 <div class="slide" data-index="8">
         <button class="slide-mfs">⛶</button>
@@ -834,10 +897,33 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">心脏骤停·抢救</div>
         
-        <p><strong>2025-08-06 18:32</strong> 因患者烦躁，无创不能耐受，心电监护示：HR 120次/分，R 35次/分，ABP 155/68mmHg，SpO₂ 97%；肺部体征：双肺可闻及哮鸣音；行经口气管插管术。</p>
-        <p><strong>2025-08-06 20:38</strong> 床旁心电图监护提示血压、心率进行性下降，血氧饱和度测不出（HR 78次/分，ABP 79/38mmHg（去甲肾上腺素0.222µg/kg/min），RR 20次/分，SpO₂ 测不出），吸痰见血性痰。呼吸机参数：Mode P-SIMV，PS 12cmH₂O，FiO₂ 50%，PEEP 8cmH₂O，RR 20rpm，PC 12cmH₂O，MVe 16.2L/min。查体：双侧瞳孔散大，对光反射消失，全身花斑，双肺呼吸音消失，呼吸机阻力大。</p>
-        <div class="highlight-box">
-          <p><strong>抢救措施：</strong>心肺复苏同时更换气管插管，可见气管导管开口处血凝块堵塞；抗感染＋多粘菌素；俯卧位通气。</p>
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">2025-08-06　18:32　气管插管</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">因患者烦躁，无创不能耐受，心电监护示：
+            HR <span style="color:var(--accent);font-weight:600;">120</span>次/分，
+            R <span style="color:var(--accent);font-weight:600;">35</span>次/分，
+            ABP <span style="color:var(--accent);font-weight:600;">155/68</span>mmHg，
+            SpO₂ <span style="color:var(--accent);font-weight:600;">97%</span>；
+            肺部体征：双肺可闻及哮鸣音；行经口气管插管术。
+          </div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:8px 14px;margin-bottom:10px;background:rgba(231,111,44,0.04);">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">2025-08-06　20:38　心脏骤停</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">床旁心电图监护提示血压、心率进行性下降，
+            <span style="color:var(--accent);font-weight:600;">血氧饱和度测不出</span>
+            （HR <span style="color:var(--accent);font-weight:600;">78</span>次/分，
+            ABP <span style="color:var(--accent);font-weight:600;">79/38</span>mmHg
+            （去甲肾上腺素 0.222µg/kg/min），
+            RR 20次/分，SpO₂ 测不出），吸痰见血性痰。
+          </div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>呼吸机参数：</strong>Mode P-SIMV，PS 12cmH₂O，FiO₂ <span style="color:var(--accent);font-weight:600;">50%</span>，PEEP 8cmH₂O，RR 20rpm，PC 12cmH₂O，MVe 16.2L/min。</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>查体：</strong>双侧瞳孔散大，对光反射消失，全身花斑，双肺呼吸音消失，呼吸机阻力大。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:8px 14px;background:rgba(231,111,44,0.06);">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">抢 救 措 施</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.7;">心肺复苏同时更换气管插管，可见气管导管开口处血凝块堵塞；抗感染＋多粘菌素；俯卧位通气。</div>
         </div>
       </div>
 <div class="slide" data-index="12">
@@ -1063,7 +1149,20 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">感染的控制 ① 上行路径</div>
         
-        <p>肾盂肾炎属于上尿路感染，可能由下尿路感染发展而来，也可能由于全身血行感染引起。前者可能因为下尿路感染没有得到及时有效的治疗，也可能因为存在先天性膀胱输尿管反流或者泌尿道结石、肿瘤等引起的尿流不通畅，或者由于某些泌尿系统的操作，使得致病菌由下尿路上行至肾盂并繁殖，造成肾盂肾炎。</p>
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">上 行 途 径</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">肾盂肾炎属于<span style="color:var(--accent);font-weight:600;">上尿路感染</span>，可由下尿路感染发展而来，也可由全身血行感染引起。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">常 见 上 行 诱 因</div>
+          <ul style="margin:4px 0 0 20px;font-size:13px;color:var(--text);line-height:1.7;">
+            <li>下尿路感染未得到及时有效治疗</li>
+            <li>先天性膀胱输尿管反流</li>
+            <li>泌尿道结石、肿瘤等尿流不通畅</li>
+            <li>泌尿系统操作</li>
+          </ul>
+        </div>
       </div>
 <div class="slide" data-index="30">
         <button class="slide-mfs">⛶</button>
@@ -1071,8 +1170,20 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">感染的控制 ② 致病菌</div>
         
-        <p>肾盂肾炎最常见的致病菌是革兰阴性杆菌，尤以<strong>大肠杆菌</strong>最为常见，占60~90%，大约5~10%的肾盂肾炎是由革兰阳性球菌引起，多见于伴有尿路结石的肾盂肾炎，金黄色葡萄球菌常见于败血症所致的血源性肾盂肾炎，留置导尿或曾行尿路器械检查的患者常有绿脓杆菌感染。</p>
-        <p>但复杂性尿路感染患者可能存在克雷伯杆菌、假单胞菌或其他肠杆菌属细菌，甚至真菌感染，而且可能存在多种细菌混合感染，耐药菌多见。</p>
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">常 见 致 病 菌</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">最常见为革兰阴性杆菌，尤以<span style="color:var(--accent);font-weight:600;">大肠杆菌</span>为主，占 <span style="color:var(--accent);font-weight:600;">60~90%</span>。</div>
+          <ul style="margin:6px 0 0 20px;font-size:13px;color:var(--text);line-height:1.7;">
+            <li>革兰阳性球菌：<span style="color:var(--accent);font-weight:600;">5~10%</span>，多见于尿路结石合并肾盂肾炎</li>
+            <li>金黄色葡萄球菌：常见于血源性肾盂肾炎（败血症所致）</li>
+            <li>绿脓杆菌：留置导尿或尿路器械检查后</li>
+          </ul>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">复 杂 性 尿 路 感 染</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">可能存在<span style="color:var(--accent);font-weight:600;">克雷伯杆菌、假单胞菌或其他肠杆菌属细菌</span>，甚至真菌感染；可能多种细菌混合感染，<span style="color:var(--accent);font-weight:600;">耐药菌多见</span>。</div>
+        </div>
       </div>
 <div class="slide" data-index="31">
         <button class="slide-mfs">⛶</button>
@@ -1080,9 +1191,16 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">感染的控制 ③ 亚硝酸盐与白细胞酯酶</div>
         
-        <p><strong>亚硝酸盐的临床意义：</strong></p>
-        <p>尿亚硝酸盐阳性结果常见于：由大肠埃希菌引起的肾盂肾炎（约占三分之二），以及尿路感染、膀胱炎、菌尿症等。尿亚硝酸盐特异性可达 80%，其对辅助诊断泌尿系统感染有很高的价值，亚硝酸盐为阳性基本可以初步判断为泌尿系感染。若尿路感染细菌（如阳性菌）不能使硝酸盐还原为亚硝酸盐，或尿在膀胱中存留较短，或尿中缺乏硝酸盐，也会导致阴性结果，需要注意。</p>
-        <p><strong>白细胞酯酶</strong>是存在于白细胞中的一种酶，且存在于中性粒细胞，当患有泌尿道感染时，白细胞酯酶常常和尿白细胞都会呈阳性。</p>
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">亚 硝 酸 盐 · 临 床 意 义</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">阳性结果常见于大肠埃希菌引起的肾盂肾炎（约占 <span style="color:var(--accent);font-weight:600;">2/3</span>）、尿路感染、膀胱炎、菌尿症等。特异性可达 <span style="color:var(--accent);font-weight:600;">80%</span>，阳性基本可判断泌尿系感染。</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>假阴性情况：</strong>阳性菌不能还原硝酸盐 / 尿在膀胱中存留时间短 / 尿中缺乏硝酸盐。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">白 细 胞 酯 酶</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">存在于白细胞（中性粒细胞）中的酶。泌尿道感染时，白细胞酯酶常和尿白细胞都呈阳性。</div>
+        </div>
       </div>
 <div class="slide" data-index="32">
         <button class="slide-mfs">⛶</button>
@@ -1102,7 +1220,7 @@
         <div class="slide-title">器官功能支持 ①</div>
         
         <div class="img-grid c1">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide34_f48a59f2.png" alt="器官支持1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide33_b270749a.png" alt="器官支持1" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="34">
@@ -1112,7 +1230,7 @@
         <div class="slide-title">器官功能支持 ②</div>
         
         <div class="img-grid c1">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide35_444dc5ef.png" alt="器官支持2" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide34_421bf5fd.png" alt="器官支持2" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="35">
@@ -1124,7 +1242,7 @@
         <p>拯救脓毒症运动中未提出免疫治疗有效的方法；</p>
         <p>2022年《脓毒症免疫监测与治疗专家共识》唯一推荐<strong>胸腺肽α1</strong>为脓毒症免疫调节治疗药物；</p>
         <div class="img-grid c1" style="margin:10px 0;">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide36_80606804.png" alt="免疫" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide35_910228a2.png" alt="免疫" loading="lazy"></div>
         </div>
         <p>2024年底NEJM在《Sepsis and Septic Shock》综述中，宿主免疫反应失调是脓毒症发病机制的关键，但目前的治疗方法主要集中在感染管理和恢复灌注上。目前正在进行研究以确定可操作的脓毒症亚型，并开发针对宿主失调的靶向疗法。</p>
       </div>
@@ -1135,7 +1253,7 @@
         <div class="slide-title">脓毒症的炎症因子吸附 ①</div>
         
         <div class="img-grid c1">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide39_d1f5b6e8.png" alt="吸附" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide36_36d27513.png" alt="吸附" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="37">
@@ -1157,7 +1275,15 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">急性呼吸窘迫综合征 ① 定义</div>
         
-        <p><strong>ARDS</strong>是由多种病因引发的，以肺泡上皮和肺毛细血管内皮细胞损伤，造成弥漫性肺间质及肺泡水肿，进而导致急性低氧性呼吸功能不全或衰竭为特征的临床综合征。其主要病理特征为<strong>炎症导致的肺微血管通透性增高，肺泡腔渗出富含蛋白质的液体，进而引发肺水肿及透明膜形成，常伴有肺泡出血</strong>。</p>
+        <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">概　念</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;"><span style="color:var(--accent);font-weight:600;">ARDS</span>（急性呼吸窘迫综合征）是由多种病因引发的临床综合征，以肺泡上皮和肺毛细血管内皮细胞损伤、弥漫性肺间质及肺泡水肿为特征，表现为<span style="color:var(--accent);font-weight:600;">急性低氧性呼吸功能不全或衰竭</span>。</div>
+        </div>
+
+        <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">主 要 病 理 特 征</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">炎症导致<span style="color:var(--accent);font-weight:600;">肺微血管通透性增高</span>，肺泡腔渗出富含蛋白质的液体 → <span style="color:var(--accent);font-weight:600;">肺水肿</span>、<span style="color:var(--accent);font-weight:600;">透明膜形成</span>，常伴<span style="color:var(--accent);font-weight:600;">肺泡出血</span>。</div>
+        </div>
       </div>
 <div class="slide" data-index="39">
         <button class="slide-mfs">⛶</button>
@@ -1166,7 +1292,7 @@
         <div class="slide-title">急性呼吸窘迫综合征 ②</div>
         
         <div class="img-grid c1">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide40_7a68995c.jpg" alt="ARDS1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide39_d86196a3.png" alt="ARDS1" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="40">
@@ -1176,14 +1302,14 @@
         <div class="slide-title">ARDS 病理生理</div>
         
         <div class="img-grid c1">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide41_b4328cae.jpg" alt="ARDS2" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide40_ddc91af5.jpg" alt="ARDS2" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="41">
         <button class="slide-mfs">⛶</button>
         <div class="meta-label">ARDS</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">ARDS 机械通气</div>
+        <div class="slide-title">ARDS 俯卧位通气</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide41_b4328cae.jpg" alt="ARDS3" loading="lazy"></div>
@@ -1200,6 +1326,26 @@
         </div>
       </div>
 <div class="slide" data-index="43">
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">总结</div>
+        <div class="slide-title-bar"></div>
+        <div class="slide-title">叁 · 总结</div>
+
+        <div class="highlight-box" style="padding:18px 28px;text-align:left;font-size:14px;line-height:1.7;">
+          <p><strong>• 早期识别：</strong>Sepsis 3.0 = 感染 + SOFA ≥ 2；1 小时集束化（测乳酸 → 血培养 → 广谱抗生素 → 液体复苏 30ml/kg → 升压药 MAP≥65）</p>
+          <p><strong>• 感染源头控制：</strong>解除梗阻（双 J 管）+ 重锤出击（美罗培南 + 万古霉素 + 多粘菌素，覆盖革兰阴/阳/耐药）</p>
+          <p><strong>• 多器官支持同步推进：</strong></p>
+          <ul style="margin:6px 0 6px 20px;line-height:1.6;">
+            <li>循环：液体复苏 + 去甲肾维持灌注压</li>
+            <li>呼吸：俯卧位通气（ARDS 病变非均一性 / 重力依赖性肺不张）</li>
+            <li>肾脏：CRRT 把握时机</li>
+            <li>免疫：胸腺肽 α1（PICS 调节）</li>
+          </ul>
+          <p><strong>• oXiris 膜启动指征：</strong>乳酸 / CRT 提示灌注不足 + NE &gt; 0.5mcg/kg/min 或需联用两种升压药</p>
+          <p><strong>• 病理生理再认知：</strong>促炎与免疫抑制同时发生 → 早期促炎致 MODS、后期免疫抑制致感染再燃 / PICS</p>
+        </div>
+      </div>
+<div class="slide" data-index="44">
         <button class="slide-mfs">⛶</button>
         <div class="slide-image-only">
           <div class="center-title">请各位老师批评指正！</div>
@@ -1239,7 +1385,7 @@
   var pf = document.getElementById('progressFill');
 
   function go(i) {
-    if (i < 1 || i > 43) return;
+    if (i < 1 || i > N) return;
     S.forEach(function(s, t) {
       s.classList.remove('active', 'exit-left');
       if (t + 1 === i) s.classList.add('active');

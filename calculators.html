@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>医学计算器 · Teng.ZG</title>
-<meta name="description" content="ICU 常用医学计算器: 肌酐清除率、eGFR、平均动脉压、氧合指数、校正血钠、SOFA 评分。">
+<meta name="description" content="ICU 床旁常用医学计算器: 肌酐清除率、eGFR、平均动脉压、氧合指数、校正血钠、SOFA 评分。">
 <meta name="theme-color" content="#F4F1EA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,9 +128,48 @@
     margin: 0;
   }
 
+  /* ── 搜索框 ── */
+  .calc-search-wrap {
+    max-width: 1200px; margin: 32px auto 0;
+    padding: 0 32px;
+    position: relative;
+  }
+  .calc-search {
+    width: 100%;
+    padding: 13px 18px 13px 44px;
+    background: rgba(244, 241, 234, 0.75);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font: inherit; font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: all .2s;
+  }
+  .calc-search::placeholder { color: var(--text-faint); }
+  .calc-search:focus {
+    border-color: var(--ink-2);
+    box-shadow: 0 0 0 3px rgba(31, 61, 47, 0.08);
+    background: rgba(244, 241, 234, 0.95);
+  }
+  .calc-search-icon {
+    position: absolute; left: 46px; top: 50%;
+    transform: translateY(-50%);
+    width: 16px; height: 16px;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+  .calc-search-empty {
+    margin-top: 10px; padding-left: 4px;
+    font-size: 13px; color: var(--text-faint);
+    display: none;
+  }
+  .calc-search-empty.show { display: block; }
+
   /* ── Tabs ── */
   .tabs {
-    max-width: 1200px; margin: 36px auto 0;
+    max-width: 1200px; margin: 14px auto 0;
     padding: 0 32px;
     display: flex; flex-wrap: wrap; gap: 8px;
   }
@@ -164,10 +203,15 @@
     padding: 0 32px;
   }
   .pane { display: none; }
-  .pane.active { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; align-items: start; }
+  /* 拉宽 + 左对齐: 与 hero/tabs 同 max-width, 不再居中窄列 */
+  .pane.active {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
 
   .pane-head {
-    grid-column: 1 / -1;
     margin-bottom: 8px;
   }
   .pane-head h2 {
@@ -184,7 +228,6 @@
 
   /* ── 输入卡 ── */
   .inputs {
-    position: sticky; top: 100px;
     padding: 24px;
     background: rgba(244, 241, 234, 0.65);
     backdrop-filter: saturate(180%) blur(20px);
@@ -227,10 +270,51 @@
     margin-left: 6px; font-weight: 400;
     font-family: 'Space Grotesk', sans-serif;
   }
+  /* MDCalc 式单位: 嵌在输入框右侧. 两种形态:
+     .unit-toggle = 可切换 (µmol/L|mg/dL, mmHg|kPa)
+     .unit-static = 固定单位 (mL/min, kg, 岁...) */
+  .unit-input { position: relative; }
+  .unit-input:has(.unit-toggle) input[type=number] { padding-right: 108px; }
+  .unit-input:has(.unit-static) input[type=number] { padding-right: 64px; }
+  .unit-toggle {
+    position: absolute;
+    right: 4px; top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    background: rgba(31, 61, 47, 0.06);
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .unit-toggle button {
+    border: none;
+    background: transparent;
+    padding: 5px 8px;
+    font-size: 11px; font-weight: 500;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: all .15s;
+    line-height: 1;
+  }
+  .unit-toggle button.on {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .unit-toggle button:not(.on):hover { color: var(--ink-2); }
+  .unit-static {
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px; font-weight: 500;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
   /* radio / checkbox 风格的性别/选项 */
   .opt-group {
-    display: flex; gap: 6px;
+    display: flex; flex-wrap: wrap; gap: 6px;
   }
+  .opt-group .opt { min-width: 0; }
   .opt {
     flex: 1;
     padding: 9px 12px;
@@ -247,15 +331,36 @@
     background: var(--ink); color: var(--bg);
     border-color: var(--ink);
   }
+  /* 升压药 6 档: 改 3 列网格, 避免 flex:1 平分导致文字挤压 */
+  .opt-group.opt-vaso {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .opt-group.opt-vaso .opt { flex: initial; }
 
   /* ── 结果区 ── */
+  /* 拉宽后改横向布局: 主数值/单位/分级在左, 脚注在右, 降低 sticky 高度减少遮挡 */
   .result-card {
-    padding: 32px 28px;
-    background: var(--bg);
+    position: sticky;
+    top: 96px;
+    z-index: 10;
+    padding: 22px 28px;
+    background: rgba(244, 241, 234, 0.92);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     border: 1px solid var(--line);
     border-radius: 18px;
+    box-shadow: 0 8px 28px rgba(31, 61, 47, 0.06);
     text-align: left;
+    display: grid;
+    grid-template-columns: minmax(220px, auto) 1fr;
+    gap: 8px 32px;
+    align-items: center;
   }
+  .result-label { grid-column: 1; grid-row: 1; margin-bottom: 4px; }
+  .result-value { grid-column: 1; grid-row: 2; margin-bottom: 4px; }
+  .result-tier  { grid-column: 1; grid-row: 3; margin-top: 6px; }
+  .result-foot  { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; padding-top: 0; border-top: none; align-self: center; }
   .result-label {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
@@ -263,10 +368,10 @@
   }
   .result-value {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 56px; font-weight: 600;
+    font-size: 48px; font-weight: 600;
     color: var(--ink);
     line-height: 1;
-    letter-spacing: -2px;
+    letter-spacing: -1.5px;
     margin-bottom: 4px;
     font-variant-numeric: tabular-nums;
   }
@@ -302,10 +407,52 @@
   }
   .result-foot strong { color: var(--ink); font-weight: 600; }
 
+  /* ── 结果卡操作按钮 (分享/收藏) ── */
+  .result-actions {
+    position: absolute;
+    top: 16px; right: 18px;
+    display: flex; gap: 6px;
+    z-index: 2;
+  }
+  .result-actions button {
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(244, 241, 234, 0.6);
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .result-actions button:hover {
+    color: var(--ink-2);
+    border-color: var(--ink-2);
+    background: var(--bg);
+  }
+  .result-actions button svg { width: 15px; height: 15px; }
+  /* 收藏激活态: 暖橘实心 */
+  .result-actions button.fav-on {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(231, 111, 44, 0.08);
+  }
+  .result-actions button.fav-on svg { fill: var(--accent); }
+  /* 分享/收藏成功提示 */
+  .result-actions .toast {
+    position: absolute; top: 38px; right: 0;
+    padding: 5px 10px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 6px;
+    font-size: 11px; font-family: 'Space Grotesk', sans-serif;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+  }
+  .result-actions .toast.show { opacity: 1; }
+
   /* ── 4 段元信息 ── */
   .meta {
-    grid-column: 1 / -1;
-    margin-top: 24px;
+    margin-top: 8px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -344,18 +491,45 @@
   .footer a { color: var(--ink-2); }
   .footer a:hover { color: var(--accent); }
 
+  /* 手机端结果栏「先定底部」模式: JS 在 ≤560px 时给 result-card 加 .mobile-dock
+     使其 position:fixed 钉在屏幕底部; 滚到原位附近时移除该类, 自然上移归位 */
+  .result-card.mobile-dock {
+    position: fixed;
+    left: 12px; right: 12px;
+    bottom: 12px;
+    top: auto;
+    z-index: 50;
+    border-radius: 14px;
+    box-shadow: 0 -4px 24px rgba(31, 61, 47, 0.12);
+  }
+  /* 钉底时精简: 隐藏脚注行, 只留数值+分级, 避免遮挡内容 */
+  .result-card.mobile-dock .result-foot { display: none; }
+  .result-card.mobile-dock .result-label { display: none; }
+  .result-card.mobile-dock { padding: 14px 18px; }
+  .result-card.mobile-dock .result-value { font-size: 28px; }
+
   /* ── 响应式 ── */
   @media (max-width: 860px) {
-    .pane.active { grid-template-columns: 1fr; }
-    .inputs { position: static; }
     .meta { grid-template-columns: 1fr; }
+    /* 窄屏: result-card 回退纵向布局, 脚注回到下方 */
+    .result-card { grid-template-columns: 1fr; }
+    .result-foot { grid-column: 1; grid-row: auto; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
   }
   @media (max-width: 560px) {
     .hero { padding: 48px 18px 16px; }
-    .pane-wrap, .tabs, .footer { padding-left: 18px; padding-right: 18px; }
+    .pane-wrap, .tabs, .footer, .calc-search-wrap { padding-left: 18px; padding-right: 18px; }
+    .calc-search-icon { left: 32px; }
     .topbar { margin: 12px 12px 0; padding: 12px 16px; }
     .brand-sub { display: none; }
-    .result-value { font-size: 44px; }
+    .result-value { font-size: 40px; }
+    .opt-group.opt-vaso { grid-template-columns: repeat(2, 1fr); }
+    /* 手机端双列输入框 (如 PaO₂/FiO₂, SBP/DBP) 回退单列, 避免框太窄 */
+    .field-row { grid-template-columns: 1fr; }
+    /* 手机端结果卡 sticky 顶距调小 (topbar 更矮); 非 dock 时正常 sticky */
+    .result-card { top: 80px; }
+    /* 手机端操作按钮放大, 便于点按 */
+    .result-actions button { width: 36px; height: 36px; }
+    .result-actions button svg { width: 17px; height: 17px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: .01ms !important; }
@@ -382,17 +556,24 @@
   <section class="hero">
     <div class="eyebrow">Medical Calculators</div>
     <h1>医学<span class="dot">.</span>计算器</h1>
-    <p class="hero-desc">ICU 床旁最常用的 6 个计算器: 肌酐清除率、eGFR、平均动脉压、氧合指数、校正血钠、SOFA 评分。输入即算,结果下方附 4 段元信息: 用法、临床坑、为什么用、证据来源。</p>
+    <p class="hero-desc">ICU 床旁常用医学计算器。输入即算,结果持续显示,每个计算器附用法、临床坑、为什么用、证据来源四段说明。支持搜索、单位切换、深链接分享与收藏。</p>
   </section>
+
+  <!-- 搜索框 -->
+  <div class="calc-search-wrap">
+    <svg class="calc-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="search" class="calc-search" id="calc-search" placeholder="搜索计算器: 名称、英文、关键词、相关疾病 (如: 肾功能、氧合、SOFA)" autocomplete="off" aria-label="搜索计算器">
+    <div class="calc-search-empty" id="calc-search-empty">未找到匹配的计算器。试试: 肾、血压、血钠、ARDS、脓毒症…</div>
+  </div>
 
   <!-- Tabs -->
   <nav class="tabs" id="tabs" role="tablist" aria-label="计算器">
-    <button class="tab active" data-tab="crcl"   role="tab">CrCl <span class="tab-en">Cockcroft-Gault</span></button>
-    <button class="tab"        data-tab="gfr"    role="tab">eGFR <span class="tab-en">CKD-EPI 2021</span></button>
-    <button class="tab"        data-tab="map"    role="tab">MAP <span class="tab-en">平均动脉压</span></button>
-    <button class="tab"        data-tab="sf"     role="tab">S/F <span class="tab-en">SpO₂/FiO₂</span></button>
-    <button class="tab"        data-tab="na"     role="tab">Na 校正 <span class="tab-en">高血糖</span></button>
-    <button class="tab"        data-tab="sofa"   role="tab">SOFA <span class="tab-en">器官衰竭</span></button>
+    <button class="tab active" data-tab="crcl"   role="tab" data-kw="肌酐清除率 肾功能 药物剂量 万古霉素 氨基糖苷 肾 crcl cockcroft gault 肾小球滤过">CrCl <span class="tab-en">Cockcroft-Gault</span></button>
+    <button class="tab"        data-tab="gfr"    role="tab" data-kw="肾小球滤过率 ckd 慢性肾病 肾病分期 肾科 肾 egfr ckd-epi race-free 肾功能">eGFR <span class="tab-en">CKD-EPI 2021</span></button>
+    <button class="tab"        data-tab="map"    role="tab" data-kw="平均动脉压 血压 休克 灌注 脓毒症 复苏 sbp dbp map mean arterial pressure 血压">MAP <span class="tab-en">平均动脉压</span></button>
+    <button class="tab"        data-tab="sf"     role="tab" data-kw="氧合 氧合指数 ards 血气 spo2 fio2 呼吸 肺 kigali berlin 氧">S/F <span class="tab-en">SpO₂/FiO₂</span></button>
+    <button class="tab"        data-tab="na"     role="tab" data-kw="校正血钠 钠 低钠 高钠 高血糖 糖尿病 dka hhs 渗透压 na sodium 血钠">Na 校正 <span class="tab-en">高血糖</span></button>
+    <button class="tab"        data-tab="sofa"   role="tab" data-kw="sofa 器官衰竭 脏器衰竭 脓毒症 sepsis 死亡率 icu 呼吸 凝血 肝 心血管 神经 肾 多器官">SOFA <span class="tab-en">器官衰竭</span></button>
   </nav>
 
   <div class="pane-wrap">
@@ -417,29 +598,50 @@
 
         <div class="field-row">
           <div class="field">
-            <label>年龄 <span class="unit">岁</span></label>
-            <input type="number" id="crcl-age" value="65" min="1" max="120" step="1">
+            <label>年龄</label>
+            <div class="unit-input">
+              <input type="number" id="crcl-age" min="1" max="120" step="1">
+              <span class="unit-static">岁</span>
+            </div>
           </div>
           <div class="field">
-            <label>体重 <span class="unit">kg</span></label>
-            <input type="number" id="crcl-wt" value="70" min="1" max="300" step="0.1">
+            <label>体重</label>
+            <div class="unit-input">
+              <input type="number" id="crcl-wt" min="1" max="300" step="0.1">
+              <span class="unit-static">kg</span>
+            </div>
             <div class="help">肥胖患者用 IBW + 0.4×(实际-IBW)</div>
           </div>
         </div>
 
         <div class="field">
-          <label>血肌酐 <span class="unit">µmol/L</span></label>
-          <input type="number" id="crcl-cr" value="120" min="10" max="2000" step="1">
+          <label>血肌酐</label>
+          <div class="unit-input">
+            <input type="number" id="crcl-cr" min="10" max="2000" step="1">
+            <span class="unit-static">µmol/L</span>
+          </div>
           <div class="help">mg/dL × 88.4 = µmol/L</div>
         </div>
 
         <div class="field">
-          <label>身高 <span class="unit">cm (可选, 算 BMI)</span></label>
-          <input type="number" id="crcl-ht" placeholder="170" min="50" max="250" step="1">
+          <label>身高 <span style="font-weight:400;font-size:12px;color:var(--text-faint);">(可选, 算 BMI)</span></label>
+          <div class="unit-input">
+            <input type="number" id="crcl-ht" min="50" max="250" step="1">
+            <span class="unit-static">cm</span>
+          </div>
         </div>
       </div>
 
       <div class="result-card">
+        <div class="result-actions">
+          <button type="button" class="ra-share" aria-label="分享" title="分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <span class="toast"></span>
+        </div>
         <div class="result-label">Result</div>
         <div class="result-value" id="crcl-out"><span class="unit">mL/min</span></div>
         <div id="crcl-tier" class="result-tier tier-info">—</div>
@@ -490,17 +692,32 @@
 
         <div class="field-row">
           <div class="field">
-            <label>年龄 <span class="unit">岁</span></label>
-            <input type="number" id="gfr-age" value="65" min="1" max="120" step="1">
+            <label>年龄</label>
+            <div class="unit-input">
+              <input type="number" id="gfr-age" min="1" max="120" step="1">
+              <span class="unit-static">岁</span>
+            </div>
           </div>
           <div class="field">
-            <label>血肌酐 <span class="unit">µmol/L</span></label>
-            <input type="number" id="gfr-cr" value="120" min="10" max="2000" step="1">
+            <label>血肌酐</label>
+            <div class="unit-input">
+              <input type="number" id="gfr-cr" min="10" max="2000" step="1">
+              <span class="unit-static">µmol/L</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="result-card">
+        <div class="result-actions">
+          <button type="button" class="ra-share" aria-label="分享" title="分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <span class="toast"></span>
+        </div>
         <div class="result-label">Result</div>
         <div class="result-value" id="gfr-out"><span class="unit">mL/min/1.73m²</span></div>
         <div id="gfr-tier" class="result-tier tier-info">—</div>
@@ -543,17 +760,32 @@
 
         <div class="field-row">
           <div class="field">
-            <label>收缩压 SBP <span class="unit">mmHg</span></label>
-            <input type="number" id="map-sbp" value="95" min="40" max="280" step="1">
+            <label>收缩压 SBP</label>
+            <div class="unit-input">
+              <input type="number" id="map-sbp" min="40" max="280" step="1">
+              <span class="unit-static">mmHg</span>
+            </div>
           </div>
           <div class="field">
-            <label>舒张压 DBP <span class="unit">mmHg</span></label>
-            <input type="number" id="map-dbp" value="55" min="20" max="180" step="1">
+            <label>舒张压 DBP</label>
+            <div class="unit-input">
+              <input type="number" id="map-dbp" min="20" max="180" step="1">
+              <span class="unit-static">mmHg</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="result-card">
+        <div class="result-actions">
+          <button type="button" class="ra-share" aria-label="分享" title="分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <span class="toast"></span>
+        </div>
         <div class="result-label">Result</div>
         <div class="result-value" id="map-out"><span class="unit">mmHg</span></div>
         <div id="map-tier" class="result-tier tier-info">—</div>
@@ -596,17 +828,32 @@
 
         <div class="field-row">
           <div class="field">
-            <label>SpO₂ <span class="unit">%</span></label>
-            <input type="number" id="sf-spo2" value="94" min="50" max="100" step="1">
+            <label>SpO₂</label>
+            <div class="unit-input">
+              <input type="number" id="sf-spo2" min="50" max="100" step="1">
+              <span class="unit-static">%</span>
+            </div>
           </div>
           <div class="field">
-            <label>FiO₂ <span class="unit">0.21 - 1.0</span></label>
-            <input type="number" id="sf-fio2" value="0.50" min="0.21" max="1.0" step="0.01">
+            <label>FiO₂</label>
+            <div class="unit-input">
+              <input type="number" id="sf-fio2" min="0.21" max="1.0" step="0.01">
+              <span class="unit-static">0.21-1.0</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="result-card">
+        <div class="result-actions">
+          <button type="button" class="ra-share" aria-label="分享" title="分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <span class="toast"></span>
+        </div>
         <div class="result-label">Result</div>
         <div class="result-value" id="sf-out"><span class="unit">S/F</span></div>
         <div id="sf-tier" class="result-tier tier-info">—</div>
@@ -649,18 +896,33 @@
 
         <div class="field-row">
           <div class="field">
-            <label>实测血钠 <span class="unit">mmol/L</span></label>
-            <input type="number" id="na-na" value="128" min="100" max="180" step="1">
+            <label>实测血钠</label>
+            <div class="unit-input">
+              <input type="number" id="na-na" min="100" max="180" step="1">
+              <span class="unit-static">mmol/L</span>
+            </div>
           </div>
           <div class="field">
-            <label>血糖 <span class="unit">mg/dL</span></label>
-            <input type="number" id="na-glu" value="450" min="50" max="1500" step="1">
+            <label>血糖</label>
+            <div class="unit-input">
+              <input type="number" id="na-glu" min="50" max="1500" step="1">
+              <span class="unit-static">mg/dL</span>
+            </div>
             <div class="help">mmol/L × 18 = mg/dL</div>
           </div>
         </div>
       </div>
 
       <div class="result-card">
+        <div class="result-actions">
+          <button type="button" class="ra-share" aria-label="分享" title="分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <span class="toast"></span>
+        </div>
         <div class="result-label">Result</div>
         <div class="result-value" id="na-out"><span class="unit">mmol/L</span></div>
         <div id="na-tier" class="result-tier tier-info">—</div>
@@ -704,59 +966,106 @@
         <div class="field">
           <label>① 呼吸 (PaO₂/FiO₂)</label>
           <div class="field-row">
-            <div class="field"><label style="font-weight:400;font-size:12px;">PaO₂ <span class="unit">mmHg</span></label>
-              <input type="number" id="sofa-pao2" value="80" min="20" max="600" step="1"></div>
+            <div class="field"><label style="font-weight:400;font-size:12px;">PaO₂</label>
+              <div class="unit-input">
+                <input type="number" id="sofa-pao2" min="20" max="600" step="1">
+                <div class="unit-toggle" data-name="sofa-pao2-unit">
+                  <button type="button" class="on" data-val="mmhg">mmHg</button>
+                  <button type="button" data-val="kpa">kPa</button>
+                </div>
+              </div></div>
             <div class="field"><label style="font-weight:400;font-size:12px;">FiO₂</label>
-              <input type="number" id="sofa-fio2" value="0.40" min="0.21" max="1.0" step="0.01"></div>
+              <div class="unit-input">
+                <input type="number" id="sofa-fio2" min="0.21" max="1.0" step="0.01">
+                <span class="unit-static">0.21-1.0</span>
+              </div></div>
           </div>
         </div>
 
         <div class="field">
           <label>② 凝血 (血小板)</label>
-          <input type="number" id="sofa-plt" value="120" min="0" max="600" step="1">
-          <div class="help">×10⁹/L</div>
+          <div class="unit-input">
+            <input type="number" id="sofa-plt" min="0" max="600" step="1">
+            <span class="unit-static">×10⁹/L</span>
+          </div>
         </div>
 
         <div class="field">
           <label>③ 肝脏 (胆红素)</label>
-          <input type="number" id="sofa-bil" value="20" min="0" max="500" step="0.1">
-          <div class="help">µmol/L · mg/dL × 17.1 = µmol/L</div>
+          <div class="unit-input">
+            <input type="number" id="sofa-bil" min="0" max="500" step="0.1">
+            <div class="unit-toggle" data-name="sofa-bil-unit">
+              <button type="button" class="on" data-val="umol">µmol/L</button>
+              <button type="button" data-val="mgdl">mg/dL</button>
+            </div>
+          </div>
+          <div class="help">中国检验报告默认 µmol/L; 美国/原始论文用 mg/dL · 点击右侧切换</div>
         </div>
 
         <div class="field">
           <label>④ 心血管</label>
-          <div class="field-row">
-            <div class="field"><label style="font-weight:400;font-size:12px;">MAP <span class="unit">mmHg</span></label>
-              <input type="number" id="sofa-map" value="70" min="20" max="200" step="1"></div>
-            <div class="field"><label style="font-weight:400;font-size:12px;">升压药</label>
-              <div class="opt-group" data-name="sofa-vaso">
-                <div class="opt on" data-val="none">无</div>
-                <div class="opt" data-val="dopa">多巴 ≤15</div>
-                <div class="opt" data-val="dopaHi">多巴 &gt;15</div>
-                <div class="opt" data-val="nore">NE/AD</div>
-              </div>
+          <div class="field">
+            <label style="font-weight:400;font-size:12px;">MAP (无升压药时: ≥70 = 0分, &lt;70 = 1分)</label>
+            <div class="unit-input">
+              <input type="number" id="sofa-map" min="20" max="200" step="1">
+              <span class="unit-static">mmHg</span>
             </div>
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="font-weight:400;font-size:12px;">升压药 · 取最高剂量档 (µg/kg/min)</label>
+            <div class="opt-group opt-vaso" data-name="sofa-vaso">
+              <div class="opt on" data-val="none">无</div>
+              <div class="opt" data-val="dopaLo">多巴胺 ≤5</div>
+              <div class="opt" data-val="dopaMid">多巴胺 5-15</div>
+              <div class="opt" data-val="dopa15">多巴胺 &gt;15</div>
+              <div class="opt" data-val="nore">NE/AD ≤0.1</div>
+              <div class="opt" data-val="noreHi">NE/AD &gt;0.1</div>
+            </div>
+            <div class="help">多巴胺(含多巴酚丁胺任意剂量归 ≤5 档)或 NE/肾上腺素</div>
           </div>
         </div>
 
         <div class="field">
           <label>⑤ 神经 (GCS)</label>
-          <input type="number" id="sofa-gcs" value="15" min="3" max="15" step="1">
+          <div class="unit-input">
+            <input type="number" id="sofa-gcs" min="3" max="15" step="1">
+            <span class="unit-static">/15</span>
+          </div>
           <div class="help">3-15 分 (已用镇静者用评估前 GCS)</div>
         </div>
 
         <div class="field">
-          <label>⑥ 肾脏</label>
-          <div class="field-row">
-            <div class="field"><label style="font-weight:400;font-size:12px;">肌酐 <span class="unit">µmol/L</span></label>
-              <input type="number" id="sofa-cr" value="100" min="10" max="1500" step="1"></div>
-            <div class="field"><label style="font-weight:400;font-size:12px;">尿量 <span class="unit">mL/d</span></label>
-              <input type="number" id="sofa-ur" value="800" min="0" max="5000" step="50"></div>
+          <label>⑥ 肾脏 <span style="font-weight:400;font-size:12px;color:var(--text-faint);">(填肌酐或尿量任一即可 · SOFA 取较高分)</span></label>
+          <div class="field" style="margin-bottom:10px;">
+            <label style="font-weight:400;font-size:12px;">肌酐</label>
+            <div class="unit-input">
+              <input type="number" id="sofa-cr" min="0" max="1500" step="1">
+              <div class="unit-toggle" data-name="sofa-cr-unit">
+                <button type="button" class="on" data-val="umol">µmol/L</button>
+                <button type="button" data-val="mgdl">mg/dL</button>
+              </div>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="font-weight:400;font-size:12px;">尿量</label>
+            <div class="unit-input">
+              <input type="number" id="sofa-ur" placeholder="如无 24h 尿量可不填" min="0" max="5000" step="50">
+              <span class="unit-static">mL/d</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="result-card">
+        <div class="result-actions">
+          <button type="button" class="ra-share" aria-label="分享" title="分享">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+          <span class="toast"></span>
+        </div>
         <div class="result-label">SOFA Total</div>
         <div class="result-value" id="sofa-out"><span class="unit">/ 24</span></div>
         <div id="sofa-tier" class="result-tier tier-info">—</div>
@@ -801,28 +1110,64 @@
 
 <script>
 /* ═══════════════════════════════════════════
-   Tab 切换
+   Tab 切换 + hash 深链接
    ═══════════════════════════════════════════ */
 (function() {
+  const VALID = ['crcl','gfr','map','sf','na','sofa'];
   const tabs = document.querySelectorAll('.tab');
   const panes = document.querySelectorAll('.pane');
-  tabs.forEach(t => {
-    t.addEventListener('click', () => {
-      tabs.forEach(x => x.classList.remove('active'));
-      panes.forEach(p => p.classList.remove('active'));
-      t.classList.add('active');
-      const id = 'pane-' + t.dataset.tab;
-      document.getElementById(id).classList.add('active');
-      // 切到新 tab 时, 重新触发计算
-      recompute(t.dataset.tab);
-      // 滚到结果区
-      document.getElementById('pane-' + t.dataset.tab).scrollIntoView({behavior: 'smooth', block: 'start'});
+  function activate(name, scroll) {
+    tabs.forEach(x => x.classList.remove('active'));
+    panes.forEach(p => p.classList.remove('active'));
+    const tab = document.querySelector('.tab[data-tab="' + name + '"]');
+    const pane = document.getElementById('pane-' + name);
+    if (tab) tab.classList.add('active');
+    if (pane) pane.classList.add('active');
+    recompute(name);
+    if (scroll && pane) pane.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+  tabs.forEach(t => t.addEventListener('click', () => {
+    const name = t.dataset.tab;
+    activate(name, true);
+    history.replaceState(null, '', '#' + name);
+  }));
+  window.addEventListener('hashchange', () => {
+    const h = location.hash.slice(1);
+    if (VALID.includes(h)) activate(h, true);
+  });
+  window.__activateCalc = activate;
+})();
+
+/* ═══════════════════════════════════════════
+   计算器搜索: 按 名称/英文/关键词/相关疾病 过滤 tab
+   ═══════════════════════════════════════════ */
+(function() {
+  const search = document.getElementById('calc-search');
+  const emptyHint = document.getElementById('calc-search-empty');
+  const tabs = document.querySelectorAll('.tab');
+  if (!search) return;
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    let visibleCount = 0;
+    tabs.forEach(t => {
+      if (!q) { t.style.display = ''; visibleCount++; return; }
+      const text = (t.textContent + ' ' + (t.dataset.kw || '')).toLowerCase();
+      const hit = text.includes(q);
+      t.style.display = hit ? '' : 'none';
+      if (hit) visibleCount++;
     });
+    emptyHint.classList.toggle('show', q !== '' && visibleCount === 0);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+      e.preventDefault();
+      search.focus();
+    }
   });
 })();
 
 /* ═══════════════════════════════════════════
-   通用: opt-group 选择 + 数值绑定
+   通用: opt-group / unit-toggle 选择 + 数值绑定
    ═══════════════════════════════════════════ */
 document.querySelectorAll('.opt-group').forEach(g => {
   g.addEventListener('click', e => {
@@ -831,7 +1176,18 @@ document.querySelectorAll('.opt-group').forEach(g => {
     g.querySelectorAll('.opt').forEach(o => o.classList.remove('on'));
     opt.classList.add('on');
     const name = g.dataset.name;
-    if (name) recompute(name.replace(/-sex$|-vaso$/, ''));
+    if (name) recompute(name.replace(/-sex$|-vaso$|-unit$/, ''));
+  });
+});
+/* MDCalc 式单位切换器 (.unit-toggle) */
+document.querySelectorAll('.unit-toggle').forEach(g => {
+  g.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    g.querySelectorAll('button').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    const name = g.dataset.name;
+    if (name) recompute(name.replace(/-unit$/, ''));
   });
 });
 document.querySelectorAll('input[type=number]').forEach(i => {
@@ -845,9 +1201,10 @@ document.querySelectorAll('input[type=number]').forEach(i => {
    计算函数
    ═══════════════════════════════════════════ */
 function getOpt(name) {
-  const g = document.querySelector(`.opt-group[data-name="${name}"]`);
+  // 优先 opt-group (性别/升压药), 其次 unit-toggle (单位切换)
+  const g = document.querySelector('.opt-group[data-name="' + name + '"]') || document.querySelector('.unit-toggle[data-name="' + name + '"]');
   if (!g) return null;
-  const on = g.querySelector('.opt.on');
+  const on = g.querySelector('.on');
   return on ? on.dataset.val : null;
 }
 function getVal(id) {
@@ -881,13 +1238,11 @@ function calcCrCl() {
   const age = getVal('crcl-age');
   const wt  = getVal('crcl-wt');
   const cr  = getVal('crcl-cr');
-  if ([age, wt, cr].some(v => v === null)) { setOut('crcl-out', null, 'mL/min'); setTier('crcl-tier', '请填写必填项', 'tier-info'); setFoot('crcl-foot', '需要年龄、体重、肌酐。'); return; }
-  // µmol/L → mg/dL
-  const crMg = cr / 88.4;
+  if ([age, wt, cr].some(v => v === null)) { setOut('crcl-out', null, 'mL/min'); setTier('crcl-tier', '请填写必填项', 'tier-info'); setFoot('crcl-foot', ''); return; }
+  const crMg = cr / 88.4; // µmol/L → mg/dL
   let crcl = ((140 - age) * wt) / (72 * crMg);
   if (sex === 'female') crcl *= 0.85;
   setOut('crcl-out', crcl, 'mL/min');
-  // 分级
   let tier, cls, foot;
   if (crcl >= 90) { tier = '正常'; cls = 'tier-ok'; foot = '<strong>≥ 90</strong> 肾功能正常, 多数药物无需调整剂量。'; }
   else if (crcl >= 60) { tier = '轻度下降'; cls = 'tier-ok'; foot = '<strong>60-89</strong> CKD G2 期, 大多数药物无需调整, 注意监测。'; }
@@ -903,7 +1258,7 @@ function calcGfr() {
   const sex = getOpt('gfr-sex');
   const age = getVal('gfr-age');
   const cr  = getVal('gfr-cr');
-  if ([age, cr].some(v => v === null)) { setOut('gfr-out', null, 'mL/min/1.73m²'); setTier('gfr-tier', '请填写必填项', 'tier-info'); return; }
+  if ([age, cr].some(v => v === null)) { setOut('gfr-out', null, 'mL/min/1.73m²'); setTier('gfr-tier', '请填写必填项', 'tier-info'); setFoot('gfr-foot', ''); return; }
   const crMg = cr / 88.4; // µmol/L → mg/dL
   const isFemale = sex === 'female';
   const kappa = isFemale ? 0.7 : 0.9;
@@ -928,7 +1283,7 @@ function calcGfr() {
 function calcMap() {
   const sbp = getVal('map-sbp');
   const dbp = getVal('map-dbp');
-  if ([sbp, dbp].some(v => v === null)) { setOut('map-out', null, 'mmHg'); setTier('map-tier', '请填写', 'tier-info'); return; }
+  if ([sbp, dbp].some(v => v === null)) { setOut('map-out', null, 'mmHg'); setTier('map-tier', '请填写必填项', 'tier-info'); setFoot('map-foot', ''); return; }
   const map = (sbp + 2 * dbp) / 3;
   setOut('map-out', map, 'mmHg');
   let tier, cls, foot;
@@ -943,15 +1298,16 @@ function calcMap() {
 function calcSf() {
   const spo2 = getVal('sf-spo2');
   const fio2 = getVal('sf-fio2');
-  if ([spo2, fio2].some(v => v === null)) { setOut('sf-out', null, 'S/F'); setTier('sf-tier', '请填写', 'tier-info'); return; }
+  if ([spo2, fio2].some(v => v === null)) { setOut('sf-out', null, 'S/F'); setTier('sf-tier', '请填写必填项', 'tier-info'); setFoot('sf-foot', ''); return; }
   const ratio = spo2 / fio2;
   setOut('sf-out', ratio, 'S/F');
-  // 临床分级 (Rice 2007 / Kigali)
+  // 临床分级 (Berlin S/F 等效阈值, Kigali 修改版)
   let tier, cls, foot;
-  if (spo2 >= 99) { tier = 'SpO₂ 100% 失真'; cls = 'tier-warn'; foot = 'SpO₂ ≥ 99% 时公式出现<strong>"天花板"效应</strong>, 需参考 SpO₂ 100% 时 P/F 至少 200。'; }
-  else if (ratio >= 235) { tier = '无 ARDS'; cls = 'tier-ok'; foot = '<strong>≥ 235</strong> 氧合基本正常。'; }
-  else if (ratio >= 148) { tier = '轻度 ARDS (P/F 100-200 等效)'; cls = 'tier-warn'; foot = '<strong>148-234</strong> 中度 ARDS, 肺保护通气 (小潮气量 6mL/kg, PEEP 滴定)。'; }
-  else { tier = '重度 ARDS (P/F < 100 等效)'; cls = 'tier-danger'; foot = '<strong>&lt; 148</strong> 重度 ARDS, 评估<strong>俯卧位</strong>、肌松、VV-ECMO。'; }
+  if (spo2 >= 99) { tier = 'SpO₂ 失真'; cls = 'tier-warn'; foot = 'SpO₂ ≥ 99% 时公式出现<strong>"天花板"效应</strong>, 需参考 SpO₂ 100% 时 P/F 至少 200。'; }
+  else if (ratio >= 315) { tier = '无 ARDS'; cls = 'tier-ok'; foot = '<strong>≥ 315</strong> (≈ P/F ≥ 300) 氧合基本正常。'; }
+  else if (ratio >= 235) { tier = '轻度 ARDS (P/F 200-300 等效)'; cls = 'tier-warn'; foot = '<strong>235-314</strong> (≈ P/F 200-300) 轻度 ARDS, 肺保护通气 (小潮气量 6 mL/kg, PEEP 滴定)。'; }
+  else if (ratio >= 148) { tier = '中度 ARDS (P/F 100-200 等效)'; cls = 'tier-danger'; foot = '<strong>148-234</strong> (≈ P/F 100-200) 中度 ARDS, 评估<strong>俯卧位</strong>。'; }
+  else { tier = '重度 ARDS (P/F < 100 等效)'; cls = 'tier-danger'; foot = '<strong>&lt; 148</strong> (≈ P/F &lt; 100) 重度 ARDS, 评估<strong>俯卧位</strong>、肌松、VV-ECMO。'; }
   setTier('sf-tier', tier, cls); setFoot('sf-foot', foot);
 }
 
@@ -959,8 +1315,7 @@ function calcSf() {
 function calcNa() {
   const na  = getVal('na-na');
   const glu = getVal('na-glu');
-  if ([na, glu].some(v => v === null)) { setOut('na-out', null, 'mmol/L'); setTier('na-tier', '请填写', 'tier-info'); return; }
-  // 1.6 公式
+  if ([na, glu].some(v => v === null)) { setOut('na-out', null, 'mmol/L'); setTier('na-tier', '请填写必填项', 'tier-info'); setFoot('na-foot', ''); return; }
   const corrected = na + 1.6 * (glu - 100) / 100;
   setOut('na-out', corrected, 'mmol/L');
   const delta = corrected - na;
@@ -988,21 +1343,25 @@ function sofaCoag(plt) {
   return 4;
 }
 function sofaLiver(bil) {
-  if (bil <  20.5) return 0;  // < 1.2 mg/dL
-  if (bil <  34.2) return 1;  // 1.2-1.9
-  if (bil < 102.6) return 2;  // 2.0-5.9
-  if (bil < 205.2) return 3;  // 6.0-11.9
+  // bil 已统一为 mg/dL
+  if (bil < 1.2)  return 0;
+  if (bil < 2.0)  return 1;
+  if (bil < 6.0)  return 2;
+  if (bil < 12.0) return 3;
   return 4;
 }
 function sofaCardio(map, vaso) {
-  if (vaso === 'none' && map >= 70) return 0;
-  if (vaso === 'none' && map < 70) return 1;
-  if (vaso === 'dopa' || vaso === 'dopaHi' || vaso === 'nore') {
-    if (vaso === 'dopa') return 2;  // ≤ 5
-    if (vaso === 'dopaHi') return 3; // > 5
-    return 4; // NE ≤ 0.1 / AD ≤ 0.08; 此处统一定为 4
+  // SOFA 心血管: 用了升压药即 ≥2 分 (取最高档), 此时 MAP 不再单独计分
+  switch (vaso) {
+    case 'dopa15':  return 4;  // 多巴胺 >15
+    case 'noreHi':  return 4;  // NE/肾上腺素 >0.1
+    case 'dopaMid': return 3;  // 多巴胺 5-15
+    case 'nore':    return 3;  // NE/肾上腺素 ≤0.1
+    case 'dopaLo':  return 2;  // 多巴胺 ≤5 / 多巴酚丁胺(任意剂量)
+    default: break;
   }
-  return 0;
+  // 无升压药: 按 MAP
+  return map < 70 ? 1 : 0;
 }
 function sofaNeuro(gcs) {
   if (gcs >= 15) return 0;
@@ -1011,39 +1370,59 @@ function sofaNeuro(gcs) {
   if (gcs >=  6) return 3;
   return 4;
 }
-function sofaRenal(crUm, ur) {
-  // cr µmol/L → mg/dL
-  const cr = crUm / 88.4;
-  let byCr;
-  if (cr < 1.2) byCr = 0;
-  else if (cr < 1.9) byCr = 1;
-  else if (cr < 3.5) byCr = 2;
-  else if (cr < 5.0) byCr = 3;
-  else byCr = 4;
-  // 尿量 5
-  const byUr = (ur < 500) ? 4 : (ur < 200 ? 0 : 0); // < 200 mL/d = 4 (简化: 其他情况不扣)
-  // 实际 SOFA: 肌酐和尿量取较高
+function sofaRenal(crMg, ur) {
+  // crMg 已统一为 mg/dL; ur 单位 mL/d
+  // SOFA 肾脏: 肌酐与尿量取较高分, 任一缺失按基线 0
+  let byCr = 0;
+  if (crMg !== null && crMg !== undefined) {
+    if (crMg < 1.2) byCr = 0;
+    else if (crMg < 1.9) byCr = 1;
+    else if (crMg < 3.5) byCr = 2;
+    else if (crMg < 5.0) byCr = 3;
+    else byCr = 4;
+  }
+  let byUr = 0;
+  if (ur !== null && ur !== undefined) {
+    if (ur < 200) byUr = 4;
+    else if (ur < 500) byUr = 3;
+  }
   return Math.max(byCr, byUr);
 }
 function calcSofa() {
-  const pao2 = getVal('sofa-pao2');
+  const pao2Raw = getVal('sofa-pao2');
+  const pao2Unit = getOpt('sofa-pao2-unit') || 'mmhg';
+  // PaO₂: kPa → mmHg (1 kPa = 7.5 mmHg)
+  const pao2 = (pao2Raw === null) ? null : (pao2Unit === 'kpa' ? pao2Raw * 7.5 : pao2Raw);
   const fio2 = getVal('sofa-fio2');
   const plt  = getVal('sofa-plt');
   const bil  = getVal('sofa-bil');
   const map  = getVal('sofa-map');
   const vaso = getOpt('sofa-vaso');
   const gcs  = getVal('sofa-gcs');
-  const cr   = getVal('sofa-cr');
+  // 胆红素: 按 SOFA 单位切换器换算为 mg/dL
+  const bilUnit = getOpt('sofa-bil-unit') || 'umol';
+  const bilMg = (bil === null) ? null : (bilUnit === 'umol' ? bil / 17.1 : bil);
+  // 肾脏: 肌酐/尿量二选一即可 (SOFA 取较高分); 都没填按基线 0
+  const crRaw = getVal('sofa-cr');
+  const crUnit = getOpt('sofa-cr-unit') || 'umol';
+  const crMg = (crRaw === null) ? null : (crUnit === 'umol' ? crRaw / 88.4 : crRaw);
   const ur   = getVal('sofa-ur');
-  const all = [pao2, fio2, plt, bil, map, vaso, gcs, cr, ur];
-  if (all.some(v => v === null)) { setOut('sofa-out', null, '/ 24'); setTier('sofa-tier', '请填写', 'tier-info'); return; }
+  // 必填校验: 肾脏至少有一个 (cr 或 ur), 其余子系统必填
+  const required = [pao2, fio2, plt, bil, map, vaso, gcs];
+  const renalEmpty = (crRaw === null && ur === null);
+  if (required.some(v => v === null) || renalEmpty) {
+    setOut('sofa-out', null, '/ 24');
+    setTier('sofa-tier', '请填写必填项', 'tier-info');
+    setFoot('sofa-foot', '');
+    return;
+  }
   const pf = pao2 / fio2;
   const r = sofaResp(pf);
   const c = sofaCoag(plt);
-  const l = sofaLiver(bil);
+  const l = sofaLiver(bilMg);
   const cv = sofaCardio(map, vaso);
   const n = sofaNeuro(gcs);
-  const k = sofaRenal(cr, ur);
+  const k = sofaRenal(crMg, ur);
   const total = r + c + l + cv + n + k;
   setOut('sofa-out', total, '/ 24');
   let tier, cls, foot;
@@ -1073,13 +1452,117 @@ function recompute(which) {
     Object.values(CALCS).forEach(fn => fn());
     return;
   }
-  // tab 名为 'crcl' / 'gfr' / 'map' / 'sf' / 'na' / 'sofa' / 'crcl-sex' / 'crcl-vaso' 等
-  const key = which.replace(/-sex$|-vaso$/, '');
+  // 输入框 id 形如 'sofa-bil' / 'crcl-age'; 单位切换器传 'sofa-bil-unit' (已 strip -unit)
+  // 取第一段作为计算器名 (sofa / crcl / gfr / map / sf / na)
+  const key = which.split('-')[0];
   if (CALCS[key]) CALCS[key]();
 }
 
-// 初始全部算一次 (默认显示的会显示, 其余 hidden 不算)
-calcCrCl();
+/* ═══════════════════════════════════════════
+   分享 + 收藏 (每个 result-card 独立)
+   收藏存 localStorage: fav_calcs = ["sofa","crcl",...]
+   ═══════════════════════════════════════════ */
+(function() {
+  const FAV_KEY = 'fav_calcs';
+  const readFavs = () => { try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch(e) { return []; } };
+  const writeFavs = (arr) => { try { localStorage.setItem(FAV_KEY, JSON.stringify(arr)); } catch(e) {} };
+
+  document.querySelectorAll('.pane').forEach(pane => {
+    const calcName = pane.id.replace('pane-', '');
+    const card = pane.querySelector('.result-card');
+    if (!card) return;
+    const shareBtn = card.querySelector('.ra-share');
+    const favBtn = card.querySelector('.ra-fav');
+    const toast = card.querySelector('.toast');
+    if (!shareBtn || !favBtn) return;
+
+    let toastTimer = null;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+    }
+
+    if (readFavs().includes(calcName)) favBtn.classList.add('fav-on');
+
+    shareBtn.addEventListener('click', async () => {
+      const url = location.origin + location.pathname + '#' + calcName;
+      const title = 'Teng.ZG 医学计算器 · ' + (pane.querySelector('.pane-head h2') ? pane.querySelector('.pane-head h2').textContent : calcName);
+      if (navigator.share) {
+        try { await navigator.share({ title: title, url: url }); } catch(e) { /* 用户取消, 静默 */ }
+      } else if (navigator.clipboard) {
+        try { await navigator.clipboard.writeText(url); showToast('链接已复制'); }
+        catch(e) { showToast('复制失败, 请手动复制'); }
+      } else {
+        showToast(url);
+      }
+    });
+
+    favBtn.addEventListener('click', () => {
+      let favs = readFavs();
+      if (favs.includes(calcName)) {
+        favs = favs.filter(x => x !== calcName);
+        favBtn.classList.remove('fav-on');
+        showToast('已取消收藏');
+      } else {
+        favs.push(calcName);
+        favBtn.classList.add('fav-on');
+        showToast('已收藏');
+      }
+      writeFavs(favs);
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════════
+   手机端结果栏「先定底部, 滚到原位才上移」
+   ≤560px 时: result-card 默认 fixed 钉在屏幕底部
+   当其原始位置 (inputs 底部) 滚入视口时, 移除 dock 让其自然归位
+   ═══════════════════════════════════════════ */
+(function() {
+  const mq = window.matchMedia('(max-width: 560px)');
+  const items = Array.from(document.querySelectorAll('.pane')).map(pane => ({
+    pane: pane,
+    card: pane.querySelector('.result-card'),
+    anchor: pane.querySelector('.inputs'),
+  })).filter(x => x.card && x.anchor);
+
+  function update() {
+    if (!mq.matches) {
+      items.forEach(it => it.card.classList.remove('mobile-dock'));
+      return;
+    }
+    const vh = window.innerHeight;
+    items.forEach(it => {
+      if (!it.pane.classList.contains('active')) {
+        it.card.classList.remove('mobile-dock');
+        return;
+      }
+      const rect = it.anchor.getBoundingClientRect();
+      const shouldDock = rect.bottom > vh - 80;
+      it.card.classList.toggle('mobile-dock', shouldDock);
+    });
+  }
+
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { update(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', update);
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setTimeout(update, 50)));
+  setTimeout(update, 100);
+})();
+
+// 初始化: 读 URL hash 决定显示哪个计算器 (支持深链接 #sofa)
+(function() {
+  const VALID = ['crcl','gfr','map','sf','na','sofa'];
+  const h = location.hash.slice(1);
+  window.__activateCalc(VALID.includes(h) ? h : 'crcl', false);
+})();
 </script>
 </body>
 </html>

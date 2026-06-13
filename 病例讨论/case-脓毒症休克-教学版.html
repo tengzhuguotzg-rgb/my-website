@@ -1474,9 +1474,9 @@
   function scaleViewport() {
     var wrap = document.querySelector('.slide-viewport-wrap');
     var cw, ch;
-    if (FS && window.screen && screen.width && screen.height) {
-      cw = screen.width;
-      ch = screen.height;
+    if (FS) {
+      cw = window.innerWidth;
+      ch = window.innerHeight;
     } else {
       cw = wrap.clientWidth;
       ch = wrap.clientHeight;

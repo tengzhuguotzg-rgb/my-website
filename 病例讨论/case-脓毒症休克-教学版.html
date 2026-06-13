@@ -590,19 +590,18 @@
     /* 幻灯片内浮动全屏按钮 */
     .slide-mfs {
         display: flex;
-        position: absolute; top: 8px; right: 8px;
-        z-index: 10;
-        width: 52px; height: 52px;
+        position: fixed; top: 12px; right: 12px;
+        z-index: 100;
+        width: 48px; height: 48px;
         align-items: center; justify-content: center;
-        background: rgba(31,61,47,0.35);
+        background: rgba(31,61,47,0.5);
         backdrop-filter: blur(4px);
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.15);
         border-radius: 50%;
-        color: rgba(255,255,255,0.7);
+        color: rgba(255,255,255,0.8);
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 24px;
+        font-size: 22px;
         cursor: pointer;
-        transition: background .2s;
     }
     .slide-mfs:hover { background: rgba(31,61,47,0.55); color: #fff; }
     .fs .slide-mfs { display: flex; }

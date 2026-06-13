@@ -339,36 +339,36 @@
   .opt-group.opt-vaso .opt { flex: initial; }
 
   /* ── 结果区 ── */
-  /* 拉宽后改横向布局: 主数值/单位/分级在左, 脚注在右, 降低 sticky 高度减少遮挡 */
+  /* 紧凑横向布局: 主数值/单位/分级在左, 脚注在右, 尽量矮少挡文字 */
   .result-card {
     position: sticky;
     top: 96px;
     z-index: 10;
-    padding: 22px 28px;
+    padding: 14px 20px;
     background: rgba(244, 241, 234, 0.92);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border: 1px solid var(--line);
-    border-radius: 18px;
+    border-radius: 14px;
     box-shadow: 0 8px 28px rgba(31, 61, 47, 0.06);
     text-align: left;
     display: grid;
-    grid-template-columns: minmax(220px, auto) 1fr;
-    gap: 8px 32px;
+    grid-template-columns: minmax(180px, auto) 1fr;
+    gap: 4px 24px;
     align-items: center;
   }
-  .result-label { grid-column: 1; grid-row: 1; margin-bottom: 4px; }
+  .result-label { grid-column: 1; grid-row: 1; margin-bottom: 2px; }
   .result-value { grid-column: 1; grid-row: 2; margin-bottom: 4px; }
-  .result-tier  { grid-column: 1; grid-row: 3; margin-top: 6px; }
+  .result-tier  { grid-column: 1; grid-row: 3; margin-top: 2px; }
   .result-foot  { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; padding-top: 0; border-top: none; align-self: center; }
   .result-label {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--text-faint); margin-bottom: 8px;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-faint); margin-bottom: 2px;
   }
   .result-value {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 48px; font-weight: 600;
+    font-size: 40px; font-weight: 600;
     color: var(--ink);
     line-height: 1;
     letter-spacing: -1.5px;
@@ -376,19 +376,19 @@
     font-variant-numeric: tabular-nums;
   }
   .result-value .unit {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--text-faint);
     font-weight: 400;
     margin-left: 6px;
     letter-spacing: 0;
   }
-  .result-value.empty { color: var(--text-faint); font-size: 32px; }
+  .result-value.empty { color: var(--text-faint); font-size: 26px; }
   .result-tier {
     display: inline-block;
-    margin-top: 12px;
-    padding: 6px 14px;
+    margin-top: 4px;
+    padding: 4px 12px;
     border-radius: 999px;
-    font-size: 12px; font-weight: 500;
+    font-size: 11px; font-weight: 500;
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: 0.5px;
   }
@@ -397,12 +397,12 @@
   .tier-danger{ background: rgba(177, 69, 42, 0.14); color: var(--danger); }
   .tier-info  { background: rgba(31, 61, 47, 0.10); color: var(--ink-2); }
   .result-foot {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-    font-size: 13px;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    font-size: 12.5px;
     color: var(--text-dim);
-    line-height: 1.6;
+    line-height: 1.55;
     font-family: 'Noto Serif SC', serif;
   }
   .result-foot strong { color: var(--ink); font-weight: 600; }
@@ -505,8 +505,9 @@
   /* 钉底时精简: 隐藏脚注行, 只留数值+分级, 避免遮挡内容 */
   .result-card.mobile-dock .result-foot { display: none; }
   .result-card.mobile-dock .result-label { display: none; }
-  .result-card.mobile-dock { padding: 14px 18px; }
-  .result-card.mobile-dock .result-value { font-size: 28px; }
+  .result-card.mobile-dock { padding: 11px 16px; }
+  .result-card.mobile-dock .result-value { font-size: 26px; margin-bottom: 2px; }
+  .result-card.mobile-dock .result-tier { margin-top: 2px; }
 
   /* ── 响应式 ── */
   @media (max-width: 860px) {
@@ -521,7 +522,7 @@
     .calc-search-icon { left: 32px; }
     .topbar { margin: 12px 12px 0; padding: 12px 16px; }
     .brand-sub { display: none; }
-    .result-value { font-size: 40px; }
+    .result-value { font-size: 34px; }
     .opt-group.opt-vaso { grid-template-columns: repeat(2, 1fr); }
     /* 手机端双列输入框 (如 PaO₂/FiO₂, SBP/DBP) 回退单列, 避免框太窄 */
     .field-row { grid-template-columns: 1fr; }

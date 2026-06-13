@@ -211,11 +211,11 @@
     backdrop-filter: saturate(180%) blur(8px);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 130px 36px 24px;
+    padding: 130px 36px 30px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     opacity: 0;
     transition: opacity .12s ease;
     pointer-events: none;
@@ -299,7 +299,7 @@
   .slide-11-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 14px;
     flex: 1;
     min-height: 0;
   }
@@ -386,8 +386,8 @@
   /* ═══ 双栏布局工具类 ═══ */
   .two-col {
     display: grid;
-    grid-template-columns: 5fr 7fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
     flex: 1;
     min-height: 0;
   }
@@ -431,87 +431,6 @@
     border: 2px solid var(--accent);
     box-shadow: 0 0 0 2px var(--bg);
   }
-  /* ═══ 讨论问句页（Slide 10） ═══ */
-  .discussion-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    min-height: 280px;
-    padding: 40px 40px;
-    background: rgba(231,111,44,0.06);
-    border: 2px solid rgba(231,111,44,0.18);
-    border-radius: 16px;
-    text-align: center;
-    gap: 20px;
-  }
-  .discussion-box .q-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(231,111,44,0.35);
-  }
-  /* ═══ 5图2+3网格（Slide 12） ═══ */
-  .five-img-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    min-height: 0;
-  }
-  .five-img-grid .img-row-top,
-  .five-img-grid .img-row-bottom {
-    display: grid;
-    gap: 10px;
-    min-height: 0;
-  }
-  .five-img-grid .img-row-top {
-    grid-template-columns: 1fr 1fr;
-  }
-  .five-img-grid .img-row-bottom {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  .five-img-grid .img-wrap {
-    position: relative;
-    overflow: hidden;
-  }
-  .five-img-grid .img-num {
-    position: absolute;
-    top: 6px; left: 6px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: rgba(31,61,47,0.72);
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .discussion-box .discussion-q {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.7;
-    margin: 0;
-    text-align: center;
-    max-width: 700px;
-  }
-
   .slide ul.timeline li strong {
     color: var(--ink);
     font-family: 'Space Grotesk', sans-serif;
@@ -1164,15 +1083,16 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">治疗经过：转入ICU + PCI</div>
 
-        <div class="two-col">
+        <div class="two-col" style="grid-template-columns: 1.1fr 1.3fr; gap: 20px;">
           <div class="col">
             <p><span class="t-stamp">05-30 14:36</span> 转入我科监护治疗。</p>
-            <p><span class="t-stamp">05-30 16:00</span> 外出行<strong>经皮冠状动脉旋磨术</strong>、<strong>2.经皮冠状动脉腔内血管成形术[PTCA]</strong>。术后转入我科行CRRT及监护治疗。</p>
+            <p><span class="t-stamp">05-30 16:00</span> 外出行<strong>经皮冠状动脉旋磨术</strong>、<strong>经皮冠状动脉腔内血管成形术[PTCA]</strong>。术后转入我科行CRRT及监护治疗。</p>
             <div class="soft-divider"></div>
             <div class="section-heading">入我科后完善相关检查</div>
+            <p style="color: var(--text-faint); font-size: 12px;">· PCI 过程影像（→ 点击放大查看）</p>
           </div>
           <div class="col">
-            <div class="img-grid c3">
+            <div class="img-grid c3" style="grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
               <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_02.png" alt="PCI图像1" loading="lazy"></div>
               <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_03.png" alt="PCI图像2" loading="lazy"></div>
               <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_04.png" alt="PCI图像3" loading="lazy"></div>
@@ -1187,10 +1107,15 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">入科后相关检验检查</div>
 
-        <div class="two-col">
+        <div class="two-col" style="grid-template-columns: 1fr 1.2fr; gap: 20px;">
           <div class="col">
             <div class="section-heading">治疗方案</div>
-            <p><strong>治疗上，</strong>予头孢呋辛抗感染，法莫替丁抑酸护胃，多烯磷脂酰胆碱护肝，床旁CRRT降肌酐，术后予吲哚布芬、氯吡格雷抗板，普伐他汀降脂稳斑，地佐辛镇痛，盐酸右美托咪定注射液、氟哌啶醇浅镇静，沙库巴曲缬沙坦钠片降压，注射用人促红素改善肾性贫血等对症支持治疗。</p>
+            <p><strong>抗感染：</strong>头孢呋辛</p>
+            <p><strong>护胃+护肝：</strong>法莫替丁、多烯磷脂酰胆碱</p>
+            <p><strong>降肌酐：</strong>床旁CRRT</p>
+            <p><strong>抗板+降脂：</strong>吲哚布芬、氯吡格雷、普伐他汀</p>
+            <p><strong>镇痛镇静：</strong>地佐辛、盐酸右美托咪定、氟哌啶醇</p>
+            <p><strong>其他：</strong>沙库巴曲缬沙坦钠、注射用人促红素</p>
             <div class="highlight-box" style="margin-top:8px;">
               <p>后患者不配合，强行要求转科，<strong>于<span class="t-stamp warn">05-31 17:30</span>转出</strong>。</p>
             </div>
@@ -1225,9 +1150,8 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">讨论1</div>
 
-        <div class="discussion-box">
-          <div class="q-badge">Q1</div>
-          <p class="discussion-q">讨论1：患者出现意识障碍，应当做如何诊断？</p>
+        <div class="highlight-box">
+          <p style="font-size:22px;text-align:center;padding:60px 0;">讨论1：患者出现意识障碍，应当做如何诊断？</p>
         </div>
       </div>
 
@@ -1278,16 +1202,12 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">入科完善相关检验检查</div>
 
-        <div class="five-img-grid">
-          <div class="img-row-top">
-            <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_07.png" alt="检验1" loading="lazy"><span class="img-num">①</span></div>
-            <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_08.png" alt="检验2" loading="lazy"><span class="img-num">②</span></div>
-          </div>
-          <div class="img-row-bottom">
-            <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_09.png" alt="检验3" loading="lazy"><span class="img-num">③</span></div>
-            <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_10.png" alt="检验4" loading="lazy"><span class="img-num">④</span></div>
-            <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_11.png" alt="检验5" loading="lazy"><span class="img-num">⑤</span></div>
-          </div>
+        <div class="img-grid c5">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_07.png" alt="检验1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_08.png" alt="检验2" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_09.png" alt="检验3" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_10.png" alt="检验4" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide12_11.png" alt="检验5" loading="lazy"></div>
         </div>
       </div>
 

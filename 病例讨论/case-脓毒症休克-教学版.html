@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>脓毒症休克教学案例（完整版）· Teng.ZG</title>
-<meta name="description" content="肾盂肾炎致脓毒症休克、ARDS、DIC——从感染控制到器官支持的决策复盘?>
+<meta name="description" content="肾盂肾炎致脓毒症休克、ARDS、DIC——从感染控制到器官支持的决策复盘。">
 <meta name="theme-color" content="#F4F1EA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@
   :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
   a { color: var(--ink-2); }
 
-  /* ══?Topbar ══?*/
+  /* ═══ Topbar ═══ */
   .topbar {
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: space-between;
@@ -97,7 +97,7 @@
   }
   .home-pill:hover { background: var(--accent); color: var(--bg); }
 
-  /* ══?Progress ══?*/
+  /* ═══ Progress ═══ */
   .progress-wrap {
     flex-shrink: 0;
     padding: 6px 16px 2px;
@@ -110,7 +110,7 @@
   }
   .progress-fill { height: 100%; background: var(--accent); transition: width .35s ease; }
 
-  /* ══?Slide Container ══?*/
+  /* ═══ Slide Container ═══ */
   .slide-container {
     flex: 1;
     display: flex;
@@ -136,7 +136,7 @@
   .slide-sidebar::-webkit-scrollbar { width: 3px; }
   .slide-sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
 
-  /* ── 缩略图（类似PPT左侧预览?── */
+  /* ── 缩略图（类似PPT左侧预览） ── */
   .thumb-wrap {
     position: relative;
     width: 100%;
@@ -201,7 +201,7 @@
     max-height: 100%;
   }
 
-  /* ══?固定 1000×562.5 画布 ══?*/
+  /* ═══ 固定 1000×562.5 画布 ═══ */
   .slide {
     position: absolute;
     inset: 0;
@@ -212,9 +212,9 @@
     border: 1px solid var(--line);
     border-radius: 12px;
     /* 顶部 130px 留给 absolute 定位的页眉组
-       (subtitle@30 + titleBar@50 + title@78 + 标题高度 ?130)?
-       避免 flex 流元?(img-grid / p / highlight-box)
-       从顶部开始撑?slide 时覆盖页眉?*/
+       (subtitle@30 + titleBar@50 + title@78 + 标题高度 ≈ 130)，
+       避免 flex 流元素 (img-grid / p / highlight-box)
+       从顶部开始撑满 slide 时覆盖页眉。 */
     padding: 130px 36px 30px;
     overflow: hidden;
     display: flex;
@@ -227,7 +227,7 @@
   .slide.active { opacity: 1; pointer-events: auto; }
   .slide.exit-left { opacity: 0; }
 
-  /* ══?全屏：整个画布等比例放大 ══?*/
+  /* ═══ 全屏：整个画布等比例放大 ═══ */
   .fs .slide-container { padding: 0; }
   .fs .slide-viewport {
     max-width: none;
@@ -238,11 +238,11 @@
   .fs .thumb-strip { display: none; }
   .fs .slide-img-hint { display: none; }
 
-  /* ══?内部排版（固?px 尺寸?══?*/
+  /* ═══ 内部排版（固定 px 尺寸） ═══ */
   .slide-title {
     /* absolute 定位，跟 .slide-subtitle / .slide-title-bar
-       组成统一的“页眉组”。避?flex justify-content: center
-       在内容少?slide 上把 title 推到顶部，跟 subtitle 重叠?*/
+       组成统一的“页眉组”。避免 flex justify-content: center
+       在内容少的 slide 上把 title 推到顶部，跟 subtitle 重叠。 */
     position: absolute;
     top: 78px; left: 36px; right: 36px;
     font-family: 'Noto Serif SC', serif;
@@ -322,13 +322,13 @@
   }
   .center-sub {
     font-family: 'Noto Serif SC', serif;
-    font-size: 32px; color: var(--text-dim);
+    font-size: 22px; color: var(--text-dim);
     text-align: center;
     margin-top: 4px;
   }
   .center-sub.small { font-size: 16px; }
 
-  /* ══?图片网格 ══?*/
+  /* ═══ 图片网格 ═══ */
   .img-grid {
     display: grid;
     gap: 8px;
@@ -381,7 +381,7 @@
     flex: 1; gap: 4px;
   }
 
-  /* ══?Lightbox ══?*/
+  /* ═══ Lightbox ═══ */
   .lightbox {
     position: fixed; inset: 0; z-index: 500;
     display: none; align-items: center; justify-content: center;
@@ -432,7 +432,7 @@
   .slide-mfs { display: none; }
 .slide-img-hint { display: none; }
 
-/* ══?Bottom bar（导?+ 全屏按钮?══?*/
+/* ═══ Bottom bar（导航 + 全屏按钮） ═══ */
   .bottom-bar {
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
@@ -441,8 +441,8 @@
     transition: opacity .3s;
   }
   .fs .bottom-bar { display: none; }
-  /* 全屏悬浮退出按?—?圆形对称图标，固定在物理屏幕右下?
-     物理屏幕右下?= viewport 旋转90° 后视觉横屏的右上?
+  /* 全屏悬浮退出按钮 —— 圆形对称图标，固定在物理屏幕右下角
+     物理屏幕右下角 = viewport 旋转90° 后视觉横屏的右上角
      圆形图标旋转90° 视觉无差别，无需反向旋转抵消 */
   .fs-exit-btn {
     display: none;
@@ -590,9 +590,9 @@
     /* 幻灯片内浮动全屏按钮 */
     .slide-mfs {
         display: flex;
-        position: absolute; top: -8px; right: -8px;
+        position: fixed; top: 12px; right: 12px;
         z-index: 100;
-        width: 80px; height: 80px;
+        width: 48px; height: 48px;
         align-items: center; justify-content: center;
         background: rgba(31,61,47,0.5);
         backdrop-filter: blur(4px);
@@ -600,13 +600,13 @@
         border-radius: 50%;
         color: rgba(255,255,255,0.8);
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 32px;
+        font-size: 22px;
         cursor: pointer;
     }
     .slide-mfs:hover { background: rgba(31,61,47,0.55); color: #fff; }
     .fs .slide-mfs { display: flex; }
 
-    /* 手机上移：减少顶?进度条空间，幻灯片靠?*/
+    /* 手机上移：减少顶栏/进度条空间，幻灯片靠上 */
     .slide-container { flex: 0 0 auto; justify-content: flex-start; padding: 0; flex-direction: column; }
     .fs .slide-container { flex: 1; padding: 0; }
     .progress-wrap { display: none; }
@@ -616,7 +616,7 @@
     .fs:not(.fs-rotated) .slide-viewport { width: 100vw; height: 100vh; height: 100dvh; aspect-ratio: auto; }
     .fs .slide-viewport-wrap { aspect-ratio: auto; flex: 1; padding: 0; }
     
-    /* iOS CSS 全屏（Fullscreen API 不可用时?*/
+    /* iOS CSS 全屏（Fullscreen API 不可用时） */
     .fs .slide-container {
       position: fixed;
       top: 0; left: 0;
@@ -627,9 +627,9 @@
       background: var(--bg);
     }
 
-    /* ══?视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ══?
-       物理屏幕保持竖屏，但 viewport 顺时针旋?90°?
-       ?slide 内容视觉上变横屏。退出按钮是圆形图标 + fixed 定位，不参与此旋?*/
+    /* ═══ 视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ═══
+       物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
+       让 slide 内容视觉上变横屏。退出按钮是圆形图标 + fixed 定位，不参与此旋转 */
     .fs.fs-rotated .slide-viewport-wrap { padding: 0; }
     .fs.fs-rotated .slide-viewport {
       position: fixed;
@@ -638,15 +638,15 @@
       transform-origin: center center;
     }
 
-    /* ══?Lightbox：fs-rotated 模式下跟随视觉横?══?
-       用同样的技巧旋?lb-stage，图片作为子元素跟着转，
-       视觉上以横屏方式显示?5vh × 95vw?
-       退出按钮改为圆形图标固定在屏幕右下?= 视觉右上?*/
+    /* ═══ Lightbox：fs-rotated 模式下跟随视觉横屏 ═══
+       用同样的技巧旋转 lb-stage，图片作为子元素跟着转，
+       视觉上以横屏方式显示（95vh × 95vw）
+       退出按钮改为圆形图标固定在屏幕右下角 = 视觉右上角 */
     .fs.fs-rotated .lb-stage {
       position: fixed;
       top: 50%; left: 50%;
-      width: 100vh;   /* 旋转?? = 物理屏幕?*/
-      height: 100vw;  /* 旋转?? = 物理屏幕?*/
+      width: 100vh;   /* 旋转后"宽" = 物理屏幕高 */
+      height: 100vw;  /* 旋转后"高" = 物理屏幕宽 */
       margin: 0;
       transform: translate(-50%, -50%) rotate(90deg);
       transform-origin: center center;
@@ -686,12 +686,12 @@
       </div>
     </div>
     <div class="topbar-right">
-      <nav class="crumb" aria-label="面包?>
+      <nav class="crumb" aria-label="面包屑">
         <a href="../cases.html">病例讨论</a>
         <span class="sep">/</span>
         <span>肾盂肾炎</span>
       </nav>
-      <a href="../cases.html" class="home-pill">?返回</a>
+      <a href="../cases.html" class="home-pill">← 返回</a>
     </div>
   </header>
 
@@ -708,87 +708,87 @@
     <div class="slide-viewport" id="viewport">
 
 <div class="slide active" data-index="1">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="slide-image-only">
-          <div class="center-title">脓毒症休?/div>
+          <div class="center-title">脓毒症休克</div>
           <div class="center-sub">肾盂肾炎·ARDS·DIC</div>
           <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
-          <div class="center-sub small">重症医学?· 2025?8?1?/div>
+          <div class="center-sub small">重症医学科 · 2025年08月21日</div>
         </div>
       </div>
 <div class="slide" data-index="2">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">目录</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">主要内容</div>
         <div class="outline-list" style="display:flex;justify-content:space-around;align-items:flex-start;margin:70px 60px 30px;gap:40px;">
           <div class="outline-item" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 12px;border-top:3px solid var(--accent);">
-            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">?/div>
+            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">壹</div>
             <div class="outline-text" style="font-size:24px;font-weight:600;color:var(--ink-2);margin-top:24px;letter-spacing:4px;">病史汇报</div>
           </div>
           <div class="outline-item" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 12px;border-top:3px solid var(--accent);">
-            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">?/div>
+            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">贰</div>
             <div class="outline-text" style="font-size:24px;font-weight:600;color:var(--ink-2);margin-top:24px;letter-spacing:4px;">讨论</div>
           </div>
           <div class="outline-item" style="flex:1;display:flex;flex-direction:column;align-items:center;padding:24px 12px;border-top:3px solid var(--accent);">
-            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">?/div>
+            <div class="outline-num" style="font-size:80px;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;line-height:1;">叁</div>
             <div class="outline-text" style="font-size:24px;font-weight:600;color:var(--ink-2);margin-top:24px;letter-spacing:4px;">总结</div>
           </div>
         </div>
       </div>
 <div class="slide" data-index="3">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">病史</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">?· 病史汇报</div>
+        <div class="slide-title">壹 · 病史汇报</div>
 
         <div class="highlight-box" style="padding:60px 0;text-align:center;">
-          <p style="font-size:20px;">以下为该病例涉及的核心病史信?/p>
+          <p style="font-size:20px;">以下为该病例涉及的核心病史信息</p>
         </div>
       </div>
 <div class="slide" data-index="4">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">病史</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">病史简?/div>
+        <div class="slide-title">病史简介</div>
         
         <div class="patient-card" style="display:flex;align-items:center;gap:20px;background:rgba(31,61,47,0.06);padding:12px 18px;border-radius:6px;margin-bottom:12px;">
           <div style="font-size:32px;font-weight:700;color:var(--ink);letter-spacing:2px;">李某</div>
           <div style="display:flex;gap:14px;font-size:14px;color:var(--text-dim);align-items:baseline;">
-            <span>?/span>
+            <span>女</span>
             <span style="color:var(--text-faint);">·</span>
-            <span style="color:var(--accent);font-weight:600;font-size:20px;">62?/span>
+            <span style="color:var(--accent);font-weight:600;font-size:20px;">62岁</span>
           </div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">主　?/div>
-          <div style="font-size:15px;color:var(--text);line-height:1.6;">发现肾结?span style="color:var(--accent);font-weight:600;"> 30+?/span>，加重伴腰痛 1+ ?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">主　诉</div>
+          <div style="font-size:15px;color:var(--text);line-height:1.6;">发现肾结石<span style="color:var(--accent);font-weight:600;"> 30+年</span>，加重伴腰痛 1+ 天</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">???/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">30年前无明显诱因出现左侧腰部胀痛，于外院诊断为泌尿系结石，予体外冲击波碎石术，后患者上述症状反复发作；5月前患者左侧腰痛明显加重，于当地医院就诊予体外冲击波碎石术治疗后缓解，2+月前患者左侧腰痛反复出现，于外院行"经尿道输尿管镜左侧输尿管结石钬激光碎石取石术+双J管置入术"（具体不详），术?月行"经尿道输尿管镜双J管取出术"?/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>1天前</strong>患者出现左腰痛，伴呕吐，外院查血示：血小板?span style="color:var(--accent);font-weight:600;">16.00×10?L</span>，遂转至我院急诊就诊?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">现 病 史</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">30年前无明显诱因出现左侧腰部胀痛，于外院诊断为泌尿系结石，予体外冲击波碎石术，后患者上述症状反复发作；5月前患者左侧腰痛明显加重，于当地医院就诊予体外冲击波碎石术治疗后缓解，2+月前患者左侧腰痛反复出现，于外院行"经尿道输尿管镜左侧输尿管结石钬激光碎石取石术+双J管置入术"（具体不详），术后1月行"经尿道输尿管镜双J管取出术"。</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>1天前</strong>患者出现左腰痛，伴呕吐，外院查血示：血小板：<span style="color:var(--accent);font-weight:600;">16.00×10⁹/L</span>，遂转至我院急诊就诊。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
           <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">CT · 2025-08-05</div>
-          <div style="font-size:13px;color:var(--text);line-height:1.6;">右肾?盏内结石；左肾盂-盏内考虑结石；左侧输尿管下段结石影，左输尿管及左肾积水；左肾周筋膜增厚，左输尿管壁增厚，提示炎性病变?/div>
+          <div style="font-size:13px;color:var(--text);line-height:1.6;">右肾盂-盏内结石；左肾盂-盏内考虑结石；左侧输尿管下段结石影，左输尿管及左肾积水；左肾周筋膜增厚，左输尿管壁增厚，提示炎性病变。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.6;">神清神可，左侧腰部胀痛加重，持续低热、呕吐?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">入 院 症 见</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.6;">神清神可，左侧腰部胀痛加重，持续低热、呕吐。</div>
         </div>
       </div>
 <div class="slide" data-index="5">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">CT</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">病史简介·CT影像</div>
         
-        <p>CT示双肾及左输尿管结石，左肾积水，左肾周筋膜增厚?/p>
+        <p>CT示双肾及左输尿管结石，左肾积水，左肾周筋膜增厚。</p>
         <div class="img-grid c4">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide05_96e1f31b.png" alt="CT1" loading="lazy"></div>
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide05_1e92c4a0.png" alt="CT2" loading="lazy"></div>
@@ -797,60 +797,60 @@
         </div>
       </div>
 <div class="slide" data-index="6">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">查体</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">入院查体与初步诊?/div>
+        <div class="slide-title">入院查体与初步诊断</div>
         
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">????/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">生 命 体 征</div>
           <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:baseline;">
-            <span style="font-size:13px;">T <span style="font-size:20px;font-weight:600;color:var(--accent);">36.5</span>?/span>
-            <span style="font-size:13px;">P <span style="font-size:20px;font-weight:600;color:var(--accent);">125</span>??/span>
-            <span style="font-size:13px;">R <span style="font-size:20px;font-weight:600;color:var(--accent);">21</span>??/span>
+            <span style="font-size:13px;">T <span style="font-size:20px;font-weight:600;color:var(--accent);">36.5</span>℃</span>
+            <span style="font-size:13px;">P <span style="font-size:20px;font-weight:600;color:var(--accent);">125</span>次/分</span>
+            <span style="font-size:13px;">R <span style="font-size:20px;font-weight:600;color:var(--accent);">21</span>次/分</span>
             <span style="font-size:13px;">BP <span style="font-size:20px;font-weight:600;color:var(--accent);">105/58</span>mmHg</span>
           </div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">??/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.6;">左侧肾区叩击痛，右肾区无叩击痛，左侧输尿管移行区压痛，右侧输尿管移行区无压痛，膀胱区无叩浊?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">查 体</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.6;">左侧肾区叩击痛，右肾区无叩击痛，左侧输尿管移行区压痛，右侧输尿管移行区无压痛，膀胱区无叩浊。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--accent);padding:8px 14px;background:rgba(231,111,44,0.04);">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">????/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:6px;">初 步 诊 断</div>
           <div style="font-size:13px;color:var(--text);line-height:1.7;">
-            <div style="margin-bottom:6px;"><strong>中医?/strong>石淋（湿热蕴结证?/div>
-            <div><strong>西医?/strong></div>
+            <div style="margin-bottom:6px;"><strong>中医：</strong>石淋（湿热蕴结证）</div>
+            <div><strong>西医：</strong></div>
             <ol style="margin:4px 0 0 24px;line-height:1.7;">
-              <li>肾结石（双肾结石?/li>
+              <li>肾结石（双肾结石）</li>
               <li>输尿管结石伴有积水和感染（左侧）</li>
-              <li>脂肪?/li>
+              <li>脂肪肝</li>
             </ol>
           </div>
         </div>
       </div>
 <div class="slide" data-index="7">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">变化</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">病情变化</div>
         
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;">
           <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">2025-08-05　22:34</div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">患者烦躁，发热，寒战，呼吸急促?
-            <span style="color:var(--accent);font-weight:600;">氧饱和度 91%</span>?
-            <span style="color:var(--accent);font-weight:600;">最高体?40.8?/span>?
-            <span style="color:var(--accent);font-weight:600;">降钙素原（PCT?4.05 ng/ml</span>?
-            请我科会诊，与患者及家属沟通后，急诊行双侧输尿管支架置入术后转入我科?
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">患者烦躁，发热，寒战，呼吸急促，
+            <span style="color:var(--accent);font-weight:600;">氧饱和度 91%</span>，
+            <span style="color:var(--accent);font-weight:600;">最高体温 40.8℃</span>，
+            <span style="color:var(--accent);font-weight:600;">降钙素原（PCT）34.05 ng/ml</span>；
+            请我科会诊，与患者及家属沟通后，急诊行双侧输尿管支架置入术后转入我科。
           </div>
         </div>
       </div>
 <div class="slide" data-index="8">
-        <button class="slide-mfs">?/button>
-        <div class="meta-label">检?/div>
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">检验</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">8.5 / 8.6 检验结?/div>
+        <div class="slide-title">8.5 / 8.6 检验结果</div>
         
         <div class="img-grid c2">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide08_938ea44c.png" alt="8.5" loading="lazy"></div>
@@ -858,78 +858,78 @@
         </div>
       </div>
 <div class="slide" data-index="9">
-        <button class="slide-mfs">?/button>
-        <div class="meta-label">检?/div>
+        <button class="slide-mfs">⛶</button>
+        <div class="meta-label">检验</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">8.6 检验结?/div>
+        <div class="slide-title">8.6 检验结果</div>
         
         <div class="img-grid c2">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide09_a0c91c12.png" alt="8.6检?" loading="lazy"></div>
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide09_0c91c113.png" alt="8.6检?" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide09_a0c91c12.png" alt="8.6检验1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide09_0c91c113.png" alt="8.6检验2" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="10">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">治疗</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">初始治疗</div>
         
         <ul>
           <li>患者持续高热，肌注柴胡注射液、复方氨林巴比妥解热镇痛</li>
-          <li>高流量及无创呼吸机呼吸支持，去甲肾上腺素维持血?/li>
+          <li>高流量及无创呼吸机呼吸支持，去甲肾上腺素维持血压</li>
           <li>静注美罗培南+替考拉宁抗感染</li>
-          <li>予法莫替丁抑酸护?/li>
-          <li>予聚明胶肽注射液、血浆、复方氯化钠注射液补?/li>
-          <li><strong>百希瑞炎症因子吸?/strong></li>
+          <li>予法莫替丁抑酸护胃</li>
+          <li>予聚明胶肽注射液、血浆、复方氯化钠注射液补液</li>
+          <li><strong>百希瑞炎症因子吸附</strong></li>
         </ul>
       </div>
 <div class="slide" data-index="11">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">抢救</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">心脏骤停·抢救</div>
         
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
           <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">2025-08-06　18:32　气管插管</div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">因患者烦躁，无创不能耐受，心电监护示?
-            HR <span style="color:var(--accent);font-weight:600;">120</span>?分，
-            R <span style="color:var(--accent);font-weight:600;">35</span>?分，
-            ABP <span style="color:var(--accent);font-weight:600;">155/68</span>mmHg?
-            SpO?<span style="color:var(--accent);font-weight:600;">97%</span>?
-            肺部体征：双肺可闻及哮鸣音；行经口气管插管术?
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">因患者烦躁，无创不能耐受，心电监护示：
+            HR <span style="color:var(--accent);font-weight:600;">120</span>次/分，
+            R <span style="color:var(--accent);font-weight:600;">35</span>次/分，
+            ABP <span style="color:var(--accent);font-weight:600;">155/68</span>mmHg，
+            SpO₂ <span style="color:var(--accent);font-weight:600;">97%</span>；
+            肺部体征：双肺可闻及哮鸣音；行经口气管插管术。
           </div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--accent);padding:8px 14px;margin-bottom:10px;background:rgba(231,111,44,0.04);">
           <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">2025-08-06　20:38　心脏骤停</div>
           <div style="font-size:13px;color:var(--text);line-height:1.65;">床旁心电图监护提示血压、心率进行性下降，
-            <span style="color:var(--accent);font-weight:600;">血氧饱和度测不?/span>
-            （HR <span style="color:var(--accent);font-weight:600;">78</span>?分，
+            <span style="color:var(--accent);font-weight:600;">血氧饱和度测不出</span>
+            （HR <span style="color:var(--accent);font-weight:600;">78</span>次/分，
             ABP <span style="color:var(--accent);font-weight:600;">79/38</span>mmHg
-            （去甲肾上腺?0.222µg/kg/min），
-            RR 20?分，SpO?测不出），吸痰见血性痰?
+            （去甲肾上腺素 0.222µg/kg/min），
+            RR 20次/分，SpO₂ 测不出），吸痰见血性痰。
           </div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>呼吸机参数：</strong>Mode P-SIMV，PS 12cmH₂O，FiO?<span style="color:var(--accent);font-weight:600;">50%</span>，PEEP 8cmH₂O，RR 20rpm，PC 12cmH₂O，MVe 16.2L/min?/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>查体?/strong>双侧瞳孔散大，对光反射消失，全身花斑，双肺呼吸音消失，呼吸机阻力大?/div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>呼吸机参数：</strong>Mode P-SIMV，PS 12cmH₂O，FiO₂ <span style="color:var(--accent);font-weight:600;">50%</span>，PEEP 8cmH₂O，RR 20rpm，PC 12cmH₂O，MVe 16.2L/min。</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>查体：</strong>双侧瞳孔散大，对光反射消失，全身花斑，双肺呼吸音消失，呼吸机阻力大。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--accent);padding:8px 14px;background:rgba(231,111,44,0.06);">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.7;">心肺复苏同时更换气管插管，可见气管导管开口处血凝块堵塞；抗感染＋多粘菌素；俯卧位通气?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">抢 救 措 施</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.7;">心肺复苏同时更换气管插管，可见气管导管开口处血凝块堵塞；抗感染＋多粘菌素；俯卧位通气。</div>
         </div>
       </div>
 <div class="slide" data-index="12">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">DR</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">8??床旁DR</div>
+        <div class="slide-title">8月6日 床旁DR</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide12_6840a4f3.png" alt="DR" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="13">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">复查CT</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">2025-08-07 复查CT</div>
@@ -941,13 +941,13 @@
             <div class="img-wrap"><img src="images/case-sepsis-redacted/slide13_4af67ce8.png" alt="肺窗" loading="lazy"></div>
           </div>
           <div class="col medi">
-            <div class="img-wrap"><img src="images/case-sepsis-redacted/slide13_1f6b956f.png" alt="纵隔? loading="lazy"></div>
-            <div class="img-wrap"><img src="images/case-sepsis-redacted/slide13_c9160812.png" alt="纵隔? loading="lazy"></div>
+            <div class="img-wrap"><img src="images/case-sepsis-redacted/slide13_1f6b956f.png" alt="纵隔窗" loading="lazy"></div>
+            <div class="img-wrap"><img src="images/case-sepsis-redacted/slide13_c9160812.png" alt="纵隔窗" loading="lazy"></div>
           </div>
         </div>
       </div>
 <div class="slide" data-index="14">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">治疗</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">治疗过程</div>
@@ -959,16 +959,16 @@
         </div>
       </div>
 <div class="slide" data-index="15">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">治疗</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">8??治疗</div>
+        <div class="slide-title">8月8日 治疗</div>
         
         <ul>
           <li>根据培养结果停用多粘菌素</li>
-          <li>去甲肾上腺素组以0.111µg/kg/min、米力农组液3ml/h经中心静脉泵?/li>
-          <li>尿量1850ml，体温波动在38℃左?/li>
-          <li>停用百希?/li>
+          <li>去甲肾上腺素组以0.111µg/kg/min、米力农组液3ml/h经中心静脉泵入</li>
+          <li>尿量1850ml，体温波动在38℃左右</li>
+          <li>停用百希瑞</li>
         </ul>
         <div class="img-grid c3">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide15_4cf3ef26.png" alt="8.8a" loading="lazy"></div>
@@ -977,23 +977,23 @@
         </div>
       </div>
 <div class="slide" data-index="16">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">治疗</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">后续治疗</div>
         
         <ul>
-          <li>8??停用万古霉素</li>
-          <li>8?3?停去甲肾上腺素、米力农</li>
-          <li>8?8?改美罗培南为哌拉西林钠他唑巴?/li>
-          <li>全身水肿，呋塞米利尿负平?/li>
+          <li>8月9日 停用万古霉素</li>
+          <li>8月13日 停去甲肾上腺素、米力农</li>
+          <li>8月18日 改美罗培南为哌拉西林钠他唑巴坦</li>
+          <li>全身水肿，呋塞米利尿负平衡</li>
         </ul>
       </div>
 <div class="slide" data-index="17">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">趋势</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">实验室检查变化趋??/div>
+        <div class="slide-title">实验室检查变化趋势 ①</div>
         
         <p style="margin-bottom:8px;">依诺肝素 40000u</p>
         <div class="img-grid c4">
@@ -1004,23 +1004,23 @@
         </div>
       </div>
 <div class="slide" data-index="18">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">趋势</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">实验室检查变化趋??/div>
+        <div class="slide-title">实验室检查变化趋势 ②</div>
         
         <div class="img-grid c4">
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_caec7b20.png" alt="白细胞趋? loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_caec7b20.png" alt="白细胞趋势" loading="lazy"></div>
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_9b0f4804.png" alt="全血C反应蛋白趋势" loading="lazy"></div>
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_944360d3.png" alt="白介?趋势" loading="lazy"></div>
-          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_18461b9e.png" alt="血浆降钙素原趋? loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_944360d3.png" alt="白介素6趋势" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-sepsis-redacted/slide18_18461b9e.png" alt="血浆降钙素原趋势" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="19">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">趋势</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">实验室检查变化趋??/div>
+        <div class="slide-title">实验室检查变化趋势 ③</div>
         
         <div class="img-grid c2" style="flex:1;">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide19_996e4d0c.png" alt="趋势i" loading="lazy"></div>
@@ -1028,10 +1028,10 @@
         </div>
       </div>
 <div class="slide" data-index="20">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">体温</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">体温?/div>
+        <div class="slide-title">体温单</div>
         
         <div class="img-grid c2">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide20_d1f7b19e.png" alt="体温1" loading="lazy"></div>
@@ -1039,17 +1039,17 @@
         </div>
       </div>
 <div class="slide" data-index="21">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">诊断</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">诊断</div>
         
         <div class="highlight-box">
-          <p><strong>中医诊断?/strong>脱证（阳气欲脱）</p>
-          <p><strong>西医诊断?/strong></p>
+          <p><strong>中医诊断：</strong>脱证（阳气欲脱）</p>
+          <p><strong>西医诊断：</strong></p>
           <ol>
-            <li>肾盂肾炎 脓毒症休?ARDS（中度）急性肝损伤 急性肾损伤 DIC 凝血功能障碍</li>
-            <li>泌尿系结?/li>
+            <li>肾盂肾炎 脓毒症休克 ARDS（中度）急性肝损伤 急性肾损伤 DIC 凝血功能障碍</li>
+            <li>泌尿系结石</li>
             <li>心脏停搏复苏成功</li>
             <li>重度贫血</li>
             <li>气胸</li>
@@ -1058,20 +1058,20 @@
         </div>
       </div>
 <div class="slide" data-index="22">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">讨论</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">?· 讨论</div>
+        <div class="slide-title">贰 · 讨论</div>
         
         <div class="highlight-box" style="padding:60px 0;text-align:center;">
-          <p style="font-size:20px;">以下为该病例涉及的临床核心议?/p>
+          <p style="font-size:20px;">以下为该病例涉及的临床核心议题</p>
         </div>
       </div>
 <div class="slide" data-index="23">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">定义</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">脓毒症定义（Sepsis 1.0-3.0?/div>
+        <div class="slide-title">脓毒症定义（Sepsis 1.0-3.0）</div>
         
         <div class="img-grid c2">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide23_34591800.png" alt="定义1" loading="lazy"></div>
@@ -1079,20 +1079,20 @@
         </div>
       </div>
 <div class="slide" data-index="24">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">定义</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">脓毒症定义（Sepsis 3.0?/div>
+        <div class="slide-title">脓毒症定义（Sepsis 3.0）</div>
         
-        <p><strong>脓毒症（sepsis）：</strong>机体对于感染的失控反应所导致可以威胁生命的器官功能障碍?strong>Sepsis 3.0 = 感染 + SOFA ?2?/strong></p>
-        <p><strong>脓毒性休克（septic shock）：</strong>脓毒症发生了严重的循环、细胞和代谢异常，并足以使病死率显著增加?/p>
+        <p><strong>脓毒症（sepsis）：</strong>机体对于感染的失控反应所导致可以威胁生命的器官功能障碍。<strong>Sepsis 3.0 = 感染 + SOFA ≥ 2。</strong></p>
+        <p><strong>脓毒性休克（septic shock）：</strong>脓毒症发生了严重的循环、细胞和代谢异常，并足以使病死率显著增加。</p>
         <div class="img-grid c2" style="margin-top:10px;">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide24_13659b92.jpg" alt="定义3" loading="lazy"></div>
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide24_10c6013a.png" alt="定义4" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="25">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">宿主</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">宿主反应</div>
@@ -1101,53 +1101,53 @@
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide25_7e276bdb.png" alt="宿主反应" loading="lazy"></div>
         </div>
         <p style="margin-top:8px;">在脓毒症中，炎症和免疫抑制反应同时发生；</p>
-        <p>传统上，对入侵病原体的早期促炎反应与多器官衰竭和早期死亡的发生有关，而抗炎反应与潜伏感染的重新激活和延迟死亡有关?/p>
-        <p>脓毒症早期存活下来的患者中观察到的宿主反应的特征是<strong>持续炎症、免疫抑制和分解代谢综合征（PICS?/strong>。促炎和免疫抑制反应的程度及其发生时间因个体存在差异?/p>
+        <p>传统上，对入侵病原体的早期促炎反应与多器官衰竭和早期死亡的发生有关，而抗炎反应与潜伏感染的重新激活和延迟死亡有关；</p>
+        <p>脓毒症早期存活下来的患者中观察到的宿主反应的特征是<strong>持续炎症、免疫抑制和分解代谢综合征（PICS）</strong>。促炎和免疫抑制反应的程度及其发生时间因个体存在差异。</p>
         <div class="ref">van der Poll T, et al. Immunity. 2021 Nov 9;54(11):2450-2464.</div>
       </div>
 <div class="slide" data-index="26">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">宿主</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">宿主反应（续?/div>
+        <div class="slide-title">宿主反应（续）</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide26_d55d1e6e.png" alt="宿主1" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="27">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">宿主</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">宿主反应（续?/div>
+        <div class="slide-title">宿主反应（续）</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide27_25e7135e.png" alt="宿主2" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="28">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">宿主</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">宿主反应（续?/div>
+        <div class="slide-title">宿主反应（续）</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide28_dcba5bbe.png" alt="宿主3" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="29">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">感染</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">感染的控??上行路径</div>
+        <div class="slide-title">感染的控制 ① 上行路径</div>
         
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">肾盂肾炎属于<span style="color:var(--accent);font-weight:600;">上尿路感?/span>，可由下尿路感染发展而来，也可由全身血行感染引起?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">上 行 途 径</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">肾盂肾炎属于<span style="color:var(--accent);font-weight:600;">上尿路感染</span>，可由下尿路感染发展而来，也可由全身血行感染引起。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">??????/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">常 见 上 行 诱 因</div>
           <ul style="margin:4px 0 0 20px;font-size:13px;color:var(--text);line-height:1.7;">
             <li>下尿路感染未得到及时有效治疗</li>
             <li>先天性膀胱输尿管反流</li>
@@ -1157,14 +1157,14 @@
         </div>
       </div>
 <div class="slide" data-index="30">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">感染</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">感染的控??致病?/div>
+        <div class="slide-title">感染的控制 ② 致病菌</div>
         
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">?????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">最常见为革兰阴性杆菌，尤以<span style="color:var(--accent);font-weight:600;">大肠杆菌</span>为主，占 <span style="color:var(--accent);font-weight:600;">60~90%</span>?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">常 见 致 病 菌</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">最常见为革兰阴性杆菌，尤以<span style="color:var(--accent);font-weight:600;">大肠杆菌</span>为主，占 <span style="color:var(--accent);font-weight:600;">60~90%</span>。</div>
           <ul style="margin:6px 0 0 20px;font-size:13px;color:var(--text);line-height:1.7;">
             <li>革兰阳性球菌：<span style="color:var(--accent);font-weight:600;">5~10%</span>，多见于尿路结石合并肾盂肾炎</li>
             <li>金黄色葡萄球菌：常见于血源性肾盂肾炎（败血症所致）</li>
@@ -1173,122 +1173,122 @@
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">???????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">可能存在<span style="color:var(--accent);font-weight:600;">克雷伯杆菌、假单胞菌或其他肠杆菌属细菌</span>，甚至真菌感染；可能多种细菌混合感染?span style="color:var(--accent);font-weight:600;">耐药菌多?/span>?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">复 杂 性 尿 路 感 染</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">可能存在<span style="color:var(--accent);font-weight:600;">克雷伯杆菌、假单胞菌或其他肠杆菌属细菌</span>，甚至真菌感染；可能多种细菌混合感染，<span style="color:var(--accent);font-weight:600;">耐药菌多见</span>。</div>
         </div>
       </div>
 <div class="slide" data-index="31">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">感染</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">感染的控??亚硝酸盐与白细胞酯酶</div>
+        <div class="slide-title">感染的控制 ③ 亚硝酸盐与白细胞酯酶</div>
         
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">????· ????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">阳性结果常见于大肠埃希菌引起的肾盂肾炎（约?<span style="color:var(--accent);font-weight:600;">2/3</span>）、尿路感染、膀胱炎、菌尿症等。特异性可?<span style="color:var(--accent);font-weight:600;">80%</span>，阳性基本可判断泌尿系感染?/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>假阴性情况：</strong>阳性菌不能还原硝酸?/ 尿在膀胱中存留时间?/ 尿中缺乏硝酸盐?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">亚 硝 酸 盐 · 临 床 意 义</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">阳性结果常见于大肠埃希菌引起的肾盂肾炎（约占 <span style="color:var(--accent);font-weight:600;">2/3</span>）、尿路感染、膀胱炎、菌尿症等。特异性可达 <span style="color:var(--accent);font-weight:600;">80%</span>，阳性基本可判断泌尿系感染。</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);"><strong>假阴性情况：</strong>阳性菌不能还原硝酸盐 / 尿在膀胱中存留时间短 / 尿中缺乏硝酸盐。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">?????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">存在于白细胞（中性粒细胞）中的酶。泌尿道感染时，白细胞酯酶常和尿白细胞都呈阳性?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">白 细 胞 酯 酶</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">存在于白细胞（中性粒细胞）中的酶。泌尿道感染时，白细胞酯酶常和尿白细胞都呈阳性。</div>
         </div>
       </div>
 <div class="slide" data-index="32">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">感染</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">感染的控??抗感染策?/div>
+        <div class="slide-title">感染的控制 ④ 抗感染策略</div>
         
-        <p><strong>早期控制感染源：</strong>双J管解除梗阻?/p>
+        <p><strong>早期控制感染源：</strong>双J管解除梗阻。</p>
         <div class="highlight-box">
           <p><strong>抗生素方案：</strong>美罗培南 + 万古霉素 + 多粘菌素</p>
         </div>
       </div>
 <div class="slide" data-index="33">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">支持</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">器官功能支持 ?/div>
+        <div class="slide-title">器官功能支持 ①</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide33_b270749a.png" alt="器官支持1" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="34">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">支持</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">器官功能支持 ?/div>
+        <div class="slide-title">器官功能支持 ②</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide34_421bf5fd.png" alt="器官支持2" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="35">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">免疫</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">免疫调节</div>
         
-        <p>拯救脓毒症运动中未提出免疫治疗有效的方法?/p>
-        <p>2022年《脓毒症免疫监测与治疗专家共识》唯一推荐<strong>胸腺肽?</strong>为脓毒症免疫调节治疗药物?/p>
+        <p>拯救脓毒症运动中未提出免疫治疗有效的方法；</p>
+        <p>2022年《脓毒症免疫监测与治疗专家共识》唯一推荐<strong>胸腺肽α1</strong>为脓毒症免疫调节治疗药物；</p>
         <div class="img-grid c1" style="margin:10px 0;">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide35_910228a2.png" alt="免疫" loading="lazy"></div>
         </div>
-        <p>2024年底NEJM在《Sepsis and Septic Shock》综述中，宿主免疫反应失调是脓毒症发病机制的关键，但目前的治疗方法主要集中在感染管理和恢复灌注上。目前正在进行研究以确定可操作的脓毒症亚型，并开发针对宿主失调的靶向疗法?/p>
+        <p>2024年底NEJM在《Sepsis and Septic Shock》综述中，宿主免疫反应失调是脓毒症发病机制的关键，但目前的治疗方法主要集中在感染管理和恢复灌注上。目前正在进行研究以确定可操作的脓毒症亚型，并开发针对宿主失调的靶向疗法。</p>
       </div>
 <div class="slide" data-index="36">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">吸附</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">脓毒症的炎症因子吸附 ?/div>
+        <div class="slide-title">脓毒症的炎症因子吸附 ①</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide36_36d27513.png" alt="吸附" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="37">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">吸附</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">脓毒症的炎症因子吸附 ?/div>
+        <div class="slide-title">脓毒症的炎症因子吸附 ②</div>
         
-        <p>欧洲与亚太地区专家意见均建议，合并明显血流动力学、微循环及器官功能紊乱的脓毒症或脓毒性休克患者应尽快启用<strong>oXiris?/strong>?/p>
-        <p>基于临床经验与研究证据，Fernando等人与专家意见相似，进一步提出考虑患者乳?毛细血管充盈时间提示组织灌注不足，去甲肾上腺素所需剂量?.5mcg/kg/min或需联用两种血管升压药时，即便无明显少尿或KDIGO AKI 1期，也宜及时启用oXiris膜?/p>
+        <p>欧洲与亚太地区专家意见均建议，合并明显血流动力学、微循环及器官功能紊乱的脓毒症或脓毒性休克患者应尽快启用<strong>oXiris膜</strong>。</p>
+        <p>基于临床经验与研究证据，Fernando等人与专家意见相似，进一步提出考虑患者乳酸/毛细血管充盈时间提示组织灌注不足，去甲肾上腺素所需剂量＞0.5mcg/kg/min或需联用两种血管升压药时，即便无明显少尿或KDIGO AKI 1期，也宜及时启用oXiris膜。</p>
         <div class="highlight-box">
-          <p><strong>启动指征?/strong></p>
-          <p>乳酸 / CRT 提示灌注不足 | NE ?0.5mcg/kg/min 或联用两种升压药</p>
+          <p><strong>启动指征：</strong></p>
+          <p>乳酸 / CRT 提示灌注不足 | NE ＞ 0.5mcg/kg/min 或联用两种升压药</p>
         </div>
       </div>
 <div class="slide" data-index="38">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">ARDS</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">急性呼吸窘迫综合征 ?定义</div>
+        <div class="slide-title">急性呼吸窘迫综合征 ① 定义</div>
         
         <div class="info-card" style="border-left:4px solid var(--accent);padding:6px 14px;margin-bottom:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">概　?/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;"><span style="color:var(--accent);font-weight:600;">ARDS</span>（急性呼吸窘迫综合征）是由多种病因引发的临床综合征，以肺泡上皮和肺毛细血管内皮细胞损伤、弥漫性肺间质及肺泡水肿为特征，表现为<span style="color:var(--accent);font-weight:600;">急性低氧性呼吸功能不全或衰竭</span>?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--accent);letter-spacing:2px;margin-bottom:4px;">概　念</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;"><span style="color:var(--accent);font-weight:600;">ARDS</span>（急性呼吸窘迫综合征）是由多种病因引发的临床综合征，以肺泡上皮和肺毛细血管内皮细胞损伤、弥漫性肺间质及肺泡水肿为特征，表现为<span style="color:var(--accent);font-weight:600;">急性低氧性呼吸功能不全或衰竭</span>。</div>
         </div>
 
         <div class="info-card" style="border-left:4px solid var(--ink-2);padding:6px 14px;">
-          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">??????/div>
-          <div style="font-size:13px;color:var(--text);line-height:1.65;">炎症导致<span style="color:var(--accent);font-weight:600;">肺微血管通透性增?/span>，肺泡腔渗出富含蛋白质的液体 ?<span style="color:var(--accent);font-weight:600;">肺水?/span>?span style="color:var(--accent);font-weight:600;">透明膜形?/span>，常?span style="color:var(--accent);font-weight:600;">肺泡出血</span>?/div>
+          <div style="font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:2px;margin-bottom:4px;">主 要 病 理 特 征</div>
+          <div style="font-size:13px;color:var(--text);line-height:1.65;">炎症导致<span style="color:var(--accent);font-weight:600;">肺微血管通透性增高</span>，肺泡腔渗出富含蛋白质的液体 → <span style="color:var(--accent);font-weight:600;">肺水肿</span>、<span style="color:var(--accent);font-weight:600;">透明膜形成</span>，常伴<span style="color:var(--accent);font-weight:600;">肺泡出血</span>。</div>
         </div>
       </div>
 <div class="slide" data-index="39">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">ARDS</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">急性呼吸窘迫综合征 ?/div>
+        <div class="slide-title">急性呼吸窘迫综合征 ②</div>
         
         <div class="img-grid c1">
           <div class="img-wrap"><img src="images/case-sepsis-redacted/slide39_d86196a3.png" alt="ARDS1" loading="lazy"></div>
         </div>
       </div>
 <div class="slide" data-index="40">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">ARDS</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">ARDS 病理生理</div>
@@ -1298,7 +1298,7 @@
         </div>
       </div>
 <div class="slide" data-index="41">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">ARDS</div>
         <div class="slide-title-bar"></div>
         <div class="slide-title">ARDS 俯卧位通气</div>
@@ -1308,58 +1308,58 @@
         </div>
       </div>
 <div class="slide" data-index="42">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">总结</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">?· 总结</div>
+        <div class="slide-title">叁 · 总结</div>
         
         <div class="highlight-box" style="padding:60px 0;text-align:center;">
           <p style="font-size:20px;">病例核心要点</p>
         </div>
       </div>
 <div class="slide" data-index="43">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="meta-label">总结</div>
         <div class="slide-title-bar"></div>
-        <div class="slide-title">?· 总结</div>
+        <div class="slide-title">叁 · 总结</div>
 
         <div class="highlight-box" style="padding:18px 28px;text-align:left;font-size:14px;line-height:1.7;">
-          <p><strong>?早期识别?/strong>Sepsis 3.0 = 感染 + SOFA ?2? 小时集束化（测乳??血培养 ?广谱抗生??液体复苏 30ml/kg ?升压?MAP?5?/p>
-          <p><strong>?感染源头控制?/strong>解除梗阻（双 J 管）+ 重锤出击（美罗培?+ 万古霉素 + 多粘菌素，覆盖革兰阴/?耐药?/p>
-          <p><strong>?多器官支持同步推进：</strong></p>
+          <p><strong>• 早期识别：</strong>Sepsis 3.0 = 感染 + SOFA ≥ 2；1 小时集束化（测乳酸 → 血培养 → 广谱抗生素 → 液体复苏 30ml/kg → 升压药 MAP≥65）</p>
+          <p><strong>• 感染源头控制：</strong>解除梗阻（双 J 管）+ 重锤出击（美罗培南 + 万古霉素 + 多粘菌素，覆盖革兰阴/阳/耐药）</p>
+          <p><strong>• 多器官支持同步推进：</strong></p>
           <ul style="margin:6px 0 6px 20px;line-height:1.6;">
-            <li>循环：液体复?+ 去甲肾维持灌注压</li>
-            <li>呼吸：俯卧位通气（ARDS 病变非均一?/ 重力依赖性肺不张?/li>
+            <li>循环：液体复苏 + 去甲肾维持灌注压</li>
+            <li>呼吸：俯卧位通气（ARDS 病变非均一性 / 重力依赖性肺不张）</li>
             <li>肾脏：CRRT 把握时机</li>
-            <li>免疫：胸腺肽 α1（PICS 调节?/li>
+            <li>免疫：胸腺肽 α1（PICS 调节）</li>
           </ul>
-          <p><strong>?oXiris 膜启动指征：</strong>乳酸 / CRT 提示灌注不足 + NE &gt; 0.5mcg/kg/min 或需联用两种升压?/p>
-          <p><strong>?病理生理再认知：</strong>促炎与免疫抑制同时发??早期促炎?MODS、后期免疫抑制致感染再燃 / PICS</p>
+          <p><strong>• oXiris 膜启动指征：</strong>乳酸 / CRT 提示灌注不足 + NE &gt; 0.5mcg/kg/min 或需联用两种升压药</p>
+          <p><strong>• 病理生理再认知：</strong>促炎与免疫抑制同时发生 → 早期促炎致 MODS、后期免疫抑制致感染再燃 / PICS</p>
         </div>
       </div>
 <div class="slide" data-index="44">
-        <button class="slide-mfs">?/button>
+        <button class="slide-mfs">⛶</button>
         <div class="slide-image-only">
-          <div class="center-title">请各位老师批评指正?/div>
+          <div class="center-title">请各位老师批评指正！</div>
           <div style="margin:14px auto;width:40px;height:3px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>
-          <div class="center-sub small">肾盂肾炎 · 脓毒症休?· ARDS · DIC</div>
+          <div class="center-sub small">肾盂肾炎 · 脓毒症休克 · ARDS · DIC</div>
         </div>
       </div>
 
     </div>
     </div>
-    <div class="slide-img-hint">点击图片可放?/div>
+    <div class="slide-img-hint">点击图片可放大</div>
   </div>
 
   <div class="bottom-bar">
-    <button class="nav-btn" id="prevBtn" disabled>?上一?/button>
-    <button class="nav-btn" id="homeBtn" disabled style="padding:6px 12px;">?首页</button>
+    <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>
+    <button class="nav-btn" id="homeBtn" disabled style="padding:6px 12px;">◉ 首页</button>
     <span class="nav-counter" id="counter"><span class="page-box" id="pageBox"><span class="current" id="pageDisplay">1</span></span><span id="pageTotal"></span></span>
-    <button class="fs-btn" id="fsBtn">?全屏</button>
-    <button class="nav-btn" id="nextBtn">下一??/button>
+    <button class="fs-btn" id="fsBtn">⛶ 全屏</button>
+    <button class="nav-btn" id="nextBtn">下一页 →</button>
   </div>
 
-  <button class="fs-exit-btn" id="fsExitBtn" aria-label="退出全?>?/button>
+  <button class="fs-exit-btn" id="fsExitBtn" aria-label="退出全屏">⛶</button>
 
   <div class="lightbox" id="lightbox">
     <div class="lightbox-bg"></div>
@@ -1399,7 +1399,7 @@
   var hb = document.getElementById('homeBtn');
   hb.addEventListener('click', function(){ go(1); });
 
-  /* 页码方框点击 ?内联输入 */
+  /* 页码方框点击 → 内联输入 */
   var pageBox = document.getElementById('pageBox');
   pageBox.addEventListener('click', function(e) {
     if (e.target.tagName === 'INPUT') return;
@@ -1433,7 +1433,7 @@
     if (e.key === 'Escape' && FS) { toggleFS(); }
   });
 
-  /* 触摸滑动翻页（手机上用垂直滑动，桌面触控板用水平?*/
+  /* 触摸滑动翻页（手机上用垂直滑动，桌面触控板用水平） */
   (function(){
     var tx = 0, ty = 0;
     document.addEventListener('touchstart', function(e){
@@ -1443,15 +1443,15 @@
       ty = e.changedTouches[0].screenY;
     });
     document.addEventListener('touchend', function(e){
-      // 忽略滑块条区?
+      // 忽略滑块条区域
       if (e.target.closest('.thumb-strip')) return;
       var dx = tx - e.changedTouches[0].screenX;
       var dy = ty - e.changedTouches[0].screenY;
-      // 优先检测垂直滑?
+      // 优先检测垂直滑动
       if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
         if (dy > 0) go(C + 1); else go(C - 1);
       } else if (Math.abs(dx) > 70) {
-        // 全屏旋转模式下，视觉水平轴与物理轴交?
+        // 全屏旋转模式下，视觉水平轴与物理轴交换
         var isFsR = document.body.classList.contains('fs-rotated');
         if (isFsR) {
           if (dx > 0) go(C - 1); else go(C + 1);
@@ -1465,10 +1465,10 @@
   var vp = document.getElementById('viewport');
   var fsBtn = document.getElementById('fsBtn');
 
-  /* 全屏退出按?*/
+  /* 全屏退出按钮 */
   document.getElementById('fsExitBtn').addEventListener('click', function(){ toggleFS(); });
 
-  /* ══?自动缩放：固?1000×562.5 画布 ?等比填满外层容器 ══?*/
+  /* ═══ 自动缩放：固定 1000×562.5 画布 → 等比填满外层容器 ═══ */
   function scaleViewport() {
     var wrap = document.querySelector('.slide-viewport-wrap');
     var cw, ch;
@@ -1483,7 +1483,7 @@
     var isFsR = document.body.classList.contains('fs-rotated');
     var s;
     if (isFsR) {
-      // rotate 90° 后：视觉?= vpH×s, 视觉?= vpW×s
+      // rotate 90° 后：视觉宽 = vpH×s, 视觉高 = vpW×s
       s = Math.min(cw / vpH, ch / vpW);
     } else {
       s = Math.min(cw / vpW, ch / vpH);
@@ -1494,18 +1494,18 @@
     vp.style.transformOrigin = 'center center';
   }
 
-  /* ══?强制横屏：先尝试 Screen Orientation API（物理锁屏）?
-       失败时给 body ?.fs-rotated ?CSS 视觉旋转 viewport 90° ══?*/
+  /* ═══ 强制横屏：先尝试 Screen Orientation API（物理锁屏），
+       失败时给 body 加 .fs-rotated → CSS 视觉旋转 viewport 90° ═══ */
   function doLock() {
-    // 桌面或已经是横屏 ?不需要旋?
+    // 桌面或已经是横屏 → 不需要旋转
     var isPortrait = window.matchMedia('(orientation: portrait)').matches;
     if (!isPortrait) {
       document.body.classList.remove('fs-rotated');
       return;
     }
-    // 竖屏全屏：始终加 fs-rotated 视觉旋转（CSS rotate 90°?
-    // 必先?vp inline transform（scaleViewport 可能已写入），否?inline scale
-    // 会覆盖样式表?rotate(90deg)，华为上旋转不生效?
+    // 竖屏全屏：始终加 fs-rotated 视觉旋转（CSS rotate 90°）
+    // 必先清 vp inline transform（scaleViewport 可能已写入），否则 inline scale
+    // 会覆盖样式表的 rotate(90deg)，华为上旋转不生效。
     vp.style.transform = '';
     document.body.classList.add('fs-rotated');
     // 可选地尝试锁屏（给系统提示横幅用），结果不影响视觉
@@ -1529,7 +1529,7 @@
         else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); }
         document.body.classList.add('fs');
         FS = true;
-        fsBtn.textContent = '?退?;
+        fsBtn.textContent = '⛶ 退出';
         if (fsPromise && fsPromise.then) {
           fsPromise.then(function(){ doLock(); }).catch(function(){ doLock(); });
         } else {
@@ -1538,7 +1538,7 @@
       } else {
         document.body.classList.add('fs');
         FS = true;
-        fsBtn.textContent = '?退?;
+        fsBtn.textContent = '⛶ 退出';
         doLock();
       }
       setTimeout(scaleViewport, 100);
@@ -1548,7 +1548,7 @@
       document.body.classList.remove('fs');
       document.body.classList.remove('fs-rotated');
       FS = false;
-      fsBtn.textContent = '?全屏';
+      fsBtn.textContent = '⛶ 全屏';
       setTimeout(scaleViewport, 100);
     }
   }
@@ -1560,12 +1560,12 @@
       document.body.classList.remove('fs');
       document.body.classList.remove('fs-rotated');
       FS = false;
-      fsBtn.textContent = '?全屏';
+      fsBtn.textContent = '⛶ 全屏';
     }
     else if (inFS && !FS) {
       document.body.classList.add('fs');
       FS = true;
-      fsBtn.textContent = '?退?;
+      fsBtn.textContent = '⛶ 退出';
       // 系统级退出后再进入，重新评估旋转策略
       doLock();
     }
@@ -1583,7 +1583,7 @@
     if (e.clientX < window.innerWidth / 2) go(C - 1); else go(C + 1);
   });
 
-  /* 滚轮翻页（全屏和未全屏均生效?*/
+  /* 滚轮翻页（全屏和未全屏均生效） */
   document.addEventListener('wheel', function(e) {
     if (e.target.closest('.lightbox') || e.target.closest('input') || e.target.closest('.slide-sidebar')) return;
     e.preventDefault();
@@ -1603,7 +1603,7 @@
     lb.classList.add('open');
   }
 
-  /* ?lightbox 中显示图片——已限定到屏幕内，避免超大图溢出 */
+  /* 在 lightbox 中显示图片——已限定到屏幕内，避免超大图溢出 */
   function lbShow() {
     li.src = lbGroup[lbIndex].src;
     var stage = li.parentElement;
@@ -1638,11 +1638,11 @@
     btn.addEventListener('click', function(e) { e.stopPropagation(); toggleFS(); });
   });
 
-  /* 窗口变化时重新缩?*/
+  /* 窗口变化时重新缩放 */
   window.addEventListener('resize', scaleViewport);
 
-  /* 构建侧栏缩略?*/
-  /* 构建手机横向缩略?*/
+  /* 构建侧栏缩略图 */
+  /* 构建手机横向缩略图 */
   function buildThumbStrip() {
     var strip = document.getElementById('thumbStrip');
     if (!strip) return;
@@ -1668,7 +1668,7 @@
         num.className = 'ts-num';
         num.textContent = si + 1;
         wrap.appendChild(num);
-        // 触摸：只有点击（不滑动）才跳?
+        // 触摸：只有点击（不滑动）才跳转
         (function(idx){
           var tx = 0, ty = 0;
           wrap.addEventListener('touchstart', function(e){ tx = e.changedTouches[0].screenX; ty = e.changedTouches[0].screenY; });
@@ -1702,12 +1702,12 @@
     S.forEach(function(s, i) {
       var wrap = document.createElement('div');
       wrap.className = 'thumb-wrap' + (i === 0 ? ' active' : '');
-      // 克隆幻灯片内容到缩略?
+      // 克隆幻灯片内容到缩略图
       var inner = document.createElement('div');
       inner.className = 'thumb-inner';
       inner.innerHTML = s.innerHTML;
       inner.style.transform = 'scale(' + thumbScale + ')';
-      // 页码?
+      // 页码标
       var num = document.createElement('div');
       num.className = 'thumb-num';
       num.textContent = i + 1;
@@ -1718,7 +1718,7 @@
     });
   }
 
-  /* 更新缩略图高?*/
+  /* 更新缩略图高亮 */
   function updateSidebar() {
     var wraps = document.querySelectorAll('.thumb-wrap');
     wraps.forEach(function(w, i) {
@@ -1735,4 +1735,3 @@
 </script>
 </body>
 </html>
-

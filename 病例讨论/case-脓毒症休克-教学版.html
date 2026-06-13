@@ -1453,8 +1453,13 @@
       if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
         if (dy > 0) go(C + 1); else go(C - 1);
       } else if (Math.abs(dx) > 70) {
-        if (dx > 0) go(C + 1); else go(C - 1);
-      }
+        // 全屏旋转模式下，视觉水平轴与物理轴交换
+        var isFsR = document.body.classList.contains('fs-rotated');
+        if (isFsR) {
+          if (dx > 0) go(C - 1); else go(C + 1);
+        } else {
+          if (dx > 0) go(C + 1); else go(C - 1);
+        }
     });
   })();
 

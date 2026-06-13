@@ -407,6 +407,89 @@
   }
   .result-foot strong { color: var(--ink); font-weight: 600; }
 
+  /* ── 静脉血气折叠区块 (血气分析用) ── */
+  .venous-toggle {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .venous-toggle-btn {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(231, 111, 44, 0.06);
+    border: 1px solid rgba(231, 111, 44, 0.18);
+    border-radius: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--accent-2);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .venous-toggle-btn:hover { background: rgba(231, 111, 44, 0.10); }
+  .venous-toggle-btn .arrow { transition: transform .2s; }
+  .venous-toggle-btn.open .arrow { transform: rotate(180deg); }
+  .venous-body { display: none; padding-top: 14px; }
+  .venous-body.open { display: block; }
+  .venous-hint {
+    font-size: 11px; color: var(--text-faint);
+    margin-bottom: 10px; font-family: 'Noto Serif SC', serif;
+  }
+
+  /* ── 血气分析结果分段卡 (5 段) ── */
+  .bg-results { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .bg-segment {
+    padding: 16px 20px;
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  /* 第一段酸碱卡 sticky (最重要结论常驻) */
+  .bg-segment.bg-main {
+    position: sticky; top: 96px; z-index: 10;
+    background: rgba(244, 241, 234, 0.92);
+    box-shadow: 0 8px 28px rgba(31, 61, 47, 0.06);
+  }
+  .bg-seg-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 8px; font-weight: 600;
+  }
+  .bg-seg-conclusion {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px; font-weight: 700; color: var(--ink);
+    line-height: 1.4; margin-bottom: 8px;
+  }
+  .bg-seg-detail {
+    font-size: 13px; color: var(--text-dim); line-height: 1.65;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .bg-seg-detail strong { color: var(--ink); font-weight: 600; }
+  .bg-seg-detail .calc { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-faint); }
+  /* ③④ 无静脉时的灰条提示 */
+  .bg-seg-need-venous {
+    padding: 8px 12px;
+    background: rgba(31, 61, 47, 0.04);
+    border-radius: 8px;
+    font-size: 12.5px; color: var(--text-faint);
+    font-family: 'Noto Serif SC', serif;
+  }
+  /* 危急值项 */
+  .bg-critical-list { display: grid; gap: 6px; }
+  .bg-critical-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Noto Serif SC', serif;
+  }
+  .bg-critical-item.warn { background: rgba(200, 136, 26, 0.12); color: var(--warn); }
+  .bg-critical-item.danger { background: rgba(177, 69, 42, 0.12); color: var(--danger); }
+  .bg-critical-item.ok { background: rgba(61, 107, 79, 0.10); color: var(--ok); }
+  .bg-critical-item b { font-weight: 600; }
+
   /* ── 结果卡操作按钮 (分享/收藏) ── */
   .result-actions {
     position: absolute;
@@ -575,6 +658,7 @@
     <button class="tab"        data-tab="sf"     role="tab" data-kw="氧合 氧合指数 ards 血气 spo2 fio2 呼吸 肺 kigali berlin 氧">S/F <span class="tab-en">SpO₂/FiO₂</span></button>
     <button class="tab"        data-tab="na"     role="tab" data-kw="校正血钠 钠 低钠 高钠 高血糖 糖尿病 dka hhs 渗透压 na sodium 血钠">Na 校正 <span class="tab-en">高血糖</span></button>
     <button class="tab"        data-tab="sofa"   role="tab" data-kw="sofa 器官衰竭 脏器衰竭 脓毒症 sepsis 死亡率 icu 呼吸 凝血 肝 心血管 神经 肾 多器官">SOFA <span class="tab-en">器官衰竭</span></button>
+    <button class="tab"        data-tab="bg"     role="tab" data-kw="血气分析 动脉血气 静脉血气 abg vbg 酸碱失衡 酸中毒 碱中毒 呼吸性 代谢性 ph paco2 hco3 缺氧分型 呼吸商 gap svo2 乳酸 lac 危急值 肺泡 a-ado2 tabd 三相失衡 血气">血气 <span class="tab-en">动脉/静脉</span></button>
   </nav>
 
   <div class="pane-wrap">
@@ -1097,6 +1181,270 @@
       </div>
     </section>
 
+    <!-- ═══ 7. 血气分析 ═══ -->
+    <section class="pane" id="pane-bg" role="tabpanel">
+      <div class="pane-head">
+        <h2>血气分析 (动脉 + 静脉)</h2>
+        <div class="sub">酸碱失衡判断、氧合评估、缺氧分型、呼吸商计算、危急值预警。动脉血气必填,静脉血气可选(用于缺氧分型与呼吸商)。</div>
+      </div>
+
+      <div class="inputs">
+        <h3>— 动脉血气 (必填)</h3>
+
+        <!-- 急/慢性选项 (影响呼酸/呼碱代偿系数) -->
+        <div class="field">
+          <label>病程 <span style="font-weight:400;font-size:12px;color:var(--text-faint);">(呼吸性失衡的急/慢性, 影响代偿系数)</span></label>
+          <div class="opt-group" data-name="bg-acute">
+            <div class="opt" data-val="acute">急性</div>
+            <div class="opt on" data-val="chronic">慢性 (ICU 常见, 如 COPD)</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>pH</label>
+            <div class="unit-input">
+              <input type="number" id="bg-ph" min="6.8" max="7.8" step="0.01">
+              <span class="unit-static">7.35-7.45</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>PaCO₂</label>
+            <div class="unit-input">
+              <input type="number" id="bg-paco2" min="10" max="200" step="0.1">
+              <div class="unit-toggle" data-name="bg-paco2-unit">
+                <button type="button" class="on" data-val="mmhg">mmHg</button>
+                <button type="button" data-val="kpa">kPa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>PaO₂</label>
+            <div class="unit-input">
+              <input type="number" id="bg-pao2" min="20" max="600" step="0.1">
+              <div class="unit-toggle" data-name="bg-pao2-unit">
+                <button type="button" class="on" data-val="mmhg">mmHg</button>
+                <button type="button" data-val="kpa">kPa</button>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>HCO₃⁻</label>
+            <div class="unit-input">
+              <input type="number" id="bg-hco3" min="0" max="60" step="0.1">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>BE 碱剩余</label>
+            <div class="unit-input">
+              <input type="number" id="bg-be" min="-30" max="30" step="0.1">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>SaO₂</label>
+            <div class="unit-input">
+              <input type="number" id="bg-sao2" min="50" max="100" step="0.1">
+              <span class="unit-static">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Lac 乳酸</label>
+            <div class="unit-input">
+              <input type="number" id="bg-lac" min="0" max="30" step="0.01">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Hgb 血红蛋白</label>
+            <div class="unit-input">
+              <input type="number" id="bg-hgb" min="20" max="250" step="1">
+              <div class="unit-toggle" data-name="bg-hgb-unit">
+                <button type="button" class="on" data-val="gl">g/L</button>
+                <button type="button" data-val="gdl">g/dL</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>K⁺</label>
+            <div class="unit-input">
+              <input type="number" id="bg-k" min="1" max="10" step="0.01">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Na⁺</label>
+            <div class="unit-input">
+              <input type="number" id="bg-na" min="100" max="180" step="0.1">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Cl⁻ <span style="font-weight:400;font-size:12px;color:var(--text-faint);">(可选, 算 AG)</span></label>
+            <div class="unit-input">
+              <input type="number" id="bg-cl" min="70" max="150" step="0.1">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Glu 血糖</label>
+            <div class="unit-input">
+              <input type="number" id="bg-glu" min="0.5" max="60" step="0.1">
+              <span class="unit-static">mmol/L</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-bottom:0;">
+          <label>FiO₂</label>
+          <div class="unit-input">
+            <input type="number" id="bg-fio2" min="0.21" max="1.0" step="0.01">
+            <span class="unit-static">0.21-1.0</span>
+          </div>
+          <div class="help">吸氧浓度; 鼻导管 ≈ 21 + 4×流量(L/min)</div>
+        </div>
+
+        <!-- 静脉血气折叠区块 -->
+        <div class="venous-toggle">
+          <button type="button" class="venous-toggle-btn" id="venous-toggle-btn">
+            <span>+ 补充静脉血气分析 (缺氧分型 + 呼吸商 R)</span>
+            <span class="arrow">▾</span>
+          </button>
+          <div class="venous-body" id="venous-body">
+            <div class="venous-hint">填入同一病人同一时间的静脉血气, 解锁缺氧分型(8 种)与呼吸商计算。SaO₂ 高的为动脉、低的为静脉。</div>
+            <div class="field-row">
+              <div class="field">
+                <label>PvCO₂</label>
+                <div class="unit-input">
+                  <input type="number" id="bg-pvco2" min="10" max="200" step="0.1">
+                  <div class="unit-toggle" data-name="bg-pvco2-unit">
+                    <button type="button" class="on" data-val="mmhg">mmHg</button>
+                    <button type="button" data-val="kpa">kPa</button>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label>SvO₂</label>
+                <div class="unit-input">
+                  <input type="number" id="bg-svo2" min="20" max="100" step="0.1">
+                  <span class="unit-static">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label>PvO₂ <span style="font-weight:400;font-size:12px;color:var(--text-faint);">(可选, 算呼吸商 C(a-v)O₂)</span></label>
+              <div class="unit-input">
+                <input type="number" id="bg-pvo2" min="10" max="200" step="0.1">
+                <div class="unit-toggle" data-name="bg-pvo2-unit">
+                  <button type="button" class="on" data-val="mmhg">mmHg</button>
+                  <button type="button" data-val="kpa">kPa</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 血气结果: 5 段分段卡 -->
+      <div class="bg-results">
+        <div class="bg-segment bg-main">
+          <div class="result-actions">
+            <button type="button" class="ra-share" aria-label="分享" title="分享">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
+            <button type="button" class="ra-fav" aria-label="收藏" title="收藏">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+            <span class="toast"></span>
+          </div>
+          <div class="bg-seg-title">① 酸碱失衡</div>
+          <div class="bg-seg-conclusion" id="bg-ab-conclusion">输入动脉血气参数后分析。</div>
+          <div class="bg-seg-detail" id="bg-ab-detail"></div>
+          <div id="bg-ab-tier" class="result-tier tier-info" style="margin-top:8px;">—</div>
+        </div>
+
+        <div class="bg-segment">
+          <div class="bg-seg-title">② 氧合状态</div>
+          <div class="bg-seg-conclusion" id="bg-o2-conclusion">—</div>
+          <div class="bg-seg-detail" id="bg-o2-detail"></div>
+        </div>
+
+        <div class="bg-segment">
+          <div class="bg-seg-title">③ 缺氧分型 (需静脉血气)</div>
+          <div id="bg-hypoxia-wrap">
+            <div class="bg-seg-need-venous">补充静脉血气(SvO₂、PvCO₂)后, 按 乳酸+SvO₂+GAP 三联分 8 种缺氧类型。</div>
+          </div>
+        </div>
+
+        <div class="bg-segment">
+          <div class="bg-seg-title">④ 呼吸商 R (需静脉血气 + Hgb)</div>
+          <div id="bg-r-wrap">
+            <div class="bg-seg-need-venous">补充静脉血气(SvO₂、PvCO₂)与血红蛋白后, 计算 R = GAP / C(a-v)O₂。</div>
+          </div>
+        </div>
+
+        <div class="bg-segment">
+          <div class="bg-seg-title">⑤ 危急值预警</div>
+          <div class="bg-critical-list" id="bg-critical">
+            <div class="bg-seg-need-venous">输入参数后评估。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-card">
+          <h4>Instructions 用法</h4>
+          <p>动脉血气必填(pH/PaCO₂/HCO₃⁻为核心), 静脉血气可选(展开折叠块)。酸碱判断按 4 步: pH定性 → 定原发 → 代偿计算 → TABD。缺氧分型与呼吸商需动静脉配对。</p>
+        </div>
+        <div class="meta-card">
+          <h4>代偿公式</h4>
+          <ul>
+            <li><strong>代酸</strong>: 预计PaCO₂ = 1.5×HCO₃ + 8 ± 2</li>
+            <li><strong>代碱</strong>: 预计PaCO₂ = 0.7×HCO₃ + 20 ± 5</li>
+            <li><strong>急/慢呼酸</strong>: HCO₃ = 24 + (PaCO₂-40)×(0.05/0.35)</li>
+            <li><strong>急/慢呼碱</strong>: HCO₃ = 24 - (40-PaCO₂)×(0.2/0.5)</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>缺氧分型阈值</h4>
+          <ul>
+            <li><strong>乳酸</strong> Lac &gt; 2 mmol/L = 缺氧</li>
+            <li><strong>SvO₂</strong> &lt; 70% = 氧输送不足; ≥70% = 氧利用障碍</li>
+            <li><strong>GAP</strong> = PvCO₂ - PaCO₂, &gt; 6 mmHg = 组织低灌注</li>
+            <li>三联组合 → 8 种分型(低CO/微循环障碍/高CO性缺氧等)</li>
+          </ul>
+        </div>
+        <div class="meta-card">
+          <h4>呼吸商 R 临床意义</h4>
+          <p><strong>R = GAP / C(a-v)O₂</strong>, 其中 C(a-v)O₂ = 1.34×Hgb×(SaO₂-SvO₂)。<br>&lt; 0.8 正常有氧代谢; &gt; 1.0 无氧代谢/组织缺氧; &gt; 1.4-1.6 危重症高度提示微循环障碍。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Why Use 为什么要用</h4>
+          <p>血气分析是 ICU 床头最常开的检查。结构化分析避免遗漏 TABD(三相失衡)和微循环障碍(乳酸正常但 GAP 增大), 这些是单纯看 pH/PaCO₂ 容易漏的。</p>
+        </div>
+        <div class="meta-card">
+          <h4>Evidence 证据</h4>
+          <p>急诊血气分析专家共识 2025(乳酸分级); Sepsis-3 微循环灌注三联(ScvO₂&lt;70% + P(cv-a)CO₂&gt;6 + CRT&gt;4s); Kigali/Berlin ARDS 定义。</p>
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <!-- Footer -->
@@ -1114,7 +1462,7 @@
    Tab 切换 + hash 深链接
    ═══════════════════════════════════════════ */
 (function() {
-  const VALID = ['crcl','gfr','map','sf','na','sofa'];
+  const VALID = ['crcl','gfr','map','sf','na','sofa','bg'];
   const tabs = document.querySelectorAll('.tab');
   const panes = document.querySelectorAll('.pane');
   function activate(name, scroll) {
@@ -1437,6 +1785,257 @@ function calcSofa() {
   setFoot('sofa-foot', foot + `<br>— 呼吸 ${r} · 凝血 ${c} · 肝脏 ${l} · 心血管 ${cv} · 神经 ${n} · 肾脏 ${k}`);
 }
 
+/* ── 血气分析 ── */
+// 带单位换算的取值: valId 值, unitId 单位 opt, factor 单位→标准换算因子
+function bgGet(id, unitName, factor) {
+  const v = getVal(id);
+  if (v === null) return null;
+  const u = getOpt(unitName);
+  // u 为非标准单位时, 乘 factor 转标准 (mmHg / g/L)
+  return u && u !== 'mmhg' && u !== 'gl' ? v * factor : v;
+}
+function setText(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
+
+function calcBg() {
+  // ── 取值 (全部换算为 mmHg / g/L 标准单位) ──
+  const ph   = getVal('bg-ph');
+  const paco2 = bgGet('bg-paco2', 'bg-paco2-unit', 7.5);
+  const pao2  = bgGet('bg-pao2', 'bg-pao2-unit', 7.5);
+  const hco3 = getVal('bg-hco3');
+  const be   = getVal('bg-be');
+  const sao2 = getVal('bg-sao2');
+  const lac  = getVal('bg-lac');
+  const hgbRaw = getVal('bg-hgb');
+  const hgbUnit = getOpt('bg-hgb-unit');
+  const hgb = (hgbRaw === null) ? null : (hgbUnit === 'gdl' ? hgbRaw * 10 : hgbRaw); // → g/L
+  const k    = getVal('bg-k');
+  const na   = getVal('bg-na');
+  const cl   = getVal('bg-cl');   // 可选
+  const glu  = getVal('bg-glu');
+  const fio2 = getVal('bg-fio2');
+  const acute = getOpt('bg-acute') || 'chronic';
+
+  // 静脉 (可选)
+  const pvco2 = bgGet('bg-pvco2', 'bg-pvco2-unit', 7.5);
+  const svo2  = getVal('bg-svo2');
+  const pvo2  = bgGet('bg-pvo2', 'bg-pvo2-unit', 7.5);
+  const hasVenous = (pvco2 !== null || svo2 !== null || pvo2 !== null);
+
+  // ── 必填校验 (pH/PaCO2/HCO3 为酸碱核心) ──
+  if (ph === null || paco2 === null || hco3 === null) {
+    setText('bg-ab-conclusion', '请填写必填项');
+    setText('bg-ab-detail', '');
+    setText('bg-ab-tier', '<div class="result-tier tier-info">需要 pH、PaCO₂、HCO₃⁻</div>');
+    setText('bg-o2-conclusion', '—');
+    setText('bg-o2-detail', '');
+    setText('bg-critical', '<div class="bg-seg-need-venous">输入参数后评估。</div>');
+    return;
+  }
+
+  // ═══════════════════════════════════════
+  // ① 酸碱失衡 (4 步)
+  // ═══════════════════════════════════════
+  const isAcid = ph < 7.35, isAlk = ph > 7.45;
+  const paco2High = paco2 > 45, paco2Low = paco2 < 35;
+  const hco3Low = hco3 < 22, hco3High = hco3 > 27;
+  let primary = '', primaryKey = '', detail = '', conclusion = '', tierCls = 'tier-ok';
+
+  // Step 2: 定原发
+  if (isAcid) {
+    if (paco2High && !hco3Low) { primary = '呼吸性酸中毒'; primaryKey = 'racid'; }
+    else if (hco3Low && !paco2High) { primary = '代谢性酸中毒'; primaryKey = 'macid'; }
+    else if (hco3Low && paco2High) { primary = '混合性酸中毒(呼酸+代酸)'; primaryKey = 'mixed_acid'; }
+    else { primary = '酸血症(代偿期)'; primaryKey = ''; }
+    tierCls = 'tier-danger';
+  } else if (isAlk) {
+    if (paco2Low && !hco3High) { primary = '呼吸性碱中毒'; primaryKey = 'ralk'; }
+    else if (hco3High && !paco2Low) { primary = '代谢性碱中毒'; primaryKey = 'malk'; }
+    else if (hco3High && paco2Low) { primary = '混合性碱中毒(呼碱+代碱)'; primaryKey = 'mixed_alk'; }
+    else { primary = '碱血症(代偿期)'; primaryKey = ''; }
+    tierCls = 'tier-warn';
+  } else {
+    // pH 正常
+    if (paco2High && hco3High) { primary = '完全代偿性呼吸性酸中毒'; primaryKey = 'racid'; tierCls = 'tier-warn'; }
+    else if (paco2Low && hco3Low) { primary = '完全代偿性呼吸性碱中毒'; primaryKey = 'ralk'; tierCls = 'tier-warn'; }
+    else if (hco3Low && paco2Low) { primary = '完全代偿性代谢性酸中毒'; primaryKey = 'macid'; tierCls = 'tier-warn'; }
+    else if (hco3High && paco2High) { primary = '完全代偿性代谢性碱中毒'; primaryKey = 'malk'; tierCls = 'tier-warn'; }
+    else { primary = '酸碱平衡正常'; primaryKey = ''; tierCls = 'tier-ok'; }
+  }
+
+  // Step 3: 代偿计算
+  let compText = '';
+  if (primaryKey === 'macid') {
+    const expPaco2 = 1.5 * hco3 + 8;
+    compText = `代偿公式: 预计 PaCO₂ = 1.5×${hco3}+8 = <strong>${expPaco2.toFixed(1)} ± 2</strong> mmHg (Winter)。<br>实际 PaCO₂ ${paco2.toFixed(1)} → `;
+    const diff = paco2 - expPaco2;
+    if (Math.abs(diff) <= 2) compText += '符合代偿, <strong>单纯性代酸</strong>。';
+    else if (diff > 2) compText += `<strong>高于预计 → 叠加呼吸性酸中毒</strong>。`;
+    else compText += `<strong>低于预计 → 代偿过度</strong>(可能合并呼碱)。`;
+  } else if (primaryKey === 'malk') {
+    const expPaco2 = 0.7 * hco3 + 20;
+    compText = `代偿公式: 预计 PaCO₂ = 0.7×${hco3}+20 = <strong>${expPaco2.toFixed(1)} ± 5</strong> mmHg。<br>实际 PaCO₂ ${paco2.toFixed(1)} → `;
+    const diff = paco2 - expPaco2;
+    if (Math.abs(diff) <= 5) compText += '符合代偿, <strong>单纯性代碱</strong>。';
+    else if (diff > 5) compText += `<strong>高于预计 → 叠加呼吸性酸中毒</strong>。`;
+    else compText += `<strong>低于预计 → 叠加呼吸性碱中毒</strong>。`;
+  } else if (primaryKey === 'racid') {
+    const coef = acute === 'acute' ? 0.05 : 0.35;
+    const expHco3 = 24 + (paco2 - 40) * coef;
+    compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): 预计 HCO₃⁻ = 24+(${paco2.toFixed(1)}-40)×${coef} = <strong>${expHco3.toFixed(1)}</strong> mmol/L。<br>实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
+    const diff = hco3 - expHco3;
+    if (Math.abs(diff) <= 2) compText += '符合代偿, <strong>单纯性呼酸</strong>。';
+    else if (diff > 2) compText += `<strong>高于预计 → 叠加代谢性碱中毒</strong>。`;
+    else compText += `<strong>低于预计 → 叠加代谢性酸中毒</strong>。`;
+  } else if (primaryKey === 'ralk') {
+    const coef = acute === 'acute' ? 0.2 : 0.5;
+    const expHco3 = 24 - (40 - paco2) * coef;
+    compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): 预计 HCO₃⁻ = 24-(40-${paco2.toFixed(1)})×${coef} = <strong>${expHco3.toFixed(1)}</strong> mmol/L。<br>实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
+    const diff = hco3 - expHco3;
+    if (Math.abs(diff) <= 2) compText += '符合代偿, <strong>单纯性呼碱</strong>。';
+    else if (diff > 2) compText += `<strong>高于预计 → 叠加代谢性碱中毒</strong>。`;
+    else compText += `<strong>低于预计 → 叠加代谢性酸中毒</strong>。`;
+  }
+
+  // Step 4: TABD 三相失衡 (ΔAG 法, 需 Na; 有 Cl 更准)
+  let tabdText = '';
+  if (na !== null && hco3Low) {
+    // 高 AG 型代酸 → 校正 HCO3 判断是否合并代碱
+    let ag = null;
+    if (cl !== null) ag = na - (cl + hco3);
+    else ag = na - hco3 - 104; // 无 Cl 时用经验 Cl≈104 估算
+    if (ag > 12) {
+      const corrHco3 = hco3 + (ag - 12);
+      if (corrHco3 > 26) {
+        tabdText = `<br><strong>⚠ 三相失衡提示(TABD)</strong>: AG=${ag.toFixed(0)}(↑), 校正 HCO₃⁻=${corrHco3.toFixed(0)}(>26) → 存在<strong>高AG型代酸 + 代谢性碱中毒</strong>`;
+        if (paco2High) tabdText += ' + 呼吸性酸中毒 = <strong>呼酸型 TABD</strong>';
+        else if (paco2Low) tabdText += ' + 呼吸性碱中毒 = <strong>呼碱型 TABD</strong>';
+      }
+    }
+  }
+
+  // 汇总酸碱
+  setText('bg-ab-conclusion', primary);
+  let abDetail = `pH <strong>${ph.toFixed(2)}</strong> · PaCO₂ <strong>${paco2.toFixed(1)}</strong> mmHg · HCO₃⁻ <strong>${hco3.toFixed(1)}</strong> mmol/L`;
+  if (be !== null) abDetail += ` · BE <strong>${be > 0 ? '+' : ''}${be.toFixed(1)}</strong>`;
+  if (compText) abDetail += `<br><br>` + compText;
+  if (tabdText) abDetail += tabdText;
+  setText('bg-ab-detail', abDetail);
+  setText('bg-ab-tier', '<div class="result-tier ' + tierCls + '">' + (isAcid ? '酸血症' : isAlk ? '碱血症' : '代偿/正常') + '</div>');
+
+  // ═══════════════════════════════════════
+  // ② 氧合状态
+  // ═══════════════════════════════════════
+  let o2Conclusion = '—', o2Detail = '';
+  if (pao2 !== null) {
+    let pao2Tier = '', pao2TierCls = 'tier-ok';
+    if (pao2 < 60) { pao2Tier = '低氧血症(II型呼衰)'; pao2TierCls = 'tier-danger'; }
+    else if (pao2 < 80) { pao2Tier = '轻度低氧'; pao2TierCls = 'tier-warn'; }
+    else { pao2Tier = '氧合正常'; pao2TierCls = 'tier-ok'; }
+    o2Conclusion = `PaO₂ ${pao2.toFixed(0)} mmHg · ${pao2Tier}`;
+    o2Detail = `<span class="calc">参考: 80-100 正常, 60-80 轻度低氧, <60 呼衰</span>`;
+    if (fio2 !== null) {
+      const pao2Alv = fio2 * (760 - 47) - paco2 / 0.8;
+      const aado2 = pao2Alv - pao2;
+      let aado2Tier = aado2 < 15 ? '正常' : aado2 < 25 ? '轻度升高' : aado2 < 35 ? '中度升高' : '显著升高';
+      o2Detail += `<br>肺泡气方程: PAO₂ = ${fio2}×713 − ${paco2.toFixed(0)}/0.8 = <strong>${pao2Alv.toFixed(0)}</strong> mmHg<br>A-aDO₂ = ${pao2Alv.toFixed(0)} − ${pao2.toFixed(0)} = <strong>${aado2.toFixed(0)} mmHg</strong> (${aado2Tier})`;
+      if (aado2 > 25) o2Detail += `<br>⚠ A-aDO₂ 增大提示<strong>肺换气障碍</strong>(V/Q 失调、分流、弥散障碍)。`;
+    }
+  } else {
+    o2Detail = '请填 PaO₂ 评估氧合。';
+  }
+  setText('bg-o2-conclusion', o2Conclusion);
+  setText('bg-o2-detail', o2Detail);
+
+  // ═══════════════════════════════════════
+  // ③ 缺氧分型 (需静脉: SvO2, PvCO2 算 GAP; Lac 动脉)
+  // ═══════════════════════════════════════
+  if (hasVenous && svo2 !== null && pvco2 !== null && lac !== null) {
+    const gap = pvco2 - paco2;
+    const lacHigh = lac > 2, svo2Low = svo2 < 70, gapHigh = gap > 6;
+    let hypoxiaType = '', hypoxiaCls = 'tier-ok';
+    // 8 种分型查表
+    if (lacHigh && svo2Low && !gapHigh) { hypoxiaType = '低CO性缺氧'; hypoxiaCls = 'tier-danger'; }
+    else if (lacHigh && svo2Low && gapHigh) { hypoxiaType = '低CO性缺氧(脓毒症)'; hypoxiaCls = 'tier-danger'; }
+    else if (lacHigh && !svo2Low && gapHigh) { hypoxiaType = '微循环障碍性缺氧'; hypoxiaCls = 'tier-danger'; }
+    else if (lacHigh && !svo2Low && !gapHigh) { hypoxiaType = '高CO性缺氧(脓毒症)'; hypoxiaCls = 'tier-warn'; }
+    else if (!lacHigh && svo2Low && gapHigh) { hypoxiaType = '微循环障碍性缺氧'; hypoxiaCls = 'tier-warn'; }
+    else if (!lacHigh && svo2Low && !gapHigh) { hypoxiaType = '低CO性缺氧(贫血)'; hypoxiaCls = 'tier-warn'; }
+    else if (!lacHigh && !svo2Low && gapHigh) { hypoxiaType = '微循环障碍(无明显缺氧)'; hypoxiaCls = 'tier-warn'; }
+    else { hypoxiaType = '正常'; hypoxiaCls = 'tier-ok'; }
+    setText('bg-hypoxia-wrap',
+      `<div class="bg-seg-conclusion">${hypoxiaType}</div>` +
+      `<div class="bg-seg-detail">三联指标: 乳酸 <strong>${lac}</strong> ${lacHigh ? '>2↑' : '≤2✓'} · SvO₂ <strong>${svo2}%</strong> ${svo2Low ? '<70↓' : '≥70'} · GAP <strong>${gap.toFixed(0)}</strong> mmHg ${gapHigh ? '>6↑' : '≤6✓'}<br><span class="calc">GAP = PvCO₂(${pvco2.toFixed(0)}) − PaCO₂(${paco2.toFixed(0)}) = ${gap.toFixed(0)}</span></div>` +
+      `<div class="result-tier ${hypoxiaCls}" style="margin-top:8px;">${hypoxiaType}</div>`);
+  } else {
+    setText('bg-hypoxia-wrap', '<div class="bg-seg-need-venous">补充静脉血气(SvO₂、PvCO₂)后, 按 乳酸+SvO₂+GAP 三联分 8 种缺氧类型。</div>');
+  }
+
+  // ═══════════════════════════════════════
+  // ④ 呼吸商 R (需静脉: SvO2, PvCO2; + Hgb)
+  // ═══════════════════════════════════════
+  if (hasVenous && svo2 !== null && pvco2 !== null && hgb !== null) {
+    const gap = pvco2 - paco2;
+    const hgbGdl = hgb / 10;
+    const cao2 = 1.34 * hgbGdl * (sao2 !== null ? sao2/100 : 0.97);
+    const cvo2 = 1.34 * hgbGdl * (svo2/100);
+    const cavO2 = cao2 - cvo2;
+    if (cavO2 > 0.01) {
+      const R = gap / cavO2;
+      let rTier = R < 0.8 ? '正常(有氧代谢)' : R <= 1.0 ? '边缘' : R <= 1.4 ? '无氧代谢/组织缺氧' : R <= 1.6 ? '无氧代谢' : '危重症微循环障碍';
+      let rCls = R < 0.8 ? 'tier-ok' : R <= 1.0 ? 'tier-warn' : 'tier-danger';
+      setText('bg-r-wrap',
+        `<div class="bg-seg-conclusion">R = <span class="num">${R.toFixed(2)}</span> · ${rTier}</div>` +
+        `<div class="bg-seg-detail">CaO₂ = 1.34×${hgbGdl.toFixed(1)}×${sao2!==null?sao2:97}% = <strong>${cao2.toFixed(2)}</strong> vol%<br>CvO₂ = 1.34×${hgbGdl.toFixed(1)}×${svo2}% = <strong>${cvo2.toFixed(2)}</strong> vol%<br>C(a-v)O₂ = ${cao2.toFixed(2)} − ${cvo2.toFixed(2)} = <strong>${cavO2.toFixed(2)}</strong> vol%<br>R = GAP(${gap.toFixed(0)}) / C(a-v)O₂(${cavO2.toFixed(2)}) = <strong>${R.toFixed(2)}</strong><br><span class="calc">R&lt;0.8 正常 / &gt;1.0 无氧代谢 / &gt;1.4-1.6 危重症微循环障碍</span></div>` +
+        `<div class="result-tier ${rCls}" style="margin-top:8px;">${rTier}</div>`);
+    } else {
+      setText('bg-r-wrap', '<div class="bg-seg-need-venous">C(a-v)O₂ ≈ 0(动静脉氧饱和度差过小), 无法计算呼吸商。</div>');
+    }
+  } else {
+    setText('bg-r-wrap', '<div class="bg-seg-need-venous">补充静脉血气(SvO₂、PvCO₂)与血红蛋白后, 计算 R = GAP / C(a-v)O₂。</div>');
+  }
+
+  // ═══════════════════════════════════════
+  // ⑤ 危急值预警
+  // ═══════════════════════════════════════
+  let critHtml = '';
+  // 乳酸分级
+  if (lac !== null) {
+    let lt, lc;
+    if (lac < 2) { lt = `乳酸 ${lac} mmol/L · 正常`; lc = 'ok'; }
+    else if (lac <= 4) { lt = `乳酸 ${lac} mmol/L · 中度升高 (死亡率≈13.4%)`; lc = 'warn'; }
+    else if (lac <= 10) { lt = `乳酸 ${lac} mmol/L · 显著升高 (死亡率≈40.9%, 危急值)`; lc = 'danger'; }
+    else { lt = `乳酸 ${lac} mmol/L · 极高 (脓毒症/脓毒性休克特征)`; lc = 'danger'; }
+    critHtml += `<div class="bg-critical-item ${lc}">⚠ <b>${lt}</b></div>`;
+  }
+  // Hgb
+  if (hgb !== null) {
+    if (hgb < 60) critHtml += `<div class="bg-critical-item danger">⚠ <b>血红蛋白 ${hgb} g/L · 严重贫血 (危急值 <60)</b></div>`;
+    else critHtml += `<div class="bg-critical-item ok">✓ 血红蛋白 ${hgb} g/L 正常</div>`;
+  }
+  // K+
+  if (k !== null) {
+    if (k < 3.5) critHtml += `<div class="bg-critical-item danger">⚠ <b>K⁺ ${k} mmol/L · 低钾血症</b></div>`;
+    else if (k > 5.5) critHtml += `<div class="bg-critical-item danger">⚠ <b>K⁺ ${k} mmol/L · 高钾血症 (危急值 >5.5)</b></div>`;
+    else critHtml += `<div class="bg-critical-item ok">✓ K⁺ ${k} mmol/L 正常</div>`;
+  }
+  // Glu
+  if (glu !== null) {
+    if (glu > 12) critHtml += `<div class="bg-critical-item danger">⚠ <b>血糖 ${glu} mmol/L · 高血糖 (危急值 >12)</b></div>`;
+    else if (glu < 3.9) critHtml += `<div class="bg-critical-item warn">⚠ 血糖 ${glu} mmol/L · 低血糖</div>`;
+    else if (glu > 7.8) critHtml += `<div class="bg-critical-item warn">血糖 ${glu} mmol/L · 偏高</div>`;
+    else critHtml += `<div class="bg-critical-item ok">✓ 血糖 ${glu} mmol/L 正常</div>`;
+  }
+  // Na+
+  if (na !== null) {
+    if (na < 125) critHtml += `<div class="bg-critical-item danger">⚠ <b>Na⁺ ${na} mmol/L · 重度低钠 (危急值 <125)</b></div>`;
+    else if (na < 135) critHtml += `<div class="bg-critical-item warn">Na⁺ ${na} mmol/L · 低钠血症</div>`;
+    else if (na > 155) critHtml += `<div class="bg-critical-item danger">⚠ <b>Na⁺ ${na} mmol/L · 重度高钠 (危急值 >155)</b></div>`;
+    else if (na > 145) critHtml += `<div class="bg-critical-item warn">Na⁺ ${na} mmol/L · 高钠血症</div>`;
+    else critHtml += `<div class="bg-critical-item ok">✓ Na⁺ ${na} mmol/L 正常</div>`;
+  }
+  setText('bg-critical', critHtml || '<div class="bg-seg-need-venous">输入参数后评估。</div>');
+}
+
 /* ═══════════════════════════════════════════
    recompute 路由
    ═══════════════════════════════════════════ */
@@ -1447,6 +2046,7 @@ const CALCS = {
   sf:   calcSf,
   na:   calcNa,
   sofa: calcSofa,
+  bg:   calcBg,
 };
 function recompute(which) {
   if (!which) {
@@ -1470,7 +2070,7 @@ function recompute(which) {
 
   document.querySelectorAll('.pane').forEach(pane => {
     const calcName = pane.id.replace('pane-', '');
-    const card = pane.querySelector('.result-card');
+    const card = pane.querySelector('.result-card') || pane.querySelector('.bg-segment.bg-main');
     if (!card) return;
     const shareBtn = card.querySelector('.ra-share');
     const favBtn = card.querySelector('.ra-fav');
@@ -1527,7 +2127,7 @@ function recompute(which) {
     pane: pane,
     card: pane.querySelector('.result-card'),
     anchor: pane.querySelector('.inputs'),
-  })).filter(x => x.card && x.anchor);
+  })).filter(x => x.card && x.anchor); // bg pane 无 .result-card (用分段卡), 自动排除
 
   function update() {
     if (!mq.matches) {
@@ -1558,9 +2158,23 @@ function recompute(which) {
   setTimeout(update, 100);
 })();
 
+/* ═══════════════════════════════════════════
+   血气分析: 静脉血气折叠区块
+   ═══════════════════════════════════════════ */
+(function() {
+  const btn = document.getElementById('venous-toggle-btn');
+  const body = document.getElementById('venous-body');
+  if (!btn || !body) return;
+  btn.addEventListener('click', () => {
+    const open = body.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.querySelector('span').textContent = open ? '− 收起静脉血气' : '+ 补充静脉血气分析 (缺氧分型 + 呼吸商 R)';
+  });
+})();
+
 // 初始化: 读 URL hash 决定显示哪个计算器 (支持深链接 #sofa)
 (function() {
-  const VALID = ['crcl','gfr','map','sf','na','sofa'];
+  const VALID = ['crcl','gfr','map','sf','na','sofa','bg'];
   const h = location.hash.slice(1);
   window.__activateCalc(VALID.includes(h) ? h : 'crcl', false);
 })();

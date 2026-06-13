@@ -273,7 +273,7 @@
   }
   .slide p, .slide li {
     font-family: 'Noto Serif SC', serif;
-    font-size: 16px; line-height: 1.6;
+    font-size: 18px; line-height: 1.6;
     color: var(--text);
     margin: 0 0 6px;
   }
@@ -283,13 +283,13 @@
     margin: 4px 0;
   }
   .slide ol.num-list li {
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.55;
     margin: 0 0 2px;
     padding-left: 2px;
   }
   .slide ol.num-list.compact li {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.4;
     margin: 0 0 1px;
     padding-left: 2px;
@@ -309,7 +309,7 @@
     min-height: 0;
   }
   .slide-11-grid .col-left p {
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.6;
     margin: 0 0 8px;
   }
@@ -321,12 +321,13 @@
     overflow: hidden;
   }
   .slide-11-grid .col-right .highlight-box > p {
-    font-size: 12px;
+    font-size: 14px;
     margin: 0 0 4px;
   }
   .slide-11-grid ol.num-list.compact {
     padding-left: 20px;
     margin: 0;
+    font-size: 14px;
   }
 
   /* ═══ 通用排版增强（全局复用） ═══ */
@@ -358,10 +359,25 @@
     font-weight: 600;
   }
   .content-block p {
-    flex: 1;
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.65;
+  }
+  .content-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .block-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(231,111,44,0.08);
+    border: 1px solid rgba(231,111,44,0.18);
+    border-radius: 4px;
+    padding: 1px 8px;
+    margin-bottom: 4px;
+    display: inline-block;
   }
 
   /* ═══ 章节小标题（重点突出） ═══ */
@@ -396,7 +412,7 @@
     flex-direction: column;
     min-height: 0;
   }
-  .two-col p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; }
+  .two-col p { margin: 0 0 8px; font-size: 16px; line-height: 1.6; }
   .two-col p:last-child { margin-bottom: 0; }
 
   /* ═══ 时间线列表（Slide 16 专用，复用 .timeline） ═══ */
@@ -417,7 +433,7 @@
     position: relative;
     padding: 0 0 10px 26px;
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.55;
   }
   .slide ul.timeline li:last-child { padding-bottom: 0; }
@@ -503,7 +519,7 @@
 
   .discussion-box .discussion-q {
     font-family: 'Noto Serif SC', serif;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--ink);
     line-height: 1.7;
@@ -523,7 +539,7 @@
   .fact {
     display: inline-block;
     font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
+    font-weight: 400;
     color: var(--accent);
     background: rgba(231,111,44,0.08);
     border: 1px solid rgba(231,111,44,0.2);
@@ -657,7 +673,7 @@
     margin-top: 8px;
     flex-shrink: 0;
   }
-  .highlight-box p { font-size: 14px; line-height: 1.6; margin: 0 0 6px; }
+  .highlight-box p { font-size: 16px; line-height: 1.6; margin: 0 0 6px; }
   .highlight-box p:last-child { margin-bottom: 0; }
   .key-tag {
     display: inline-flex;
@@ -1058,15 +1074,21 @@
 
         <div class="content-block">
           <span class="num-tag">1</span>
-          <p>张某，男性，62岁，因"双下肢疼痛3月，溃疡2月"拟双下肢动脉硬化闭塞症伴坏疽2025-05-27收入血管外科。</p>
+          <div class="content-body">
+            <p><strong>入院原因：</strong><br>张某，男性，<span class="fact">62岁</span>，因"双下肢疼痛3月，溃疡2月"拟双下肢动脉硬化闭塞症伴坏疽2025-05-27收入血管外科。</p>
+          </div>
         </div>
         <div class="content-block">
           <span class="num-tag">2</span>
-          <p>高血压20年，未口服药物控制，自诉平素血压控制在100/60mmHg左右；糖尿病20年，口服瑞格列奈，血糖控制可。慢性肾衰竭3年，左前臂人工动静脉瘘成形术，规律透析（一、三、五）。</p>
+          <div class="content-body">
+            <p><strong>既往史：</strong><br>高血压<span class="fact">20年</span>，未口服药物控制，自诉平素血压控制在<span class="fact">100/60mmHg</span>左右；糖尿病<span class="fact">20年</span>，口服瑞格列奈，血糖控制可。慢性肾衰竭<span class="fact">3年</span>，左前臂人工动静脉瘘成形术，规律透析（一、三、五）。</p>
+          </div>
         </div>
         <div class="content-block">
           <span class="num-tag">3</span>
-          <p>2025-05-27心超：左室壁运动欠协调、心尖部搏幅稍减低。心电图：不定型室内阻滞伴ST-T改变，ST段：II、III、avF、V5、V6压低≥0.05mV。T波：II、III、avF、V7-V9平坦。BNP前体＞35000，TnI0.143。</p>
+          <div class="content-body">
+            <p><strong>入院检查：</strong><br>2025-05-27心超：左室壁运动欠协调、心尖部搏幅稍减低。心电图：不定型室内阻滞伴ST-T改变，ST段：II、III、avF、V5、V6压低≥0.05mV。T波：II、III、avF、V7-V9平坦。BNP前体<span class="fact">＞35000</span>，TnI<span class="fact">0.143</span>。</p>
+          </div>
         </div>
       </div>
 
@@ -1091,12 +1113,6 @@
           <div class="col">
             <p><strong>心脏方面：</strong>2025-05-27心超：左室壁运动欠协调、心尖部搏幅稍减低。心电图：不定型室内阻滞伴ST-T改变，ST段：II、III、avF、V5、V6压低≥0.05mV。T波：II、III、avF、V7-V9平坦。</p>
             <p>BNP前体<span class="fact">＞35000</span>，TnI<span class="fact">0.143</span>。</p>
-            <div class="highlight-box">
-              <p><strong>心血管二科会诊（2025-05-28）诊断：</strong>慢性心力衰竭（射血分数保留型，EF51%）心功能II~III级，高血压性心脏病，高血压，可疑冠心病观察；余诊断同贵科。</p>
-              <p><strong>处理：</strong>低盐低脂低嘌呤糖尿病饮食，记出入量，控制每日总入量＜1500ml及输液速度，维持出入量平衡；维持电解质平衡；监测血压，目标血压＜130/80mmHg；控制血糖达标，尿酸＜360umol/l，减少动脉硬化风险；鉴于患者心血管易患因素多，已合并外周动脉闭塞，结合心电图提示"心肌缺血"及心彩超"左室壁运动欠协调、心尖部搏幅稍减低"改变，建议行冠脉造影术评估病情；完善HCY评估病情，指导诊治。我科随访。 谢谢！</p>
-            </div>
-          </div>
-          <div class="col">
             <div class="section-heading">其他指标</div>
             <div class="lab-strip">
               <div class="lab-item"><span class="lab-label">血肌酐</span><span class="lab-value">568<span class="lab-unit"> μmol/L</span></span></div>
@@ -1106,6 +1122,20 @@
               <div class="lab-item"><span class="lab-label">AST</span><span class="lab-value">698<span class="lab-unit"> U/L</span></span></div>
               <div class="lab-item"><span class="lab-label">APTT</span><span class="lab-value">47</span></div>
               <div class="lab-item"><span class="lab-label">D-D</span><span class="lab-value">1.4</span></div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="highlight-box">
+              <p><strong>心血管二科会诊（2025-05-28）诊断：</strong></p>
+              <p>慢性心力衰竭（射血分数保留型，EF51%）心功能II~III级，高血压性心脏病，高血压，可疑冠心病观察；余诊断同贵科。</p>
+              <p><strong>处理：</strong></p>
+              <p>· 低盐低脂低嘌呤糖尿病饮食</p>
+              <p>· 记出入量，控制每日总入量＜1500ml及输液速度，维持出入量平衡</p>
+              <p>· 维持电解质平衡</p>
+              <p>· 监测血压，目标血压＜130/80mmHg</p>
+              <p>· 控制血糖达标，尿酸＜360umol/l，减少动脉硬化风险</p>
+              <p>· 鉴于患者心血管易患因素多，已合并外周动脉闭塞，结合心电图提示"心肌缺血"及心彩超"左室壁运动欠协调、心尖部搏幅稍减低"改变，建议行冠脉造影术评估病情</p>
+              <p>· 完善HCY评估病情，指导诊治。我科随访。 谢谢！</p>
             </div>
           </div>
         </div>
@@ -1139,10 +1169,18 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">治疗经过：下肢动脉造影 + 冠脉造影</div>
 
-        <div class="two-col">
+        <div class="two-col" style="grid-template-columns: 5.5fr 4.5fr;">
           <div class="col">
             <div class="section-heading">2025-05-28 下肢动脉造影</div>
-            <p>腹主动脉下段通畅，管壁毛糙，双侧髂总动脉通畅，右侧髂外动脉可见多处短段中-重度狭窄，左侧髂外动脉通畅。右侧股总动脉通畅，股浅动脉起始部纤细，以下部分闭塞，股深动脉代偿、侧枝形成，腘动脉P1段部分经侧枝显影浅淡，以下部分闭塞，膝下胫前、胫后、腓动脉远端经侧枝显影浅淡，近端闭塞。左侧股浅动脉上段纤细，以下部分闭塞，股深动脉代偿、侧枝形成，腘动脉P3段经侧枝显影浅淡，其余部分闭塞，胫前动脉通畅，胫后、腓动脉闭塞。</p>
+            <p>· 腹主动脉下段通畅，管壁毛糙</p>
+            <p>· 双侧髂总动脉通畅</p>
+            <p>· 右侧髂外动脉可见多处短段中-重度<span class="fact">狭窄</span>，左侧髂外动脉通畅</p>
+            <p>· 右侧股总动脉通畅，股浅动脉起始部纤细，以下部分<span class="fact">闭塞</span>，股深动脉代偿、侧枝形成</p>
+            <p>· 腘动脉P1段部分经侧枝显影浅淡，以下部分<span class="fact">闭塞</span></p>
+            <p>· 膝下胫前、胫后、腓动脉远端经侧枝显影浅淡，近端<span class="fact">闭塞</span></p>
+            <p>· 左侧股浅动脉上段纤细，以下部分<span class="fact">闭塞</span>，股深动脉代偿、侧枝形成</p>
+            <p>· 腘动脉P3段经侧枝显影浅淡，其余部分<span class="fact">闭塞</span></p>
+            <p>· 胫前动脉通畅，胫后、腓动脉<span class="fact">闭塞</span></p>
           </div>
           <div class="col">
             <div class="section-heading">2025-05-30 09:50 冠脉造影</div>
@@ -1164,20 +1202,14 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">治疗经过：转入ICU + PCI</div>
 
-        <div class="two-col">
-          <div class="col">
-            <p><span class="t-stamp">05-30 14:36</span> 转入我科监护治疗。</p>
-            <p><span class="t-stamp">05-30 16:00</span> 外出行<strong>经皮冠状动脉旋磨术</strong>、<strong>2.经皮冠状动脉腔内血管成形术[PTCA]</strong>。术后转入我科行CRRT及监护治疗。</p>
-            <div class="soft-divider"></div>
-            <div class="section-heading">入我科后完善相关检查</div>
-          </div>
-          <div class="col">
-            <div class="img-grid c3">
-              <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_02.png" alt="PCI图像1" loading="lazy"></div>
-              <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_03.png" alt="PCI图像2" loading="lazy"></div>
-              <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_04.png" alt="PCI图像3" loading="lazy"></div>
-            </div>
-          </div>
+        <p><span class="t-stamp">05-30 14:36</span> 转入我科监护治疗。</p>
+        <p><span class="t-stamp">05-30 16:00</span> 外出行<strong>经皮冠状动脉旋磨术</strong>、<strong>2.经皮冠状动脉腔内血管成形术[PTCA]</strong>。术后转入我科行CRRT及监护治疗。</p>
+        <div class="soft-divider"></div>
+        <div class="section-heading">入我科后完善相关检查</div>
+        <div class="img-grid c3">
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_02.png" alt="PCI图像1" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_03.png" alt="PCI图像2" loading="lazy"></div>
+          <div class="img-wrap"><img src="images/case-zhangjianzhong/slide07_04.png" alt="PCI图像3" loading="lazy"></div>
         </div>
       </div>
 
@@ -1239,8 +1271,15 @@
 
         <div class="slide-11-grid">
           <div class="col col-left">
-            <p><strong>神内会诊：</strong>目前诊断：意识丧失待查：癫痫？建议：1.复查头颅CT，排除出血等新发情况。2.排除心脏新发病变。3.ICU会诊，维持生命体征平稳。</p>
-            <p><strong>我科会诊：</strong>患者嗜睡，呼之可应，言语不清，瞳孔等大，直径约2mm，对光反射迟钝。心电监护示：P 88次/分，SPO2 99%（面罩吸氧10L/min），BP 90/50mmHg。结合病史及辅助检查，考虑诊断：意识障碍原因待查。遂转入我科监护治疗。</p>
+            <p><strong>神内会诊：</strong></p>
+            <p>· 目前诊断：意识丧失待查：癫痫？</p>
+            <p>· 建议：1.复查头颅CT，排除出血等新发情况</p>
+            <p>· 2.排除心脏新发病变</p>
+            <p>· 3.ICU会诊，维持生命体征平稳</p>
+            <p><strong>我科会诊：</strong></p>
+            <p>· 患者嗜睡，呼之可应，言语不清，瞳孔等大，直径约2mm，对光反射迟钝</p>
+            <p>· 心电监护示：P 88次/分，SPO2 99%（面罩吸氧10L/min），BP 90/50mmHg</p>
+            <p>· 结合病史及辅助检查，考虑诊断：意识障碍原因待查。遂转入我科监护治疗</p>
           </div>
           <div class="col col-right">
             <div class="highlight-box">
@@ -1444,17 +1483,25 @@
         <div class="slide-title-bar"></div>
         <div class="slide-title">识别触发因素</div>
 
-        <div class="two-col">
+        <div class="two-col" style="grid-template-columns: 1fr 1fr;">
           <div class="col">
-            <div class="section-heading">触发因素与检查</div>
-            <p><strong>潜在的触发因素</strong>包括心肌缺血、心力衰竭恶化或容量负荷过重、伴有发热的急性疾病、近期用药或药物变化导致的药物毒性或QT间期延长、交感神经和副交感神经活动失衡、非心脏器官衰竭、甲状腺毒症以及电解质紊乱（尤其是低钾血症或高钾血症和低镁血症）。</p>
-            <p>识别并停用致心律失常药物至关重要。交感神经张力升高和肾上腺素能亢进具有致心律失常作用，常常诱发ES。初步实验室检查应包括电解质、乳酸、肾/肝/甲状腺功能以及心脏标志物。如果可能的话，应在患者自身心律和室性心动过速（VT）期间获取12导联心电图。</p>
+            <div class="section-heading">触发因素</div>
+            <p>· 心肌缺血、心力衰竭恶化或容量负荷过重</p>
+            <p>· 急性感染伴发热</p>
+            <p>· 药物毒性（致QT间期延长）</p>
+            <p>· 电解质紊乱（低钾/高钾/低镁）</p>
+            <p>· 交感神经亢进</p>
+            <p>· 非心脏器官衰竭、甲状腺毒症</p>
+            <div class="section-heading">识别与检查</div>
+            <p>· 识别并停用致心律失常药物</p>
+            <p>· 实验室检查：电解质、乳酸、肾/肝/甲状腺功能、心脏标志物</p>
+            <p>· 12导联心电图（自身心律+VT期间）</p>
           </div>
           <div class="col">
             <div class="section-heading">影像学评估</div>
-            <p>对于已确诊冠状动脉疾病（CAD）或缺血性心肌病（ICM）的患者，必须排除心肌缺血，同时要认识到非缺血性过程也可能使血清心肌肌钙蛋白水平升高。</p>
-            <p>冠状动脉造影常用于识别可能引发心肌缺血的阻塞性冠状动脉疾病，即使患者没有急性心肌梗死的明确证据。</p>
-            <p>对于临床怀疑程度较低的特定稳定患者，可考虑进行计算机断层扫描冠状动脉造影。</p>
+            <p>· 对于已确诊冠状动脉疾病（CAD）或缺血性心肌病（ICM）的患者，必须排除心肌缺血，同时要认识到非缺血性过程也可能使血清心肌肌钙蛋白水平升高</p>
+            <p>· 冠状动脉造影常用于识别可能引发心肌缺血的阻塞性冠状动脉疾病，即使患者没有急性心肌梗死的明确证据</p>
+            <p>· 对于临床怀疑程度较低的特定稳定患者，可考虑进行计算机断层扫描冠状动脉造影</p>
           </div>
         </div>
         <div class="ref">Jentzer JC, et al. Multidisciplinary Critical Care Management of Electrical Storm: JACC State-of-the-Art Review. J Am Coll Cardiol. 2023;81(22):2189-2206.</div>

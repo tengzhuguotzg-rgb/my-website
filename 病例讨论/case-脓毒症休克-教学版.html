@@ -628,6 +628,17 @@
     .slide-viewport { margin-top: 0; }
     .fs:not(.fs-rotated) .slide-viewport { width: 100vw; height: 100vh; height: 100dvh; aspect-ratio: auto; }
     .fs .slide-viewport-wrap { aspect-ratio: auto; flex: 1; padding: 0; }
+    
+    /* iOS CSS 全屏（Fullscreen API 不可用时） */
+    .fs .slide-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 9999;
+      background: var(--bg);
+    }
 
     /* ═══ 视觉横屏：screen.orientation.lock 失败时的 viewport 旋转 ═══
        物理屏幕保持竖屏，但 viewport 顺时针旋转 90°，
@@ -1522,16 +1533,26 @@
 
   function toggleFS() {
     if (!FS) {
-      var fsPromise = null;
-      if (document.documentElement.requestFullscreen) { fsPromise = document.documentElement.requestFullscreen(); }
-      else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); }
-      document.body.classList.add('fs');
-      FS = true;
-      fsBtn.textContent = '⛶ 退出';
-      if (fsPromise && fsPromise.then) {
-        fsPromise.then(function(){ doLock(); }).catch(function(){ doLock(); });
+      var fsSupported = document.documentElement.requestFullscreen || 
+                        document.documentElement.webkitRequestFullscreen;
+      
+      if (fsSupported) {
+        var fsPromise = null;
+        if (document.documentElement.requestFullscreen) { fsPromise = document.documentElement.requestFullscreen(); }
+        else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); }
+        document.body.classList.add('fs');
+        FS = true;
+        fsBtn.textContent = '⛶ 退出';
+        if (fsPromise && fsPromise.then) {
+          fsPromise.then(function(){ doLock(); }).catch(function(){ doLock(); });
+        } else {
+          setTimeout(doLock, 300);
+        }
       } else {
-        setTimeout(doLock, 300);
+        document.body.classList.add('fs');
+        FS = true;
+        fsBtn.textContent = '⛶ 退出';
+        doLock();
       }
       setTimeout(scaleViewport, 100);
     } else {

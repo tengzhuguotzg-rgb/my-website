@@ -528,10 +528,6 @@
   #pageTotal { vertical-align: middle; }
 
   @media (max-width: 900px) {
-    :root {
-      --slide-w: 400px;
-      --slide-h: 225px;
-    }
     .slide-sidebar { display: none; }
     .slide-container { gap: 0; padding: 4px 8px; flex-direction: column; }
     .slide-viewport { max-width: none; max-height: none; }
@@ -1362,7 +1358,7 @@
   <div class="bottom-bar">
     <button class="nav-btn" id="prevBtn" disabled>← 上一页</button>
     <button class="nav-btn" id="homeBtn" disabled style="padding:6px 12px;">◉ 首页</button>
-    <span class="nav-counter" id="counter"><span class="page-box" id="pageBox"><span class="current" id="pageDisplay">1</span></span><span id="pageTotal"> / 42</span></span>
+    <span class="nav-counter" id="counter"><span class="page-box" id="pageBox"><span class="current" id="pageDisplay">1</span></span><span id="pageTotal"></span></span>
     <button class="fs-btn" id="fsBtn">⛶ 全屏</button>
     <button class="nav-btn" id="nextBtn">下一页 →</button>
   </div>
@@ -1479,7 +1475,7 @@
     // 导致 vp 视觉尺寸溢出 viewport-wrap，被 sidebar 遮挡。
     var wrap = document.querySelector('.slide-viewport-wrap');
     var cw = wrap.clientWidth, ch = wrap.clientHeight;
-    var sw = (vp.offsetWidth > 100 ? vp.offsetWidth : 1000), sh = (vp.offsetHeight > 100 ? vp.offsetHeight : 562.5);
+    var sw = 1000, sh = 562.5;
     var s = Math.min(cw / sw, ch / sh);
     if (s >= 0.95 && s <= 1.05) { vp.style.transform = ''; return; }
     vp.style.transform = 'scale(' + s + ')';
@@ -1712,6 +1708,7 @@
   buildSidebar();
   go(1);
   scaleViewport();
+  document.getElementById('pageTotal').textContent = ' / ' + N;
 })();
 </script>
 </body>

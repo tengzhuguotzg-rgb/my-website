@@ -1891,10 +1891,10 @@ function calcBg() {
       else if (diff > 2) { primary = '代谢性酸中毒 合并 呼吸性酸中毒'; compText += '<strong>高于预计 → 合并呼吸性酸中毒</strong>(通气不足)。'; }
       else { primary = '代谢性酸中毒 合并 呼吸性碱中毒'; compText += '<strong>低于预计 → 合并呼吸性碱中毒</strong>(代偿过度/独立呼碱)。'; }
     }
-    // 单一原发 = 呼酸 (PaCO2高, pH酸) → 课件 0.35±5.58 (慢性) / 0.05±2.5 (急性)
+    // 单一原发 = 呼酸 (PaCO2高, pH酸) → 0.35±5.58 (慢性) / 0.07±1.5 (急性, 据《实用重症医学》表22-4-3)
     else if (paco2Dir === 'high') {
-      const coef = acute === 'acute' ? 0.05 : 0.35;
-      const tol = acute === 'acute' ? 2.5 : 5.58;
+      const coef = acute === 'acute' ? 0.07 : 0.35;
+      const tol = acute === 'acute' ? 1.5 : 5.58;
       const expHco3 = 24 + (paco2 - 40) * coef;
       compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): △HCO₃⁻=${coef}×△PaCO₂, 预计 HCO₃⁻ = <strong>${expHco3.toFixed(1)} ± ${tol}</strong>。实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
       const diff = hco3 - expHco3;

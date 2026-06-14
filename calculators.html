@@ -1446,17 +1446,17 @@
         </div>
 
         <div class="bg-segment bg-summary">
-          <div class="bg-seg-title">⑥ 综合印象与处理方向</div>
-          <div class="bg-seg-conclusion" id="bg-sum-conclusion">输入参数后生成综合判断。</div>
+          <div class="bg-seg-title">⑥ 异常总览</div>
+          <div class="bg-seg-conclusion" id="bg-sum-conclusion">输入参数后汇总异常。</div>
           <div class="bg-seg-detail" id="bg-sum-detail"></div>
-          <div class="bg-seg-detail" style="margin-top:10px;font-size:11px;color:var(--text-faint);">⚠ 综合印象由规则引擎根据前 5 项自动生成, 仅供临床参考, 不替代医生综合判断。</div>
+          <div class="bg-seg-detail" style="margin-top:10px;font-size:11px;color:var(--text-faint);">本栏仅汇总前 5 项中超出阈值的客观数据, 不含治疗建议。</div>
         </div>
       </div>
 
       <div class="meta">
         <div class="meta-card span-2">
           <h4>Instructions 用法</h4>
-          <p><strong>动脉血气必填</strong>(pH / PaCO₂ / HCO₃⁻ 为酸碱核心, 另需 Na⁺、Cl⁻ 计算 AG), <strong>静脉血气可选</strong>(展开折叠块, 缺氧分型与呼吸商需动静脉配对)。<br>酸碱判断按 <strong>6 步</strong>: ① H-H 校验 → ② pH 定性 → ③ 方向规则定原发 → ④ 代偿公式验证 → ⑤ AG/潜在 HCO₃⁻ 判 TABD → ⑥ 代酸分型 (电中和原理)。每栏(① 酸碱 / ② 氧合 / ③ 缺氧分型 / ④ 呼吸商 / ⑤ 危急值 / ⑥ 综合印象)内容均重要, 全部平铺展示, 滚动浏览不互相遮挡。</p>
+          <p><strong>动脉血气必填</strong>(pH / PaCO₂ / HCO₃⁻ 为酸碱核心, 另需 Na⁺、Cl⁻ 计算 AG), <strong>静脉血气可选</strong>(展开折叠块, 缺氧分型与呼吸商需动静脉配对)。<br>酸碱判断按 <strong>6 步</strong>: ① H-H 校验 → ② pH 定性 → ③ 方向规则定原发 → ④ 代偿公式验证 → ⑤ AG/潜在 HCO₃⁻ 判 TABD → ⑥ 代酸分型 (电中和原理)。每栏(① 酸碱 / ② 氧合 / ③ 缺氧分型 / ④ 呼吸商 / ⑤ 危急值 / ⑥ 异常总览)内容均重要, 全部平铺展示, 滚动浏览不互相遮挡。</p>
         </div>
         <div class="meta-card span-2">
           <h4>酸碱失衡 · 决策树与计算方法</h4>
@@ -2017,7 +2017,7 @@ function calcBg() {
     setText('bg-o2-conclusion', '—');
     setText('bg-o2-detail', '');
     setText('bg-critical', '<div class="bg-seg-need-venous">输入参数后评估。</div>');
-    setText('bg-sum-conclusion', '输入参数后生成综合判断。');
+    setText('bg-sum-conclusion', '输入参数后汇总异常。');
     setText('bg-sum-detail', '');
     return;
   }
@@ -2403,66 +2403,67 @@ function calcBg() {
   setText('bg-critical', critHtml || '<div class="bg-seg-need-venous">输入参数后评估。</div>');
 
   // ═══════════════════════════════════════
-  // ⑥ 综合印象与处理方向 (规则引擎)
+  // ⑥ 异常总览 (纯客观: 汇总前 5 项超阈值数据, 无治疗建议)
   // ═══════════════════════════════════════
-  let sumConclusion = '', sumDetail = '';
-  const impressions = []; // 临床印象
-  const actions = [];     // 处理优先级
+  const abnormals = []; // 各类异常条目 {text, cls}
+  const ABBR = (s, n) => s.length > n ? s.slice(0, n) + '…' : s;
 
-  // --- 处理优先级 1: 危及生命的立即处理 ---
-  if (k !== null && (k < 3.0 || k > 6.0)) {
-    actions.push(`K⁺ ${k} mmol/L <strong>危急</strong>, 立即心电监护, 评估钙剂/胰岛素+葡萄糖/降钾树脂`);
+  // --- 酸碱失衡 ---
+  if (primary && !/正常|代偿$|代偿完全|无酸碱/.test(primary)) {
+    abnormals.push({text: `酸碱: ${ABBR(primary, 36)}`, cls: 'tier-danger'});
   }
-  if (ph < 7.1) actions.push(`pH ${ph} <strong>严重酸血症</strong>, 评估碳酸氢钠(目标 pH>7.15) + 病因处理`);
-  if (pao2 !== null && pao2 < 50) actions.push(`PaO₂ ${pao2.toFixed(0)} <strong>严重低氧</strong>, 立即提高 FiO₂/评估插管`);
-  if (lac !== null && lac > 4) actions.push(`乳酸 ${lac} <strong>显著升高(死亡率≈40.9%)</strong>, 按脓毒症 bundle 评估`);
+  // --- pH ---
+  if (ph < 7.35) abnormals.push({text: `pH ${ph} ↓ (酸血症)`, cls: 'tier-danger'});
+  else if (ph > 7.45) abnormals.push({text: `pH ${ph} ↑ (碱血症)`, cls: 'tier-warn'});
 
-  // --- 临床印象: 酸碱 + 灌注 模式识别 ---
-  // 模式 A: 脓毒症提示 (乳酸↑ + 缺氧分型含微循环/脓毒症)
-  const hypoxiaText = document.getElementById('bg-hypoxia-wrap').textContent;
-  if (lac !== null && lac > 2 && (hypoxiaText.includes('脓毒症') || hypoxiaText.includes('微循环'))) {
-    impressions.push(`乳酸升高 ${lac} + ${hypoxiaText.includes('微循环') ? '微循环障碍' : '缺氧'} → <strong>提示脓毒症/组织低灌注</strong>, 按 qSOFA/SOFA 评估, 完善感染源筛查`);
-  }
-  // 模式 B: COPD/慢性呼酸急性加重
-  if (primary.includes('呼吸性酸中毒') && paco2 > 60) {
-    impressions.push(`PaCO₂ ${paco2.toFixed(0)} 明显升高 → <strong>通气衰竭</strong>, 若有 COPD 病史考虑急性加重, 警惕肺性脑病`);
-  }
-  // 模式 C: 换气障碍 (A-aDO2 增大)
-  if (fio2 !== null && pao2 !== null) {
+  // --- 氧合 ---
+  if (pao2 !== null && fio2 !== null) {
+    const pf = pao2 / fio2;
+    if (pf <= 100) abnormals.push({text: `P/F ${pf.toFixed(0)} (重度 ARDS, ≤100)`, cls: 'tier-danger'});
+    else if (pf <= 200) abnormals.push({text: `P/F ${pf.toFixed(0)} (中度 ARDS, 101-200)`, cls: 'tier-danger'});
+    else if (pf <= 300) abnormals.push({text: `P/F ${pf.toFixed(0)} (轻度 ARDS, 201-300)`, cls: 'tier-warn'});
     const pao2Alv = fio2 * (760 - 47) - paco2 / 0.8;
     const aado2 = pao2Alv - pao2;
-    if (aado2 > 35) impressions.push(`A-aDO₂ ${aado2.toFixed(0)} 显著增大 → <strong>肺换气障碍</strong>(V/Q 失调/分流/弥散), 评估 ARDS/肺炎/肺栓塞`);
+    if (aado2 > 25) abnormals.push({text: `A-aDO₂ ${aado2.toFixed(0)} ↑ (换气障碍)`, cls: 'tier-warn'});
   }
-  // 模式 D: 呼吸商 R 高 (需静脉)
-  const rText = document.getElementById('bg-r-wrap').textContent;
-  if (rText.includes('危重症') || rText.includes('无氧代谢')) {
-    impressions.push(`呼吸商异常 → <strong>组织氧供需失衡</strong>, 评估心输出量、Hgb、灌注目标`);
-  }
-  // 模式 E: 代谢性酸中毒 + 乳酸正常 → 非乳酸型代酸(腹泻/肾小管酸中毒)
-  if (primary.includes('代谢性酸中毒') && lac !== null && lac <= 2) {
-    impressions.push(`代酸但乳酸正常 → <strong>非乳酸型代酸</strong>, 查电解质(计算 ΔAG/ΔHCO₃)、评估腹泻/肾小管酸中毒`);
-  }
-  // 模式 F: 一切正常
-  if (impressions.length === 0 && actions.length === 0) {
-    impressions.push('酸碱、氧合、电解质均在目标范围, <strong>暂无危急异常</strong>, 继续监测。');
+  if (pao2 !== null && pao2 < 60) abnormals.push({text: `PaO₂ ${pao2.toFixed(0)} ↓ (低氧血症)`, cls: 'tier-danger'});
+  if (paco2 > 50) abnormals.push({text: `PaCO₂ ${paco2.toFixed(0)} ↑ (II 型呼衰/通气不足)`, cls: 'tier-warn'});
+  else if (paco2 < 30) abnormals.push({text: `PaCO₂ ${paco2.toFixed(0)} ↓ (过度通气)`, cls: 'tier-warn'});
+
+  // --- 缺氧分型 (读③栏结论) ---
+  const hypoxiaText = (document.getElementById('bg-hypoxia-wrap').textContent || '').trim();
+  if (hypoxiaText && !/补充静脉|正常/.test(hypoxiaText)) {
+    abnormals.push({text: `缺氧: ${ABBR(hypoxiaText.split('·')[0].replace(/\s+/g,' '), 24)}`, cls: 'tier-warn'});
   }
 
-  // --- 通气策略提示 (基于 PaCO2 + pH) ---
-  if (paco2 > 55 && ph < 7.35) {
-    actions.push(`通气不足: 评估无创/有创通气, 目标 PaCO₂ 缓慢下降(防碱中毒)`);
-  } else if (paco2 < 30 && ph > 7.45) {
-    actions.push(`过度通气: 评估镇痛镇静深度、疼痛、焦虑, 避免呼碱加重脑缺血`);
+  // --- 呼吸商 R (读④栏结论) ---
+  const rText = (document.getElementById('bg-r-wrap').textContent || '').trim();
+  if (rText && !/补充静脉/.test(rText)) {
+    const rMatch = rText.match(/R\s*=?\s*([\d.]+)/);
+    if (rMatch && parseFloat(rMatch[1]) > 1.0) {
+      abnormals.push({text: `呼吸商 R=${rMatch[1]} ↑ (>1.0 无氧代谢)`, cls: 'tier-danger'});
+    }
   }
 
-  sumConclusion = impressions.length > 0 ? impressions[0] : '已录入参数, 见分项结论。';
-  if (impressions.length > 1) sumConclusion = impressions.slice(0, 2).join('<br>');
-  sumDetail = '';
-  if (actions.length > 0) {
-    sumDetail += '<strong>处理优先级:</strong><br>' + actions.map((a, i) => `${i + 1}. ${a}`).join('<br>');
+  // --- 危急值 (电解质/乳酸) ---
+  if (k !== null && (k < 3.5 || k > 5.0)) abnormals.push({text: `K⁺ ${k} mmol/L ${k<3.5?'↓':'↑'}`, cls: k<3.0||k>6.0?'tier-danger':'tier-warn'});
+  if (na !== null && (na < 135 || na > 145)) abnormals.push({text: `Na⁺ ${na} mmol/L ${na<135?'↓':'↑'}`, cls: na<125||na>155?'tier-danger':'tier-warn'});
+  if (cl !== null && (cl < 96 || cl > 108)) abnormals.push({text: `Cl⁻ ${cl} mmol/L ${cl<96?'↓':'↑'}`, cls: 'tier-warn'});
+  if (lac !== null && lac > 2) abnormals.push({text: `乳酸 ${lac} ↑ ${lac>4?'(显著, 死亡率≈40.9%)':'(组织缺氧/低灌注)'}`, cls: lac>4?'tier-danger':'tier-warn'});
+  if (na !== null && cl !== null) {
+    const ag = na - (cl + hco3);
+    if (ag > 16) abnormals.push({text: `AG ${ag.toFixed(0)} ↑ (>16 高 AG 代酸)`, cls: 'tier-warn'});
   }
-  if (impressions.length > 2) {
-    if (sumDetail) sumDetail += '<br><br>';
-    sumDetail += '<strong>其他提示:</strong><br>' + impressions.slice(2).map(a => '• ' + a).join('<br>');
+
+  // --- 汇总输出 ---
+  let sumConclusion, sumDetail;
+  if (abnormals.length === 0) {
+    sumConclusion = '酸碱、氧合、电解质均在正常范围';
+    sumDetail = '未见超出阈值的异常项。';
+  } else {
+    const dangerCount = abnormals.filter(a => a.cls === 'tier-danger').length;
+    sumConclusion = `共 ${abnormals.length} 项异常${dangerCount > 0 ? ` (其中 ${dangerCount} 项危急)` : ''}`;
+    sumDetail = abnormals.map(a => `<span class="result-tier ${a.cls}" style="display:inline-block;margin:3px 0;font-size:12px;">${a.text}</span>`).join('<br>');
   }
   setText('bg-sum-conclusion', sumConclusion);
   setText('bg-sum-detail', sumDetail);

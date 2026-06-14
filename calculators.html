@@ -2103,9 +2103,9 @@ function calcBg() {
       const expPaco2 = 40 + 0.9 * (hco3 - 24);
       compText = `代偿公式: △PaCO₂=0.9×△HCO₃⁻, 预计 PaCO₂ = <strong>${expPaco2.toFixed(1)} ± 5</strong> mmHg (极限 55)。实际 PaCO₂ ${paco2.toFixed(1)} → `;
       const diff = paco2 - expPaco2;
-      if (paco2 > 55) { primary = '代谢性碱中毒 (已达呼吸代偿极限 PaCO₂>55)'; compText += '<strong>超过呼吸代偿极限 → 代偿已达极限</strong>。'; }
+      // 先判是否合并呼酸(超预计上限), 再考虑极限; 极限55指单纯代碱代偿上限, 超过通常提示独立呼酸因素
+      if (diff > 5) { primary = '代谢性碱中毒 合并 呼吸性酸中毒'; compText += `<strong>高于预计上限${(expPaco2+5).toFixed(1)} → 合并呼吸性酸中毒</strong>${paco2 > 55 ? ' (且超过代偿极限55, 通气不足显著)' : ''}。`; }
       else if (Math.abs(diff) <= 5) { primary = '代谢性碱中毒 (单纯性, 代偿充分)'; compText += '在预计范围内 → <strong>呼吸代偿恰当, 单纯性代碱</strong>。'; }
-      else if (diff > 5) { primary = '代谢性碱中毒 合并 呼吸性酸中毒'; compText += '<strong>高于预计 → 合并呼吸性酸中毒</strong>。'; }
       else { primary = '代谢性碱中毒 合并 呼吸性碱中毒'; compText += '<strong>低于预计 → 合并呼吸性碱中毒</strong>。'; }
     }
     // 单一原发 = 呼碱 (PaCO2低) → 慢性 0.49±1.72 极限12-15 / 急性 0.2±2.5 极限18
@@ -2148,9 +2148,9 @@ function calcBg() {
         // 原发代碱 → 套代碱公式, 验证 PaCO2
         const expPaco2 = 40 + 0.9 * (hco3 - 24);
         compText = `pH ${ph} 偏碱 → 原发代碱。代偿公式: 预计 PaCO₂ = <strong>${expPaco2.toFixed(1)} ± 5</strong> (极限 55)。实际 PaCO₂ ${paco2.toFixed(1)} → `;
-        if (paco2 > 55) { primary = '代谢性碱中毒 (已达代偿极限)'; compText += '<strong>超过呼吸代偿极限</strong>。'; }
+        // 先判合并呼酸(超预计上限), 极限55仅作辅助说明
+        if (paco2 > expPaco2 + 5) { primary = '代谢性碱中毒 合并 呼吸性酸中毒'; compText += `<strong>高于预计上限 → 合并呼酸</strong>${paco2 > 55 ? ' (且超过代偿极限55, 通气不足显著)' : ''}。`; tierCls = 'tier-danger'; }
         else if (Math.abs(paco2 - expPaco2) <= 5) { primary = '代谢性碱中毒 (代偿完全)'; compText += '在预计范围内 → <strong>代偿完全</strong>。'; }
-        else if (paco2 > expPaco2 + 5) { primary = '代谢性碱中毒 合并 呼吸性酸中毒'; compText += '<strong>高于预计 → 合并呼酸</strong>。'; tierCls = 'tier-danger'; }
         else { primary = '代谢性碱中毒 合并 呼吸性碱中毒'; compText += '<strong>低于预计 → 合并呼碱</strong>。'; }
       }
     }

@@ -2036,9 +2036,17 @@ function calcBg() {
     primary = '数据可能不一致';
     tierCls = 'tier-warn';
     setText('bg-ab-conclusion', '⚠ 数据一致性校验未通过');
-    setText('bg-ab-detail', `pH/PaCO₂/HCO₃⁻ 三者不自洽: 按 H-H 公式 pH ${ph} + PaCO₂ ${paco2} 时 HCO₃⁻ 理论应为 <strong>${expHco3HH.toFixed(1)}</strong>, 但实测 <strong>${hco3}</strong> (差 ${hhDiff.toFixed(1)})。<br>请核对录入(常见: pH 或 HCO₃⁻ 填反)。`);
+    setText('bg-ab-detail', `pH/PaCO₂/HCO₃⁻ 三者不自洽: 按 H-H 公式 pH ${ph} + PaCO₂ ${paco2} 时 HCO₃⁻ 理论应为 <strong>${expHco3HH.toFixed(1)}</strong>, 但实测 <strong>${hco3}</strong> (差 ${hhDiff.toFixed(1)})。<br>请核对录入(常见: pH 或 HCO₃⁻ 填反)。<br><br><em style="color:var(--text-faint)">数据不自洽时后续所有分析(氧合/缺氧分型/呼吸商/危急值/异常总览)均不可信, 已停止计算。</em>`);
     setText('bg-ab-tier', '<div class="result-tier tier-warn">数据校验</div>');
-    // 跳过后续酸碱分析, 但其他段(氧合/危急值)仍正常进行
+    // 数据不自洽: 后续所有段(②氧合/③缺氧/④呼吸商/⑤危急值/⑥异常总览)均基于不可信数据, 清空并停止
+    setText('bg-o2-conclusion', '—');
+    setText('bg-o2-detail', '<span style="color:var(--text-faint)">数据一致性校验未通过, 氧合分析已停止。请先修正 pH/PaCO₂/HCO₃⁻ 录入。</span>');
+    setText('bg-hypoxia-wrap', '<div class="bg-seg-need-venous">数据一致性校验未通过, 缺氧分型已停止。</div>');
+    setText('bg-r-wrap', '<div class="bg-seg-need-venous">数据一致性校验未通过, 呼吸商计算已停止。</div>');
+    setText('bg-critical', '<div class="bg-seg-need-venous">数据一致性校验未通过, 危急值评估已停止。</div>');
+    setText('bg-sum-conclusion', '数据校验未通过');
+    setText('bg-sum-detail', '<span style="color:var(--text-faint)">pH/PaCO₂/HCO₃⁻ 三者不自洽, 所有分析已停止。请核对录入后重算。</span>');
+    return;
   } else {
 
   const isAcid = ph < 7.35, isAlk = ph > 7.45;

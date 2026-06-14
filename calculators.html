@@ -1543,17 +1543,42 @@
           </ul>
         </div>
         <div class="meta-card">
-          <h4>缺氧分型阈值</h4>
+          <h4>缺氧分型 · 8 种全表</h4>
+          <p>三联指标: <strong>Lac</strong> &gt;2 = 缺氧 · <strong>SvO₂</strong> &lt;70% = 氧输送不足(≥70% = 氧利用障碍) · <strong>GAP</strong> = PvCO₂−PaCO₂, &gt;6 = 组织低灌注。</p>
           <ul>
-            <li><strong>乳酸</strong> Lac &gt; 2 mmol/L = 缺氧</li>
-            <li><strong>SvO₂</strong> &lt; 70% = 氧输送不足; ≥70% = 氧利用障碍</li>
-            <li><strong>GAP</strong> = PvCO₂ - PaCO₂, &gt; 6 mmHg = 组织低灌注</li>
-            <li>三联组合 → 8 种分型(低CO/微循环障碍/高CO性缺氧等)</li>
+            <li><strong>Lac↑ SvO₂↓ GAP正常</strong> → 低 CO 性缺氧</li>
+            <li><strong>Lac↑ SvO₂↓ GAP↑</strong> → 低 CO 性缺氧(脓毒症)</li>
+            <li><strong>Lac↑ SvO₂正常 GAP↑</strong> → 微循环障碍性缺氧</li>
+            <li><strong>Lac↑ SvO₂正常 GAP正常</strong> → 高 CO 性缺氧(脓毒症)</li>
+            <li><strong>Lac正常 SvO₂↓ GAP↑</strong> → 微循环障碍性缺氧(早期)</li>
+            <li><strong>Lac正常 SvO₂↓ GAP正常</strong> → 低 CO 性缺氧(贫血)</li>
+            <li><strong>Lac正常 SvO₂正常 GAP↑</strong> → 微循环障碍(无明显缺氧)</li>
+            <li><strong>三项全正常</strong> → 无缺氧(正常)</li>
+          </ul>
+          <p class="dt-note">↑ = 升高, ↓ = 降低。前 4 项(乳酸↑)提示已存在无氧代谢/组织缺氧, 红色预警; 后 4 项(乳酸正常)多为氧输送或微循环早期改变, 黄色关注。</p>
+        </div>
+        <div class="meta-card">
+          <h4>氧合状态 · 计算与分级</h4>
+          <ul>
+            <li><strong>P/F 氧合指数</strong> = PaO₂/FiO₂ (正常 400-500)<br>柏林/Matthay 2024: ≤300 诊断 ARDS — 重 ≤100 / 中 101-200 / 轻 201-300; 插管需 PEEP ≥ 5</li>
+            <li><strong>呼衰分型</strong>: PaO₂&lt;60 + PaCO₂&gt;50 = <em>II 型</em>(通气衰竭); PaO₂&lt;60 + PaCO₂ 正常/低 = <em>I 型</em>(换气衰竭)</li>
+            <li><strong>肺泡气方程</strong>: <code>PAO₂ = FiO₂×(760−47) − PaCO₂/0.8</code> = FiO₂×713 − PaCO₂/R</li>
+            <li><strong>A-aDO₂</strong> = PAO₂ − PaO₂, 正常 &lt;15 (青年) / &lt;25 (老年), 每 10 岁约 +4。&gt;25 提示换气障碍(V/Q 失调、分流、弥散)</li>
+            <li><strong>PaO₂ 分级</strong>: &lt;60 低氧血症 / 60-79 轻度低氧 / ≥80 正常</li>
           </ul>
         </div>
         <div class="meta-card">
-          <h4>呼吸商 R 临床意义</h4>
-          <p><strong>R = GAP / C(a-v)O₂</strong>, 其中 CaO₂ = 1.34×Hgb×SaO₂ + 0.0031×PaO₂, CvO₂ = 1.34×Hgb×SvO₂ + 0.0031×PvO₂。<br>&lt; 0.8 正常有氧代谢; &gt; 1.0 无氧代谢/组织缺氧; &gt; 1.4-1.6 危重症高度提示微循环障碍。</p>
+          <h4>呼吸商 R · 机理与计算</h4>
+          <p><strong>定义</strong>: R = VCO₂/VO₂ = 产生的 CO₂ ÷ 消耗的 O₂。底物不同, R 不同:</p>
+          <ul>
+            <li><strong>碳水化合物 (葡萄糖)</strong>: <code>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O</code> → R = 6CO₂/6O₂ = <em>1.0</em></li>
+            <li><strong>脂肪 (三棕榈酸甘油酯)</strong>: <code>2C₅₁H₉₈O₆ + 145O₂ → 102CO₂ + 98H₂O</code> → R = 102/145 = <em>0.7</em> (氧需多, 因脂肪还原度高需额外 O₂ 脱氢)</li>
+            <li><strong>蛋白质</strong>: R ≈ <em>0.8-0.82</em></li>
+            <li><strong>混合膳食</strong>: R ≈ <em>0.8-0.85</em></li>
+          </ul>
+          <p><strong>血气计算 (Fick 方程推导)</strong>: <code>R = GAP / C(a-v)O₂</code><br>
+          其中 GAP = PvCO₂ − PaCO₂; C(a-v)O₂ = CaO₂ − CvO₂; CaO₂ = 1.34×Hgb×SaO₂ + 0.0031×PaO₂。</p>
+          <p><strong>临床意义</strong>: &lt;0.85 正常有氧代谢 · &gt;1.0 CO₂ 产出超过 O₂ 消耗 = <em>无氧代谢/组织缺氧</em>(糖酵解产乳酸, 无额外 O₂ 但仍生 CO₂) · &gt;1.4-1.6 危重症高度提示 <em>微循环障碍</em>(分流、组织无法摄取 O₂)。</p>
         </div>
         <div class="meta-card">
           <h4>Why Use 为什么要用</h4>

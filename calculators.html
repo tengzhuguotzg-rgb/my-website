@@ -1521,13 +1521,14 @@
               <div class="dt-head"><span class="dt-no">5</span>代酸分型 (高 AG / 高氯性 / 复合型, 电中和原理)</div>
               <p>当代酸确诊且有 Na⁺、Cl⁻ 时, 进一步分型。依据电中和原理: <code>|△HCO₃⁻| ≈ △AG + △Cl⁻</code>。</p>
               <ul>
-                <li><strong>AG &gt; 20</strong>: 走高 AG 方向。若 <code>△Cl⁻ &gt; 1</code> 且 <code>||△HCO₃⁻| − (△AG + △Cl⁻)| ≤ 3</code> → <em>复合型代酸</em> (高 AG + 高氯性); 否则 = <em>单纯高 AG 型代酸</em>。</li>
-                <li><strong>AG 正常 (≤ 20)</strong>: 若 <code>Cl⁻ &gt; 108</code> → <em>高氯性代酸 (正常 AG 型)</em>, Cl⁻ 升高代偿了 HCO₃⁻ 下降。</li>
+                <li><strong>电中和优先</strong>: 若 <code>△AG ≥ 2</code> 且 <code>△Cl⁻ &gt; 1</code> 且 <code>||△HCO₃⁻| − (△AG + △Cl⁻)| ≤ 3</code> → <em>复合型代酸</em> (高 AG + 高氯性, 教材例16: AG=18 临界区据此判出复合型; △AG≥2 排除测量误差)。</li>
+                <li><strong>AG ≥ 20</strong> (ΔCl 未显著参与): <em>单纯高 AG 型代酸</em> (AG&gt;30 确诊, 20-30 提示)。</li>
+                <li><strong>AG 正常/临界 + Cl⁻ &gt; 108</strong>: <em>高氯性代酸 (正常 AG 型)</em>, Cl⁻ 升高代偿了 HCO₃⁻ 下降。</li>
                 <li>正常参考: <code>HCO₃⁻ = 24</code>, <code>Cl⁻ = 100</code>, <code>△ = 实测 − 正常</code>。</li>
               </ul>
             </div>
 
-            <div class="dt-flow">完整流程:  H-H校验 → pH定性 → 方向规则(对向=混合/同向=代偿) → 套代偿公式(±容差/极限) → AG(>20?) → 潜在HCO₃⁻ → TABD → 代酸分型</div>
+            <div class="dt-flow">完整流程:  H-H校验 → pH定性 → 方向规则(对向=混合/同向=代偿) → 套代偿公式(±容差/极限) → AG(≥20?) → 潜在HCO₃⁻ → TABD → 代酸分型(电中和优先)</div>
           </div>
         </div>
 
@@ -2190,7 +2191,7 @@ function calcBg() {
   let tabdText = '';
   if (na !== null && cl !== null) {
     const ag = na - (cl + hco3);
-    if (ag > 20) {
+    if (ag >= 20) {
       const deltaAG = ag - 16;
       const latentHco3 = hco3 + deltaAG;
       // 计算原发失衡的 HCO3 代偿上限 (含容差)
@@ -2228,7 +2229,7 @@ function calcBg() {
         tierCls = 'tier-danger';
         // 改写 compText: 推理过程
         const prelim = compText.split(' → ')[0];
-        compText = prelim + ` → <strong>初步判断为${prelimLabel}</strong>。但 AG=${ag.toFixed(0)}(↑, >20)${ag > 30 ? ' (确诊' : ' (提示'}高 AG 型代酸), 计算潜在 HCO₃⁻=${latentHco3.toFixed(0)} &gt; 代偿上限${upperLimit.toFixed(1)} → 高 AG 代酸消耗部分 HCO₃⁻, 排除其掩盖作用后潜在 HCO₃⁻ 仍超上限 → 合并代谢性碱中毒。综合为 <strong>${diagType}</strong>。<br><em style="color:var(--text-faint)">若不计算 AG 和潜在 HCO₃⁻, 易误诊为「${misdxLabel}」。</em>`;
+        compText = prelim + ` → <strong>初步判断为${prelimLabel}</strong>。但 AG=${ag.toFixed(0)}(↑, ≥20)${ag > 30 ? ' (确诊' : ' (提示'}高 AG 型代酸), 计算潜在 HCO₃⁻=${latentHco3.toFixed(0)} &gt; 代偿上限${upperLimit.toFixed(1)} → 高 AG 代酸消耗部分 HCO₃⁻, 排除其掩盖作用后潜在 HCO₃⁻ 仍超上限 → 合并代谢性碱中毒。综合为 <strong>${diagType}</strong>。<br><em style="color:var(--text-faint)">若不计算 AG 和潜在 HCO₃⁻, 易误诊为「${misdxLabel}」。</em>`;
         tabdText = ''; // 已合并进 compText
       } else {
         tabdText = `<br><span style="color:var(--text-faint)">AG=${ag.toFixed(0)}(↑), 潜在 HCO₃⁻=${latentHco3.toFixed(0)} ≤ 上限${upperLimit.toFixed(1)}, 无合并代碱。</span>`;
@@ -2239,27 +2240,29 @@ function calcBg() {
     }
   }
 
-  // 代酸分型检查 (slide 27 + line 1884/1886)
+  // 代酸分型检查 (教材例16 L1886: AG临界区也做电中和)
   // 代酸确诊 + 有 Na/Cl 时, 分高AG型/高氯性/复合型
-  // 判据: AG>20 → 高AG方向; 电中和(|ΔHCO₃⁻|≈ΔAG+ΔCl⁻) → 复合型; AG正常+Cl↑ → 高氯性
+  // 判据: 电中和(|ΔHCO₃⁻|≈ΔAG+ΔCl⁻) → 复合型 (不论AG在哪个区间);
+  //        否则 AG≥20 → 高AG型; AG正常+Cl↑ → 高氯性
   if (na !== null && cl !== null && /代酸|代谢性酸中毒/.test(primary)) {
     const ag = na - (cl + hco3);
     const dAG = Math.max(0, ag - 16);         // ΔAG (AG 正常上限 16)
-    const dCl = Math.max(0, cl - 100);         // ΔCl⁻ (Cl 正常值 100, 据 line 1886 举例)
+    const dCl = Math.max(0, cl - 100);         // ΔCl⁻ (Cl 正常值 100, 教材例16原文: 108-100=8)
     const absDHCO3 = Math.abs(24 - hco3);      // |ΔHCO₃⁻| (HCO₃ 正常 24)
     let acidType = '';
-    if (ag > 20) {
-      // AG 升高: 电中和验证 → 复合型 vs 高AG型
-      if (dCl > 1 && Math.abs(absDHCO3 - (dAG + dCl)) <= 3) {
-        acidType = `复合型代酸 (高AG + 高氯性), ΔAG=${dAG.toFixed(0)} + ΔCl⁻=${dCl.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}`;
-      } else {
-        acidType = `高AG型代酸, AG=${ag.toFixed(0)}(>20${ag > 30 ? ', 确诊' : ', 提示'}), ΔAG=${dAG.toFixed(0)}`;
-      }
-    } else {
-      // AG 正常 (≤20): Cl 升高 → 高氯性
-      if (cl > 108) {
-        acidType = `高氯性代酸 (正常AG型), Cl=${cl.toFixed(0)}(>108), ΔCl⁻=${dCl.toFixed(0)}`;
-      }
+    // 电中和验证: ΔAG 有临床意义(≥2, 排除测量误差) 且 ΔCl 参与(>1) 且 |ΔHCO₃⁻| ≈ ΔAG+ΔCl (容差±3) → 复合型
+    if (dAG >= 2 && dCl > 1 && Math.abs(absDHCO3 - (dAG + dCl)) <= 3) {
+      const agNote = ag >= 20 ? (ag > 30 ? 'AG确诊高AG' : 'AG提示高AG') : 'AG临界区';
+      acidType = `复合型代酸 (高AG + 高氯性), ΔAG=${dAG.toFixed(0)} + ΔCl⁻=${dCl.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)} (${agNote})`;
+    } else if (ag >= 20) {
+      // AG 达提示阈值, ΔCl 未显著参与 → 单纯高AG型
+      acidType = `高AG型代酸, AG=${ag.toFixed(0)}(≥20${ag > 30 ? ', 确诊' : ', 提示'}), ΔAG=${dAG.toFixed(0)}`;
+    } else if (cl > 108) {
+      // AG 正常/临界, Cl 升高主导 → 高氯性
+      acidType = `高氯性代酸 (正常AG型), Cl=${cl.toFixed(0)}(>108), ΔCl⁻=${dCl.toFixed(0)}`;
+    } else if (ag > 16) {
+      // AG 临界(16-20), Cl 未明显升高, 无电中和匹配 → 提示临界高AG
+      acidType = `临界高AG (AG=${ag.toFixed(0)}, 16-20区间仅20%有酸中毒), 需结合临床`;
     }
     if (acidType) {
       tabdText += `<br><strong>代酸分型:</strong> AG=${ag.toFixed(0)}, ${acidType}。<br><span style="color:var(--text-faint)">ΔAG=${dAG.toFixed(0)}, ΔCl⁻=${dCl.toFixed(0)}, |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}。</span>`;

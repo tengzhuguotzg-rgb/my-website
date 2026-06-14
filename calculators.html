@@ -2418,11 +2418,10 @@ function calcBg() {
   // ⑥ 异常总览 (纯客观: 汇总前 5 项超阈值数据, 无治疗建议)
   // ═══════════════════════════════════════
   const abnormals = []; // 各类异常条目 {text, cls}
-  const ABBR = (s, n) => s.length > n ? s.slice(0, n) + '…' : s;
 
   // --- 酸碱失衡 ---
   if (primary && !/正常|代偿$|代偿完全|无酸碱/.test(primary)) {
-    abnormals.push({text: `酸碱: ${ABBR(primary, 36)}`, cls: 'tier-danger'});
+    abnormals.push({text: `酸碱: ${primary}`, cls: 'tier-danger'});
   }
   // --- pH ---
   if (ph < 7.35) abnormals.push({text: `pH ${ph} ↓ (酸血症)`, cls: 'tier-danger'});
@@ -2445,7 +2444,7 @@ function calcBg() {
   // --- 缺氧分型 (读③栏结论) ---
   const hypoxiaText = (document.getElementById('bg-hypoxia-wrap').textContent || '').trim();
   if (hypoxiaText && !/补充静脉|正常/.test(hypoxiaText)) {
-    abnormals.push({text: `缺氧: ${ABBR(hypoxiaText.split('·')[0].replace(/\s+/g,' '), 24)}`, cls: 'tier-warn'});
+    abnormals.push({text: `缺氧: ${hypoxiaText.split('·')[0].replace(/\s+/g,' ')}`, cls: 'tier-warn'});
   }
 
   // --- 呼吸商 R (读④栏结论) ---

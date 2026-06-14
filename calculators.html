@@ -2463,7 +2463,11 @@ function calcBg() {
   } else {
     const dangerCount = abnormals.filter(a => a.cls === 'tier-danger').length;
     sumConclusion = `共 ${abnormals.length} 项异常${dangerCount > 0 ? ` (其中 ${dangerCount} 项危急)` : ''}`;
-    sumDetail = abnormals.map(a => `<span class="result-tier ${a.cls}" style="display:inline-block;margin:3px 0;font-size:12px;">${a.text}</span>`).join('<br>');
+    sumDetail = abnormals.map(a => a.cls === 'tier-danger' ? `<strong>• ${a.text}</strong>` : `• ${a.text}`).join('<br>');
+  }
+  // AG / Na 校正提示 (仅当 Na、Cl 已填且 AG 异常或血糖未填时才强烈相关; 此处始终显示以作提醒)
+  if (na !== null && cl !== null) {
+    sumDetail += `<br><br><span style="font-size:11px;color:var(--text-faint);">⚠ 本结果基于实测 AG / 实测 Na 计算。<strong>若白蛋白 &lt; 2.5 g/dL</strong>, 实测 AG 可能被低估 (校正 AG = 实测 + 2.5 × (4 − 白蛋白)); <strong>若血糖 &gt; 400 mg/dL</strong>, 实测 Na 被稀释, AG 假性升高 (校正 Na = 实测 + 1.6 × (Glu−100) / 100)。建议结合临床校正后判断。</span>`;
   }
   setText('bg-sum-conclusion', sumConclusion);
   setText('bg-sum-detail', sumDetail);

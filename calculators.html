@@ -2104,9 +2104,11 @@ function calcBg() {
   if (pao2 !== null && fio2 !== null) {
     const pf = pao2 / fio2;  // 氧合指数 P/F
     let pfTier = '', pfTierCls = 'tier-ok';
-    if (pf < 200) { pfTier = '重度 ARDS (P/F < 200)'; pfTierCls = 'tier-danger'; }
-    else if (pf < 300) { pfTier = 'ALI / 中度 ARDS (P/F 200-300)'; pfTierCls = 'tier-warn'; }
-    else if (pf < 400) { pfTier = '氧合轻度受损 (P/F 300-400)'; pfTierCls = 'tier-warn'; }
+    // 柏林 2012 / Matthay 2024 全球定义: ≤300 诊断 ARDS, 三级分度
+    if (pf <= 100) { pfTier = '重度 ARDS (P/F ≤ 100)'; pfTierCls = 'tier-danger'; }
+    else if (pf <= 200) { pfTier = '中度 ARDS (P/F 101-200)'; pfTierCls = 'tier-danger'; }
+    else if (pf <= 300) { pfTier = '轻度 ARDS (P/F 201-300)'; pfTierCls = 'tier-warn'; }
+    else if (pf < 400) { pfTier = '氧合轻度受损 (P/F 300-400, 未达 ARDS)'; pfTierCls = 'tier-warn'; }
     else { pfTier = '氧合正常 (P/F ≥ 400)'; pfTierCls = 'tier-ok'; }
     // 呼衰分型 (slide 46): PaO₂<60 区分 I 型(PaCO₂正常/低) vs II 型(PaCO₂升高)
     let respFail = '';
@@ -2115,7 +2117,7 @@ function calcBg() {
     }
     o2Conclusion = `P/F = ${pao2.toFixed(0)}/${fio2} = <strong>${pf.toFixed(0)}</strong> · ${pfTier}`;
     if (respFail) o2Conclusion += ` · ${respFail}`;
-    o2Detail = `<span class="calc">P/F = PaO₂/FiO₂, 正常 400-500, <300 ALI, <200 ARDS</span>`;
+    o2Detail = `<span class="calc">P/F = PaO₂/FiO₂, 正常 400-500。柏林/Matthay 2024 标准: ≤300 诊断 ARDS (轻 201-300 / 中 101-200 / 重 ≤100), 插管患者需 PEEP ≥ 5。</span>`;
     // PaO₂ 分级 (补充)
     let pao2Note = '';
     if (pao2 < 60) pao2Note = '低氧血症';

@@ -2417,11 +2417,49 @@ function calcBg() {
   // ═══════════════════════════════════════
   // ⑥ 异常总览 (纯客观: 汇总前 5 项超阈值数据, 无治疗建议)
   // ═══════════════════════════════════════
-  const abnormals = []; // 各类异常条目 {text, cls}
+  const abnormals = []; // 各类异常条目 {text, cls, sub}
+
+  // 酸碱失衡常见原因 (精简版, 引用自 meta 区"酸碱失衡·常见原因"卡片)
+  // 按诊断关键词匹配, 返回简短原因串; 复合型/TABD 取各成分原因拼接
+  const CAUSES = {
+    '呼吸性酸中毒': 'COPD/肺心病(最常见)、哮喘重度、呼吸肌无力、中枢抑制、气道阻塞',
+    '呼吸性碱中毒': '癔病/焦虑过度通气、脓毒症早期、肺栓塞/肺炎、机械通气过度',
+    '代谢性酸中毒': { // 根据 AG 分型
+      highAG: '高AG型: 乳酸酸中毒(休克/缺氧)、酮症(DKA)、肾衰、中毒(甲醇/乙二醇)',
+      normalAG: '高氯性: 腹泻(最常见)、肾小管酸中毒、过多含氯液体'
+    },
+    '代谢性碱中毒': '呕吐/胃管引流(最常见)、利尿剂、皮质激素、低钾低氯'
+  };
+  function getCause(diag) {
+    // TABD / 复合型: 多关键词, 取呼吸成分 + 代谢成分
+    if (/TABD|三重/.test(diag)) {
+      let parts = [];
+      if (/呼酸|呼吸性酸中毒/.test(diag)) parts.push('呼酸: COPD/通气不足');
+      if (/呼碱|呼吸性碱中毒/.test(diag)) parts.push('呼碱: 过度通气/脓毒症');
+      if (/高AG|高 AG/.test(diag)) parts.push('高AG代酸: 乳酸/酮症/肾衰');
+      parts.push('代碱: 呕吐/利尿剂');
+      return parts.join('; ');
+    }
+    // 单纯 / 双重型
+    let causes = [];
+    if (/呼吸性酸中毒|呼酸/.test(diag)) causes.push('呼酸: ' + CAUSES['呼吸性酸中毒']);
+    if (/呼吸性碱中毒|呼碱/.test(diag)) causes.push('呼碱: ' + CAUSES['呼吸性碱中毒']);
+    if (/代谢性碱中毒|代碱/.test(diag)) causes.push('代碱: ' + CAUSES['代谢性碱中毒']);
+    if (/代谢性酸中毒|代酸/.test(diag)) {
+      // 需 Na/Cl 判断 AG 分型
+      let acidCause = '代酸: 高AG或高氯性';
+      if (na !== null && cl !== null) {
+        const agTmp = na - (cl + hco3);
+        acidCause = agTmp >= 20 ? '代酸: ' + CAUSES['代谢性酸中毒'].highAG : '代酸: ' + CAUSES['代谢性酸中毒'].normalAG;
+      }
+      causes.push(acidCause);
+    }
+    return causes.join('; ');
+  }
 
   // --- 酸碱失衡 ---
   if (primary && !/正常|代偿$|代偿完全|无酸碱/.test(primary)) {
-    abnormals.push({text: `酸碱: ${primary}`, cls: 'tier-danger'});
+    abnormals.push({text: `酸碱: ${primary}`, cls: 'tier-danger', sub: '常见原因: ' + getCause(primary)});
   }
   // --- pH ---
   if (ph < 7.35) abnormals.push({text: `pH ${ph} ↓ (酸血症)`, cls: 'tier-danger'});
@@ -2475,7 +2513,11 @@ function calcBg() {
   } else {
     const dangerCount = abnormals.filter(a => a.cls === 'tier-danger').length;
     sumConclusion = `共 ${abnormals.length} 项异常${dangerCount > 0 ? ` (其中 ${dangerCount} 项危急)` : ''}`;
-    sumDetail = abnormals.map(a => a.cls === 'tier-danger' ? `<strong>• ${a.text}</strong>` : `• ${a.text}`).join('<br>');
+    sumDetail = abnormals.map(a => {
+      const main = a.cls === 'tier-danger' ? `<strong>• ${a.text}</strong>` : `• ${a.text}`;
+      const sub = a.sub ? `<br><span style="font-size:12px;color:var(--text-faint);padding-left:14px;">${a.sub}</span>` : '';
+      return main + sub;
+    }).join('<br>');
   }
   // AG / Na 校正提示 (仅当 Na、Cl 已填且 AG 异常或血糖未填时才强烈相关; 此处始终显示以作提醒)
   if (na !== null && cl !== null) {

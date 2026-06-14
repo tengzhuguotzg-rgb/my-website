@@ -566,6 +566,39 @@
   .meta-card li { margin-bottom: 4px; }
   .meta-card a { color: var(--ink-2); border-bottom: 1px solid var(--line); }
   .meta-card a:hover { color: var(--accent); border-color: var(--accent); }
+  /* 跨列大卡 (如酸碱失衡决策树) */
+  .meta-card.span-2 { grid-column: 1 / -1; }
+  .meta-card.span-2 .decision-tree { font-size: 13px; color: var(--text-dim); line-height: 1.75; font-family: 'Noto Serif SC', serif; }
+  .meta-card.span-2 .dt-step {
+    margin: 14px 0; padding: 12px 14px 12px 16px;
+    border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0;
+    background: rgba(231, 111, 44, 0.04);
+  }
+  .meta-card.span-2 .dt-step:nth-child(even) { border-left-color: var(--ink-2); background: rgba(31, 61, 47, 0.03); }
+  .meta-card.span-2 .dt-step .dt-head {
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600;
+    color: var(--ink); letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .meta-card.span-2 .dt-step .dt-head .dt-no {
+    display: inline-block; min-width: 20px; color: var(--accent); margin-right: 4px;
+  }
+  .meta-card.span-2 .dt-step strong { color: var(--ink); font-weight: 600; }
+  .meta-card.span-2 .dt-step em { color: var(--accent-2); font-style: normal; font-weight: 600; }
+  .meta-card.span-2 .dt-step code {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: rgba(31, 61, 47, 0.07); padding: 1px 5px; border-radius: 4px; color: var(--ink);
+  }
+  .meta-card.span-2 .dt-step ul { padding-left: 20px; margin: 6px 0 0; }
+  .meta-card.span-2 .dt-step ul li { margin-bottom: 3px; }
+  .meta-card.span-2 .dt-flow {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    background: rgba(31, 61, 47, 0.04); border: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.9;
+    color: var(--text-dim); white-space: pre-wrap; word-break: break-word;
+  }
+  .meta-card.span-2 .dt-note {
+    margin-top: 10px; font-size: 11px; color: var(--text-faint); line-height: 1.6;
+  }
 
   /* ── Footer ── */
   .footer {
@@ -1421,6 +1454,79 @@
       </div>
 
       <div class="meta">
+        <div class="meta-card span-2">
+          <h4>酸碱失衡 · 决策树与计算方法</h4>
+          <div class="decision-tree">
+
+            <div class="dt-step">
+              <div class="dt-head"><span class="dt-no">0</span>H-H 方程一致性校验 (数据可信度)</div>
+              <p>Henderson-Hasselbalch 方程: <code>pH = 6.1 + log(HCO₃⁻ / (0.03 × PaCO₂))</code><br>
+              反推理论 HCO₃⁻ = <code>0.03 × PaCO₂ × 10^(pH−6.1)</code>, 与实测值比较。<br>
+              <em>若 |实测 − 理论| &gt; 3 mmol/L</em> → 三者不自洽, 提示<strong>录入有误</strong>(常见 pH 与 HCO₃⁻ 填反), 应核对后重算。校验通过才进入下一步。</p>
+            </div>
+
+            <div class="dt-step">
+              <div class="dt-head"><span class="dt-no">1</span>pH 定性 (酸血症 / 碱血症 / 正常)</div>
+              <ul>
+                <li><strong>pH &lt; 7.35</strong> → 酸血症 (原发必为酸中毒)</li>
+                <li><strong>pH &gt; 7.45</strong> → 碱血症 (原发必为碱中毒)</li>
+                <li><strong>7.35 ≤ pH ≤ 7.45</strong> → 正常范围 (≠ 完全代偿! 仍须按 pH 偏向 7.40 定原发方向)</li>
+              </ul>
+            </div>
+
+            <div class="dt-step">
+              <div class="dt-head"><span class="dt-no">2</span>定原发 + 方向规则 (判混合失衡)</div>
+              <p>对照正常范围 <code>PaCO₂ 35-45</code> / <code>HCO₃⁻ 22-27</code>, 标出二者方向:</p>
+              <ul>
+                <li><strong>对向 (一高一低)</strong> → 两因素方向相反却都致同一 pH 偏向 = <em>混合性失衡</em>, 直接判定, 无需代偿公式。</li>
+                <li><strong>同向 (双高或双低)</strong> → 一为原发, 一为代偿, 需套代偿公式验证代偿是否恰当。</li>
+                <li><strong>pH 正常时的原发判定</strong>: pH &lt; 7.40 偏酸 → 原发在酸方向; pH &gt; 7.40 偏碱 → 原发在碱方向 (双高: 偏酸=呼酸原发, 偏碱=代碱原发; 双低: 偏酸=代酸原发, 偏碱=呼碱原发)。</li>
+              </ul>
+            </div>
+
+            <div class="dt-step">
+              <div class="dt-head"><span class="dt-no">3</span>套代偿公式 (验证代偿是否恰当)</div>
+              <p>按原发类型选公式, 算出预计代偿值, 判实测值落在哪一区间:</p>
+              <ul>
+                <li><strong>代酸 (原发 HCO₃⁻↓)</strong> → Winter 公式 <code>PaCO₂ = 1.5×HCO₃⁻ + 8 ± 2</code>, 极限 PaCO₂=10。<br>
+                实测 PaCO₂ 在±2内 = 单纯性; 高于预计 = 合并呼酸; 低于预计 = 合并呼碱; &lt;10 = 代偿已达极限。</li>
+                <li><strong>代碱 (原发 HCO₃⁻↑)</strong> → <code>△PaCO₂ = 0.9×△HCO₃⁻ ± 5</code>, 极限 PaCO₂=55。<br>
+                实测在±5内 = 单纯性; 高于预计 = 合并呼酸; 低于预计 = 合并呼碱。</li>
+                <li><strong>呼酸 (原发 PaCO₂↑)</strong> → 急性 <code>△HCO₃⁻ = 0.1×△PaCO₂</code>(无±, 极限 HCO₃⁻=30) / 慢性 <code>0.35×△PaCO₂ ± 5.58</code>(极限 45)。<br>
+                实测在范围内 = 单纯性; 超上限 = 合并代碱; 低于下限 = 合并代酸。</li>
+                <li><strong>呼碱 (原发 PaCO₂↓)</strong> → 急性 <code>△HCO₃⁻ = 0.2×△PaCO₂ ± 2.5</code>(极限 HCO₃⁻=18) / 慢性 <code>0.49×△PaCO₂ ± 1.72</code>(极限 15)。<br>
+                实测在范围内 = 单纯性; 高于上限 = 合并代碱; 低于下限 = 合并代酸。</li>
+              </ul>
+              <p><span class="calc">急/慢性选择影响系数: 急性代偿弱 (缓冲), 慢性代偿强 (肾脏 2-3 天调节)。本计算器默认慢性, 急性起病 (&lt; 48h) 请切换。</span></p>
+            </div>
+
+            <div class="dt-step">
+              <div class="dt-head"><span class="dt-no">4</span>AG → 潜在 HCO₃⁻ → TABD 三重失衡</div>
+              <p>需 Na⁺、Cl⁻。阴离子间隙 <code>AG = Na⁺ − (Cl⁻ + HCO₃⁻)</code>, 正常 8-16。</p>
+              <ul>
+                <li><strong>AG &gt; 16</strong> = 高 AG 型代谢性酸中毒 (内源性酸蓄积: 乳酸/酮症/肾衰/中毒)。</li>
+                <li>计算 <em>潜在 HCO₃⁻ = 实测 HCO₃⁻ + △AG</em> (△AG = AG − 16), 排除高 AG 代酸"消耗"掉的部分。</li>
+                <li><strong>潜在 HCO₃⁻ &gt; 原发代偿上限</strong> → 合并代谢性碱中毒 → 确诊 <em>三重酸碱失衡 (TABD)</em>。</li>
+                <li>TABD 分型: PaCO₂↑ = <em>呼酸型 TABD</em> (呼酸 + 高 AG 代酸 + 代碱); PaCO₂↓ = <em>呼碱型 TABD</em> (呼碱 + 高 AG 代酸 + 代碱); PaCO₂ 正常 = 仅双重失衡 (高 AG 代酸 + 代碱), 非三重。</li>
+                <li><strong>AG 12-16</strong> = 偏高未达标准, 提示关注, 不轻易诊断。</li>
+              </ul>
+              <p class="dt-note">⚠ TABD 极易误诊: 若不算 AG 与潜在 HCO₃⁻, 仅看 pH/PaCO₂/HCO₃⁻ 常误判为"单纯性呼酸/呼碱"或"正常"。此步是漏诊高 AG 代酸 + 代碱的关键。</p>
+            </div>
+
+            <div class="dt-step">
+              <div class="dt-head"><span class="dt-no">5</span>代酸分型 (高 AG / 高氯性 / 复合型, 电中和原理)</div>
+              <p>当代酸确诊且有 Na⁺、Cl⁻ 时, 进一步分型。依据电中和原理: <code>|△HCO₃⁻| ≈ △AG + △Cl⁻</code>。</p>
+              <ul>
+                <li><strong>AG &gt; 16</strong>: 走高 AG 方向。若 <code>△Cl⁻ &gt; 1</code> 且 <code>||△HCO₃⁻| − (△AG + △Cl⁻)| ≤ 3</code> → <em>复合型代酸</em> (高 AG + 高氯性); 否则 = <em>单纯高 AG 型代酸</em>。</li>
+                <li><strong>AG 正常</strong>: 若 <code>Cl⁻ &gt; 108</code> → <em>高氯性代酸 (正常 AG 型)</em>, Cl⁻ 升高代偿了 HCO₃⁻ 下降。</li>
+                <li>正常参考: <code>HCO₃⁻ = 24</code>, <code>Cl⁻ = 100</code>, <code>△ = 实测 − 正常</code>。</li>
+              </ul>
+            </div>
+
+            <div class="dt-flow">完整流程:  H-H校验 → pH定性 → 方向规则(对向=混合/同向=代偿) → 套代偿公式(±容差/极限) → AG(>16?) → 潜在HCO₃⁻ → TABD → 代酸分型</div>
+          </div>
+        </div>
+
         <div class="meta-card">
           <h4>Instructions 用法</h4>
           <p>动脉血气必填(pH/PaCO₂/HCO₃⁻为核心), 静脉血气可选(展开折叠块)。酸碱判断按 4 步: pH定性 → 定原发 → 代偿计算 → TABD。缺氧分型与呼吸商需动静脉配对。</p>

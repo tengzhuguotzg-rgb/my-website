@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>血气分析 教学手册 · Teng.ZG</title>
+<meta name="description" content="血气分析教学长文 · 三大变量、13 项常用指标、氧合/通气评估、6 步判断法、6 条代偿公式、4 单纯+7 复合型酸碱失衡、TABD、代酸分型、缺氧 8 型。系统整理自《实用重症医学》第三版第 22 章第 4 节。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  /* ====== 与 CRRT 手册完全一致的设计系统 ====== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --line-strong: rgba(31, 61, 47, 0.22);
+    --code-bg: rgba(31, 61, 47, 0.05);
+    --ref-bg: rgba(231, 111, 44, 0.06);
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body {
+    font-family: 'Noto Serif SC', 'Space Grotesk', serif;
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
+      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent); }
+  .topbar {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 18px 18px 0;
+    padding: 14px 22px;
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
+  }
+  .brand-info { display: flex; flex-direction: column; }
+  .brand-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.2px; color: var(--ink); }
+  .brand-sub  { font-size: 12px; color: var(--text-faint); margin-top: 1px; font-family: 'Noto Serif SC', serif; letter-spacing: 0.5px; }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .home-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none; transition: background .2s;
+  }
+  .home-pill:hover { background: var(--accent); color: var(--bg); }
+  .crumb { display: flex; align-items: center; gap: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 13px; color: var(--text-dim); letter-spacing: 0.3px; }
+  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  .crumb a:hover { color: var(--accent); }
+  .crumb .sep { opacity: .4; }
+
+  .doc { max-width: 920px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 560px) { .doc { padding: 0 18px; } .topbar { margin: 12px 12px 0; padding: 12px 16px; } .brand-sub { display: none; } .crumb { display: none; } }
+
+  .hero { padding: 72px 0 24px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(48px, 7vw, 88px); font-weight: 600; line-height: 0.95; margin: 0 0 16px; letter-spacing: -2.5px; color: var(--ink); }
+  h1 .dot { color: var(--accent); }
+  .lede { font-family: 'Noto Serif SC', serif; font-size: 16px; color: var(--text-dim); line-height: 1.7; max-width: 640px; margin: 0; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 18px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 1px; color: var(--text-faint); text-transform: uppercase; }
+  .meta-row b { color: var(--ink); font-weight: 600; }
+
+  .toc { margin: 48px 0 64px; padding: 28px 32px; background: rgba(244, 241, 234, 0.55); border: 1px solid var(--line); border-radius: 18px; }
+  .toc-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 0 0 16px; font-weight: 500; }
+  .toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; }
+  .toc li { counter-increment: toc; display: flex; align-items: baseline; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+  .toc li:last-child { border-bottom: none; }
+  .toc li::before { content: counter(toc, decimal-leading-zero); font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 1.5px; color: var(--accent); font-weight: 500; min-width: 28px; }
+  .toc a { color: var(--text); flex: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .toc a:hover { color: var(--accent); }
+  .toc .toc-num { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--text-faint); letter-spacing: 1.5px; }
+
+  section.chapter { margin: 80px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+  section.chapter:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .chapter-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .chapter-num { font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 2.5px; color: var(--accent); font-weight: 500; text-transform: uppercase; flex-shrink: 0; min-width: 64px; }
+  .chapter-title { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 3.5vw, 36px); font-weight: 700; color: var(--ink); margin: 0; letter-spacing: 0.5px; line-height: 1.2; }
+  .chapter-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); margin: 0 0 32px 80px; }
+  @media (max-width: 560px) { .chapter-subtitle { margin-left: 0; } }
+
+  article h2 { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin: 48px 0 16px; letter-spacing: 0.3px; }
+  article h3 { font-family: 'Noto Serif SC', serif; font-size: 19px; font-weight: 700; color: var(--ink-2); margin: 32px 0 12px; }
+  article h4 { font-family: 'Noto Serif SC', serif; font-size: 16px; font-weight: 700; color: var(--ink-2); margin: 24px 0 8px; }
+  article p { margin: 0 0 16px; }
+  article ul, article ol { margin: 0 0 16px; padding-left: 24px; }
+  article li { margin-bottom: 6px; }
+  article strong { color: var(--ink); font-weight: 700; }
+  article em { color: var(--ink-2); font-style: italic; }
+  article a { border-bottom: 1px solid var(--line-strong); }
+
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14.5px; }
+  th { text-align: left; padding: 12px 14px; background: var(--ink); color: var(--bg); font-weight: 600; font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:hover { background: rgba(31, 61, 47, 0.03); }
+  td:first-child { font-weight: 600; color: var(--ink-2); }
+
+  .callout { margin: 24px 0; padding: 20px 24px; background: var(--ref-bg); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; }
+  .callout-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; overflow-x: auto; font-size: 13px; line-height: 1.6; margin: 20px 0; }
+  code { font-family: 'JetBrains Mono', monospace; color: var(--ink); }
+  p code, li code, td code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+  .term { color: var(--accent-2); font-weight: 600; }
+  .divider { text-align: center; margin: 64px 0 24px; color: var(--text-faint); font-size: 18px; letter-spacing: 8px; }
+  .footer { text-align: center; padding: 32px 0 48px; color: var(--text-faint); font-family: 'Space Grotesk', sans-serif; font-size: 12px; letter-spacing: 0.5px; }
+  .footer a { color: var(--text-faint); }
+
+  .case-box { background: rgba(31, 61, 47, 0.04); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin: 20px 0; font-size: 14.5px; }
+  .case-box .case-id { display: inline-block; padding: 2px 10px; background: var(--ink); color: var(--bg); border-radius: 999px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 1px; margin-right: 10px; vertical-align: middle; }
+  .case-box .case-dx { display: inline-block; padding: 2px 10px; background: var(--accent); color: var(--bg); border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .case-box .case-detail { margin-top: 10px; color: var(--text-dim); font-size: 14px; }
+  .case-box .case-input { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); margin: 6px 0; }
+
+  .formula { background: var(--code-bg); border-left: 3px solid var(--accent-2); padding: 14px 20px; border-radius: 0 10px 10px 0; margin: 20px 0; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--ink); }
+  .formula .label { display: block; font-family: 'Noto Serif SC', serif; font-size: 13px; color: var(--text-faint); margin-bottom: 4px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-info">
+        <div class="brand-name">Teng.ZG</div>
+        <div class="brand-sub">重症医学 · 教学手册系列</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="crumb">
+        <a href="../index.html">首页</a>
+        <span class="sep">/</span>
+        <a href="./crrt-教学手册.html">CRRT</a>
+        <span class="sep">/</span>
+        <span>血气分析</span>
+      </nav>
+      <a href="../index.html" class="home-pill">← 返回首页</a>
+    </div>
+  </header>
+
+  <main class="doc">
+  <article>
+
+    <section class="hero">
+      <div class="eyebrow">ABG · VBG · Lesson Notes</div>
+      <h1>血气分析<span class="dot">.</span>教学手册</h1>
+      <p class="lede">从三大变量(pH / PaCO2 / HCO3-)出发,系统梳理动脉与静脉血气分析的临床判读:13 项常用指标、氧合与通气评估、6 步酸碱判断法、6 条预计代偿公式、4 型单纯 + 7 型复合酸碱失衡、TABD 与代酸分型、缺氧 8 型。本笔记整理自《实用重症医学》第三版第 22 章第 4 节及配套课件,适合 ICU 进修、规培带教与日常查阅。</p>
+      <div class="meta-row">
+        <span><b>主题</b>&nbsp;&nbsp;血气分析全流程</span>
+        <span><b>来源</b>&nbsp;&nbsp;《实用重症医学》3 版 第 22 章第 4 节 + 课件</span>
+        <span><b>读者</b>&nbsp;&nbsp;ICU 医师 / 进修生</span>
+        <span><b>版次</b>&nbsp;&nbsp;v2.0</span>
+      </div>
+    </section>
+
+    <!-- 目录 -->
+    <nav class="toc">
+      <h2 class="toc-title">- 目录 / Contents</h2>
+      <ol>
+        <li><a href="#ch1"><span>总览:三大变量与 H-H 公式</span><span class="toc-num">01</span></a></li>
+        <li><a href="#ch2"><span>13 项常用血气指标</span><span class="toc-num">02</span></a></li>
+        <li><a href="#ch3"><span>氧合评估:PaO2 / P/F / A-aDO2 / 呼衰分型</span><span class="toc-num">03</span></a></li>
+        <li><a href="#ch4"><span>通气评估:PaCO2 / PvCO2 / 呼吸商 R</span><span class="toc-num">04</span></a></li>
+        <li><a href="#ch5"><span>酸碱失衡判断 6 步法</span><span class="toc-num">05</span></a></li>
+        <li><a href="#ch6"><span>6 条预计代偿公式与代偿极限</span><span class="toc-num">06</span></a></li>
+        <li><a href="#ch7"><span>单纯性酸碱失衡(4 型)</span><span class="toc-num">07</span></a></li>
+        <li><a href="#ch8"><span>复合型酸碱失衡(5 型)</span><span class="toc-num">08</span></a></li>
+        <li><a href="#ch9"><span>三重酸碱失衡 TABD(呼酸型 / 呼碱型)</span><span class="toc-num">09</span></a></li>
+        <li><a href="#ch10"><span>代酸分型(高 AG / 高氯 / 复合)</span><span class="toc-num">10</span></a></li>
+        <li><a href="#ch11"><span>缺氧分型(8 种)</span><span class="toc-num">11</span></a></li>
+        <li><a href="#ch12"><span>自测题与延伸阅读</span><span class="toc-num">12</span></a></li>
+      </ol>
+    </nav>
+
+    <!-- ─────────────────────────────── 01 ─────────────────────────────── -->
+    <section class="chapter" id="ch1">
+      <div class="chapter-head">
+        <span class="chapter-num">- 01 / 12</span>
+        <h2 class="chapter-title">总览:三大变量与 H-H 公式</h2>
+      </div>
+      <p class="chapter-subtitle">pH / PaCO2 / HCO3-</p>
+
+      <h2>核心思想</h2>
+      <p>动脉血气分析(ABG)评价<strong>氧合、通气、酸碱</strong>三大维度,标本可来自动脉(常用)或静脉(动静脉配对用于缺氧分型 / 呼吸商)。血液中气体分压之和称为<strong>总压</strong>,常用大气压 760 mmHg,扣除水蒸气压 47 mmHg 后为 713 mmHg(即简化肺泡气方程中 <code>FiO2 × 713</code> 的来源)。</p>
+
+      <h2>酸碱评价的三个变量</h2>
+      <p>评价血液酸碱平衡状态的指标较多,但核心只有三个:</p>
+      <table>
+        <thead><tr><th>变量</th><th>代表维度</th><th>正常值</th><th>意义</th></tr></thead>
+        <tbody>
+          <tr><td>pH</td><td>酸碱度</td><td>7.35 ~ 7.45(平均 7.40)</td><td>酸中毒 &lt; 7.35,碱中毒 &gt; 7.45;正常不一定无失衡</td></tr>
+          <tr><td>PaCO2</td><td>呼吸因素</td><td>35 ~ 45 mmHg(平均 40)</td><td>↑ 呼酸 / 代碱代偿;↓ 呼碱 / 代酸代偿</td></tr>
+          <tr><td>HCO3-</td><td>代谢因素</td><td>22 ~ 27 mmol/L(平均 24)</td><td>↑ 代碱 / 呼酸代偿;↓ 代酸 / 呼碱代偿</td></tr>
+        </tbody>
+      </table>
+
+      <h2>H-H 公式(Henderson-Hasselbalch)</h2>
+      <p>三大变量由 <span class="term">Henderson-Hasselbalch 方程</span>严格耦合:</p>
+      <div class="formula">
+        <span class="label">Henderson-Hasselbalch 公式</span>
+        pH = 6.1 + log10 ( [HCO3-] / (0.03 × PaCO2) )
+      </div>
+      <p>等价形式(Henderson 简化)便于临床心算:</p>
+      <div class="formula">
+        <span class="label">Henderson 公式(心算用)</span>
+        [H+] = 24 × (PaCO2 / [HCO3-]),pH 7.40 时 [H+] = 40 nmol/L
+      </div>
+      <p>心算口诀("<span class="term">0.8 / 1.25</span>" 法):pH 每变动 0.01,[H+] 往反方向变化约 1 nmol/L;pH &lt; 7.40 时乘 1.25,pH &gt; 7.40 时乘 0.8。</p>
+
+      <div class="callout">
+        <p class="callout-title">核实检测结果:H-H 一致性校验</p>
+        <p>pH、PCO2、HCO3- 三个变量一定要符合 H-H 公式。如检测报告所示三者代入后等式不成立,则必表明<strong>报告有误</strong>(如录入反相、标本错误)。临床可用 Henderson 公式 <code>[H+] = 24 × (PCO2 / [HCO3-])</code> 快速验证。</p>
+        <p>但现代全自动血气分析仪各项指标均由仪器内部计算并打印,<strong>理论</strong>上三者必然自洽(教材第 4 节 1. 核实检测结果是否有误),常规情况可省略该步。</p>
+      </div>
+
+      <h2>pH 7.40 边界</h2>
+      <p>pH 在 7.35 ~ 7.45 范围内称<strong>正常</strong>,但"正常"不等于"无失衡"。判读时常用 <code>pH &lt; 7.40</code> 来判定偏酸/偏碱(<strong>不是</strong> 7.35)。当 pH = 7.40 严格等于时,需结合 PaCO2/HCO3- 方向进一步定原发失衡。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 02 ─────────────────────────────── -->
+    <section class="chapter" id="ch2">
+      <div class="chapter-head">
+        <span class="chapter-num">- 02 / 12</span>
+        <h2 class="chapter-title">13 项常用血气指标</h2>
+      </div>
+      <p class="chapter-subtitle">每个指标一个表行</p>
+
+      <p>血气分析仪利用电极对全血中 pH、PO2、PCO2 进行测定,然后根据所测定的结果及血红蛋白值,<strong>计算出</strong> HCO3-(AB / SB)、TCO2、SaO2、BE、BB 等衍生指标。PO2、PCO2、pH 是直接测得;其余由公式衍生。</p>
+
+      <h2>直接测得 · 衍生指标速查表</h2>
+      <table>
+        <thead><tr><th>#</th><th>指标</th><th>缩写</th><th>正常值</th><th>临床意义</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>动脉血氧分压</td><td>PaO2</td><td>95 ~ 100 mmHg</td><td>判断低氧与呼衰;年龄公式:100 - 年龄×0.33 ± 5</td></tr>
+          <tr><td>2</td><td>肺泡-动脉氧分压差</td><td>P(A-a)O2</td><td>青年 15~20 mmHg;上限 30</td><td>反映肺换气功能;增大提示 V/Q 失调 / 分流 / 弥散障碍</td></tr>
+          <tr><td>3</td><td>动脉血氧饱和度</td><td>SaO2</td><td>95% ~ 98%</td><td>Hb 实际结合氧的百分数;与 SpO2 意义相近</td></tr>
+          <tr><td>4</td><td>混合静脉血氧分压</td><td>PvO2</td><td>35 ~ 45 mmHg(平均 40)</td><td>P(a-v)O2 ≈ 60 mmHg</td></tr>
+          <tr><td>5</td><td>动脉血氧含量</td><td>CaO2</td><td>8.55 ~ 9.45 mmol/L (19~21 ml/dl)</td><td>CaO2 = 1.34 × Hb × SaO2 + 0.0031 × PaO2</td></tr>
+          <tr><td>6</td><td>动脉血二氧化碳分压</td><td>PaCO2</td><td>35 ~ 45 mmHg(平均 40)</td><td>呼吸因素;代酸代偿极限 10、代碱代偿极限 55</td></tr>
+          <tr><td>7</td><td>酸碱度</td><td>pH</td><td>7.35 ~ 7.45(平均 7.40)</td><td>酸中毒 &lt; 7.35、碱中毒 &gt; 7.45</td></tr>
+          <tr><td>8a</td><td>标准碳酸氢根</td><td>SB</td><td>22 ~ 27 mmol/L(平均 24)</td><td>标准状态下(PaCO2 = 40)测得,不受呼吸影响</td></tr>
+          <tr><td>8b</td><td>实际碳酸氢根</td><td>AB</td><td>22 ~ 27 mmol/L(平均 24)</td><td>实测,受呼吸影响;AB &gt; SB 提示呼酸,AB &lt; SB 提示呼碱</td></tr>
+          <tr><td>8c</td><td>缓冲碱</td><td>BB</td><td>≈ 50 mmol/L</td><td>血液一切缓冲碱总和,HCO3- 占 ~50%</td></tr>
+          <tr><td>9</td><td>碱剩余</td><td>BE</td><td>0 ± 2.3 mmol/L</td><td>把血滴定到 pH 7.40 所需酸/碱量;正=碱多,负=碱缺</td></tr>
+          <tr><td>10</td><td>二氧化碳总量</td><td>TCO2</td><td>25.2 mmol/L</td><td>TCO2 = [HCO3-] + PaCO2 × 0.03;HCO3- 占 95%+</td></tr>
+          <tr><td>11</td><td>阴离子间隙</td><td>AG</td><td>8 ~ 16 mmol/L</td><td>AG = Na - (Cl + HCO3);判断代酸分型 + TABD</td></tr>
+          <tr><td>12</td><td>潜在碳酸氢根</td><td>潜在 HCO3-</td><td>-</td><td>潜在 = 实测 + ΔAG;揭示被高 AG 代酸掩盖的代碱</td></tr>
+          <tr><td>13</td><td>二氧化碳结合力</td><td>CO2CP</td><td>23 ~ 31 mmol/L</td><td>已弃用,详见下方</td></tr>
+        </tbody>
+      </table>
+
+      <h2>关键公式(必须熟记)</h2>
+      <div class="formula">
+        <span class="label">CaO2(动脉血氧含量)</span>
+        CaO2 = 1.34 × Hb(g/dL) × SaO2 + 0.0031 × PaO2
+      </div>
+      <div class="formula">
+        <span class="label">AG(阴离子间隙,简化式)</span>
+        AG = [Na+] - ([Cl-] + [HCO3-])
+      </div>
+      <div class="formula">
+        <span class="label">潜在 HCO3-</span>
+        潜在 [HCO3-] = 实测 [HCO3-] + ΔAG,其中 ΔAG = AG - 16
+      </div>
+      <div class="formula">
+        <span class="label">TCO2</span>
+        TCO2 = [HCO3-] + PaCO2 × 0.03
+      </div>
+
+      <h2>AB / SB 差(反映呼吸因素)</h2>
+      <table>
+        <thead><tr><th>失衡</th><th>AB</th><th>SB</th><th>关系</th></tr></thead>
+        <tbody>
+          <tr><td>呼酸</td><td>↑</td><td>不变</td><td>AB &gt; SB</td></tr>
+          <tr><td>呼碱</td><td>↓</td><td>不变</td><td>AB &lt; SB</td></tr>
+          <tr><td>代酸</td><td>↓</td><td>↓</td><td>AB = SB,都 &lt; 正常</td></tr>
+          <tr><td>代碱</td><td>↑</td><td>↑</td><td>AB = SB,都 &gt; 正常</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="callout-title">CO2CP 已弃用</p>
+        <p>CO2CP(CO2 结合力)反映血浆 HCO3- 含量,正常 23 ~ 31 mmol/L;升高=代碱/代偿后呼酸,降低=代酸/代偿后呼碱。<strong>随血气分析仪普及已取消</strong>,临床不再常规使用(教材第 4 节 13)。</p>
+      </div>
+
+      <h2>AG 临床意义深度解读</h2>
+      <p>AG 反映<strong>未测定阴离子(UA)</strong>与<strong>未测定阳离子(UC)</strong>之差(AG = UA - UC),计算公式简化为 <code>AG = Na - (Cl + HCO3)</code>(教材第 4 节 11)。</p>
+      <ul>
+        <li><strong>AG 升高</strong>:提示"获酸"性代酸(乳酸、尿毒症、酮症)</li>
+        <li><strong>AG 正常</strong>:可能是正常酸碱,也可能是"失碱"性代酸或高氯性代酸(腹泻、肾小管酸、含氯酸过多)</li>
+        <li><strong>判断阈值</strong>(教材原文):&gt; 30 肯定酸中毒;20 ~ 30 可能性很大(&gt; 70%);17 ~ 20 只有 20% 可能性</li>
+        <li><strong>临床 4 注意</strong>:1 血气与电解质同步测定;2 排除实验误差;3 结合临床;4 动态监测</li>
+      </ul>
+      <p>本手册严格采用教材阈值:<strong>AG &gt; 20</strong> 提示高 AG 代酸,<strong>AG &gt; 30</strong> 可确诊;16 ~ 20 为临界区(仅 20% 有酸中毒),不轻易诊断高 AG 型,需结合电中和原理判断。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 03 ─────────────────────────────── -->
+    <section class="chapter" id="ch3">
+      <div class="chapter-head">
+        <span class="chapter-num">- 03 / 12</span>
+        <h2 class="chapter-title">氧合评估:PaO2 / P/F / A-aDO2 / 呼衰分型</h2>
+      </div>
+      <p class="chapter-subtitle">1 氧合 · 2 通气 · 3 换气</p>
+
+      <h2>PaO2 与年龄校正</h2>
+      <p>PaO2 指物理溶解在动脉血中 O2 的压力,正常 <strong>95 ~ 100 mmHg</strong>。健康成年人随年龄增大而降低:</p>
+      <div class="formula">
+        <span class="label">年龄校正公式</span>
+        PaO2 预计 = 100 -(年龄 × 0.33)± 5 mmHg
+      </div>
+      <p>但 Hardie 等对 146 例 70 岁以上健康老人的研究显示,70 岁以上 PaO2 与性别有关而与年龄不相关(男性 77.0 ± 9.1 mmHg,女性 73.5 ± 8.4 mmHg)--<strong>年龄公式不能外推到 70+</strong>。</p>
+
+      <h2>低氧血症分度(教材标准)</h2>
+      <table>
+        <thead><tr><th>分度</th><th>PaO2 范围</th><th>临床意义</th></tr></thead>
+        <tbody>
+          <tr><td>轻度</td><td>80 ~ 60 mmHg</td><td>轻度低氧</td></tr>
+          <tr><td>中度</td><td>60 ~ 40 mmHg</td><td>中度低氧,常伴呼吸代偿</td></tr>
+          <tr><td>重度</td><td>&lt; 40 mmHg</td><td>重度低氧,需紧急干预</td></tr>
+        </tbody>
+      </table>
+
+      <h2>呼吸衰竭分型(I / II)</h2>
+      <p>PaO2 &lt; 60 mmHg 即可诊断呼吸衰竭,按 PaCO2 是否升高分两型:</p>
+      <table>
+        <thead><tr><th>分型</th><th>PaO2</th><th>PaCO2</th><th>机制</th><th>典型疾病</th></tr></thead>
+        <tbody>
+          <tr><td>I 型</td><td>&lt; 60</td><td>↓ 或正常</td><td>换气功能障碍</td><td>ARDS、肺炎、肺水肿、间质性肺病</td></tr>
+          <tr><td>II 型</td><td>&lt; 60</td><td>&gt; 50</td><td>通气功能障碍</td><td>COPD、神经肌肉疾病、中枢抑制</td></tr>
+        </tbody>
+      </table>
+
+      <h2>P/F 氧合指数 + ARDS 柏林标准</h2>
+      <div class="formula">
+        <span class="label">P/F 氧合指数</span>
+        P/F = PaO2 / FiO2,正常 400 ~ 500
+      </div>
+      <p>ARDS 柏林标准(2012)/ Matthay 2024 全球定义氧合界值:</p>
+      <table>
+        <thead><tr><th>氧合分级</th><th>P/F</th><th>临床意义</th></tr></thead>
+        <tbody>
+          <tr><td>氧合正常</td><td>≥ 400</td><td>正常</td></tr>
+          <tr><td>氧合轻度受损</td><td>300 ~ 400</td><td>未达 ARDS 氧合界值</td></tr>
+          <tr><td>轻度低氧合</td><td>201 ~ 300</td><td>达 ARDS 轻度氧合界值(插管需 PEEP ≥ 5)</td></tr>
+          <tr><td>中度低氧合</td><td>101 ~ 200</td><td>达 ARDS 中度氧合界值</td></tr>
+          <tr><td>重度低氧合</td><td>≤ 100</td><td>达 ARDS 重度氧合界值</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p class="callout-title">⚠ P/F 仅是"氧合界值",不是 ARDS 诊断</p>
+        <p>P/F 比值只是 ARDS 诊断的<strong>氧合维度之一</strong>。即使 P/F 达到某一氧合界值,<strong>也不能</strong>直接判定为 ARDS--ARDS 是<strong>排除性诊断</strong>,必须由临床医生综合排除心源性肺水肿、液体过负荷、肺不张等其他原因后才能确诊。床旁判读 P/F 时,只把它当作"氧合受损程度"的客观指标,而非 ARDS 的同义词。</p>
+      </div>
+
+      <h2>ARDS 诊断标准:柏林定义 vs Matthay 2024 新全球定义</h2>
+      <p>ARDS(急性呼吸窘迫综合征)的诊断 <strong>不仅看 P/F 比值</strong>,还要满足<strong>危险因素 + 排除心源性 + 时限 + 影像</strong>三大前提。</p>
+
+      <h3>共同标准(适用于所有 ARDS 类别)</h3>
+      <p>以下 3 条<strong>必须同时满足</strong>(Matthay 2024 新全球定义):</p>
+      <ol>
+        <li><strong>危险因素与水肿起源</strong>:由急性易感危险因素(肺炎、非肺部感染、外伤、输血、误吸、休克)诱发。肺水肿<strong>非纯粹或主要</strong>归因于<strong>心源性肺水肿 / 液体负荷</strong>,且低氧血症/气体交换异常<strong>非主要</strong>归因于<strong>肺不张</strong>。<em>但若同时存在 ARDS 易感危险因素,且临床医生认为其他疾病(如液体负荷过多、肺不张)不太可能是低氧血症的主要原因,<strong>仍可在存在这些疾病的情况下诊断 ARDS</strong>。</em></li>
+        <li><strong>时机</strong>:从易感危险因素估计发作时间或新发/恶化呼吸道症状起,<strong>1 周内</strong>急性发作或恶化。</li>
+        <li><strong>影像学</strong>:胸片或 CT 显示<strong>双侧</strong>透光度降低,或超声显示<strong>双侧 B 线征和/或实变影</strong>,<strong>不完全</strong>由胸腔积液、肺不张或结节/肿块解释。</li>
+      </ol>
+
+      <div class="callout">
+        <p class="callout-title">⚠ 核心诊断逻辑:排除法</p>
+        <p>ARDS 不是"阳性诊断",是"排除诊断"--必须有<strong>心源性 / 液体过负荷 / 肺不张以外</strong>的危险因素,影像学不能用其他原因解释。<strong>床旁鉴别</strong>:</p>
+        <ul>
+          <li>心源性肺水肿:PCWP &gt; 18 mmHg、BNP/NT-proBNP 显著升高、影像学多伴心脏增大 / 胸腔积液、液体负荷试验后加重</li>
+          <li>ARDS:PCWP ≤ 18 mmHg(虽不要求常规测)、BNP 通常不高(除非合并心衰)、影像学无心脏增大、利尿后氧合可改善</li>
+        </ul>
+      </div>
+
+      <h3>氧合标准(按支持方式分类)</h3>
+      <table>
+        <thead><tr><th>类别</th><th>氧合标准</th><th>支持方式</th></tr></thead>
+        <tbody>
+          <tr><td>非插管 ARDS(Matthay 2024 新增)</td><td>PaO2/FiO2 ≤ 300 <strong>或</strong> SpO2/FiO2 ≤ 315(SpO2 ≤ 97%)</td><td>HFNO ≥ 30 L/min,或 NIV/CPAP PEEP ≥ 5 cmH2O</td></tr>
+          <tr><td>插管 ARDS · 轻度</td><td>200 &lt; PaO2/FiO2 ≤ 300 <strong>或</strong> 235 &lt; S/F ≤ 315</td><td>有创通气 + PEEP ≥ 5 cmH2O</td></tr>
+          <tr><td>插管 ARDS · 中度</td><td>100 &lt; PaO2/FiO2 ≤ 200 <strong>或</strong> 148 &lt; S/F ≤ 235</td><td>有创通气 + PEEP ≥ 5 cmH2O</td></tr>
+          <tr><td>插管 ARDS · 重度</td><td>PaO2/FiO2 ≤ 100 <strong>或</strong> S/F ≤ 148</td><td>有创通气 + PEEP ≥ 5 cmH2O</td></tr>
+          <tr><td>资源受限环境(Kigali 改良)</td><td>SpO2/FiO2 ≤ 315(SpO2 ≤ 97%)</td><td>不要求 PEEP / 最低流量 / 特定设备</td></tr>
+        </tbody>
+      </table>
+
+      <h3>柏林定义 vs Matthay 2024 新全球定义:5 项关键差异</h3>
+      <table>
+        <thead><tr><th>#</th><th>柏林定义(2012)</th><th>Matthay 2024 新全球定义</th><th>更新理由</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>急性发作 1 周内</td><td>时限未变,但 HFNO 纳入将捕获更宽病程</td><td>COVID-19 等病程可超 1 周才确诊</td></tr>
+          <tr><td>2</td><td>双侧胸片或 CT 改变</td><td><strong>+ 超声</strong>(双侧 B 线 / 实变)</td><td>资源受限环境无放射学;深肤色 / 床旁即时评估</td></tr>
+          <tr><td>3</td><td>三级分度仅用 PaO2/FiO2</td><td><strong>+ SpO2/FiO2 替代</strong>(限 SpO2 ≤ 97%)</td><td>ABG 在资源受限 / 高频监测时不可及</td></tr>
+          <tr><td>4</td><td>NIV/MV + PEEP ≥ 5 才算 ARDS</td><td><strong>新增非插管 ARDS</strong>(HFNO ≥ 30 L/min 即满足)</td><td>FLORALI 试验后 HFNO 大量使用;93% HFNO 后插管仍符合柏林 ARDS</td></tr>
+          <tr><td>5</td><td>资源受限环境无独立标准</td><td><strong>新增 Kigali 改良</strong>(不要求 PEEP / 设备)</td><td>低资源地区 ABG / PEEP / HFNO 不可得</td></tr>
+        </tbody>
+      </table>
+
+      <p class="callout"><span class="callout-title">⚠ SpO2/FiO2 替代的局限性</span>脉氧仪在<strong>深肤色</strong>、<strong>休克</strong>、<strong>外周灌注不良</strong>患者中可能敏感性不足--深肤色患者隐匿性低氧血症发生率更高(隐蔽性种族差异)。<strong>临床高度怀疑 ARDS 但脉氧未达标时,必须获取 ABG</strong>。</p>
+
+      <h3>海拔 &gt; 1000m 校正</h3>
+      <div class="formula">
+        <span class="label">海拔校正公式</span>
+        校正后 P/F =(实测 PaO2 或 SpO2 对应 PaO2)/ FiO2 ×(大气压 / 760)
+      </div>
+      <p>例:海拔 2000m(大气压 ≈ 600 mmHg),实测 P/F = 200 → 校正后 = 200 × 600/760 = 158(中度 ARDS 氧合界值)。</p>
+
+      <h3>FiO2 估算(资源受限环境)</h3>
+      <div class="formula">
+        <span class="label">鼻导管 FiO2 估算</span>
+        估计 FiO2 = 环境 FiO2(0.21)+ 0.03 × 氧流量(L/min)
+      </div>
+      <p>例:鼻导管 4 L/min → FiO2 ≈ 0.21 + 0.12 = 0.33;6 L/min → 0.39。</p>
+
+      <h3>心源性 vs ARDS 肺水肿:床旁鉴别清单</h3>
+      <table>
+        <thead><tr><th>维度</th><th>心源性肺水肿</th><th>ARDS</th></tr></thead>
+        <tbody>
+          <tr><td>诱因</td><td>急性心梗、急性心衰、容量过负荷</td><td>肺炎、脓毒症、误吸、输血、外伤</td></tr>
+          <tr><td>BNP / NT-proBNP</td><td>显著升高</td><td>通常不高(除非合并心衰)</td></tr>
+          <tr><td>PCWP</td><td>&gt; 18 mmHg</td><td>≤ 18 mmHg</td></tr>
+          <tr><td>影像学</td><td>心脏增大、Kerley B 线、胸腔积液常见</td><td>无心脏增大、外周斑片影、胸腔积液少见</td></tr>
+          <tr><td>液体反应</td><td>利尿 / 减轻前负荷后改善</td><td>利尿可能改善(减肺水)但炎症仍存在</td></tr>
+          <tr><td>对 PEEP 反应</td><td>可改善</td><td>通常需要更高 PEEP(≥ 5 cmH2O)</td></tr>
+          <tr><td>重力依赖性</td><td>均匀分布</td><td>重力依赖区明显(背部&gt;前部)</td></tr>
+          <tr><td>可合并</td><td>单纯心衰</td><td>可合并心衰,但 ARDS 危险因素必须主导</td></tr>
+        </tbody>
+      </table>
+
+      <h2>A-aDO2:肺换气功能的金指标</h2>
+      <p>P(A-a)O2 是肺泡 PO2(P<sub>A</sub>O2)与 PaO2 之差,反映肺的换气功能,<strong>有时较 PaO2 更敏感</strong>。正常青年 15 ~ 20 mmHg,随年龄增加而增大,最大不超过 30 mmHg。增大的常见原因:</p>
+      <ul>
+        <li>V/Q 失调(最常见:COPD、哮喘)</li>
+        <li>右→左分流(ARDS、肺不张)</li>
+        <li>弥散障碍(间质性肺病、肺水肿)</li>
+      </ul>
+      <p>肺泡气方程(简化):</p>
+      <div class="formula">
+        <span class="label">肺泡气方程</span>
+        P<sub>A</sub>O2 = FiO2 × (760 - 47) - PaCO2 / 0.8 = FiO2 × 713 - PaCO2 / 0.8
+      </div>
+      <p>正常人吸空气时 P<sub>A</sub>O2 ≈ 100 mmHg,PaO2 ≈ 95 mmHg,A-aDO2 ≈ 5 ~ 15 mmHg。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 04 ─────────────────────────────── -->
+    <section class="chapter" id="ch4">
+      <div class="chapter-head">
+        <span class="chapter-num">- 04 / 12</span>
+        <h2 class="chapter-title">通气评估:PaCO2 / PvCO2 / 呼吸商 R</h2>
+      </div>
+      <p class="chapter-subtitle">肺泡通气与组织代谢</p>
+
+      <h2>PaCO2 的双重身份</h2>
+      <p>PaCO2 指物理溶解在动脉血中 CO2 的压力,正常 <strong>35 ~ 45 mmHg(平均 40)</strong>,是判断<strong>呼吸衰竭类型与程度</strong>、<strong>呼吸性酸碱失衡</strong>的指标,也是<strong>代谢性酸碱失衡的代偿反应指标</strong>。两个代偿极限需熟记:</p>
+      <ul>
+        <li>代谢性酸中毒 → 呼吸代偿极限 <code>PaCO2 = 10 mmHg</code></li>
+        <li>代谢性碱中毒 → 呼吸代偿极限 <code>PaCO2 = 55 mmHg</code></li>
+      </ul>
+
+      <h2>PvCO2 与 GAP(中心静脉-动脉 CO2 差)</h2>
+      <p>PvCO2(中心静脉血 CO2 分压)与 PaCO2 的差值 <strong>GAP = PvCO2 - PaCO2</strong>,反映<strong>组织代谢产生的 CO2 与肺清除能力的匹配</strong>。正常 ≤ 6 mmHg。</p>
+      <ul>
+        <li>GAP &gt; 6:CO2 清除不足 → 提示心输出量不足(低 CO 性缺氧)或微循环障碍</li>
+        <li>GAP 正常 + 乳酸高:可能是高 CO 性缺氧(脓毒症早期)</li>
+      </ul>
+
+      <h2>呼吸商 R(动脉-静脉氧差 / 动静脉 CO2 差)</h2>
+      <p>呼吸商 R 是体内代谢的<strong>实时</strong>指标。传统化学定义 R = VCO2 / VO2(CO2 产生量 / O2 消耗量),ICU 床旁通过 Fick 原理近似:</p>
+      <div class="formula">
+        <span class="label">呼吸商(ICU 近似)</span>
+        R = (PvCO2 - PaCO2) / (CaO2 - CvO2)
+      </div>
+      <p>其中 <code>CaO2 - CvO2 = 1.34 × Hb × (SaO2 - SvO2) + 0.0031 × (PaO2 - PvO2)</code>。R &lt; 0.6 提示摄氧增加、CO2 排出相对不足(心输出量低、组织缺氧);R &gt; 1.0 提示过度通气或脓毒症高代谢状态。</p>
+
+      <h3>R 的化学机理(糖 / 脂 / 蛋白)</h3>
+      <p>呼吸商的本质是<strong>底物氧化时 CO2 产生量与 O2 消耗量之比</strong>,由代谢底物种类决定:</p>
+      <ul>
+        <li><strong>糖(R = 1.0)</strong>:C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O。1 mol 葡萄糖耗 6 mol O₂、产 6 mol CO₂,R = 6/6 = 1。</li>
+        <li><strong>脂肪(R ≈ 0.7)</strong>:三软脂酸甘油酯 2 C₅₁H₉₈O₆ + 145 O₂ → 102 CO₂ + 98 H₂O。脂肪分子中 O 含量低、还原程度高,需更多 O₂ 才能完全氧化,R ≈ 0.7。</li>
+        <li><strong>蛋白(R ≈ 0.8)</strong>:蛋白质代谢复杂,R 介于糖与脂肪之间。</li>
+      </ul>
+      <p>混合膳食 R ≈ 0.85。过度通气(<strong>不依赖底物</strong>)额外排出 CO₂,R 可暂时 &gt; 1.0;脓毒症高代谢、过度营养(糖负荷过高)亦可致 R ↑。临床 R 显著偏离 0.7 ~ 1.0 提示代谢或通气异常。</p>
+
+      <h2>PvO2 正常值</h2>
+      <p>混合静脉血氧分压 <strong>35 ~ 45 mmHg(平均 40)</strong>,P(a-v)O2 ≈ 60 mmHg(教材第 4 节 4)。PvO2 下降提示组织摄氧增加(低 CO、贫血)或分布异常(微循环障碍)。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 05 ─────────────────────────────── -->
+    <section class="chapter" id="ch5">
+      <div class="chapter-head">
+        <span class="chapter-num">- 05 / 12</span>
+        <h2 class="chapter-title">酸碱失衡判断 6 步法</h2>
+      </div>
+      <p class="chapter-subtitle">教材第 4 节(二)原版 6 步</p>
+
+      <p>《实用重症医学》第三版给出标准 6 步法(page 327-328),是床旁判读血气的核心流程。</p>
+
+      <h2>Step 1 · 核实检测结果</h2>
+      <p>pH、PCO2、HCO3- 三个变量必须符合 H-H 公式。如代入后等式不成立,提示报告有误。</p>
+      <ul>
+        <li>老血气分析仪:需要用 Henderson 公式 [H+] = 24 × (PCO2 / [HCO3-]) 验证</li>
+        <li>现代全自动血气仪:理论上不会出错,可省略本步(教材原文:"故可免除上述核实误差步骤")</li>
+      </ul>
+
+      <h2>Step 2 · 结合病史和临床表现</h2>
+      <p>确定患者是否已发生酸碱失衡、已发生<strong>多长时间</strong>、<strong>何种原发失衡</strong>?例如:</p>
+      <ul>
+        <li>COPD 急性加重 → 找呼酸</li>
+        <li>DKA → 找代酸(高 AG 型)</li>
+        <li>机械通气过度 → 找呼碱</li>
+        <li>呕吐 / 利尿 → 找代碱</li>
+      </ul>
+
+      <h2>Step 3 · 分清原发与继发(代偿)变化</h2>
+      <p>酸碱失衡必须遵循三个原则(教材第 4 节 二 3):</p>
+      <ol>
+        <li><strong>HCO3-、PaCO2 同向代偿</strong>:HCO3- 原发 ↑ → PaCO2 必代偿性 ↑;反之亦然</li>
+        <li><strong>原发失衡决定 pH 偏向</strong>:原发代酸 → pH 偏酸;原发呼酸 → pH 偏酸;原发代碱 → pH 偏碱;原发呼碱 → pH 偏碱</li>
+        <li><strong>反向变化 = 复合型</strong>:HCO3- 和 PaCO2 呈<strong>相反</strong>变化 → 必有复合型酸碱失衡</li>
+      </ol>
+
+      <h2>Step 4 · 用代偿公式 + 代偿极限判断</h2>
+      <p>先定原发失衡 → 选对应预计代偿公式 → 比对实测值 → 落在范围内=单纯,超出=合并。详见第 6 章。</p>
+
+      <h2>Step 5 · 血气分析结果 + 临床 + 动态观察</h2>
+      <p>动态对比前一次报告:如慢性呼酸随访时 BE 较前下降、pH 下降且临床有诱因,要考虑合并代酸。</p>
+
+      <h2>Step 6 · 分析单纯 / 复合型</h2>
+      <p>HCO3- 和 PaCO2 反向 → 必有复合型(3 种情况:呼酸+代酸、呼碱+代碱、pH 正常而两者均偏离)。同向偏离时套代偿公式判断有无合并。详见第 7-9 章。</p>
+
+      <div class="callout">
+        <p class="callout-title">判读路径总览</p>
+        <p>6 步法可浓缩为一条主干路径:</p>
+        <ol>
+          <li><strong>H-H 校验</strong> → 数据可信?</li>
+          <li><strong>pH 定性</strong>:酸血症 / 碱血症 / pH 正常</li>
+          <li><strong>方向规则</strong>:PaCO2 与 HCO3- <strong>反向 = 直接判复合型</strong>;同向 = 套代偿公式</li>
+          <li><strong>代偿公式</strong>:实测落在 ± 容差内 = 单纯;超出 = 合并</li>
+          <li><strong>AG / 潜在 HCO3-</strong>:判 TABD(详见第 9 章)</li>
+          <li><strong>代酸分型</strong>:电中和原理(详见第 10 章)</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 06 ─────────────────────────────── -->
+    <section class="chapter" id="ch6">
+      <div class="chapter-head">
+        <span class="chapter-num">- 06 / 12</span>
+        <h2 class="chapter-title">6 条预计代偿公式与代偿极限</h2>
+      </div>
+      <p class="chapter-subtitle">表 22-4-3 完整解读</p>
+
+      <p>《实用重症医学》page 327 表 22-4-3 列出 6 条预计代偿公式,是判断复合型酸碱失衡的核心工具。</p>
+
+      <h2>表 22-4-3 完整版</h2>
+      <table>
+        <thead><tr><th>原发失衡</th><th>原发变化</th><th>代偿反应</th><th>预计代偿公式</th><th>代偿极限</th><th>代偿需时</th></tr></thead>
+        <tbody>
+          <tr><td>代谢性酸中毒</td><td>HCO3- ↓</td><td>PaCO2 ↓</td><td><code>PaCO2 = 1.5 × [HCO3-] + 8 ± 2</code></td><td>10 mmHg</td><td>12-24 小时</td></tr>
+          <tr><td>代谢性碱中毒</td><td>HCO3- ↑</td><td>PaCO2 ↑</td><td><code>ΔPaCO2 = 0.9 × ΔHCO3- ± 5</code></td><td>55 mmHg</td><td>12-24 小时</td></tr>
+          <tr><td>急性呼吸性酸中毒</td><td>PaCO2 ↑</td><td>HCO3- ↑</td><td><code>ΔHCO3- = 0.1 × ΔPaCO2</code>(无 ±)</td><td>30 mmol/L</td><td>几分钟</td></tr>
+          <tr><td>慢性呼吸性酸中毒</td><td>PaCO2 ↑</td><td>HCO3- ↑</td><td><code>ΔHCO3- = 0.35 × ΔPaCO2 ± 5.58</code></td><td>45 mmol/L</td><td>3-5 天</td></tr>
+          <tr><td>急性呼吸性碱中毒</td><td>PaCO2 ↓</td><td>HCO3- ↓</td><td><code>ΔHCO3- = 0.2 × ΔPaCO2 ± 2.5</code></td><td>18 mmol/L</td><td>几分钟</td></tr>
+          <tr><td>慢性呼吸性碱中毒</td><td>PaCO2 ↓</td><td>HCO3- ↓</td><td><code>ΔHCO3- = 0.49 × ΔPaCO2 ± 1.72</code></td><td>12-15 mmol/L</td><td>2-3 天</td></tr>
+        </tbody>
+      </table>
+
+      <p class="callout"><span class="callout-title">注</span>代偿极限是指单纯性酸碱失衡代偿所能达到的最大值或最小值;有 "Δ" 者为变化值,无 "Δ" 者为绝对值;代偿需时为体内达到最大代偿反应所需时间。</p>
+
+      <h2>公式注解</h2>
+      <ul>
+        <li><strong>代谢性酸中毒</strong>(Winter 公式):临床最常用。代酸越重 → PaCO2 越低 → 呼吸深快(Kussmaul 呼吸)</li>
+        <li><strong>急呼酸</strong>:无容差(0.1 × ΔPaCO2),代偿极弱;HCO3- 一般不超过 30 mmol/L("30 规则")</li>
+        <li><strong>慢呼酸</strong>:HCO3- 一般不超过 45 mmol/L("45 规则");超过 = 合并代碱</li>
+        <li><strong>急呼碱</strong>:HCO3- 最低 18 mmol/L</li>
+        <li><strong>慢呼碱</strong>:HCO3- 最低 12-15 mmol/L</li>
+      </ul>
+
+      <h2>判断流程图</h2>
+      <div class="formula">
+        <span class="label">判断步骤(以代谢性酸中毒为例)</span>
+        1) 定原发:pH 偏酸 + HCO3- ↓ → 原发代酸<br>
+        2) 套公式:预计 PaCO2 = 1.5 × 实测 HCO3- + 8<br>
+        3) 比实测:<br>
+        &nbsp;&nbsp;│ PaCO2 在 ±2 → 单纯代酸<br>
+        &nbsp;&nbsp;│ PaCO2 &gt; 预计 + 2 → 代酸 + 呼酸<br>
+        &nbsp;&nbsp;│ PaCO2 &lt; 预计 - 2 → 代酸 + 呼碱<br>
+        &nbsp;&nbsp;└ PaCO2 &lt; 10(极限)→ 代偿已达极限
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 07 ─────────────────────────────── -->
+    <section class="chapter" id="ch7">
+      <div class="chapter-head">
+        <span class="chapter-num">- 07 / 12</span>
+        <h2 class="chapter-title">单纯性酸碱失衡(4 型)</h2>
+      </div>
+      <p class="chapter-subtitle">呼酸 / 呼碱 / 代酸 / 代碱</p>
+
+      <p>《实用重症医学》第 4 节(三)1. 单纯性酸碱失衡包括 4 型,是复合型失衡的基础。</p>
+
+      <h2>1. 代谢性酸中毒</h2>
+      <p>血浆 HCO3- 原发减少。肺代偿非常快,临床一般<strong>不</strong>分急慢性。按 AG 分:</p>
+      <ul>
+        <li><strong>高 AG 代酸</strong>:|ΔHCO3-| = ΔAG(Cl 不变)</li>
+        <li><strong>正常 AG 代酸(高氯性)</strong>:|ΔHCO3-| = |ΔCl-|</li>
+        <li><strong>复合型代酸</strong>:|ΔHCO3-| = ΔAG + |ΔCl-|</li>
+      </ul>
+
+      <div class="case-box">
+        <span class="case-id">例 9</span><span class="case-dx">单纯代谢性酸中毒 (失代偿)</span>
+        <div class="case-input">pH 7.27 · PaCO2 27 · HCO3- 12 · K+ 5.5 · Na+ 141 · Cl- 112</div>
+        <div class="case-detail">pH 7.27 &lt; 7.40 → 原发代酸。PaCO2 预计 = 1.5×12+8±2 = 24~28,实测 27 落在范围内,AG = 141-(112+12) = 17(临界区 16-20,仅 20% 有酸中毒,不轻易诊断高 AG 型)。电中和分析:|ΔHCO3-| = 12,ΔCl- = 112-104 = 8,ΔAG = 17-16 = 1,ΔCl-(8) ≫ ΔAG(1),Cl- 升高解释了绝大部分 → 诊断:单纯代酸失代偿,<strong>高氯性(正常 AG 型)</strong>。</div>
+      </div>
+
+      <h2>2. 代谢性碱中毒</h2>
+      <p>血浆 HCO3- 原发增加。肺代偿快,临床一般不分急慢性。实测 PaCO2:</p>
+      <ul>
+        <li>在预计范围(40 + 0.9×ΔHCO3- ± 5)内 → 单纯代碱</li>
+        <li>&gt; 预计上限或 &gt; 55 → 代碱 + 呼酸</li>
+        <li>&lt; 预计下限 → 代碱 + 呼碱</li>
+      </ul>
+
+      <div class="case-box">
+        <span class="case-id">例 10</span><span class="case-dx">单纯代谢性碱中毒 (失代偿)</span>
+        <div class="case-input">pH 7.48 · PaCO2 42 · HCO3- 30 · K+ 3.6 · Na+ 140 · Cl- 98</div>
+        <div class="case-detail">pH 7.48 &gt; 7.40 → 原发代碱。预计 PaCO2 = 40 + 0.9×6 ± 5 = 40.4~50.4,实测 42 落在范围内。诊断:单纯代碱失代偿。</div>
+      </div>
+
+      <h2>3. 呼吸性酸中毒</h2>
+      <p>PaCO2 原发升高,分急慢性:</p>
+      <ul>
+        <li><strong>急性</strong>:HCO3- 预计 = 24 + 0.1×ΔPaCO2,极限 30</li>
+        <li><strong>慢性</strong>:HCO3- 预计 = 24 + 0.35×ΔPaCO2 ± 5.58,极限 45</li>
+        <li>实测 HCO3- &lt; 预计下限 → 合并代酸;&gt; 上限 → 合并代碱</li>
+      </ul>
+
+      <div class="case-box">
+        <span class="case-id">例 3</span><span class="case-dx">慢性呼吸性酸中毒 (失代偿期)</span>
+        <div class="case-input">pH 7.32 · PaCO2 60 · HCO3- 30 · 慢性</div>
+        <div class="case-detail">pH 7.32 &lt; 7.40 → 原发呼酸。慢呼酸预计 HCO3- = 24 + 0.35×20 ± 5.58 = 21.92~33.08,实测 30 落在范围内。诊断:慢性呼酸失代偿。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">例 11</span><span class="case-dx">单纯慢性呼吸性酸中毒 (代偿完全)</span>
+        <div class="case-input">pH 7.36 · PaCO2 66 · HCO3- 36 · 慢性</div>
+        <div class="case-detail">慢呼酸预计 HCO3- = 27.52~38.68,实测 36 落在范围内,pH 恢复正常。诊断:单纯慢呼酸代偿完全。</div>
+      </div>
+
+      <h2>4. 呼吸性碱中毒</h2>
+      <p>PaCO2 原发降低,分急慢性:</p>
+      <ul>
+        <li><strong>急性</strong>:HCO3- 预计 = 24 - 0.2×ΔPaCO2 ± 2.5,极限 18</li>
+        <li><strong>慢性</strong>:HCO3- 预计 = 24 - 0.49×ΔPaCO2 ± 1.72,极限 12-15</li>
+        <li>实测 HCO3- &lt; 预计下限 → 合并代酸;&gt; 上限 → 合并代碱</li>
+      </ul>
+
+      <div class="case-box">
+        <span class="case-id">例 12</span><span class="case-dx">单纯急性呼吸性碱中毒 (失代偿)</span>
+        <div class="case-input">pH 7.52 · PaCO2 25 · HCO3- 21 · 急性</div>
+        <div class="case-detail">pH 7.52 &gt; 7.40 → 原发呼碱。急呼碱预计 HCO3- = 24 - 0.2×15 ± 2.5 = 18.5~23.5,实测 21 落在范围内。诊断:单纯急呼碱失代偿。</div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 08 ─────────────────────────────── -->
+    <section class="chapter" id="ch8">
+      <div class="chapter-head">
+        <span class="chapter-num">- 08 / 12</span>
+        <h2 class="chapter-title">复合型酸碱失衡(5 型)</h2>
+      </div>
+      <p class="chapter-subtitle">传统 4 + 复合代酸 + 代酸+代碱</p>
+
+      <p>《实用重症医学》第 4 节(三)2. 复合型酸碱失衡把 7 型分为<strong>传统 4 型 + 复合代酸 + 代酸+代碱 + TABD</strong>。本章先讲传统 4 + 复合代酸,复合代酸+代碱在本章末讨论,TABD 单独在第 9 章。</p>
+
+      <h2>1. 呼酸合并代酸(反向变化,pH 必 ↓)</h2>
+      <p><strong>PaCO2 ↑ 伴 HCO3- ↓</strong>,两项反向,必为呼酸+代酸,不需套公式。</p>
+
+      <div class="case-box">
+        <span class="case-id">例 5</span><span class="case-dx">呼吸性酸中毒 + 代谢性酸中毒 (反向)</span>
+        <div class="case-input">pH 7.22 · PaCO2 50 · HCO3- 20</div>
+        <div class="case-detail">PaCO2 50 ↑ + HCO3- 20 ↓,反向必合并。诊断:呼酸+代酸。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">例 13</span><span class="case-dx">呼酸 + 代酸 (高氯型, AG=10)</span>
+        <div class="case-input">pH 7.22 · PaCO2 50 · HCO3- 20 · Na 140 · Cl 110</div>
+        <div class="case-detail">反向变化。AG = 140-(110+20) = 10 &lt; 16 → 该代酸属<strong>高氯性</strong>(|ΔHCO3-| = 4,ΔCl- = 6,AG 不变)。</div>
+      </div>
+
+      <h2>2. 呼酸合并代碱(同向,pH 取决于两者相对严重程度)</h2>
+      <p>PaCO2 ↑ + HCO3- ↑,同向但超出代偿公式上限 = 合并代碱。判断准则:</p>
+      <ul>
+        <li><strong>急性</strong>:HCO3- &gt; 30 → 急呼酸 + 代碱</li>
+        <li><strong>慢性</strong>:HCO3- &gt; (24 + 0.35×ΔPaCO2 + 5.58) 或 &gt; 45 → 慢呼酸 + 代碱</li>
+      </ul>
+
+      <div class="case-box">
+        <span class="case-id">例 4</span><span class="case-dx">慢呼酸 + 代碱</span>
+        <div class="case-input">pH 7.38 · PaCO2 80 · HCO3- 46 · 慢性</div>
+        <div class="case-detail">HCO3- 46 &gt; 代偿极限 45 → 合并代碱。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">例 7</span><span class="case-dx">慢呼酸 + 代碱</span>
+        <div class="case-input">pH 7.37 · PaCO2 75 · HCO3- 42 · 慢性</div>
+        <div class="case-detail">慢呼酸预计 HCO3- = 30.67~41.83,实测 42 &gt; 41.83 → 合并代碱。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">例 8</span><span class="case-dx">慢呼酸 + 代碱</span>
+        <div class="case-input">pH 7.39 · PaCO2 70 · HCO3- 41 · 慢性</div>
+        <div class="case-detail">慢呼酸预计 HCO3- = 28.92~40.08,实测 41 &gt; 40.08 → 合并代碱。pH 7.39 偏酸,是呼酸为主。</div>
+      </div>
+
+      <h2>3. 呼碱合并代酸</h2>
+      <p>急/慢呼碱 + 代酸。判断准则:实测 HCO3- &lt; 呼碱公式下限(急 18 / 慢 15)。</p>
+
+      <div class="case-box">
+        <span class="case-id">例 15</span><span class="case-dx">代酸 + 相对呼吸性酸中毒</span>
+        <div class="case-input">pH 7.26 · PaCO2 37 · HCO3- 16 · Na 140 · Cl 110</div>
+        <div class="case-detail">pH 7.26 偏酸,HCO3- 16 ↓ → 原发代酸。Winter 公式预计 PaCO2 = 30~34,实测 37 &gt; 34 → 合并<strong>相对呼酸</strong>(代偿不足)。AG = 140-(110+16) = 14,正常 AG 型代酸(高氯性,|ΔHCO3-| = 8,ΔCl- = 6)。</div>
+      </div>
+
+      <h2>4. 呼碱合并代碱(反向变化,pH 必 ↑)</h2>
+      <p><strong>PaCO2 ↓ 伴 HCO3- ↑</strong>,两项反向,必为呼碱+代碱,不需套公式。</p>
+
+      <div class="case-box">
+        <span class="case-id">例 6</span><span class="case-dx">呼碱 + 代碱 (反向)</span>
+        <div class="case-input">pH 7.57 · PaCO2 32 · HCO3- 28</div>
+        <div class="case-detail">PaCO2 32 ↓ + HCO3- 28 ↑,反向必合并。诊断:呼碱+代碱。</div>
+      </div>
+
+      <h2>5. 复合型代谢性酸中毒(高 AG + 高氯)</h2>
+      <p>高 AG 代酸和高氯性代酸同时存在。其电中和规律:</p>
+      <div class="formula">
+        <span class="label">复合型代酸的电中和规律</span>
+        |ΔHCO3-| = ΔAG + |ΔCl-|
+      </div>
+      <p>一旦 AG 升高伴 |ΔHCO3-| &gt; ΔAG 或 |ΔHCO3-| &gt; |ΔCl-| → 考虑复合型代酸。常见于:糖尿病酮症酸中毒伴腹泻、肾功能不全。</p>
+
+      <div class="case-box">
+        <span class="case-id">例 16</span><span class="case-dx">复合型代谢性酸中毒 (高 AG + 高氯)</span>
+        <div class="case-input">pH 7.29 · PaCO2 30 · HCO3- 14 · K+ 5.2 · Na+ 140 · Cl- 108</div>
+        <div class="case-detail">pH 7.29 偏酸,HCO3- 14 ↓ → 原发代酸。Winter 公式预计 PaCO2 = 27~31,实测 30 落在范围内。<br>电中和分析:AG = 140-(14+108) = 18,ΔAG = 2,ΔCl- = 8,|ΔHCO3-| = 10。<br>|ΔHCO3-| = ΔAG + ΔCl-(10 = 2 + 8)→ <strong>复合型代酸</strong>,高 AG + 高氯同时存在。</div>
+      </div>
+
+      <h2>5+. 代谢性碱中毒合并代谢性酸中毒</h2>
+      <p>分两型,按 AG 是否正常:</p>
+      <ul>
+        <li><strong>高 AG 型</strong>:高 AG 代酸 + 代碱,AG 与潜在 HCO3- 是核心指标</li>
+        <li><strong>正常 AG 型</strong>:高氯代酸 + 代碱,识别困难,依赖详尽病史</li>
+      </ul>
+      <p>正常 AG 型目前<strong>无可靠诊断方法</strong>(教材第 4 节原文)。高 AG 型诊断要点:潜在 HCO3- &gt; 27(排除高 AG 代酸掩盖),ΔAG &gt; |ΔHCO3-|。</p>
+
+      <div class="case-box">
+        <span class="case-id">例 17</span><span class="case-dx">高 AG 型代谢性酸中毒 + 代谢性碱中毒 (二重)</span>
+        <div class="case-input">pH 7.40 · PaCO2 40 · HCO3- 25 · K+ 3.5 · Na+ 140 · Cl- 95</div>
+        <div class="case-detail">pH 7.40 正常,HCO3- 25 正常,PaCO2 40 正常--单看三大变量像"无失衡"。<br>但 AG = 140-(25+95) = 20(提示高 AG 代酸)。潜在 HCO3- = 25 + (20-16) = 29 &gt; 27 → 提示代碱。<br>诊断:高 AG 代酸 + 代碱(<strong>二重,不是 TABD</strong>,因为 PaCO2 正常)。如忽视 AG + 潜在 HCO3-,会误诊为无酸碱失衡。</div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 09 ─────────────────────────────── -->
+    <section class="chapter" id="ch9">
+      <div class="chapter-head">
+        <span class="chapter-num">- 09 / 12</span>
+        <h2 class="chapter-title">三重酸碱失衡 TABD(呼酸型 / 呼碱型)</h2>
+      </div>
+      <p class="chapter-subtitle">潜在 HCO3- + AG + 代偿公式联合</p>
+
+      <p>TABD(triple acid-base disturbance)指同时存在三种原发失衡:<strong>一种呼吸性酸碱失衡 + 代谢性碱中毒 + 高 AG 代谢性酸中毒</strong>。必须<strong>联合</strong>应用预计代偿公式 + AG + 潜在 HCO3-。</p>
+
+      <h2>TABD 诊断三步法</h2>
+      <ol>
+        <li><strong>定呼吸性失衡</strong>:按呼酸或呼碱公式计算 HCO3- 代偿范围</li>
+        <li><strong>算 AG</strong>:确定是否并发高 AG 代酸(TABD 中的代酸必为高 AG 型,正常 AG 代酸诊断受限)</li>
+        <li><strong>算潜在 HCO3-</strong>:与预计 HCO3- 上限比,&gt; 上限 = 合并代碱</li>
+      </ol>
+
+      <h2>呼酸型 TABD</h2>
+
+      <div class="case-box">
+        <span class="case-id">例 18</span><span class="case-dx">呼酸型 TABD</span>
+        <div class="case-input">pH 7.33 · PaCO2 70 · HCO3- 36 · Na+ 140 · Cl- 80</div>
+        <div class="case-detail">pH 7.33 偏酸 → 原发呼酸。慢呼酸预计 HCO3- = 28.92~40.08,实测 36 落在范围内(<strong>看似单纯呼酸</strong>)。<br>但 AG = 140-(80+36) = 24 &gt; 20 → 高 AG 代酸。潜在 HCO3- = 36 + 8 = 44 &gt; 40.08 → 代碱。<br>最终诊断:<strong>呼酸 + 代碱 + 高 AG 代酸 = 呼酸型 TABD</strong>。如不计算 AG + 潜在 HCO3-,会误诊为单纯呼酸。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">PPTX 67</span><span class="case-dx">呼酸型 TABD</span>
+        <div class="case-input">pH 7.347 · PaCO2 66 · HCO3- 36 · Na+ 140 · Cl- 75 · 慢性</div>
+        <div class="case-detail">pH 7.347 &lt; 7.40 偏酸 → 套慢呼酸公式。慢呼酸预计 HCO3- = 33.1±5.58 = 27.52~38.68,实测 36 落在范围内。<br>AG = 140-(75+36) = 29 &gt; 20 → 高 AG 代酸。潜在 HCO3- = 36 + 13 = 49 &gt; 38.68 → 代碱。<br>最终诊断:<strong>呼酸型 TABD</strong>。</div>
+      </div>
+
+      <h2>呼碱型 TABD</h2>
+
+      <div class="case-box">
+        <span class="case-id">例 19</span><span class="case-dx">呼碱型 TABD</span>
+        <div class="case-input">pH 7.61 · PaCO2 30 · HCO3- 29 · K+ 3.0 · Na+ 140 · Cl- 90</div>
+        <div class="case-detail">PaCO2 30 ↓ + HCO3- 29 ↑,反向必合并呼碱+代碱。AG = 140-(90+29) = 21 &gt; 20 → 高 AG 代酸。<br>诊断:<strong>呼碱 + 代碱 + 高 AG 代酸 = 呼碱型 TABD</strong>。此例呼碱+代碱已明确,不必再算潜在 HCO3-。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">例 20</span><span class="case-dx">呼碱型 TABD</span>
+        <div class="case-input">pH 7.52 · PaCO2 28 · HCO3- 22 · K+ 4.0 · Na+ 140 · Cl- 96</div>
+        <div class="case-detail">pH 7.52 &gt; 7.40 → 原发呼碱。慢呼碱预计 HCO3- = 16.4~19.84,实测 22 &gt; 19.84 → 合并代碱。<br>AG = 140-(96+22) = 22 &gt; 20 → 高 AG 代酸。潜在 HCO3- = 22 + 6 = 28 &gt; 19.84 → 进一步确认代碱。<br>最终诊断:<strong>呼碱型 TABD</strong>。如不计算 AG + 潜在 HCO3-,会误诊为呼碱+代碱。</div>
+      </div>
+
+      <div class="callout">
+        <p class="callout-title">⚠ 关键边界:二重 vs 三重</p>
+        <p>判断是否为 TABD(三重)的关键,是<strong>呼吸性失衡是否存在</strong>:</p>
+        <ul>
+          <li>PaCO2 偏离正常(↑呼酸 / ↓呼碱)+ 高 AG 代酸 + 代碱 → <strong>三重 TABD</strong></li>
+          <li>PaCO2 正常 + 高 AG 代酸 + 代碱 → <strong>二重(代酸+代碱),不是 TABD</strong></li>
+        </ul>
+        <p>这一边界极易误判:例 17(PaCO2 正常)是二重,例 18-20(PaCO2 偏离)才是 TABD。</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 10 ─────────────────────────────── -->
+    <section class="chapter" id="ch10">
+      <div class="chapter-head">
+        <span class="chapter-num">- 10 / 12</span>
+        <h2 class="chapter-title">代酸分型(高 AG / 高氯 / 复合)</h2>
+      </div>
+      <p class="chapter-subtitle">电中和原理:|ΔHCO3-| = ΔAG + |ΔCl-|</p>
+
+      <p>代酸确诊后,<strong>分型</strong>对病因诊断至关重要。分型依据是<strong>电中和原理</strong>:血浆中阳离子(Na+)与阴离子(Cl- + HCO3- + UA)必须守恒,HCO3- 的下降必然由 Cl- 升高或未测定阴离子(UA,即 AG)升高来"填补"。</p>
+
+      <table>
+        <thead><tr><th>类型</th><th>电中和公式</th><th>常见病因</th></tr></thead>
+        <tbody>
+          <tr><td>高 AG 型</td><td>|ΔHCO3-| ≈ ΔAG</td><td>乳酸酸中毒、尿毒症、酮症酸中毒、水杨酸、甲醇/乙二醇</td></tr>
+          <tr><td>高氯性(正常 AG)</td><td>|ΔHCO3-| ≈ |ΔCl-|</td><td>腹泻、肾小管酸中毒、过多输注含氯液体</td></tr>
+          <tr><td>复合型</td><td>|ΔHCO3-| ≈ ΔAG + |ΔCl-|</td><td>DKA 伴腹泻、肾衰多因素</td></tr>
+        </tbody>
+      </table>
+
+      <h2>分型判据</h2>
+      <ul>
+        <li><strong>AG 阈值</strong>:AG &gt; 20 提示高 AG 代酸(AG &gt; 30 确诊);AG 16-20 为临界区,仅 20% 有酸中毒,不轻易诊断</li>
+        <li><strong>高 AG 型</strong>:AG &gt; 20,且 |ΔHCO3-| ≈ ΔAG(Cl 不变)</li>
+        <li><strong>复合型</strong>:AG &gt; 20,且 |ΔCl-| &gt; 1,|ΔHCO3-| ≈ ΔAG + |ΔCl-|(容差 ±3)</li>
+        <li><strong>高氯性</strong>:AG ≤ 20,且 Cl- &gt; 108(Cl 正常上限 108),|ΔHCO3-| ≈ |ΔCl-|</li>
+        <li><strong>正常参考值</strong>:HCO3- = 24,Cl- = 104(范围 98-106),AG = 12(范围 8-16),Δ = 实测 - 正常</li>
+      </ul>
+
+      <div class="callout">
+        <p class="callout-title">⚠ 临界 AG(16-20)的处理</p>
+        <p>当 AG 落在 16-20 临界区时,教材明确指出"仅 20% 有酸中毒",不能直接判为高 AG 型。此时应<strong>用电中和原理</strong>进一步判别:比较 |ΔHCO3-|、ΔAG、|ΔCl-| 三者,谁主导谁就是主要机制。例 9(AG=17)正是典型--ΔCl-(8)≫ ΔAG(1),应判为高氯性而非高 AG 型。</p>
+      </div>
+
+      <h2>实战:金标准案例对比</h2>
+      <div class="case-box">
+        <span class="case-id">例 13</span><span class="case-dx">高氯性代酸</span>
+        <div class="case-input">pH 7.22 · PaCO2 50 · HCO3- 20 · Na 140 · Cl 110</div>
+        <div class="case-detail">AG = 140-(110+20) = 10 &lt; 16 → 走"AG 正常"分支。Cl 110 &gt; 108 → <strong>高氯性代酸</strong>。电中和:|ΔHCO3-| = 4,ΔCl- = 6,ΔAG = -2(AG 偏低),Cl- 升高是主导 → 单纯高氯型。</div>
+      </div>
+
+      <div class="case-box">
+        <span class="case-id">例 16</span><span class="case-dx">复合型代酸</span>
+        <div class="case-input">pH 7.29 · PaCO2 30 · HCO3- 14 · Na 140 · Cl 108</div>
+        <div class="case-detail">AG = 140-(108+14) = 18(临界区,但需结合电中和)。ΔAG = 2,ΔCl- = 4,|ΔHCO3-| = 10。<br>|ΔHCO3-| = 10 ≫ ΔAG + ΔCl-(2 + 4 = 6),差值 4 &gt; 3 → 提示<strong>复合型代酸</strong>,高 AG + 高氯同时存在(但 AG 临界,需结合临床动态监测)。</div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────── 11 ─────────────────────────────── -->
+    <section class="chapter" id="ch11">
+      <div class="chapter-head">
+        <span class="chapter-num">- 11 / 12</span>
+        <h2 class="chapter-title">缺氧分型(8 种)</h2>
+      </div>
+      <p class="chapter-subtitle">乳酸 + SvO2 + GAP 三联分型</p>
+
+      <p>基于动静脉血气<strong>同时</strong>获取的三项指标:</p>
+      <ul>
+        <li><strong>乳酸(Lac)</strong>:组织无氧代谢标志。正常 ≤ 2 mmol/L</li>
+        <li><strong>中心静脉血氧饱和度(SvO2)</strong>:反映全身氧供需。正常 ≥ 70%</li>
+        <li><strong>中心静脉-动脉 CO2 分压差(GAP)</strong>:<code>PvCO2 - PaCO2</code>,反映 CO2 清除能力。正常 ≤ 6 mmHg</li>
+      </ul>
+
+      <h2>8 种分型查表(3 维布尔组合)</h2>
+      <table>
+        <thead><tr><th>Lac &gt; 2</th><th>SvO2 &lt; 70</th><th>GAP &gt; 6</th><th>分型</th><th>临床意义</th></tr></thead>
+        <tbody>
+          <tr><td>✓</td><td>✓</td><td>-</td><td>低 CO 性缺氧</td><td>心输出量低、组织摄氧增加</td></tr>
+          <tr><td>✓</td><td>✓</td><td>✓</td><td>低 CO 性缺氧(脓毒症)</td><td>低 CO + 微循环障碍</td></tr>
+          <tr><td>✓</td><td>-</td><td>✓</td><td>微循环障碍性缺氧</td><td>细胞利用氧障碍,分流 / 分布异常</td></tr>
+          <tr><td>✓</td><td>-</td><td>-</td><td>高 CO 性缺氧(脓毒症)</td><td>脓毒症早期、CO 正常/升高但利用障碍</td></tr>
+          <tr><td>-</td><td>✓</td><td>✓</td><td>微循环障碍性缺氧</td><td>轻度,无明显乳酸堆积</td></tr>
+          <tr><td>-</td><td>✓</td><td>-</td><td>低 CO 性缺氧(贫血)</td><td>CO 不足但未达无氧代谢阈值</td></tr>
+          <tr><td>-</td><td>-</td><td>✓</td><td>微循环障碍(无明显缺氧)</td><td>早期预警</td></tr>
+          <tr><td>-</td><td>-</td><td>-</td><td>正常</td><td>氧供需平衡</td></tr>
+        </tbody>
+      </table>
+
+      <h2>临床决策树</h2>
+      <p>三联组合定位缺氧机制,指导不同治疗方向:</p>
+      <ol>
+        <li><strong>Lac &gt; 2?</strong> → 找无氧代谢(组织缺氧或利用障碍)</li>
+        <li><strong>SvO2 &lt; 70?</strong> → 找摄氧(心输出量不足 / 贫血 / 低氧血症)</li>
+        <li><strong>GAP &gt; 6?</strong> → 找 CO2 清除(心输出量不足 / 微循环障碍)</li>
+      </ol>
+      <p class="callout"><span class="callout-title">决策要点</span>SvO2 低 + GAP 高 → 低 CO 性缺氧,优先<strong>容量复苏 / 强心</strong>;SvO2 正常 + GAP 高 → 微循环障碍,考虑<strong>改善微循环 / 抗感染</strong>;Lac 高 + SvO2 高 → 高 CO 性缺氧(脓毒症),重点<strong>抗感染 / 源控制</strong>。</p>
+    </section>
+
+    <!-- ─────────────────────────────── 12 ─────────────────────────────── -->
+    <section class="chapter" id="ch12">
+      <div class="chapter-head">
+        <span class="chapter-num">- 12 / 12</span>
+        <h2 class="chapter-title">自测题与延伸阅读</h2>
+      </div>
+      <p class="chapter-subtitle">巩固要点 · 拓展阅读</p>
+
+      <h2>自测题(5 道,含答案)</h2>
+
+      <h3>1. 下列哪种失衡代偿极限最低?</h3>
+      <p>A. 慢呼酸 B. 急呼酸 C. 慢呼碱 D. 急呼碱</p>
+      <p class="callout"><span class="callout-title">答案</span>B。急呼酸代偿极限 30 mmol/L(最低 HCO3- 上限)。</p>
+
+      <h3>2. 代谢性酸中毒的呼吸代偿极限 PaCO2 = ?</h3>
+      <p>A. 5 mmHg &nbsp; B. 10 mmHg &nbsp; C. 15 mmHg &nbsp; D. 20 mmHg</p>
+      <p class="callout"><span class="callout-title">答案</span>B。10 mmHg(教材表 22-4-3)。</p>
+
+      <h3>3. 关于 TABD,正确的是?(多选)</h3>
+      <p>A. 必含高 AG 代酸<br>B. 必含代碱<br>C. 必含呼酸或呼碱<br>D. 潜在 HCO3- = 实测 + ΔAG</p>
+      <p class="callout"><span class="callout-title">答案</span>ABCD。TABD = 呼酸/呼碱 + 代碱 + 高 AG 代酸,潜在 HCO3- = 实测 + ΔAG。</p>
+
+      <h3>4. pH 7.30, PaCO2 50, HCO3- 24。诊断?</h3>
+      <p>A. 呼酸<br>B. 代酸<br>C. 呼酸+代酸<br>D. 无失衡</p>
+      <p class="callout"><span class="callout-title">答案</span>A。pH 7.30 偏酸,PaCO2 50 ↑ 提示呼酸,HCO3- 24 正常。慢呼酸预计 HCO3- = 24+0.35×10±5.58 = 21.92~33.08,实测 24 落在范围内 → 单纯呼酸。</p>
+
+      <h3>5. pH 7.40, PaCO2 40, HCO3- 25, Na 140, Cl 95。诊断?</h3>
+      <p>A. 无酸碱失衡<br>B. 单纯代碱<br>C. 高 AG 代酸+代碱(二重)<br>D. TABD</p>
+      <p class="callout"><span class="callout-title">答案</span>C。AG = 140-(25+95) = 20(提示高 AG 代酸)。潜在 HCO3- = 29 &gt; 27 → 代碱。PaCO2 正常 → 二重(不是 TABD)。这是教材例 17。</p>
+
+      <h2>延伸阅读</h2>
+      <ul>
+        <li>Figge J, Jabor A, Kazda A, Fencl V. <em>Anion gap and hypoalbuminemia.</em> Crit Care Med. 1998;26(11):1807-1810. - 白蛋白校正 AG 公式的原始出处</li>
+        <li>Kraut JA, Madias NE. <em>Serum anion gap: its uses and limitations in clinical medicine.</em> Clin J Am Soc Nephrol. 2007;2(1):162-174. - AG 综述</li>
+        <li>ARDS Definition Task Force, Ranieri VM, Rubenfeld GD, et al. <em>Acute respiratory distress syndrome: the Berlin Definition.</em> JAMA. 2012;307(23):2526-2533. - ARDS 柏林标准</li>
+        <li>Matthay MA, Arabi YM, Siegel ER, et al. <em>A New Global Definition of Acute Respiratory Distress Syndrome.</em> Am J Respir Crit Care Med. 2024. - ARDS 2024 新全球定义</li>
+        <li>Hardie JA, Vollmer WM, Buist AS, et al. <em>Reference Values for Arterial Blood Gases in the Elderly.</em> Chest, 2004,125(6):2053-2060. - 老年人血气正常值</li>
+      </ul>
+    </section>
+
+    <div class="divider">· · ·</div>
+
+  </article>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      Tengzhuguotzg@gmail.com
+      &nbsp;·&nbsp;
+      <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div>© 2026 · Teng.ZG · Critical Care Medicine</div>
+  </footer>
+
+</body>
+</html>

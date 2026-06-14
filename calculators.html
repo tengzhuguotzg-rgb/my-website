@@ -2059,26 +2059,30 @@ function calcBg() {
     }
   }
 
-  // 代酸分型检查 (电中和原理, slide 27 + 例16)
-  // 当诊断为代酸(单纯或合并)且有 Na/Cl 时, 判断是高AG型/高氯型/复合型
-  // 原理: |ΔHCO₃⁻| = ΔAG + ΔCl⁻ (电中和); 单一型只占其一, 复合型两者之和
+  // 代酸分型检查 (slide 27 + line 1884/1886)
+  // 代酸确诊 + 有 Na/Cl 时, 分高AG型/高氯性/复合型
+  // 判据: AG>16 → 高AG方向; 电中和(|ΔHCO₃⁻|≈ΔAG+ΔCl⁻) → 复合型; AG正常+Cl↑ → 高氯性
   if (na !== null && cl !== null && /代酸|代谢性酸中毒/.test(primary)) {
     const ag = na - (cl + hco3);
     const dAG = Math.max(0, ag - 16);         // ΔAG (AG 正常上限 16)
-    const dCl = Math.max(0, cl - 102);         // ΔCl⁻ (Cl 正常值 102)
-    const dHCO3 = 24 - hco3;                   // |ΔHCO₃⁻| (HCO₃ 正常 24)
-    const absDHCO3 = Math.abs(dHCO3);
+    const dCl = Math.max(0, cl - 100);         // ΔCl⁻ (Cl 正常值 100, 据 line 1886 举例)
+    const absDHCO3 = Math.abs(24 - hco3);      // |ΔHCO₃⁻| (HCO₃ 正常 24)
     let acidType = '';
-    if (Math.abs(absDHCO3 - (dAG + dCl)) <= 3 && dAG > 1 && dCl > 1) {
-      acidType = `复合型代酸 (高AG + 高氯性), ΔAG=${dAG.toFixed(0)} + ΔCl⁻=${dCl.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}`;
-    } else if (dAG > 1 && Math.abs(absDHCO3 - dAG) <= 3) {
-      acidType = `高AG型代酸, ΔAG=${dAG.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}`;
-    } else if (dCl > 1 && Math.abs(absDHCO3 - dCl) <= 3) {
-      acidType = `高氯性(正常AG)代酸, ΔCl⁻=${dCl.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}`;
+    if (ag > 16) {
+      // AG 升高: 电中和验证 → 复合型 vs 高AG型
+      if (dCl > 1 && Math.abs(absDHCO3 - (dAG + dCl)) <= 3) {
+        acidType = `复合型代酸 (高AG + 高氯性), ΔAG=${dAG.toFixed(0)} + ΔCl⁻=${dCl.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}`;
+      } else {
+        acidType = `高AG型代酸, AG=${ag.toFixed(0)}(>16), ΔAG=${dAG.toFixed(0)}`;
+      }
+    } else {
+      // AG 正常: Cl 升高 → 高氯性
+      if (cl > 108) {
+        acidType = `高氯性代酸 (正常AG型), Cl=${cl.toFixed(0)}(>108), ΔCl⁻=${dCl.toFixed(0)}`;
+      }
     }
     if (acidType) {
-      // 在 primary 里加注分型 (如果是「代酸单纯/合并」, 补充分型描述)
-      tabdText += `<br><strong>代酸分型:</strong> AG=${ag.toFixed(0)}, ${acidType}。<br><span style="color:var(--text-faint)">电中和原理: |ΔHCO₃⁻|(${absDHCO3.toFixed(0)}) = ΔAG(${dAG.toFixed(0)}) + ΔCl⁻(${dCl.toFixed(0)})。</span>`;
+      tabdText += `<br><strong>代酸分型:</strong> AG=${ag.toFixed(0)}, ${acidType}。<br><span style="color:var(--text-faint)">ΔAG=${dAG.toFixed(0)}, ΔCl⁻=${dCl.toFixed(0)}, |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}。</span>`;
     }
   }
 

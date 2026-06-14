@@ -489,6 +489,13 @@
   .bg-critical-item.danger { background: rgba(177, 69, 42, 0.12); color: var(--danger); }
   .bg-critical-item.ok { background: rgba(61, 107, 79, 0.10); color: var(--ok); }
   .bg-critical-item b { font-weight: 600; }
+  /* ⑥ 综合印象卡: 最终临床结论, 强调框 */
+  .bg-segment.bg-summary {
+    background: rgba(231, 111, 44, 0.06);
+    border-color: rgba(231, 111, 44, 0.25);
+  }
+  .bg-segment.bg-summary .bg-seg-title { color: var(--accent-2); }
+  .bg-segment.bg-summary .bg-seg-conclusion { font-size: 17px; }
 
   /* ── 结果卡操作按钮 (分享/收藏) ── */
   .result-actions {
@@ -1405,6 +1412,13 @@
             <div class="bg-seg-need-venous">输入参数后评估。</div>
           </div>
         </div>
+
+        <div class="bg-segment bg-summary">
+          <div class="bg-seg-title">⑥ 综合印象与处理方向</div>
+          <div class="bg-seg-conclusion" id="bg-sum-conclusion">输入参数后生成综合判断。</div>
+          <div class="bg-seg-detail" id="bg-sum-detail"></div>
+          <div class="bg-seg-detail" style="margin-top:10px;font-size:11px;color:var(--text-faint);">⚠ 综合印象由规则引擎根据前 5 项自动生成, 仅供临床参考, 不替代医生综合判断。</div>
+        </div>
       </div>
 
       <div class="meta">
@@ -1829,6 +1843,8 @@ function calcBg() {
     setText('bg-o2-conclusion', '—');
     setText('bg-o2-detail', '');
     setText('bg-critical', '<div class="bg-seg-need-venous">输入参数后评估。</div>');
+    setText('bg-sum-conclusion', '输入参数后生成综合判断。');
+    setText('bg-sum-detail', '');
     return;
   }
 
@@ -2034,6 +2050,71 @@ function calcBg() {
     else critHtml += `<div class="bg-critical-item ok">✓ Na⁺ ${na} mmol/L 正常</div>`;
   }
   setText('bg-critical', critHtml || '<div class="bg-seg-need-venous">输入参数后评估。</div>');
+
+  // ═══════════════════════════════════════
+  // ⑥ 综合印象与处理方向 (规则引擎)
+  // ═══════════════════════════════════════
+  let sumConclusion = '', sumDetail = '';
+  const impressions = []; // 临床印象
+  const actions = [];     // 处理优先级
+
+  // --- 处理优先级 1: 危及生命的立即处理 ---
+  if (k !== null && (k < 3.0 || k > 6.0)) {
+    actions.push(`K⁺ ${k} mmol/L <strong>危急</strong>, 立即心电监护, 评估钙剂/胰岛素+葡萄糖/降钾树脂`);
+  }
+  if (ph < 7.1) actions.push(`pH ${ph} <strong>严重酸血症</strong>, 评估碳酸氢钠(目标 pH>7.15) + 病因处理`);
+  if (pao2 !== null && pao2 < 50) actions.push(`PaO₂ ${pao2.toFixed(0)} <strong>严重低氧</strong>, 立即提高 FiO₂/评估插管`);
+  if (lac !== null && lac > 4) actions.push(`乳酸 ${lac} <strong>显著升高(死亡率≈40.9%)</strong>, 按脓毒症 bundle 评估`);
+
+  // --- 临床印象: 酸碱 + 灌注 模式识别 ---
+  // 模式 A: 脓毒症提示 (乳酸↑ + 缺氧分型含微循环/脓毒症)
+  const hypoxiaText = document.getElementById('bg-hypoxia-wrap').textContent;
+  if (lac !== null && lac > 2 && (hypoxiaText.includes('脓毒症') || hypoxiaText.includes('微循环'))) {
+    impressions.push(`乳酸升高 ${lac} + ${hypoxiaText.includes('微循环') ? '微循环障碍' : '缺氧'} → <strong>提示脓毒症/组织低灌注</strong>, 按 qSOFA/SOFA 评估, 完善感染源筛查`);
+  }
+  // 模式 B: COPD/慢性呼酸急性加重
+  if (primary.includes('呼吸性酸中毒') && paco2 > 60) {
+    impressions.push(`PaCO₂ ${paco2.toFixed(0)} 明显升高 → <strong>通气衰竭</strong>, 若有 COPD 病史考虑急性加重, 警惕肺性脑病`);
+  }
+  // 模式 C: 换气障碍 (A-aDO2 增大)
+  if (fio2 !== null && pao2 !== null) {
+    const pao2Alv = fio2 * (760 - 47) - paco2 / 0.8;
+    const aado2 = pao2Alv - pao2;
+    if (aado2 > 35) impressions.push(`A-aDO₂ ${aado2.toFixed(0)} 显著增大 → <strong>肺换气障碍</strong>(V/Q 失调/分流/弥散), 评估 ARDS/肺炎/肺栓塞`);
+  }
+  // 模式 D: 呼吸商 R 高 (需静脉)
+  const rText = document.getElementById('bg-r-wrap').textContent;
+  if (rText.includes('危重症') || rText.includes('无氧代谢')) {
+    impressions.push(`呼吸商异常 → <strong>组织氧供需失衡</strong>, 评估心输出量、Hgb、灌注目标`);
+  }
+  // 模式 E: 代谢性酸中毒 + 乳酸正常 → 非乳酸型代酸(腹泻/肾小管酸中毒)
+  if (primary.includes('代谢性酸中毒') && lac !== null && lac <= 2) {
+    impressions.push(`代酸但乳酸正常 → <strong>非乳酸型代酸</strong>, 查电解质(计算 ΔAG/ΔHCO₃)、评估腹泻/肾小管酸中毒`);
+  }
+  // 模式 F: 一切正常
+  if (impressions.length === 0 && actions.length === 0) {
+    impressions.push('酸碱、氧合、电解质均在目标范围, <strong>暂无危急异常</strong>, 继续监测。');
+  }
+
+  // --- 通气策略提示 (基于 PaCO2 + pH) ---
+  if (paco2 > 55 && ph < 7.35) {
+    actions.push(`通气不足: 评估无创/有创通气, 目标 PaCO₂ 缓慢下降(防碱中毒)`);
+  } else if (paco2 < 30 && ph > 7.45) {
+    actions.push(`过度通气: 评估镇痛镇静深度、疼痛、焦虑, 避免呼碱加重脑缺血`);
+  }
+
+  sumConclusion = impressions.length > 0 ? impressions[0] : '已录入参数, 见分项结论。';
+  if (impressions.length > 1) sumConclusion = impressions.slice(0, 2).join('<br>');
+  sumDetail = '';
+  if (actions.length > 0) {
+    sumDetail += '<strong>处理优先级:</strong><br>' + actions.map((a, i) => `${i + 1}. ${a}`).join('<br>');
+  }
+  if (impressions.length > 2) {
+    if (sumDetail) sumDetail += '<br><br>';
+    sumDetail += '<strong>其他提示:</strong><br>' + impressions.slice(2).map(a => '• ' + a).join('<br>');
+  }
+  setText('bg-sum-conclusion', sumConclusion);
+  setText('bg-sum-detail', sumDetail);
 }
 
 /* ═══════════════════════════════════════════

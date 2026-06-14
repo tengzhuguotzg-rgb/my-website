@@ -1850,71 +1850,83 @@ function calcBg() {
 
   // ═══════════════════════════════════════
   // ① 酸碱失衡 (4 步)
+  // 三态方向判定: 'high'/'low'/'normal'
   // ═══════════════════════════════════════
   const isAcid = ph < 7.35, isAlk = ph > 7.45;
-  const paco2High = paco2 > 45, paco2Low = paco2 < 35;
-  const hco3Low = hco3 < 22, hco3High = hco3 > 27;
-  let primary = '', primaryKey = '', detail = '', conclusion = '', tierCls = 'tier-ok';
+  const paco2Dir = paco2 > 45 ? 'high' : paco2 < 35 ? 'low' : 'normal';
+  const hco3Dir  = hco3 > 27 ? 'high' : hco3 < 22 ? 'low' : 'normal';
+  let primary = '', tierCls = 'tier-ok';
 
-  // Step 2: 定原发
-  if (isAcid) {
-    if (paco2High && !hco3Low) { primary = '呼吸性酸中毒'; primaryKey = 'racid'; }
-    else if (hco3Low && !paco2High) { primary = '代谢性酸中毒'; primaryKey = 'macid'; }
-    else if (hco3Low && paco2High) { primary = '混合性酸中毒(呼酸+代酸)'; primaryKey = 'mixed_acid'; }
-    else { primary = '酸血症(代偿期)'; primaryKey = ''; }
-    tierCls = 'tier-danger';
-  } else if (isAlk) {
-    if (paco2Low && !hco3High) { primary = '呼吸性碱中毒'; primaryKey = 'ralk'; }
-    else if (hco3High && !paco2Low) { primary = '代谢性碱中毒'; primaryKey = 'malk'; }
-    else if (hco3High && paco2Low) { primary = '混合性碱中毒(呼碱+代碱)'; primaryKey = 'mixed_alk'; }
-    else { primary = '碱血症(代偿期)'; primaryKey = ''; }
-    tierCls = 'tier-warn';
-  } else {
-    // pH 正常
-    if (paco2High && hco3High) { primary = '完全代偿性呼吸性酸中毒'; primaryKey = 'racid'; tierCls = 'tier-warn'; }
-    else if (paco2Low && hco3Low) { primary = '完全代偿性呼吸性碱中毒'; primaryKey = 'ralk'; tierCls = 'tier-warn'; }
-    else if (hco3Low && paco2Low) { primary = '完全代偿性代谢性酸中毒'; primaryKey = 'macid'; tierCls = 'tier-warn'; }
-    else if (hco3High && paco2High) { primary = '完全代偿性代谢性碱中毒'; primaryKey = 'malk'; tierCls = 'tier-warn'; }
-    else { primary = '酸碱平衡正常'; primaryKey = ''; tierCls = 'tier-ok'; }
-  }
-
-  // Step 3: 代偿计算
+  // Step 2 + 3: 同向双重直接判混合; 单一原发套代偿公式判额外失衡
   let compText = '';
-  if (primaryKey === 'macid') {
-    const expPaco2 = 1.5 * hco3 + 8;
-    compText = `代偿公式: 预计 PaCO₂ = 1.5×${hco3}+8 = <strong>${expPaco2.toFixed(1)} ± 2</strong> mmHg (Winter)。<br>实际 PaCO₂ ${paco2.toFixed(1)} → `;
-    const diff = paco2 - expPaco2;
-    if (Math.abs(diff) <= 2) compText += '符合代偿, <strong>单纯性代酸</strong>。';
-    else if (diff > 2) compText += `<strong>高于预计 → 叠加呼吸性酸中毒</strong>。`;
-    else compText += `<strong>低于预计 → 代偿过度</strong>(可能合并呼碱)。`;
-  } else if (primaryKey === 'malk') {
-    const expPaco2 = 0.7 * hco3 + 20;
-    compText = `代偿公式: 预计 PaCO₂ = 0.7×${hco3}+20 = <strong>${expPaco2.toFixed(1)} ± 5</strong> mmHg。<br>实际 PaCO₂ ${paco2.toFixed(1)} → `;
-    const diff = paco2 - expPaco2;
-    if (Math.abs(diff) <= 5) compText += '符合代偿, <strong>单纯性代碱</strong>。';
-    else if (diff > 5) compText += `<strong>高于预计 → 叠加呼吸性酸中毒</strong>。`;
-    else compText += `<strong>低于预计 → 叠加呼吸性碱中毒</strong>。`;
-  } else if (primaryKey === 'racid') {
-    const coef = acute === 'acute' ? 0.05 : 0.35;
-    const expHco3 = 24 + (paco2 - 40) * coef;
-    compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): 预计 HCO₃⁻ = 24+(${paco2.toFixed(1)}-40)×${coef} = <strong>${expHco3.toFixed(1)}</strong> mmol/L。<br>实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
-    const diff = hco3 - expHco3;
-    if (Math.abs(diff) <= 2) compText += '符合代偿, <strong>单纯性呼酸</strong>。';
-    else if (diff > 2) compText += `<strong>高于预计 → 叠加代谢性碱中毒</strong>。`;
-    else compText += `<strong>低于预计 → 叠加代谢性酸中毒</strong>。`;
-  } else if (primaryKey === 'ralk') {
-    const coef = acute === 'acute' ? 0.2 : 0.5;
-    const expHco3 = 24 - (40 - paco2) * coef;
-    compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): 预计 HCO₃⁻ = 24-(40-${paco2.toFixed(1)})×${coef} = <strong>${expHco3.toFixed(1)}</strong> mmol/L。<br>实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
-    const diff = hco3 - expHco3;
-    if (Math.abs(diff) <= 2) compText += '符合代偿, <strong>单纯性呼碱</strong>。';
-    else if (diff > 2) compText += `<strong>高于预计 → 叠加代谢性碱中毒</strong>。`;
-    else compText += `<strong>低于预计 → 叠加代谢性酸中毒</strong>。`;
+
+  if (isAcid) {
+    tierCls = 'tier-danger';
+    // 同向酸 (呼酸+代酸): pH酸 + PaCO2高 + HCO3低 → 直接混合
+    if (paco2Dir === 'high' && hco3Dir === 'low') {
+      primary = '混合性酸中毒 (呼吸性酸中毒 + 代谢性酸中毒)';
+      compText = '两个系统都往酸方向偏离 → <strong>无需代偿公式</strong>, 直接判定混合性酸中毒(pH 必然严重偏低)。';
+    }
+    // 单一原发 = 代酸 (HCO3低, pH酸)
+    else if (hco3Dir === 'low') {
+      const expPaco2 = 1.5 * hco3 + 8;
+      compText = `代偿公式(Winter): 预计 PaCO₂ = 1.5×${hco3}+8 = <strong>${expPaco2.toFixed(1)} ± 2</strong> mmHg。实际 PaCO₂ ${paco2.toFixed(1)} → `;
+      const diff = paco2 - expPaco2;
+      if (Math.abs(diff) <= 2) { primary = '代谢性酸中毒 (代偿充分, 单纯性)'; compText += '在预计范围内 → <strong>呼吸代偿恰当, 单纯性代酸</strong>。'; }
+      else if (diff > 2) { primary = '代谢性酸中毒 合并 呼吸性酸中毒'; compText += '<strong>高于预计 → 合并呼吸性酸中毒</strong>(通气不足)。'; }
+      else { primary = '代谢性酸中毒 合并 呼吸性碱中毒'; compText += '<strong>低于预计 → 合并呼吸性碱中毒</strong>(代偿过度/独立呼碱)。'; }
+    }
+    // 单一原发 = 呼酸 (PaCO2高, pH酸)
+    else if (paco2Dir === 'high') {
+      const coef = acute === 'acute' ? 0.05 : 0.35;
+      const expHco3 = 24 + (paco2 - 40) * coef;
+      compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): 预计 HCO₃⁻ = 24+(${paco2.toFixed(1)}-40)×${coef} = <strong>${expHco3.toFixed(1)} ± 2</strong>。实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
+      const diff = hco3 - expHco3;
+      if (Math.abs(diff) <= 2) { primary = '呼吸性酸中毒 (代偿充分, 单纯性)'; compText += '在预计范围内 → <strong>代谢代偿恰当, 单纯性呼酸</strong>。'; }
+      else if (diff > 2) { primary = '呼吸性酸中毒 合并 代谢性碱中毒'; compText += '<strong>高于预计 → 合并代谢性碱中毒</strong>。'; }
+      else { primary = '呼吸性酸中毒 合并 代谢性酸中毒'; compText += '<strong>低于预计 → 合并代谢性酸中毒</strong>。'; }
+    }
+    // pH酸 但 PaCO2/HCO3 都不异常(罕见, 如严重低钠)
+    else { primary = '酸血症 (PaCO₂/HCO₃⁻ 均在正常范围, 需查其他原因)'; compText = 'pH 偏酸但常规指标无异常, 可能需要更精确的电解质或混合因素分析。'; }
+  } else if (isAlk) {
+    tierCls = 'tier-warn';
+    // 同向碱 (呼碱+代碱): pH碱 + PaCO2低 + HCO3高 → 直接混合
+    if (paco2Dir === 'low' && hco3Dir === 'high') {
+      primary = '混合性碱中毒 (呼吸性碱中毒 + 代谢性碱中毒)';
+      compText = '两个系统都往碱方向偏离 → <strong>无需代偿公式</strong>, 直接判定混合性碱中毒(pH 必然严重偏高)。';
+    }
+    // 单一原发 = 代碱 (HCO3高, pH碱)
+    else if (hco3Dir === 'high') {
+      const expPaco2 = 0.7 * hco3 + 20;
+      compText = `代偿公式: 预计 PaCO₂ = 0.7×${hco3}+20 = <strong>${expPaco2.toFixed(1)} ± 5</strong> mmHg。实际 PaCO₂ ${paco2.toFixed(1)} → `;
+      const diff = paco2 - expPaco2;
+      if (Math.abs(diff) <= 5) { primary = '代谢性碱中毒 (代偿充分, 单纯性)'; compText += '在预计范围内 → <strong>呼吸代偿恰当, 单纯性代碱</strong>。'; }
+      else if (diff > 5) { primary = '代谢性碱中毒 合并 呼吸性酸中毒'; compText += '<strong>高于预计 → 合并呼吸性酸中毒</strong>。'; }
+      else { primary = '代谢性碱中毒 合并 呼吸性碱中毒'; compText += '<strong>低于预计 → 合并呼吸性碱中毒</strong>。'; }
+    }
+    // 单一原发 = 呼碱 (PaCO2低, pH碱)
+    else if (paco2Dir === 'low') {
+      const coef = acute === 'acute' ? 0.2 : 0.5;
+      const expHco3 = 24 - (40 - paco2) * coef;
+      compText = `代偿公式(${acute === 'acute' ? '急性' : '慢性'}): 预计 HCO₃⁻ = 24-(40-${paco2.toFixed(1)})×${coef} = <strong>${expHco3.toFixed(1)} ± 2</strong>。实际 HCO₃⁻ ${hco3.toFixed(1)} → `;
+      const diff = hco3 - expHco3;
+      if (Math.abs(diff) <= 2) { primary = '呼吸性碱中毒 (代偿充分, 单纯性)'; compText += '在预计范围内 → <strong>代谢代偿恰当, 单纯性呼碱</strong>。'; }
+      else if (diff > 2) { primary = '呼吸性碱中毒 合并 代谢性碱中毒'; compText += '<strong>高于预计 → 合并代谢性碱中毒</strong>。'; }
+      else { primary = '呼吸性碱中毒 合并 代谢性酸中毒'; compText += '<strong>低于预计 → 合并代谢性酸中毒</strong>。'; }
+    }
+    else { primary = '碱血症 (PaCO₂/HCO₃⁻ 均在正常范围, 需查其他原因)'; compText = 'pH 偏碱但常规指标无异常。'; }
+  } else {
+    // pH 正常: 看是否有「对向异常互相抵消」或「完全代偿」
+    if (paco2Dir === 'high' && hco3Dir === 'high') { primary = '完全代偿性 呼吸性酸中毒'; tierCls = 'tier-warn'; compText = 'pH 正常但 PaCO₂/HCO₃⁻ 同向升高 → 代偿完全的呼酸。'; }
+    else if (paco2Dir === 'low' && hco3Dir === 'low') { primary = '完全代偿性 呼吸性碱中毒'; tierCls = 'tier-warn'; compText = 'pH 正常但 PaCO₂/HCO₃⁻ 同向降低 → 代偿完全的呼碱。'; }
+    else if (paco2Dir === 'low' && hco3Dir === 'high') { primary = '完全代偿性 代谢性碱中毒'; tierCls = 'tier-warn'; compText = 'HCO₃⁻ 升高 + PaCO₂ 代偿性降低, pH 正常 → 代碱完全代偿。'; }
+    else if (paco2Dir === 'high' && hco3Dir === 'low') { primary = '混合性失衡相互抵消 (呼吸性酸中毒 + 代谢性酸中毒?)'; tierCls = 'tier-warn'; compText = '⚠ pH 正常但 PaCO₂ 高 + HCO₃⁻ 低 → 这是<strong>对向失衡恰好抵消</strong>(呼酸+代酸方向相反影响 pH?), 临床罕见, 需结合病史判断原发。'; }
+    else { primary = '酸碱平衡正常'; tierCls = 'tier-ok'; compText = 'pH/PaCO₂/HCO₃⁻ 均在正常范围。'; }
   }
 
   // Step 4: TABD 三相失衡 (ΔAG 法, 需 Na; 有 Cl 更准)
   let tabdText = '';
-  if (na !== null && hco3Low) {
+  if (na !== null && hco3Dir === 'low') {
     // 高 AG 型代酸 → 校正 HCO3 判断是否合并代碱
     let ag = null;
     if (cl !== null) ag = na - (cl + hco3);
@@ -1923,8 +1935,8 @@ function calcBg() {
       const corrHco3 = hco3 + (ag - 12);
       if (corrHco3 > 26) {
         tabdText = `<br><strong>⚠ 三相失衡提示(TABD)</strong>: AG=${ag.toFixed(0)}(↑), 校正 HCO₃⁻=${corrHco3.toFixed(0)}(>26) → 存在<strong>高AG型代酸 + 代谢性碱中毒</strong>`;
-        if (paco2High) tabdText += ' + 呼吸性酸中毒 = <strong>呼酸型 TABD</strong>';
-        else if (paco2Low) tabdText += ' + 呼吸性碱中毒 = <strong>呼碱型 TABD</strong>';
+        if (paco2Dir === 'high') tabdText += ' + 呼吸性酸中毒 = <strong>呼酸型 TABD</strong>';
+        else if (paco2Dir === 'low') tabdText += ' + 呼吸性碱中毒 = <strong>呼碱型 TABD</strong>';
       }
     }
   }

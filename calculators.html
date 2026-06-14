@@ -1969,12 +1969,16 @@ function calcBg() {
         upperLimit = 24 - coef * (40 - paco2) + tol;
       }
       if (latentHco3 > upperLimit) {
-        let tabdType = '三重失衡';
-        if (paco2Dir === 'high') tabdType = '呼酸型 TABD';
-        else if (paco2Dir === 'low') tabdType = '呼碱型 TABD';
-        tabdText = `<br><strong>⚠ ${tabdType}</strong>: AG=${ag.toFixed(0)}(↑), △AG=${deltaAG.toFixed(0)}, 潜在 HCO₃⁻=${latentHco3.toFixed(0)} &gt; 上限${upperLimit.toFixed(1)} → <strong>高AG代酸 + 代碱</strong>`;
-        if (paco2Dir === 'high') tabdText += ' + 呼酸';
-        else if (paco2Dir === 'low') tabdText += ' + 呼碱';
+        // TABD 成立 → 覆盖主结论 (primary), 原初步诊断降级到 detail
+        let tabdType = '三重酸碱失衡';
+        let respPart = '';
+        if (paco2Dir === 'high') { tabdType = '呼酸型 TABD'; respPart = '呼吸性酸中毒'; }
+        else if (paco2Dir === 'low') { tabdType = '呼碱型 TABD'; respPart = '呼吸性碱中毒'; }
+        // 主结论直接显示 TABD (高AG代酸 + 代碱 + 呼吸性失衡)
+        primary = `${tabdType} (高AG型代谢性酸中毒 + 代谢性碱中毒 + ${respPart})`;
+        tierCls = 'tier-danger';
+        // detail 里保留计算过程 + 提示「不计算AG会误诊为...」
+        tabdText = `<br><strong>⚠ ${tabdType}</strong>: AG=${ag.toFixed(0)}(↑, >12), △AG=${deltaAG.toFixed(0)}, 潜在 HCO₃⁻=${latentHco3.toFixed(0)} &gt; 代偿上限${upperLimit.toFixed(1)} → 高AG代酸消耗部分HCO₃⁻, 排除其掩盖作用后潜在HCO₃⁻仍超过上限 → 合并代谢性碱中毒。<br><em style="color:var(--text-faint)">若不计算 AG 和潜在 HCO₃⁻, 易误诊为「${respPart}」。</em>`;
       } else {
         tabdText = `<br><span style="color:var(--text-faint)">AG=${ag.toFixed(0)}(↑), 潜在 HCO₃⁻=${latentHco3.toFixed(0)} ≤ 上限${upperLimit.toFixed(1)}, 无合并代碱。</span>`;
       }

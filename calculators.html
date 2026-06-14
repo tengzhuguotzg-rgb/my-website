@@ -2177,10 +2177,10 @@ function calcBg() {
         else { primary = '呼吸性碱中毒 合并 代谢性酸中毒'; compText += '<strong>低于预计 → 合并代酸</strong>。'; }
       }
     }
-    // 对向: PaCO₂↑ + HCO₃⁻↓ (呼酸+代酸方向相反, pH 正常=抵消)
-    else if (paco2Dir === 'high' && hco3Dir === 'low') { primary = '混合性失衡相互抵消 (呼酸+代酸方向相反)'; compText = '⚠ pH 正常但 PaCO₂↑+HCO₃⁻↓ (对向失衡抵消), 临床罕见, 需结合病史判断原发。'; }
-    // 对向: PaCO₂↓ + HCO₃⁻↑ (呼碱+代碱方向相反, pH 正常=抵消)
-    else if (paco2Dir === 'low' && hco3Dir === 'high') { primary = '混合性失衡相互抵消 (呼碱+代碱方向相反)'; compText = '⚠ pH 正常但 PaCO₂↓+HCO₃⁻↑ (对向失衡抵消), 临床罕见, 需结合病史判断原发。'; }
+    // 对向: PaCO₂↑ + HCO₃⁻↓ (协同致酸, 教材 L1805 必为呼酸+代酸, pH 通常<7.35; 此处 pH 落正常系两者程度极轻)
+    else if (paco2Dir === 'high' && hco3Dir === 'low') { primary = '呼吸性酸中毒 合并 代谢性酸中毒 (协同致酸, 程度轻微)'; compText = '⚠ PaCO₂↑+HCO₃⁻↓ 协同致酸 (教材 L1805: 必为呼酸+代酸)。正常情况下 pH 应<7.35, 现 pH 落正常范围说明两者程度极轻, 需结合病史与动态监测。'; tierCls = 'tier-danger'; }
+    // 对向: PaCO₂↓ + HCO₃⁻↑ (协同致碱, 教材 L1809 必为呼碱+代碱, pH 通常>7.45; 此处 pH 落正常系两者程度极轻)
+    else if (paco2Dir === 'low' && hco3Dir === 'high') { primary = '呼吸性碱中毒 合并 代谢性碱中毒 (协同致碱, 程度轻微)'; compText = '⚠ PaCO₂↓+HCO₃⁻↑ 协同致碱 (教材 L1809: 必为呼碱+代碱)。正常情况下 pH 应>7.45, 现 pH 落正常范围说明两者程度极轻, 需结合病史与动态监测。'; tierCls = 'tier-warn'; }
     // PaCO₂/HCO₃ 都正常
     else { primary = '酸碱平衡正常'; tierCls = 'tier-ok'; compText = 'pH/PaCO₂/HCO₃⁻ 均在正常范围。'; }
   }
@@ -2454,7 +2454,8 @@ function calcBg() {
   }
 
   // --- 危急值 (电解质/乳酸) ---
-  if (k !== null && (k < 3.5 || k > 5.0)) abnormals.push({text: `K⁺ ${k} mmol/L ${k<3.5?'↓':'↑'}`, cls: k<3.0||k>6.0?'tier-danger':'tier-warn'});
+  // K+ 正常 3.5-5.5, 超出即危急值
+  if (k !== null && (k < 3.5 || k > 5.5)) abnormals.push({text: `K⁺ ${k} mmol/L ${k<3.5?'↓':'↑'} (危急值)`, cls: 'tier-danger'});
   if (na !== null && (na < 135 || na > 145)) abnormals.push({text: `Na⁺ ${na} mmol/L ${na<135?'↓':'↑'}`, cls: na<125||na>155?'tier-danger':'tier-warn'});
   if (cl !== null && (cl < 96 || cl > 108)) abnormals.push({text: `Cl⁻ ${cl} mmol/L ${cl<96?'↓':'↑'}`, cls: 'tier-warn'});
   if (lac !== null && lac > 2) abnormals.push({text: `乳酸 ${lac} ↑ ${lac>4?'(显著, 死亡率≈40.9%)':'(组织缺氧/低灌注)'}`, cls: lac>4?'tier-danger':'tier-warn'});

@@ -1602,7 +1602,7 @@
         <div class="meta-card">
           <h4>氧合状态 · 计算与分级</h4>
           <ul>
-            <li><strong>P/F 氧合指数</strong> = PaO₂/FiO₂ (正常 400-500)<br>柏林/Matthay 2024: ≤300 诊断 ARDS — 重 ≤100 / 中 101-200 / 轻 201-300; 插管需 PEEP ≥ 5</li>
+            <li><strong>P/F 氧合指数</strong> = PaO₂/FiO₂ (正常 400-500)<br>柏林/Matthay 2024 氧合分级: 轻 201-300 / 中 101-200 / 重 ≤100 (插管需 PEEP ≥ 5); ⚠ <em>本计算器仅报告氧合分级, ARDS 诊断需临床排除心源性肺水肿/液体过负荷/肺不张</em></li>
             <li><strong>呼衰分型</strong>: PaO₂&lt;60 + PaCO₂&gt;50 = <em>II 型</em>(通气衰竭); PaO₂&lt;60 + PaCO₂ 正常/低 = <em>I 型</em>(换气衰竭)</li>
             <li><strong>肺泡气方程</strong>: <code>PAO₂ = FiO₂×(760−47) − PaCO₂/0.8</code> = FiO₂×713 − PaCO₂/R</li>
             <li><strong>A-aDO₂</strong> = PAO₂ − PaO₂, 正常 &lt;15 (青年) / &lt;25 (老年), 每 10 岁约 +4。&gt;25 提示换气障碍(V/Q 失调、分流、弥散)</li>
@@ -2276,11 +2276,11 @@ function calcBg() {
   if (pao2 !== null && fio2 !== null) {
     const pf = pao2 / fio2;  // 氧合指数 P/F
     let pfTier = '', pfTierCls = 'tier-ok';
-    // 柏林 2012 / Matthay 2024 全球定义: ≤300 诊断 ARDS, 三级分度
-    if (pf <= 100) { pfTier = '重度 ARDS (P/F ≤ 100)'; pfTierCls = 'tier-danger'; }
-    else if (pf <= 200) { pfTier = '中度 ARDS (P/F 101-200)'; pfTierCls = 'tier-danger'; }
-    else if (pf <= 300) { pfTier = '轻度 ARDS (P/F 201-300)'; pfTierCls = 'tier-warn'; }
-    else if (pf < 400) { pfTier = '氧合轻度受损 (P/F 300-400, 未达 ARDS)'; pfTierCls = 'tier-warn'; }
+    // 柏林 2012 / Matthay 2024 氧合界值, 仅报告氧合严重度分级, 不直接诊断 ARDS
+    if (pf <= 100) { pfTier = '重度低氧合 (P/F ≤ 100, 达 ARDS 重度氧合界值)'; pfTierCls = 'tier-danger'; }
+    else if (pf <= 200) { pfTier = '中度低氧合 (P/F 101-200, 达 ARDS 中度氧合界值)'; pfTierCls = 'tier-danger'; }
+    else if (pf <= 300) { pfTier = '轻度低氧合 (P/F 201-300, 达 ARDS 轻度氧合界值)'; pfTierCls = 'tier-warn'; }
+    else if (pf < 400) { pfTier = '氧合轻度受损 (P/F 300-400, 未达 ARDS 界值)'; pfTierCls = 'tier-warn'; }
     else { pfTier = '氧合正常 (P/F ≥ 400)'; pfTierCls = 'tier-ok'; }
     // 呼衰分型 (slide 46): PaO₂<60 区分 I 型(PaCO₂正常/低) vs II 型(PaCO₂升高)
     let respFail = '';
@@ -2289,7 +2289,7 @@ function calcBg() {
     }
     o2Conclusion = `P/F = ${pao2.toFixed(0)}/${fio2} = <strong>${pf.toFixed(0)}</strong> · ${pfTier}`;
     if (respFail) o2Conclusion += ` · ${respFail}`;
-    o2Detail = `<span class="calc">P/F = PaO₂/FiO₂, 正常 400-500。柏林/Matthay 2024 标准: ≤300 诊断 ARDS (轻 201-300 / 中 101-200 / 重 ≤100), 插管患者需 PEEP ≥ 5。</span>`;
+    o2Detail = `<span class="calc">P/F = PaO₂/FiO₂, 正常 400-500。柏林/Matthay 2024 氧合分级: 轻 201-300 / 中 101-200 / 重 ≤100, 插管患者需 PEEP ≥ 5。⚠ <strong>ARDS 诊断需临床排除心源性肺水肿/液体过负荷/肺不张</strong>——本计算器仅报告氧合指数与分级, 不替代 ARDS 诊断。</span>`;
     // PaO₂ 分级 (补充)
     let pao2Note = '';
     if (pao2 < 60) pao2Note = '低氧血症';
@@ -2419,9 +2419,9 @@ function calcBg() {
   // --- 氧合 ---
   if (pao2 !== null && fio2 !== null) {
     const pf = pao2 / fio2;
-    if (pf <= 100) abnormals.push({text: `P/F ${pf.toFixed(0)} (重度 ARDS, ≤100)`, cls: 'tier-danger'});
-    else if (pf <= 200) abnormals.push({text: `P/F ${pf.toFixed(0)} (中度 ARDS, 101-200)`, cls: 'tier-danger'});
-    else if (pf <= 300) abnormals.push({text: `P/F ${pf.toFixed(0)} (轻度 ARDS, 201-300)`, cls: 'tier-warn'});
+    if (pf <= 100) abnormals.push({text: `P/F ${pf.toFixed(0)} (重度低氧合, 达 ARDS 重度氧合界值)`, cls: 'tier-danger'});
+    else if (pf <= 200) abnormals.push({text: `P/F ${pf.toFixed(0)} (中度低氧合, 达 ARDS 中度氧合界值)`, cls: 'tier-danger'});
+    else if (pf <= 300) abnormals.push({text: `P/F ${pf.toFixed(0)} (轻度低氧合, 达 ARDS 轻度氧合界值)`, cls: 'tier-warn'});
     const pao2Alv = fio2 * (760 - 47) - paco2 / 0.8;
     const aado2 = pao2Alv - pao2;
     if (aado2 > 25) abnormals.push({text: `A-aDO₂ ${aado2.toFixed(0)} ↑ (换气障碍)`, cls: 'tier-warn'});

@@ -1969,7 +1969,7 @@ function calcBg() {
         upperLimit = 24 - coef * (40 - paco2) + tol;
       }
       if (latentHco3 > upperLimit) {
-        // TABD 成立 → 覆盖主结论 (primary), 原初步诊断降级到 detail
+        // TABD 成立 → 覆盖主结论 (primary) + 改写 compText (消除与初步诊断的矛盾)
         let tabdType = '三重酸碱失衡';
         let respPart = '';
         if (paco2Dir === 'high') { tabdType = '呼酸型 TABD'; respPart = '呼吸性酸中毒'; }
@@ -1977,8 +1977,10 @@ function calcBg() {
         // 主结论直接显示 TABD (高AG代酸 + 代碱 + 呼吸性失衡)
         primary = `${tabdType} (高AG型代谢性酸中毒 + 代谢性碱中毒 + ${respPart})`;
         tierCls = 'tier-danger';
-        // detail 里保留计算过程 + 提示「不计算AG会误诊为...」
-        tabdText = `<br><strong>⚠ ${tabdType}</strong>: AG=${ag.toFixed(0)}(↑, >12), △AG=${deltaAG.toFixed(0)}, 潜在 HCO₃⁻=${latentHco3.toFixed(0)} &gt; 代偿上限${upperLimit.toFixed(1)} → 高AG代酸消耗部分HCO₃⁻, 排除其掩盖作用后潜在HCO₃⁻仍超过上限 → 合并代谢性碱中毒。<br><em style="color:var(--text-faint)">若不计算 AG 和潜在 HCO₃⁻, 易误诊为「${respPart}」。</em>`;
+        // 改写 compText: 把「单纯性呼X」替换为「初步判断 → AG 发现 → 升级为 TABD」的推理过程
+        const prelim = compText.split(' → ')[0]; // 保留「代偿公式(...) 预计... 实际...」前半段
+        compText = prelim + ` → <strong>初步判断为${respPart}</strong>(代偿范围内)。但 AG=${ag.toFixed(0)}(↑, >12) 提示高 AG 型代酸, 计算潜在 HCO₃⁻=${latentHco3.toFixed(0)} &gt; 代偿上限${upperLimit.toFixed(1)} → 高 AG 代酸消耗部分 HCO₃⁻, 排除其掩盖作用后潜在 HCO₃⁻ 仍超上限 → 合并代谢性碱中毒。综合为 <strong>${tabdType}</strong>。<br><em style="color:var(--text-faint)">若不计算 AG 和潜在 HCO₃⁻, 易误诊为「${respPart}」。</em>`;
+        tabdText = ''; // 已合并进 compText, 不再单独追加
       } else {
         tabdText = `<br><span style="color:var(--text-faint)">AG=${ag.toFixed(0)}(↑), 潜在 HCO₃⁻=${latentHco3.toFixed(0)} ≤ 上限${upperLimit.toFixed(1)}, 无合并代碱。</span>`;
       }

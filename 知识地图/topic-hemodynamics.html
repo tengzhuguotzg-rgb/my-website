@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>血流动力学基础理论 · 循环 · 知识地图 · Teng.ZG</title>
+<meta name="description" content="血流动力学知识地图: 从监测到治疗的范式转变、心脏泵功能(Starling/收缩/舒张)、静脉回流与前负荷、后负荷与心室-动脉偶联、胸腔内压影响、容量反应性、多项参数综合评估。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --accent-soft:rgba(231,111,44,0.10);
+  --teal:#1A5E6E;--teal-soft:rgba(26,94,110,0.10);
+  --plum:#5A2A4A;--plum-soft:rgba(90,42,74,0.08);
+  --rose:#8A3A3A;--rose-soft:rgba(138,58,58,0.08);
+  --moss:#4A6A2A;--moss-soft:rgba(74,106,42,0.10);
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;
+  color:var(--text);min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),radial-gradient(900px 600px at 50% 92%,rgba(31,61,47,0.04) 0%,transparent 60%),linear-gradient(135deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.75);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+
+.hero{max-width:1100px;margin:0 auto;padding:72px 32px 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-size:clamp(48px,7vw,88px);font-weight:600;line-height:0.95;margin:0 0 16px;letter-spacing:-2.5px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:18px;font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1.2px;color:var(--text-faint);margin-top:10px}
+.hero-meta span strong{color:var(--ink);font-weight:600;margin-left:4px}
+.hero-desc{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+
+.section{max-width:1100px;margin:44px auto 0;padding:0 32px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px}
+.sec-num{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:500}
+.sec-title{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;margin:0;color:var(--ink);letter-spacing:0.5px}
+.sec-sub{margin-left:auto;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-faint)}
+
+.card{position:relative;background:rgba(244,241,234,0.65);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:18px;padding:22px 26px;margin-bottom:16px;transition:border-color .25s,box-shadow .25s}
+.card:hover{border-color:rgba(31,61,47,0.22);box-shadow:0 8px 28px rgba(31,61,47,0.06)}
+.card-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;margin-bottom:12px}
+.card-title{font-family:'Noto Serif SC',serif;font-size:17px;font-weight:700;margin:0 0 16px;color:var(--ink);letter-spacing:0.3px;border-bottom:1px solid var(--line);padding-bottom:10px}
+
+.chain{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr;gap:8px;align-items:stretch}
+.chain-step{padding:16px 14px;border-radius:12px;text-align:center}
+.chain-step .label{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.chain-step .detail{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--text-dim);line-height:1.55}
+.chain-step .badge{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;letter-spacing:1.5px;color:var(--text-faint);margin-bottom:4px}
+.arrow{display:grid;place-items:center;font-size:18px;color:var(--accent);font-family:'Space Grotesk',sans-serif}
+.step-do2{background:var(--teal-soft);border:1px solid rgba(26,94,110,0.25)}
+.step-mic{background:var(--plum-soft);border:1px solid rgba(90,42,74,0.25)}
+.step-vo2{background:var(--rose-soft);border:1px solid rgba(138,58,58,0.25)}
+.step-mit{background:var(--moss-soft);border:1px solid rgba(74,106,42,0.25)}
+
+.qchain{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;gap:10px;align-items:stretch}
+.qstep{background:rgba(31,61,47,0.05);border:1px solid var(--line);border-radius:12px;padding:18px 16px;text-align:center}
+.qstep .qnum{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600;color:var(--accent);line-height:1;margin-bottom:6px;letter-spacing:-1px}
+.qstep .qtext{font-family:'Noto Serif SC',serif;font-size:14.5px;font-weight:600;color:var(--ink)}
+.q-arr{display:grid;place-items:center;font-size:18px;color:var(--accent)}
+.q-leg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.q-leg-item{background:rgba(31,61,47,0.04);padding:8px 10px;border-radius:8px;font-family:'Noto Serif SC',serif;font-size:12px;color:var(--text-dim);line-height:1.5;text-align:center}
+
+.mon-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.mon-item{background:rgba(31,61,47,0.04);border-left:3px solid var(--teal);border-radius:6px;padding:12px 14px}
+.mon-item .m-label{font-family:'Noto Serif SC',serif;font-size:13.5px;font-weight:700;color:var(--ink)}
+.mon-item .m-desc{font-family:'Noto Serif SC',serif;font-size:12px;color:var(--text-dim);margin-top:3px;line-height:1.5}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col{display:flex;flex-direction:column}
+
+.tbl{width:100%;border-collapse:collapse;font-family:'Space Grotesk',sans-serif;font-size:12.5px}
+.tbl th{text-align:left;padding:8px 10px;border-bottom:1.5px solid var(--ink);font-family:'Noto Serif SC',serif;font-size:12px;font-weight:700;color:var(--ink);letter-spacing:0.3px}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);font-family:'Noto Serif SC',serif;color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .num{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600}
+.warn{font-size:11px;color:var(--text-faint);margin-top:8px;font-family:'Noto Serif SC',serif;line-height:1.55}
+.warn strong{color:var(--accent)}
+
+.level-row{display:flex;gap:12px;align-items:stretch;margin-bottom:10px}
+.level-num{flex:0 0 56px;background:var(--ink);color:var(--bg);border-radius:10px;display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.5px}
+.level-box{flex:1;background:rgba(31,61,47,0.04);border-left:3px solid var(--teal);border-radius:8px;padding:10px 14px}
+.level-box .time{font-family:'Space Grotesk',sans-serif;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-faint);margin-bottom:2px}
+.level-box .content{font-family:'Noto Serif SC',serif;font-size:12.5px;color:var(--text);line-height:1.55}
+
+.thr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.thr{background:rgba(31,61,47,0.04);border:1px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center}
+.thr .val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:var(--accent);line-height:1;letter-spacing:-0.5px}
+.thr .what{font-family:'Noto Serif SC',serif;font-size:11px;color:var(--text-dim);margin-top:4px;line-height:1.4}
+
+.footer{max-width:1100px;margin:56px auto 0;padding:28px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11.5px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.4px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+.source{max-width:1100px;margin:24px auto 0;padding:0 32px;font-family:'Noto Serif SC',serif;font-size:11.5px;color:var(--text-faint);text-align:center;line-height:1.7}
+
+@media(max-width:860px){.chain{grid-template-columns:1fr}.chain .arrow{transform:rotate(90deg);padding:4px 0}.qchain{grid-template-columns:1fr}.q-arr{transform:rotate(90deg);padding:4px 0}.cols{grid-template-columns:1fr}.mon-grid{grid-template-columns:1fr}.thr-grid{grid-template-columns:repeat(2,1fr)}.brand-sub{display:none}}
+@media(max-width:560px){.hero{padding:48px 18px 16px}.section,.source,.footer{padding-left:18px;padding-right:18px}.topbar{margin:12px 12px 0;padding:12px 16px}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<div class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</div>
+<div class="topbar-right">
+<nav class="crumb">
+<a href="../knowledge-map.html">知识地图</a><span class="sep">/</span>
+<span style="color:var(--ink);">血流动力学基础理论</span>
+</nav>
+<a href="../index.html" class="home-pill">&larr; 返回首页</a>
+</div>
+</header>
+
+<section class="hero">
+<div class="eyebrow">循环 · 02 — 血流动力学</div>
+<h1>血流动力学<span class="dot">.</span>基础理论</h1>
+<div class="hero-meta">
+<span>章节<strong>第 21 章 (9 节)</strong></span>
+<span>来源<strong>《实用重症医学》刘大为主编 第 2 版</strong></span>
+</div>
+<p class="hero-desc">从监测到治疗的范式转变 — 心脏泵功能三要素 — 静脉回流与前负荷 — 胸腔内压影响 — 后负荷与心室-动脉偶联 — 容量状态与反应性 — 多参数综合 — 氧输送与组织缺氧 — 微循环与线粒体。</p>
+</section>
+
+<!-- ═══════════ 1. 从监测到治疗 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 01 / SEVEN</span>
+<h2 class="sec-title">从监测到治疗</h2>
+<span class="sec-sub">PARADIGM SHIFT</span>
+</div>
+
+<div class="card">
+<span class="card-tag">概念</span>
+<h3 class="card-title">血流动力学：不止是监测，更是治疗</h3>
+<div class="qchain">
+<div class="qstep"><div class="qnum">监测</div><div class="qtext">指标 → 发现问题</div></div>
+<div class="q-arr">&rarr;</div>
+<div class="qstep"><div class="qnum">治疗</div><div class="qtext">目标导向 → 定量调控</div></div>
+<div class="q-arr">&rarr;</div>
+<div class="qstep"><div class="qnum">终点</div><div class="qtext">组织灌注改善</div></div>
+</div>
+<div class="q-leg">
+<div class="q-leg-item"><strong>核心转变</strong><br>从"看数字"到"用数字治病"</div>
+<div class="q-leg-item"><strong>治疗特点</strong><br>连续 · 动态 · 个体化 · 定量</div>
+<div class="q-leg-item"><strong>整体观</strong><br>器官间相互影响，局部治疗影响全局</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">范式</span>
+<h3 class="card-title">血流动力学治疗的三个核心属性</h3>
+<div class="mon-grid">
+<div class="mon-item"><div class="m-label">目标导向性</div><div class="m-desc">每个参数都有目标值。治疗是目标值变化的过程。没有哪个参数能解释全貌，但目标值有固定特定意义。</div></div>
+<div class="mon-item"><div class="m-label">连续动态性</div><div class="m-desc">不同时间点的治疗方向、程度、目标可以不同。休克治疗从"维持血压"到"灌注导向"是进步。</div></div>
+<div class="mon-item"><div class="m-label">整体协调性</div><div class="m-desc">ARDS 机械通气 → 胸腔内压↑ → CVP↑ → 静脉回流↓ → CO↓ → 肾损伤 → 水钠潴留 → 肺损伤加重。</div></div>
+<div class="mon-item"><div class="m-label">个体化治疗</div><div class="m-desc">从整体目标出发，在可操作位点定量调控。不同患者同一参数意义不同，需个体化滴定。</div></div>
+</div>
+</div>
+</section>
+
+<!-- ═══════════ 2. 心脏泵功能 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 02 / SEVEN</span>
+<h2 class="sec-title">心脏泵功能</h2>
+<span class="sec-sub">STARLING · SYSTOLIC · DIASTOLIC</span>
+</div>
+
+<div class="card">
+<span class="card-tag">STARLING</span>
+<h3 class="card-title">Starling 定律：前负荷决定每搏做功</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">核心表述</div><div class="m-desc">心肌收缩产生的能量是心肌纤维初长度的函数。舒张末容积越大 → 收缩做功越多 → SV 越多。</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">曲线特征</div><div class="m-desc">陡峭段：P↑ → SV 明显↑（容量有储备）<br>平台段：P↑ → SV 不再↑（容量无储备）<br>正常时不出现下降支。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">收缩力改变</div><div class="m-desc">收缩力↓ → 曲线右移（同前负荷做功↓）<br>收缩力↑ → 曲线左移（同前负荷做功↑）</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">生理意义</div><div class="m-desc">回心血量↑ → 前负荷↑ → CO↑ → 回心血量=CO 平衡。精细调节心输出量。</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">收缩</span>
+<h3 class="card-title">心室收缩功能</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">异长自身调节</div><div class="m-desc">基于 Starling 定律：初长度改变 → 收缩力改变。前负荷依赖。</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">等长自身调节</div><div class="m-desc">与初长度无关的收缩力本身改变。受自主神经、体液因素影响。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="warn"><strong>临床监测：</strong>SV、SWI、EF、dP/dt max 等动态指标。活体几乎不可能去除前/后负荷影响，只能动态观察趋势。</div>
+<div class="warn"><strong>收缩力↓ 常见原因：</strong>急性心梗、低氧、严重感染、酸中毒、心肌抑制药物。</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">舒张</span>
+<h3 class="card-title">心室舒张功能（顺应性）</h3>
+<table class="tbl">
+<tr><th>概念</th><th>公式</th><th>意义</th></tr>
+<tr><td>顺应性</td><td class="num">&Delta;V/&Delta;P</td><td>单位压力改变导致的容量改变。顺应性↑ = 心室更"软"。</td></tr>
+<tr><td>硬度</td><td class="num">&Delta;P/&Delta;V</td><td>顺应性的倒数。硬度↑ = 曲线左移，少量输液即致压力骤升。</td></tr>
+</table>
+<div class="warn"><strong>关键：</strong>同一心室，容量越大 → 顺应性越小。小容量时输液 Δa → Δc（压力小变）；大容量时同样 Δa → Δb（压力大变）。</div>
+<div class="warn"><strong>顺应性↓ 原因：</strong>容量逐渐增加、心肌缺血、心脏压塞、PEEP、休克、儿茶酚胺。<br><strong>顺应性↑ 原因：</strong>心肌灌注改善、硝酸甘油/硝普钠/钙通道阻滞剂。</div>
+</div>
+</section>
+
+<!-- ═══════════ 3. 静脉回流与前负荷 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 03 / SEVEN</span>
+<h2 class="sec-title">静脉回流与前负荷</h2>
+<span class="sec-sub">MCFP · STRESSED VOLUME · CVP</span>
+</div>
+
+<div class="card">
+<span class="card-tag">VR</span>
+<h3 class="card-title">静脉回流 = 心输出量的上游决定因素</h3>
+<div class="chain">
+<div class="chain-step step-do2"><div class="badge">MCFP</div><div class="label">平均循环充盈压</div><div class="detail">心脏停搏时的循环内压力<br>≈ 10~15 mmHg<br>取决于循环容量 + 血管张力</div></div>
+<div class="arrow">&minus;</div>
+<div class="chain-step step-mic"><div class="badge">CVP</div><div class="label">中心静脉压</div><div class="detail">静脉回流下游压力<br>右房压 ≈ 静脉回流终点</div></div>
+<div class="arrow">=</div>
+<div class="chain-step step-vo2"><div class="badge">VR</div><div class="label">静脉回流量</div><div class="detail">VR = (MCFP − CVP) / R<sub>v</sub><br>= CO（稳态时）</div></div>
+<div class="arrow">&rarr;</div>
+<div class="chain-step step-mit"><div class="badge">CO</div><div class="label">心输出量</div><div class="detail">VR 的下游结果<br>CO = SV × HR</div></div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">容量</span>
+<h3 class="card-title">张力容量 vs 非张力容量</h3>
+<div class="cols">
+<div class="col">
+<table class="tbl">
+<tr><th>类型</th><th>占比</th><th>作用</th></tr>
+<tr><td><strong>非张力容量</strong></td><td class="num">70~75%</td><td>维持血管形状，不产生管腔内压力</td></tr>
+<tr><td><strong>张力容量</strong></td><td class="num">25~30%</td><td>牵拉血管壁产生张力 → 形成 MCFP</td></tr>
+</table>
+</div>
+<div class="col">
+<div class="warn"><strong>气球比喻：</strong>维持形状的气体 = 非张力容量；继续吹大 → 气球壁受牵拉产生压力 = 张力容量。</div>
+<div class="warn"><strong>只有张力容量决定 MCFP。</strong>血管收缩药使非张力→张力容量（MCFP↑）；血管扩张则相反。</div>
+<div class="warn"><strong>大出血代偿：</strong>机体使非张力→张力容量，维持 MCFP 和回心血量。代偿耗尽后血压骤降。</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">压力</span>
+<h3 class="card-title">CVP 与 PAWP 的临床价值与局限</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">CVP 反映右心前负荷</div><div class="m-desc">中心静脉与右房几乎无阻力 → 近似直接测量。同时受心功能曲线和静脉回流曲线影响。</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">CVP 的局限</div><div class="m-desc">基础 CVP 不能预测容量反应性。CVP 在 0~20 mmHg 之间均有无反应者。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">PAWP 反映左心前负荷</div><div class="m-desc">气囊嵌顿后测左房压。左右心顺应性不同，急性左心衰时 PAWP 比 CVP 更敏感。</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">PAWP 的局限</div><div class="m-desc">不是直接测量 LAP；受胸腔内压、二尖瓣病变等影响。同样不能预测容量反应性。</div></div>
+</div>
+</div>
+</div>
+<div class="warn"><strong>共识：</strong>CVP 8~12 mmHg、PAWP 12~15 mmHg 仅为专家推荐，非金标准。CVP/PAWP 作为容量复苏安全性指标而非反应性预测指标。</div>
+</div>
+</section>
+
+<!-- ═══════════ 4. 胸腔内压的影响 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 04 / SEVEN</span>
+<h2 class="sec-title">胸腔内压的影响</h2>
+<span class="sec-sub">PEEP · SVV · PPV</span>
+</div>
+
+<div class="card">
+<span class="card-tag">ITP</span>
+<h3 class="card-title">正压通气如何影响循环</h3>
+<div class="chain">
+<div class="chain-step step-do2"><div class="badge">PEEP</div><div class="label">胸腔内压↑</div><div class="detail">心功能曲线右移<br>MCFP 不变</div></div>
+<div class="arrow">&rarr;</div>
+<div class="chain-step step-mic"><div class="badge">CVP↑</div><div class="label">MCFP−CVP↓</div><div class="detail">静脉回流驱动力↓<br>回心血量↓</div></div>
+<div class="arrow">&rarr;</div>
+<div class="chain-step step-vo2"><div class="badge">CO↓</div><div class="label">心输出量↓</div><div class="detail">VR↓ → CO↓<br>容量不足时更显著</div></div>
+<div class="arrow">&rarr;</div>
+<div class="chain-step step-mit"><div class="badge">代偿</div><div class="label">血管收缩</div><div class="detail">非张力→张力容量<br>MCFP↑ 维持 VR</div></div>
+</div>
+<div class="warn"><strong>代偿极限：</strong>容量充足时代偿良好；容量不足时非张力→张力转化潜力耗尽 → CO↓↓ → 血压↓↓。甚至呼吸周期即可引起血压波动（SVV/PPV 的基础）。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">动态</span>
+<h3 class="card-title">SVV / PPV：呼吸变异预测容量反应性</h3>
+<table class="tbl">
+<tr><th>指标</th><th>定义</th><th>界值</th><th>适用条件</th></tr>
+<tr><td><strong>SPV</strong></td><td>SBP<sub>max</sub> − SBP<sub>min</sub></td><td class="num">Δdown ≥ 5 mmHg</td><td>机械通气</td></tr>
+<tr><td><strong>PPV</strong></td><td>(PP<sub>max</sub>−PP<sub>min</sub>) / PP<sub>mean</sub></td><td class="num">≥ 11~15%</td><td>机械通气 + 窦律</td></tr>
+<tr><td><strong>SVV</strong></td><td>(SV<sub>max</sub>−SV<sub>min</sub>) / SV<sub>mean</sub></td><td class="num">≤ 10% 无反应</td><td>PiCCO 脉搏轮廓</td></tr>
+</table>
+<div class="warn"><strong>PPV Checklist：</strong>机械通气且无自主呼吸 ✓ · Vt ≥ 8 ml/kg ✓ · 窦性心律 ✓ · 无严重瓣膜病 ✓ · 胸壁顺应性正常 ✓ · 无严重心功能不全 ✓ · 腹内压正常 ✓</div>
+<div class="warn"><strong>陷阱：</strong>急性肺心病/肺动脉高压时 PPV 假阳性（PPV > 20% 但无容量反应性）；高频通气时 PPV 假阴性。</div>
+</div>
+</section>
+
+<!-- ═══════════ 5. 后负荷 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 05 / SEVEN</span>
+<h2 class="sec-title">后负荷与心室-动脉偶联</h2>
+<span class="sec-sub">SVR · EA/EES</span>
+</div>
+
+<div class="card">
+<span class="card-tag">射血</span>
+<h3 class="card-title">心室射血过程：动脉弹性储器效应</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">收缩期</div><div class="m-desc">心室压↑ → 主动脉瓣开放 → SV 快速射入大动脉。动脉壁扩张，储存部分 SV。</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">瓣膜关闭</div><div class="m-desc">心室内压↓ 至 = 动脉压 → 主动脉瓣关闭 → 收缩期结束。剩余 40~50 ml 为正常收缩末容积（ESV）。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="warn"><strong>动脉弹性储器效应：</strong>收缩期扩张储能 → 舒张期弹性回缩继续推动血流 → 维持舒张压 + 保证组织灌注连续性。</div>
+<div class="warn"><strong>临床意义：</strong>老年/高血压/动脉硬化 → 储器效应↓ → 收缩压↑、舒张压↓、脉压↑ → 后负荷↑ → 心室做功↑、冠脉灌注↓。这是高血压靶器官损害的核心机制。</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">后负荷</span>
+<h3 class="card-title">SVR：左心室后负荷的主要指标</h3>
+<table class="tbl">
+<tr><th>公式</th><th>参数</th><th>意义</th></tr>
+<tr><td class="num">SVR = 80 &times; (MAP &minus; RAP) / CO</td><td>MAP = 平均动脉压<br>RAP = 右房压<br>CO = 心输出量</td><td>后负荷↑ → CO↓（负相关）<br>后负荷↓ → SV↑ + 耗氧↓</td></tr>
+</table>
+<div class="warn"><strong>SVR 的局限：</strong>建立在恒流、均质假设上，忽略了波动性。大动脉是弹性器官，心脏射血是搏动性的。不同病理状态和药物干预下可能高估或低估。</div>
+<div class="warn"><strong>SVR↑ 不一定需要血管扩张药：</strong>容量不足时 SVR 可因 CO↓ 而计算值升高，补液后自然下降。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">偶联</span>
+<h3 class="card-title">心室-动脉偶联（Ea/Ees）</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">Ees（心室收缩末弹性）</div><<div class="m-desc">心肌收缩能力指标。收缩力↑ → Ees↑ → 曲线左移。</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">Ea（有效动脉弹性）</div><div class="m-desc">后负荷综合指标。后负荷↑ → Ea↑ → 曲线右移。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--moss)"><div class="m-label">Ea/Ees 比值</div><div class="m-desc">决定每搏量和收缩末压力。Ea/Ees↓ → SV↑。<br>最优偶联点：Ea/Ees ≈ 1。</div></div>
+<div class="mon-item" style="border-left-color:var(--plum)"><div class="m-label">临床应用</div><div class="m-desc">调整后负荷 → 改变偶联 → 调控容量反应性。老年人动脉僵硬 Ea↑，少量输液即致血压骤升。</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══════════ 6. 容量反应性 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 06 / SEVEN</span>
+<h2 class="sec-title">容量反应性评估</h2>
+<span class="sec-sub">FLUID RESPONSIVENESS</span>
+</div>
+
+<div class="card">
+<span class="card-tag">状态</span>
+<h3 class="card-title">容量状态评估 ≠ 容量反应性</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">压力指标</div><div class="m-desc">CVP（中心静脉压）、PAWP（肺动脉嵌顿压）。床旁易得，但预测反应性差。</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">容积指标</div><div class="m-desc">GEDV（全心舒张末容积）、ITBV（胸腔内血容积）、LVEDA（左室舒张末面积）。需 PiCCO/超声。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="warn"><strong>关键区分：</strong>容量状态是「现在有多少」（静态），容量反应性是「加一点会怎样」（动态）。</div>
+<div class="warn"><strong>研究证据：</strong>CVP/PAWP 与 EDV/SV 无相关性，变化也无密切相关。CVP/PAWP 8~12 / 12~15 mmHg 仅为专家推荐复苏目标。</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">定义</span>
+<h3 class="card-title">容量反应性 = 前负荷储备的潜能</h3>
+<div class="qchain">
+<div class="qstep"><div class="qnum">有反应</div><div class="qtext">CO/SV ↑ ≥ 10~15%<br>双心室均在 Starling 上升支</div></div>
+<div class="q-arr">&rarr;</div>
+<div class="qstep"><div class="qnum">扩容获益</div><div class="qtext">稳定血流动力学<br>提高氧输送</div></div>
+<div class="q-arr">&rarr;</div>
+<div class="qstep"><div class="qnum">终点</div><div class="qtext">组织灌注改善<br>乳酸清除</div></div>
+</div>
+<div class="warn"><strong>关键区分：</strong>容量反应性 ≠ 容量不足。存在容量反应性说明有前负荷储备，不代表一定需要补液。</div>
+<div class="warn"><strong>盲目扩容：</strong>仅 40~72% 的扩容治疗有反应。ARDS 限制性液体管理氧合改善、ICU 住院时间缩短。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">方法</span>
+<h3 class="card-title">三种评估方法对比</h3>
+<table class="tbl">
+<tr><th>方法</th><th>原理</th><th>优点</th><th>局限</th></tr>
+<tr><td><strong>PPV/SVV</strong></td><td>心肺相互作用：呼吸变异 → SV 变异</td><td>连续、实时、无创</td><td>需机械通气 + 窦律 + Vt≥8；心律失常/自主呼吸失效</td></tr>
+<tr><td><strong>容量负荷试验</strong></td><td>30 min 内输晶体 500~1000 ml → 观察 CO 变化</td><td>操作简单、最常用</td><td>诊断性方法非治疗手段；有容量过负荷风险</td></tr>
+<tr><td><strong>PLRT</strong></td><td>抬腿 → 自体输血 200~300 ml → 观察 CO</td><td>可逆、可重复、不受自主呼吸/心律失常影响</td><td>需实时监测 CO；交感刺激干扰；体位要求</td></tr>
+</table>
+<div class="warn"><strong>PLRT 阳性标准：</strong>主动脉流速 ↑ ≥ 10%~13%（敏感性和特异性均 &gt; 80%，21 章 338 行）。效果维持 ~10 min，多在 1~2 min 内出现 CO 改变。</div>
+<div class="warn"><strong>容量负荷试验 5 要素：</strong>① 液体种类 ② 用量 ③ 时间 ④ 预期效应 ⑤ 患者特点。</div>
+</div>
+</section>
+
+<!-- ═══════════ 7. 综合评估 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 07 / SEVEN</span>
+<h2 class="sec-title">多项参数综合应用</h2>
+<span class="sec-sub">CURVES · ZONES · ABC</span>
+</div>
+
+<div class="card">
+<span class="card-tag">曲线</span>
+<h3 class="card-title">心室功能曲线：PAWP vs LVSWI</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">曲线 A：正常</div><div class="m-desc">PAWP↑ → LVSWI 明显↑（上升支）<br>PAWP 继续↑ → LVSWI 不再↑（平台支）</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">曲线 B/C：心功能↓</div><div class="m-desc">曲线下移变平。需更高前负荷才能维持 CO。<br>正性肌力药使曲线回升（C→B→A）。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="warn"><strong>心功能点：</strong>同时测量 PAWP 和 LVSWI，在图中标出位置。连续监测可动态反映心功能变化。</div>
+<div class="warn"><strong>治疗指导：</strong><br>· 扩容 → 沿曲线右移（PAWP↑）<br>· 利尿 → 沿曲线左移（PAWP↓）<br>· 正性肌力 → 曲线上移<br>· 血管扩张 → 左上移（前负荷↓ + 收缩力↑）</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">分区</span>
+<h3 class="card-title">心功能分区图：CI vs PAWP 四象限</h3>
+<table class="tbl">
+<tr><th>区域</th><th>CI</th><th>PAWP</th><th>状态</th><th>治疗原则</th></tr>
+<tr><td class="num">I</td><td>正常</td><td>正常</td><td>正常范围</td><td>无需特殊治疗</td></tr>
+<tr><td class="num">II</td><td class="num">&darr;</td><td>正常</td><td>前负荷不足 或 收缩力↓</td><td>扩容 或 正性肌力</td></tr>
+<tr><td class="num">III</td><td>正常</td><td class="num">&uarr;</td><td>高负荷代偿</td><td>利尿 / 血管扩张</td></tr>
+<tr><td class="num">IV</td><td class="num">&darr;</td><td class="num">&uarr;</td><td>充血性心衰</td><td>减前负荷 + 正性肌力</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="card-tag">ABC</span>
+<h3 class="card-title">血流动力学 ABC 理论</h3>
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">A — 心脏前负荷</div><div class="m-desc">容量状态 + 容量反应性。调整 CVP/PAWP 到最佳点。CVP 不等于容积，但仍有安全边界意义。</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">B — 心脏泵功能</div><div class="m-desc">心肌收缩力。CO/SV/SWI 反映泵功能。正性肌力药（多巴酚丁胺/米力农）提升泵功能。</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">C — 后负荷</div><div class="m-desc">SVR。血管扩张药降低后负荷 → CO↑。但需维持灌注压（MAP ≥ 65 mmHg）。</div></div>
+<div class="mon-item" style="border-left-color:var(--moss)"><div class="m-label">整合</div><div class="m-desc">三个变量相互依赖。调节一个必须考虑对另外两个的影响。目标：整体最佳化而非单一参数正常化。</div></div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">PV</span>
+<h3 class="card-title">左心室压力-容积环（P-V Loop）：综合心功能的最直观工具</h3>
+<table class="tbl">
+<tr><th>阶段</th><th>瓣膜</th><th>心室内变化</th></tr>
+<tr><td><strong>A → B（充盈）</strong></td><td>二尖瓣开</td><td>心室被血液充盈，压力略升。AB 段斜率反映<strong>顺应性</strong>。</td></tr>
+<tr><td><strong>B → C（等容收缩）</strong></td><td>二尖瓣关→主动脉瓣未开</td><td>压力急升，容积不变。</td></tr>
+<tr><td><strong>C → D（射血）</strong></td><td>主动脉瓣开</td><td>心室继续收缩，血液射入动脉。</td></tr>
+<tr><td><strong>D → A（等容舒张）</strong></td><td>主动脉瓣关</td><td>压力急降，容积不变。剩余 40~50 ml 为 ESV。</td></tr>
+</table>
+<div class="warn"><strong>关键点位：</strong>B 点横坐标 = 舒张末容积（EDV）；D 点横坐标 = 收缩末容积（ESV）；BC 与 AD 间距 = 每搏量（SV）。</div>
+<div class="warn"><strong>心功能改变 → 环位移：</strong>收缩力↓ → SV↓、ESV↑（环内缩）；前负荷↑、后负荷不变 → SV↑（环右移但更宽）；后负荷↑ → EDV 代偿性↑（整个环右移）。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">双心室</span>
+<h3 class="card-title">左、右心室的不同特点：双心室处理策略的解剖基础</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">右心室特点</div><div class="m-desc">心肌薄、顺应性高、容量大但压力低。RV 衰时需<strong>维持前负荷</strong>（避免利尿/扩血管）。</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">室间隔互动</div><div class="m-desc">RV 扩张 → 室间隔左移 → 挤压 LV → LV 顺应性↓ → 即使 RV 容量↑，LV CO 也可能下降。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">左心室特点</div><div class="m-desc">心肌厚、压力高、对后负荷敏感。LV 衰时减少前负荷 + 增强收缩力为主。</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">双心室失代偿</div><div class="m-desc">双侧衰竭时容量-压力变化趋于平行，肺水肿风险低于单纯 LV 衰。扩容难使 CO↑。</div></div>
+</div>
+</div>
+</div>
+<div class="warn"><strong>临床要点：</strong>输液量过大 → 双心室负荷共同↑ → 肺水肿风险。LV 衰时 RV 压力略增即可致 LAP 显著↑（超过胶体渗透压 ~24 mmHg）→ 严重肺水肿。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">参数</span>
+<h3 class="card-title">其他常用参数：心肌收缩力监测的具体指标</h3>
+<table class="tbl">
+<tr><th>指标</th><th>反映</th><th>优势 / 局限</th></tr>
+<tr><td><strong>EF（射血分数）</strong></td><td>SV / EDV</td><td>弱化前负荷影响，但受后负荷影响明显</td></tr>
+<tr><td><strong>SWI（每搏做功指数）</strong></td><td>心室射血实际做功</td><td>综合前/后负荷信息，<strong>较 SV 更相关</strong>。儿茶酚胺可使 SWI 升高（等长调节）。</td></tr>
+<tr><td><strong>心室收缩末斜率（Ees）</strong></td><td>不同前负荷下收缩末点连线</td><td>斜率与收缩力正相关，受前负荷影响<strong>极小</strong>，最直接反映收缩力</td></tr>
+<tr><td><strong>超声（EF / FS / 室壁运动）</strong></td><td>整体或节段收缩功能</td><td>直观、可床旁，三维成像与自动边界技术拓展应用</td></tr>
+</table>
+</div>
+</section>
+
+<!-- ═══════════ 8. 氧输送及其相关问题 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 08 / SEVEN</span>
+<h2 class="sec-title">氧输送及其相关问题</h2>
+<span class="sec-sub">DO₂ · VO₂ · SvO₂</span>
+</div>
+
+<div class="card">
+<span class="card-tag">DO₂</span>
+<h3 class="card-title">氧输送 (DO₂)：左心向全身输送的氧总量</h3>
+<table class="tbl">
+<tr><th>公式</th><th>参数</th><th>正常值</th></tr>
+<tr><td class="num">DO₂ = CO × CaO₂ × 10</td><td>CO = 心输出量<br>CaO₂ = 动脉血氧含量<br>(主要取决于 SaO₂ + Hb)</td><td><strong>500~700</strong> ml/(min·m²)<br>(静息态)</td></tr>
+</table>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">氧的存在形式</div><div class="m-desc">① 血红蛋白结合（主要运输方式，每 g Hb 结合 1.34 ml O₂）<br>② 物理溶解（少量，0.022 ml/100ml/100mmHg）</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">系统依赖</div><div class="m-desc">呼吸系统（SaO₂）+ 血液系统（Hb）+ 循环系统（CO）三者共同决定。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="warn"><strong>氧的储存特性：</strong>组织不能储存氧 → 每一刻都需要供给 → 纠正组织缺氧=支持治疗主要目标。</div>
+<div class="warn"><strong>临床意义：</strong>DO₂ 从"诊断指标"演变为"连续动态监测指标"——是休克复苏的核心目标之一。</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">VO₂</span>
+<h3 class="card-title">氧耗量 (VO₂) 与氧摄取率 (O₂ext)</h3>
+<table class="tbl">
+<tr><th>公式</th><th>正常值</th><th>意义</th></tr>
+<tr><td class="num">VO₂ = CO × (CaO₂ − CvO₂) × 10</td><td>120~160 ml/(min·m²)</td><td>组织实际消耗的氧量。VO₂ &lt; 氧需量 = 组织缺氧</td></tr>
+<tr><td class="num">O₂ext = (CaO₂ − CvO₂) / CaO₂</td><td>22%~30%</td><td>反映组织摄取氧的能力</td></tr>
+</table>
+<div class="warn"><strong>关键区分：</strong>VO₂（实际耗氧量）≠ 氧需量（组织代谢需要）。VO₂ 受组织氧摄取能力影响。</div>
+<div class="warn"><strong>升高 VO₂ 的路径：</strong>① 提升 DO₂（治标） ② 改善组织氧利用（治本） ③ 降低不必要氧耗（镇静/控温）。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">SvO₂</span>
+<h3 class="card-title">静脉血氧饱和度：组织水平缺氧的窗口</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">SvO₂（混合静脉血）</div><div class="m-desc">来自肺动脉，反映全身组织平均氧剩。正常 65%~75%。</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">ScvO₂（中心静脉）</div><div class="m-desc">来自上腔静脉，仅反映上半身体。临床更易获得。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">SvO₂ ↓ 的意义</div><div class="m-desc">动脉氧供不足 或 组织摄取↑ → 强烈提示组织缺氧。</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">SvO₂ ↑ 的意义</div><div class="m-desc">外周血管扩张/分流（如感染性休克、肝硬化）。单纯提高 DO₂ 不足以纠正组织缺氧。</div></div>
+</div>
+</div>
+</div>
+<div class="warn"><strong>复苏里程碑：</strong>Rivers EGDT 试验把 ScvO₂ ≥ 70% 作为感染性休克早期复苏终点，显著降低死亡率。这是氧代谢导向治疗的经典证据。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">临界值</span>
+<h3 class="card-title">DO₂-VO₂ 相关性：氧输送临界值</h3>
+<div class="chain">
+<div class="chain-step step-do2"><div class="badge">DO₂ 充足</div><div class="label">非依赖</div><div class="detail">VO₂ 不随 DO₂ 变化<br>组织氧需已满足</div></div>
+<div class="arrow">&rarr;</div>
+<div class="chain-step step-mic"><div class="badge">临界点</div><div class="label">DO₂_crit</div><div class="detail">约 <strong>330</strong> ml/(min·m²)<br>(静息态麻醉正常人)</div></div>
+<div class="arrow">&rarr;</div>
+<div class="chain-step step-vo2"><div class="badge">DO₂ ↓</div><div class="label">依赖</div><div class="detail">VO₂ 随 DO₂ ↓ 而↓<br>组织缺氧 / 氧债</div></div>
+</div>
+<div class="warn"><strong>不同休克类型的临界值偏移：</strong><br>· 低容量/心源性/梗阻性休克：DO₂ 明显 ↓，组织摄氧代偿<br>· 感染性休克：临界值 ↑ + 摄取率 ↓ → 早期即呈 DO₂ 依赖 → 易发生组织缺氧</div>
+<div class="warn"><strong>临床策略：</strong>复苏目标不是把 DO₂ 推到"正常值"，而是<strong>推到高于当前临界值</strong>，让 VO₂ 摆脱 DO₂ 依赖。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">临床应用</span>
+<h3 class="card-title">氧代谢导向的临床整合</h3>
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">监测组合</div><div class="m-desc">CO + ScvO₂ + 乳酸清除率 + pH + 尿量 = 全身氧代谢评估。</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">复苏阶段目标</div><div class="m-desc">早期：MAP ≥ 65、ScvO₂ ≥ 70%、乳酸 ↓<br>后期：避免过度复苏、限制性液体管理</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">干预手段</div><div class="m-desc">补液/输血/正性肌力 → 升 DO₂<br>镇痛镇静/控温/抗惊厥 → 降不必要 VO₂</div></div>
+<div class="mon-item" style="border-left-color:var(--moss)"><div class="m-label">根本目标</div><div class="m-desc">消除组织氧债，而非单纯数字达标。需动态评估+滴定式治疗。</div></div>
+</div>
+</div>
+</section>
+
+<!-- ═══════════ 关键阈值 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">REF</span>
+<h2 class="sec-title">关键阈值速查</h2>
+</div>
+<div class="thr-grid">
+<div class="thr"><div class="val">8~12</div><div class="what">CVP (mmHg)<br>容量复苏安全上限</div></div>
+<div class="thr"><div class="val">12~15</div><div class="what">PAWP (mmHg)<br>左心前负荷参考</div></div>
+<div class="thr"><div class="val">&ge; 10%</div><div class="what">CO/SV 增加<br>容量反应性阳性标准</div></div>
+<div class="thr"><div class="val">11~15%</div><div class="what">PPV 界值<br>预测容量反应性</div></div>
+<div class="thr"><div class="val">250~300</div><div class="what">15 min 输液量 (ml)<br>容量负荷试验</div></div>
+<div class="thr"><div class="val">200~300</div><div class="what">PLRT 回心血量 (ml)<br>自体输血效应</div></div>
+</div>
+</section>
+
+<!-- ═══════════ 9. 微循环和线粒体功能障碍 ═══════════ -->
+<section class="section">
+<div class="sec-head">
+<span class="sec-num">— 09 / SEVEN</span>
+<h2 class="sec-title">休克患者的微循环和线粒体功能障碍</h2>
+<span class="sec-sub">MICROCIRCULATION · MITOCHONDRIA</span>
+</div>
+
+<div class="card">
+<span class="card-tag">分期</span>
+<h3 class="card-title">微循环障碍的经典分期与发生机制</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">三期演变</div><div class="m-desc"><strong>缺血性缺氧期</strong>：代偿性血管收缩<br><strong>淤血性缺氧期</strong>：血管床开放、血液淤滞<br><strong>微循环衰竭期</strong>：DIC 样改变</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">启动因素</div><div class="m-desc">有效循环血容量↓、Hb↓、SaO₂↓、心功能抑制、器官灌注压↓。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">参与机制</div><div class="m-desc">① 组织氧代谢障碍<br>② 微循环自调节功能障碍<br>③ 自由基损伤<br>④ 白细胞-内皮相互作用<br>⑤ 凝血功能紊乱</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">共同后果</div><div class="m-desc">大循环到微循环的氧输送↓，即使 DO₂ 正常甚至↑，局部仍缺氧。</div></div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<span class="card-tag">细胞机制</span>
+<h3 class="card-title">微循环障碍的细胞与流变学机制</h3>
+<table class="tbl">
+<tr><th>机制</th><th>病理改变</th><th>后果</th></tr>
+<tr><td><strong>血管舒缩调节</strong></td><td>阻力血管舒缩功能受损</td><td>灌注压调节失代偿</td></tr>
+<tr><td><strong>内皮细胞</strong></td><td>功能障碍/凋亡，屏障破坏</td><td>通透性↑、水肿、炎性激活</td></tr>
+<tr><td><strong>中性粒细胞</strong></td><td>活化↑，黏附、聚集、释放促炎介质</td><td>毛细血管堵塞、损伤</td></tr>
+<tr><td><strong>凝血系统</strong></td><td>微血栓形成</td><td>功能性毛细血管密度↓</td></tr>
+<tr><td><strong>毛细血管密度</strong></td><td>开放数量↓、血管间距↑</td><td>氧弥散距离↑ → 细胞缺氧</td></tr>
+<tr><td><strong>血液流变学</strong></td><td>红细胞变形能力↓、流速异常</td><td>微循环淤滞</td></tr>
+</table>
+</div>
+
+<div class="card">
+<span class="card-tag">PO₂ gap</span>
+<h3 class="card-title">为什么大循环正常不等于组织不缺氧</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">临床困惑</div><div class="m-desc">部分感染性休克患者：CVP/MAP/CO/DO₂/ScvO₂ 已达目标，<strong>乳酸酸中毒、MODS 仍持续进展</strong>。</div></div>
+<div class="mon-item" style="border-left-color:var(--rose)"><div class="m-label">心功能悖论</div><div class="m-desc">40%~50% 感染性休克有 EF↓，但冠脉造影正常、冠脉血流正常、活检无坏死，且完全可逆。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">PO₂ gap（氧分压间隙）</div><div class="m-desc">微循环内 PO₂ &lt; 静脉血 PO₂ → 代表分流的严重程度。<strong>全身 DO₂ 指标会掩盖微循环障碍</strong>。</div></div>
+<div class="mon-item" style="border-left-color:var(--teal)"><div class="m-label">微循环异质性</div><div class="m-desc">Boerma 等用 OPS 观察到感染性休克患者毛细血管<strong>开放数量显著减少、灌注异质性</strong>（部分低灌、部分正常甚至超常）。</div></div>
+</div>
+</div>
+</div>
+<div class="warn"><strong>关键启示：</strong>全身氧输送指标不能准确反映微循环功能障碍——解释了为什么"宏观达标"但组织缺氧仍进展。</div>
+</div>
+
+<div class="card">
+<span class="card-tag">展望</span>
+<h3 class="card-title">微循环与线粒体：休克治疗的"细胞"层</h3>
+<div class="cols">
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">线粒体功能障碍</div><div class="m-desc">休克时细胞利用氧障碍——即使 DO₂ 正常，<strong>细胞内仍缺氧</strong>。</div></div>
+<div class="mon-item" style="border-left-color:var(--accent)"><div class="m-label">现有监测工具</div><div class="m-desc">舌下 CO₂ 张力、经皮 PO₂/PCO₂、组织氧电极、NIRS、OPS/SDF 暗场成像、微透析仪。</div></div>
+</div>
+</div>
+<div class="col">
+<div class="mon-grid">
+<div class="mon-item" style="border-left-color:var(--moss)"><div class="m-label">治疗探索</div><div class="m-desc">血管扩张剂（硝酸甘油、硝普钠、莨菪碱、己酮可可碱）改善微循环。Ince 报告 OPS 改善但未降低病死率。</div></div>
+<div class="mon-item" style="border-left-color:var(--moss)"><div class="m-label">现实</div><div class="m-desc">目前无普遍接受的改善微循环的方案/药物，<strong>仍处于临床研究阶段</strong>。</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<div class="source">
+基于《实用重症医学》第 2 版 第 21 章 · 刘大为 等编著<br>
+仅供学习参考，临床决策以实际诊疗为准
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 知识地图板块</div>
+<a href="../knowledge-map.html">&larr; 返回知识地图</a>
+</footer>
+</body>
+</html>

@@ -2435,6 +2435,24 @@ function calcBg() {
     else if (na > 145) critHtml += `<div class="bg-critical-item warn">Na⁺ ${na} mmol/L · 高钠血症</div>`;
     else critHtml += `<div class="bg-critical-item ok">✓ Na⁺ ${na} mmol/L 正常</div>`;
   }
+  // Cl⁻ (正常 98-106, 中位 102 — 与代酸分型ΔCl基准102配套)
+  // 高氯/低氯均可致病:低氯→代谢性碱中毒;高氯→正常AG型代谢性酸中毒
+  if (cl !== null) {
+    if (cl < 90) critHtml += `<div class="bg-critical-item danger">⚠ <b>Cl⁻ ${cl} mmol/L · 重度低氯 (危急值 <90, 易致代碱)</b></div>`;
+    else if (cl < 98) critHtml += `<div class="bg-critical-item warn">Cl⁻ ${cl} mmol/L · 低氯 (易致代碱, 警惕)</div>`;
+    else if (cl > 115) critHtml += `<div class="bg-critical-item danger">⚠ <b>Cl⁻ ${cl} mmol/L · 重度高氯 (危急值 >115, 易致高氯性代酸)</b></div>`;
+    else if (cl > 106) critHtml += `<div class="bg-critical-item warn">Cl⁻ ${cl} mmol/L · 高氯 (易致高氯性代酸, 警惕)</div>`;
+    else critHtml += `<div class="bg-critical-item ok">✓ Cl⁻ ${cl} mmol/L 正常 (98-106)</div>`;
+  }
+  // AG (需 Na/Cl 同时填了)
+  // 临床意义:AG 升高提示高 AG 型代酸(乳酸/酮症/肾衰/中毒),是死性代酸标志
+  if (na !== null && cl !== null) {
+    const agTmp = na - (cl + hco3);
+    if (agTmp > 30) critHtml += `<div class="bg-critical-item danger">⚠ <b>AG ${agTmp.toFixed(0)} ↑↑ 确诊高 AG 代酸 (>30, 乳酸/酮症/肾衰/中毒)</b></div>`;
+    else if (agTmp >= 20) critHtml += `<div class="bg-critical-item warn">AG ${agTmp.toFixed(0)} ↑ 提示高 AG 代酸 (≥20, 需结合临床)</div>`;
+    else if (agTmp > 16) critHtml += `<div class="bg-critical-item warn">AG ${agTmp.toFixed(0)} 临界 (16-20 仅 20% 有酸中毒, 动态观察)</div>`;
+    else critHtml += `<div class="bg-critical-item ok">✓ AG ${agTmp.toFixed(0)} 正常 (8-16)</div>`;
+  }
   setText('bg-critical', critHtml || '<div class="bg-seg-need-venous">输入参数后评估。</div>');
 
   // ═══════════════════════════════════════
@@ -2531,7 +2549,8 @@ function calcBg() {
     }
   }
 
-  // --- 危急值 (电解质/乳酸) ---
+  // --- 危急值 (电解质/乳酸/AG) ---
+  // 与 ⑤ 栏分档详查互补: ⑤ 给临床医生单看, ⑥ 汇总到异常总览
   // K+ 正常 3.5-5.5, 超出即危急值
   if (k !== null && (k < 3.5 || k > 5.5)) abnormals.push({text: `K⁺ ${k} mmol/L ${k<3.5?'↓':'↑'} (危急值)`, cls: 'tier-danger'});
   if (na !== null && (na < 135 || na > 145)) abnormals.push({text: `Na⁺ ${na} mmol/L ${na<135?'↓':'↑'}`, cls: na<125||na>155?'tier-danger':'tier-warn'});

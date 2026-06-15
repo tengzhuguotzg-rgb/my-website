@@ -2195,7 +2195,10 @@ function calcBg() {
       const deltaAG = ag - 16;
       const latentHco3 = hco3 + deltaAG;
       // 计算原发失衡的 HCO3 代偿上限 (含容差)
-      let upperLimit = 27;
+      // 原发代酸时无呼吸因素干扰, HCO3 正常上限 24 即判代碱的门槛
+      //   (代酸本应让 HCO3 降, 潜在 HCO3 = 排除高AG掩盖后 > 24 即提示被代碱抬高)
+      // 旧版默认 27 会漏掉潜在 HCO3 24-27 这段代碱
+      let upperLimit = 24;
       if (primary.includes('呼吸性酸中毒')) {
         const coef = acute === 'acute' ? 0.1 : 0.35;
         const tol = acute === 'acute' ? 0 : 5.58;
@@ -2532,11 +2535,11 @@ function calcBg() {
   // K+ 正常 3.5-5.5, 超出即危急值
   if (k !== null && (k < 3.5 || k > 5.5)) abnormals.push({text: `K⁺ ${k} mmol/L ${k<3.5?'↓':'↑'} (危急值)`, cls: 'tier-danger'});
   if (na !== null && (na < 135 || na > 145)) abnormals.push({text: `Na⁺ ${na} mmol/L ${na<135?'↓':'↑'}`, cls: na<125||na>155?'tier-danger':'tier-warn'});
-  if (cl !== null && (cl < 96 || cl > 108)) abnormals.push({text: `Cl⁻ ${cl} mmol/L ${cl<96?'↓':'↑'}`, cls: 'tier-warn'});
+  if (cl !== null && (cl < 98 || cl > 106)) abnormals.push({text: `Cl⁻ ${cl} mmol/L ${cl<98?'↓':'↑'} (正常 98-106, 中位 102)`, cls: 'tier-warn'});
   if (lac !== null && lac > 2) abnormals.push({text: `乳酸 ${lac} ↑ ${lac>4?'(显著, 死亡率≈40.9%)':'(组织缺氧/低灌注)'}`, cls: lac>4?'tier-danger':'tier-warn'});
   if (na !== null && cl !== null) {
     const ag = na - (cl + hco3);
-    if (ag > 20) abnormals.push({text: `AG ${ag.toFixed(0)} ↑ (>20 提示高 AG 代酸, >30 确诊)`, cls: 'tier-warn'});
+    if (ag >= 20) abnormals.push({text: `AG ${ag.toFixed(0)} ↑ (≥20 提示高 AG 代酸, >30 确诊)`, cls: 'tier-warn'});
   }
 
   // --- 汇总输出 ---

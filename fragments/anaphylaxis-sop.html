@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>过敏性休克抢救全流程SOP · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>急腹症</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">急腹症</div>
+<h1>过敏性休克抢救全流程SOP</h1>
+<p class="lede">抖音科普视频，临床医护核心培训素材。讲透过敏性休克抢救全流程：第一步阻断触发源+优化体位；第二步肌注肾上腺素（唯一一线，无绝对禁忌）；第三步同步氧疗+快速补液；第四步二线药物（抗组胺药/激素）+难治性升压；第五步强制留观防双相反应。附剂量、注射位置、观察时间分级。</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> 抖音科普视频（临床医护人员核心培训）</p>
+<p><strong>时长：</strong> 10:40</p>
+<p><strong>处理时间：</strong> 2026年05月28日</p>
+<p><strong>模型：</strong> Whisper（音频）+ MiniMax-M2.7（视频帧）</p>
+<h2>视频总结</h2>
+<h3>核心逻辑</h3>
+<p>过敏性休克抢救的核心是<strong>分秒必争</strong>，视频以"生死时速"为主题，系统讲解从首次反应到后续留观的完整SOP。</p>
+<h3>抢救SOP六步流程</h3>
+<h4>第一步：评估与体位 — 立即阻断触发源</h4>
+<p><strong>操作：</strong></p>
+<ul>
+<li>立刻停止接触可疑过敏原（食物/药物/接触物）</li>
+<li>快速评估气道、呼吸、循环及意识</li>
+<li>持续监测血氧饱和度及精神状态</li>
+</ul>
+<p><strong>体位干预：</strong></p>
+<table><tr><th>患者情况</th><th>推荐体位</th><th>目的</th></tr><tr><td>基础（耐受）</td><td>仰卧位 + 下肢抬高 45°</td><td>促进静脉回流</td></tr><tr><td>呼吸困难</td><td>坐位</td><td>利于呼吸通畅</td></tr><tr><td>意识丧失</td><td>恢复体位（侧卧位）</td><td>防止误吸/气道阻塞</td></tr></table>
+<hr>
+<h4>第二步：绝对一线 — 肌注肾上腺素（重中之重）</h4>
+<p><strong>核心主张：</strong> 过敏性休克的紧急处理核心是立即肌肉注射肾上腺素。<strong>无绝对禁忌症</strong>——在危及生命的过敏性休克面前，肾上腺素没有任何绝对禁忌。</p>
+<p><strong>注射位置：</strong> 大腿中前外侧（股外侧肌），深部肌肉注射</p>
+<p><strong>剂量方案：</strong></p>
+<table><tr><th>人群</th><th>剂量</th><th>说明</th></tr><tr><td>成人</td><td>0.3–0.5 mg（1:1000溶液）</td><td>首选肌注</td></tr><tr><td>儿童</td><td>0.01 mg/kg（1:1000溶液）</td><td>单次最多不超过 0.3 mg</td></tr></table>
+<p><strong>重复给药规则：</strong></p>
+<ul>
+<li>5–15 分钟内症状无改善或加重 → 立即重复注射相同剂量</li>
+<li>绝大多数患者打 1–2 针即明显好转</li>
+</ul>
+<p><strong>三大同步支持（不可或缺）：</strong></p>
+<p>1. <strong>气道管理</strong> — 确保呼吸顺畅</p>
+<p>2. <strong>呼吸/循环支持</strong> — 辅助呼吸和循环</p>
+<p>3. <strong>快速液体复苏</strong> — 补充血容量</p>
+<hr>
+<h4>第三步：同步支持 — 吸氧 + 快速补液</h4>
+<p><strong>气道管理与呼吸支持（分四级）：</strong></p>
+<table><tr><th>级别</th><th>干预</th><th>适应情况</th></tr><tr><td>Level 1（基础）</td><td>高流量吸氧 8–10 L/min</td><td>所有患者</td></tr><tr><td>Level 2（痉挛）</td><td>雾化吸入沙丁胺醇</td><td>支气管痉挛</td></tr><tr><td>Level 3（高级）</td><td>紧急气管插管</td><td>喉头水肿/上呼吸道阻塞</td></tr><tr><td>Level 4（终极）</td><td>环甲膜切开或气管切开</td><td>插管失败</td></tr></table>
+<p><strong>快速补液策略：</strong></p>
+<table><tr><th>要素</th><th>要求</th></tr><tr><td>通路</td><td>大口径静脉（14–16 号套管针）</td></tr><tr><td>液体</td><td>首选晶体液（生理盐水）</td></tr><tr><td>最初 5 分钟</td><td>成人 5–10 mL/kg（儿童 20–30 mL/kg）快速输注</td></tr><tr><td>第 1 小时内</td><td>必要时成人需输注 1–2 L</td></tr></table>
+<blockquote><p>过敏时血管通透性增加，水分易流失到组织，补液量往往比预想大得多。</p></blockquote>
+<hr>
+<h4>第四步：二线与特殊 — 不可替代一线</h4>
+<p><strong>抗组胺药定位（二线，不能替代肾上腺素）：</strong></p>
+<ul>
+<li>H1 受体拮抗剂（苯海拉明、氯雷他定等）：仅缓解皮肤症状（荨麻疹、瘙痒）</li>
+<li><strong>无法纠正低血压或解除气道阻塞</strong></li>
+<li><strong>起效慢（需 4–6 小时），绝不可先于肾上腺素使用</strong></li>
+<li>病情稳定后可考虑联用 H2 受体拮抗剂（如法莫替丁）增强皮肤症状控制</li>
+</ul>
+<p><strong>糖皮质激素定位（预防为主，非急性期一线）：</strong></p>
+<ul>
+<li>起效需 4–6 小时，在黄金抢救时间内"等不起"</li>
+<li>主要用途：</li>
+</ul>
+<p>1. <strong>预防或减轻双相反应</strong></p>
+<p>2. 处理持续性支气管痉挛（证据有限）</p>
+<ul>
+<li>常用方案：甲泼尼龙 40–80 mg IV 或氢化可的松</li>
+</ul>
+<p><strong>难治性过敏性休克 — 升压策略升级：</strong></p>
+<p><strong>定义：</strong> 对 2–3 剂肌注肾上腺素及充分液体复苏仍无反应。</p>
+<table><tr><th>步骤</th><th>措施</th></tr><tr><td>1. 全面转 IV</td><td>立即启动肾上腺素持续静脉输注</td></tr><tr><td>2. 极量补液</td><td>持续积极液体复苏至血压稳定</td></tr><tr><td>3. 多靶点升压</td><td>联合去甲肾上腺素、血管加压素等</td></tr></table>
+<p><strong>静脉肾上腺素使用（极高危，仅限以下指征）：</strong></p>
+<ul>
+<li>指征：肌注无反应、意识丧失、即将心跳骤停、难治性休克</li>
+<li>必须稀释：1:1000 原液 → 稀释 10 倍 → <strong>1:10000 溶液</strong> 使用</li>
+</ul>
+<table><tr><th>给药方式</th><th>剂量</th></tr><tr><td>静脉推注（成人）</td><td>0.1–0.2 mg（1:10000 溶液 1–2 mL）</td></tr><tr><td>静脉推注（儿童）</td><td>0.01 mg/kg（1:10000 溶液）</td></tr><tr><td>持续输注起始</td><td>0.1 μg/(kg·min)，根据血压调整</td></tr></table>
+<p><strong>β受体阻滞剂患者 — 胰高血糖素解药：</strong></p>
+<ul>
+<li>患者正在服用 β受体阻滞剂且对肾上腺素反应差时</li>
+<li>机制：绕过 β受体阻滞，直接发挥作用</li>
+<li>方案：</li>
+<li>静脉推注：1–5 mg（推注时间 >5 分钟）</li>
+<li>持续输注：5–15 μg/min</li>
+<li>辅助：肾上腺素抵抗的支气管痉挛可加用雾化 β₂受体激动剂</li>
+</ul>
+<hr>
+<h4>第五步：心脏骤停 — CPR 与高级生命支持</h4>
+<p><strong>触发条件：</strong> 患者心脏骤停</p>
+<p><strong>核心指令：</strong></p>
+<p>1. 立即停止一切常规观察</p>
+<p>2. 就地开始标准心肺复苏（CPR）—— 胸外按压 + 人工呼吸</p>
+<p>3. 全面启动 ACLS（高级生命支持）流程</p>
+<p>4. 极端情况可考虑大剂量肾上腺素静脉给药</p>
+<hr>
+<h4>第六步：强制留观 — 谨防双相反应</h4>
+<p><strong>双相反应（biphasic reaction）：</strong></p>
+<ul>
+<li>首次过敏症状缓解后，危险并未解除</li>
+<li>在首次反应后 <strong>1 小时至 72 小时</strong>内，症状可能毫无征兆地再次爆发</li>
+<li>就像火山：第一次喷发完了，岩浆还在地下涌动</li>
+</ul>
+<p><strong>留观分级标准：</strong></p>
+<table><tr><th>严重程度</th><th>观察时间</th><th>判定标准</th></tr><tr><td>轻度（绿色）</td><td><strong>至少 2 小时</strong></td><td>轻度反应 + 对 1 剂肾上腺素反应良好</td></tr><tr><td>中高危（橙色）</td><td><strong>至少 6 小时或过夜</strong></td><td>需 2 剂肾上腺素才缓解 + 伴有其他高危因素</td></tr><tr><td>极高危（红色）</td><td><strong>至少住院 24 小时</strong></td><td>严重休克 + 需 >2 剂肾上腺素 + 药物诱发过敏</td></tr></table>
+<hr>
+<h3>完整SOP总览</h3>
+<pre><code>第一步：评估与体位
+   ↓ 停触发源 + 平卧抬腿 + 测生命体征
+
+第二步：【绝对一线】肌注肾上腺素 0.3–0.5 mg（成人）
+   ↓ 5–15分钟无改善即重复
+   ↓ （无绝对禁忌症）
+
+第三步：【同步支持】
+   → 高流量吸氧 (8–10 L/min)
+   → 大口径静脉快速补液（前5分钟 5–10 mL/kg）
+
+第四步：【二线与特殊】
+   → 抗组胺药/糖皮质激素（不可替代一线）
+   → 难治性 → 静脉肾上腺素 + 升压药
+   → β阻滞剂患者 → 胰高血糖素
+
+第五步：【心脏骤停】立即 CPR + ACLS
+
+第六步：【强制留观】
+   → 轻度 2H / 中高危 6H–过夜 / 极高危 24H
+   → 谨防双相反应</code></pre>
+<h2>相关条目</h2>
+<ul>
+<li>肾上腺危象 — 糖皮质激素用法、液体复苏、重症抢救流程重叠</li>
+<li>类癌危象 — 支气管痉挛（沙丁胺醇）、过敏样症状鉴别</li>
+<li>脓毒症早期识别：六个临床陷阱 — 休克识别、液体复苏、ABCS 评估重叠</li>
+<li>休克早期识别的6个隐匿信号 — 休克早期识别流程重叠</li>
+<li>index</li>
+</ul>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

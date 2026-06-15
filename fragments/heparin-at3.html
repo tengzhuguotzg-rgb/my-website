@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>肝素抗凝失效——AT3缺乏的机制与临床处理 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>抗凝血栓</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">抗凝血栓</div>
+<h1>肝素抗凝失效——AT3缺乏的机制与临床处理</h1>
+<p class="lede">肝素本身不直接抗凝，需与AT3结合才能发挥作用；AT3缺乏时即使大剂量肝素也抗凝失效，核心解决思路是补充AT3。</p>
+</section>
+
+<article class="article">
+<h2>原始视频内容</h2>
+<blockquote>
+<p><strong>❗ 核心结论（视频原文）</strong>
+肝素本身不抗凝，是与 AT3（抗凝血酶 III）结合后，才发挥抗凝作用。当 AT3 很低时，即使大剂量肝素，抗凝效果也会大幅减弱。</p>
+</blockquote>
+<p>本视频为 AI 生成医疗短剧片段（豆包AI生成），通过&quot;肝素抗凝失效→AT3缺乏&quot;这一临床场景，讲解肝素与 AT3 的药理学关系。</p>
+<h2>AT3 与肝素的分子机制</h2>
+<h3>肝素抗凝的必需辅因子</h3>
+<p>肝素类药物（普通肝素、低分子肝素）本身<strong>不直接抑制凝血酶（IIa）或 Xa 因子</strong>。其抗凝机制依赖于：</p>
+<ol>
+<li>肝素分子与血浆中的 <strong>抗凝血酶 III（AT3）</strong> 特异性结合</li>
+<li>结合后，引起 AT3 构象改变，使其抑制活性 <strong>增强约 1000 倍</strong></li>
+<li>AT3-肝素复合物加速抑制 <strong>凝血酶（IIa）</strong> 和 <strong>Xa 因子</strong></li>
+<li>肝素作为桥梁，促进 AT3 与凝血酶的结合（通过五糖序列识别）</li>
+</ol>
+<h3>AT3 的生理功能</h3>
+<p>AT3 是血浆中最重要的生理性抗凝蛋白，主要抑制：</p>
+<ul>
+<li>凝血酶（IIa）</li>
+<li>因子 IXa、Xa、XIa、XIIa</li>
+<li>纤溶酶</li>
+</ul>
+<p>AT3 正常血浆浓度：<strong>0.12–0.39 mg/mL（对应活性 80%–120%）</strong></p>
+<h2>AT3 缺乏与肝素抵抗</h2>
+<h3>病因分类</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>机制</th>
+<th>常见场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>先天缺乏</strong></td>
+<td>AT3 基因突变导致合成减少</td>
+<td>罕见，年轻人血栓史</td>
+</tr>
+<tr>
+<td><strong>获得性缺乏</strong></td>
+<td>合成减少/消耗增多/丢失</td>
+<td>肝硬化/脓毒症/DIC/肾病综合征/大量输血</td>
+</tr>
+<tr>
+<td><strong>功能性缺乏</strong></td>
+<td>AT3 被其他物质结合/抑制</td>
+<td>DIC（凝血酶大量生成耗竭 AT3）</td>
+</tr>
+<tr>
+<td><strong>氨基酸糖基化异常</strong></td>
+<td>肝功能受损影响 AT3 糖基化</td>
+<td>严重肝衰竭</td>
+</tr>
+</tbody></table>
+<h3>肝素抵抗的临床定义</h3>
+<p>肝素抵抗尚无统一标准，常用定义：</p>
+<ul>
+<li><strong>使用肝素时，需将 aPTT 维持在目标范围所需肝素剂量 &gt; 35,000 U/24h</strong></li>
+<li>或：标准肝素剂量下无法达到目标抗 Xa 水平（0.3–0.7 IU/mL）</li>
+</ul>
+<h3>AT3 缺乏时肝素为什么失效</h3>
+<p>关键逻辑链：</p>
+<pre><code>AT3 缺乏 → 肝素无法找到足够的 AT3 结合 → AT3-肝素复合物生成不足
+→ AT3 对凝血酶/Xa 的抑制无法增强 → 抗凝效应大幅下降
+即使加大肝素剂量：AT3 是&quot;锁&quot;，肝素是&quot;钥匙&quot;，锁不够用，钥匙再多也无济于事
+</code></pre>
+<blockquote>
+<p><strong>⚠️ 临床警示</strong>
+ICU 中 AT3 缺乏最常见的场景是 <strong>DIC</strong>（大量凝血酶生成消耗 AT3）和 <strong>肝功能不全</strong>（AT3 合成减少）。这两个场景恰恰也是重症患者最需要抗凝的时候——此时若只加肝素，可能越加越无效，越加越增加出血风险。</p>
+</blockquote>
+<h2>临床处理策略</h2>
+<h3>第一步：识别 AT3 缺乏</h3>
+<ul>
+<li><strong>检测 AT3 活性</strong>（发色底物法，正常 &gt;80%）</li>
+<li><strong>AT3 抗原水平</strong>（免疫比浊法，正常 0.12–0.39 mg/mL）</li>
+<li>注意：DIC 时 AT3 抗原和活性可能同时下降</li>
+</ul>
+<h3>第二步：补充 AT3</h3>
+<table>
+<thead>
+<tr>
+<th>补充方式</th>
+<th>剂量原则</th>
+<th>注意事项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>新鲜冰冻血浆（FFP）</strong></td>
+<td>10–20 mL/kg，首次；或 1 U FFP 约提升 AT3 3%–5%</td>
+<td>需要大量输注，有容量过负荷风险；输血相关肺损伤（TRALI）</td>
+</tr>
+<tr>
+<td><strong>AT3 浓缩制剂</strong></td>
+<td>负荷剂量 50–100 IU/kg，维持 50–100 IU/kg/d，目标 AT3 活性 &gt;80%</td>
+<td>首选（如果可及）；高纯度；无病毒风险</td>
+</tr>
+<tr>
+<td><strong>低分子肝素（LMWH）</strong></td>
+<td>AT3 缺乏时 LMWH 效果也下降（程度轻于普通肝素）</td>
+<td>不推荐单纯依赖 LMWH 替代</td>
+</tr>
+</tbody></table>
+<h3>第三步：调整抗凝方案</h3>
+<ul>
+<li>AT3 活性 &lt;50%：优先补充 AT3，再启动/维持抗凝</li>
+<li>AT3 活性 50%–80%：可考虑预防性补充 FFP，同时减少肝素剂量</li>
+<li>脓毒症相关 DIC：<strong>推荐在补充 AT3 的基础上启动抗凝</strong>（符合中国2024脓毒症凝血病共识）</li>
+</ul>
+<h2>肝素抵抗的其他原因（扩展鉴别）</h2>
+<blockquote>
+<p><strong>💡 鉴别思路</strong>
+AT3 缺乏是肝素抵抗最重要的原因，但不是唯一原因。以下情况也可导致肝素抵抗：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>原因</th>
+<th>机制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>血小板因子4（PF4）</strong></td>
+<td>肝素被 PF4 中和，形成抗体复合物反而激活血小板</td>
+</tr>
+<tr>
+<td><strong>血栓弹力图TEG/RoTEM</strong></td>
+<td>如 R &gt; 正常上限 1.5 倍，提示凝血因子缺乏而非 AT3 缺乏</td>
+</tr>
+<tr>
+<td><strong>抗磷脂抗体综合征</strong></td>
+<td>狼疮抗凝物干扰肝素监护指标（aPTT 假性正常）</td>
+</tr>
+<tr>
+<td><strong>低纤维蛋白原血症</strong></td>
+<td>纤维蛋白原 &lt; 1.0 g/L 时，肝素结合位点减少</td>
+</tr>
+<tr>
+<td><strong>甲状腺功能亢进</strong></td>
+<td>增加凝血因子代谢，缩短 aPTT，增加肝素需求</td>
+</tr>
+</tbody></table>
+<h2>原始视频</h2>
+<h2>相关条目</h2>
+<p><a href="#">笔记列表</a></p>
+<p><strong>相关主题：</strong></p>
+<ul>
+<li><a href="#">D二聚体升高的12种常见原因解析</a> — DIC 是 D-二聚体显著升高和 AT3 消耗的共同场景</li>
+<li><a href="#">脓毒症凝血病要不要抗凝</a> — 脓毒症相关凝血病中 AT3 耗竭是核心机制</li>
+<li><a href="#">CRRT枸橼酸抗凝</a> — CRRT 体外抗凝的另一条路（不依赖 AT3）</li>
+</ul>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

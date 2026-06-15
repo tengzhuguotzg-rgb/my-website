@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>急性肠系膜缺血——急诊与ICU的腹部刺客 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>急腹症</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">急腹症</div>
+<h1>急性肠系膜缺血——急诊与ICU的腹部刺客</h1>
+<p class="lede">急性肠系膜缺血（AMI）80%死亡率，从病因（动脉vs静脉）、CT影像特征、治疗原则、四大临床坑进行全面讲解，强调乳酸正常不能排除早期AMI，核心行动指引是立刻开增强CT并提示放射科紧急排查。</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> 13422105943777568.mp4</p>
+<p><strong>时长：</strong> 04:15</p>
+<p><strong>处理时间：</strong> 2026年05月01日</p>
+<h2>核心内容</h2>
+<h3>1. 认识急性肠系膜缺血（AMI）</h3>
+<ul>
+<li>急性肠系膜缺血（AMI）急诊和ICU中<strong>极易被忽略</strong>的疾病</li>
+<li>不是"显形大师"，非常狡猾，一不小心就会被它骗过去</li>
+<li>> 死亡率</li>
+</ul>
+<blockquote><p>急性肠系膜缺血（AMI）死亡率高达 <strong>80%</strong>，极易被误诊漏诊，江湖绰号"腹部刺客"。</p></blockquote>
+<h3>2. 最核心的误区——乳酸正常的陷阱</h3>
+<p><strong>最大误区：</strong> 看到剧烈腹痛 → 查血气 → 乳酸正常 → 先撕了半个气</p>
+<p><strong>真相：</strong> 对于急性肠系膜缺血，<strong>早期乳酸正常才是常态</strong>。等你看到乳酸蹭蹭往上长的时候，肠管八成已经保不住了。</p>
+<blockquote><p>核心警示<br>乳酸正常绝对不能排除早期的急性肠系膜缺血！等你看到乳酸往上走的时候，肠管八成已经保不住了。</p></blockquote>
+<h3>3. 分类——动脉堵 vs 静脉堵，完完全全两码事</h3>
+<table><tr><th></th><th><strong>动脉栓塞</strong></th><th><strong>肠系膜静脉血栓</strong></th></tr><tr><td><strong>病理</strong></td><td>动脉送血，突然中断，肠管立刻变干变瘪</td><td>静脉回流受阻，血瘀在肠壁，肠壁严重水肿增厚</td></tr><tr><td><strong>腹痛特点</strong></td><td>突发、爆炸性剧痛</td><td>逐渐加重的说不清楚的腹痛</td></tr><tr><td><strong>病史线索</strong></td><td>房颤、心瓣膜病等动脉栓塞高危因素</td><td>高凝状态、门静脉血栓等静脉淤滞因素</td></tr><tr><td><strong>CT表现</strong></td><td>血管截断，肠壁变薄，周围肠系膜早期干净</td><td>血管充盈缺损，肠壁增厚，"靶环征"（肠壁分层水肿）</td></tr><tr><td><strong>治疗原则</strong></td><td><strong>通</strong>——时间就是肠管，联系介入科/血管外科快速血运重建</td><td><strong>抗</strong>——只要没有肠坏死，核心策略是抗凝（足量肝素抗凝），建立侧支循环</td></tr></table>
+<h3>4. CT影像三组对比鉴别</h3>
+<table><tr><th></th><th><strong>动脉栓塞</strong></th><th><strong>肠系膜静脉血栓</strong></th></tr><tr><td><strong>血管</strong></td><td>截断（阶段征）</td><td>充盈缺损</td></tr><tr><td><strong>肠壁</strong></td><td>变薄（指样变薄——肠管透壁性坏死的特异性表现）</td><td>增厚（水肿）</td></tr><tr><td><strong>肠系膜</strong></td><td>早期干净</td><td>渗出（水肿，呈"靶环征"）</td></tr></table>
+<h3>5. 治疗决策</h3>
+<p><strong>动脉栓塞：核心是"通"</strong></p>
+<ul>
+<li>时间就是肠管</li>
+<li>立即联系介入科或血管外科</li>
+<li>快速血运重建</li>
+</ul>
+<p><strong>肠系膜静脉血栓：核心是"抗"</strong></p>
+<ul>
+<li>病人还没有肠坏死时：足量肝素抗凝，建立侧支循环，争取时间</li>
+<li>出现肠坏死迹象时：才需要外科上台</li>
+</ul>
+<h3>6. 四大临床"天坑"</h3>
+<p><strong>坑1：看乳酸决策</strong></p>
+<p>乳酸正常不能排除早期AMI，等乳酸升高时肠管往往已经保不住了。</p>
+<p><strong>坑2：保肝而放弃保肠</strong></p>
+<p>一过性的肝酶升高风险大 vs 不可逆的肠坏死风险大，在抢救生命面前这道选择题并不难做。</p>
+<p><strong>坑3：肠壁变薄反而更严重</strong></p>
+<p>肠壁变薄（动脉缺血的指样变薄）是肠管透壁性坏死的特异性表现，代表损伤已经非常严重。</p>
+<p><strong>坑4：把肠管扩张误判为肠麻痹</strong></p>
+<p>在动脉栓塞的背景下，肠管突然失去张力、扩张起来，往往不是简单的功能问题，而是神经肌肉已经缺血坏死——这个损伤可能已经无法逆转。</p>
+<h3>7. 一句话行动指南</h3>
+<blockquote><p>当你面前有一个病人，腹痛非常剧烈，但你查体没什么特别的发现，不管他的乳酸是高是低，请<strong>立刻开出腹部增强CT的申请单</strong>。而且更重要的一步：你一定要在申请单上，或者直接打电话给放射科同事，告诉他——"医生，我这个病人要紧急排查急性肠系膜缺血。"你多说的这几个字，在关键时刻可能就是救回一条命的机会。</p></blockquote>
+<hr>
+<h2>核心知识点</h2>
+<ul>
+<li>AMI 80%死亡率，早期症状隐匿，"乳酸正常"不能作为排除依据</li>
+<li>AMI 分为动脉栓塞（突发剧痛+房颤史）和静脉血栓（渐进性腹痛+高凝病史）两大类</li>
+<li>动脉栓塞CT：血管截断 + 肠壁变薄（靶样征）+ 肠系膜干净</li>
+<li>静脉血栓CT：血管充盈缺损 + 肠壁增厚（水肿）+ "靶环征"</li>
+<li>动脉栓塞治疗核心是"通"（介入/手术）；静脉血栓治疗核心是"抗"（足量肝素）</li>
+<li>四大天坑：乳酸陷阱、保肝弃肠、变薄更危、扩张≠麻痹</li>
+</ul>
+<h2>相关条目</h2>
+<ul>
+<li>静脉回流与Starling曲线 — 肠系膜血流受静脉回流与心输出量双重影响，AMI时血流动力学改变与本文高度相关</li>
+<li>血流动力学治疗5P5A原则-ICU临床思维框架 — 血流动力学评估在急腹症鉴别中的应用</li>
+<li>液体管理PPV避雷指南 — 急腹症液体管理注意事项，容量评估与内脏灌注的关系</li>
+<li>脓毒症找源七步法-De Waele — 肠系膜缺血常继发感染，了解感染源定位思路有助于综合诊治</li>
+</ul>
+<p>index</p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

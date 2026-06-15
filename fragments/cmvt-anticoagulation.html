@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>肌间静脉血栓——抗凝还是观察？风险分层精准拆弹 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>抗凝血栓</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">抗凝血栓</div>
+<h1>肌间静脉血栓——抗凝还是观察？风险分层精准拆弹</h1>
+<p class="lede">肌间静脉血栓（CMVT）治疗决策核心是风险分层；高风险需积极抗凝（DOAC或LMWH急性期→减量维持），低风险可先观察但需动态超声监测；溶栓不常规推荐；ESC 2022/ACCP 2021指南共识</p>
+</section>
+
+<article class="article">
+<h2>核心问题</h2>
+<p><strong>&quot;小腿肌肉里有个小血栓，怎么办？&quot;</strong></p>
+<p>抗凝是一把双刃剑：能防止血栓蔓延/肺栓塞，但也带来出血风险。<br>精准决策的关键：<strong>个体化风险分层</strong>——血栓进展风险 vs 出血风险，两权相害取其轻。</p>
+<h2>风险分层决策框架</h2>
+<h3>高风险 → 立即启动抗凝</h3>
+<table>
+<thead>
+<tr>
+<th>风险类别</th>
+<th>具体指标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>症状性</strong></td>
+<td>小腿明显疼痛+肿胀+皮温升高</td>
+</tr>
+<tr>
+<td><strong>超声特征</strong></td>
+<td>长度&gt;5cm / 直径粗 / 多条静脉受累 / 接近大腿近端大血管</td>
+</tr>
+<tr>
+<td><strong>合并高危因素</strong></td>
+<td>高龄 / 恶性肿瘤 / 近期大手术 / 长期卧床 / D-二聚体显著升高</td>
+</tr>
+<tr>
+<td><strong>动态进展</strong></td>
+<td>复查超声显示血栓在2周内仍在蔓延</td>
+</tr>
+</tbody></table>
+<h3>低风险 → 先观察（但需动态监测）</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>高出血风险</strong></td>
+<td>血小板极低 / 凝血功能障碍 / 近期活动性出血</td>
+</tr>
+<tr>
+<td><strong>低风险人群</strong></td>
+<td>无症状或症状轻微 / 血栓小 / 无恶性肿瘤 / D-二聚体不高</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>❗ 低风险≠完全不管</strong>
+需定期超声复查+症状监测，持续跟踪是必须的。</p>
+</blockquote>
+<h2>抗凝治疗方案</h2>
+<h3>急性期（发病2周内）</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>用药</th>
+<th>给药方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DOAC（首选）</strong></td>
+<td>利伐沙班 / 阿哌沙班</td>
+<td>口服</td>
+</tr>
+<tr>
+<td><strong>LMWH（备选）</strong></td>
+<td>低分子肝素（如依诺肝素）</td>
+<td>皮下注射</td>
+</tr>
+</tbody></table>
+<p><strong>DOAC优势</strong>：效果稳定、无需频繁监测凝血指标、用药方便</p>
+<h3>维持期（减量方案）</h3>
+<table>
+<thead>
+<tr>
+<th>药物</th>
+<th>急性期</th>
+<th>维持期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>利伐沙班</td>
+<td>15mg bid</td>
+<td>20mg qd</td>
+</tr>
+<tr>
+<td>阿哌沙班</td>
+<td>10mg bid</td>
+<td>5mg bid</td>
+</tr>
+</tbody></table>
+<h3>抗凝疗程</h3>
+<table>
+<thead>
+<tr>
+<th>人群</th>
+<th>推荐疗程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>低风险人群</td>
+<td><strong>4~6周</strong></td>
+</tr>
+<tr>
+<td>高风险人群（高龄/活动性肿瘤/血栓复发史/长期制动）</td>
+<td><strong>3个月</strong></td>
+</tr>
+</tbody></table>
+<h2>指南怎么说</h2>
+<h3>ESC 2022 共识</h3>
+<ul>
+<li><strong>高风险远端DVT</strong>（含CMVT）→ 处理标准<strong>等同于近端DVT</strong> → 抗凝<strong>至少3个月</strong></li>
+<li>低风险患者 → 可考虑较短疗程（4~6周LMWH）或密切超声监测</li>
+</ul>
+<h3>ACCP 2021 指南</h3>
+<ul>
+<li><strong>有症状或伴血栓延伸风险的孤立性远端DVT</strong> → 抗凝强度和疗程<strong>等同于近端DVT</strong></li>
+<li>再次印证：CMVT不能一概而论，需看具体风险高低</li>
+</ul>
+<h2>溶栓——不常规推荐</h2>
+<p><strong>原因</strong>：风险收益比太低</p>
+<ul>
+<li>溶栓药副作用大，<strong>出血风险极高</strong></li>
+<li>CMVT大部分可通过抗凝控制或自行吸收</li>
+<li>仅在以下情况才考虑：血栓非常大 / 明确向近端发展趋势 / 已出现严重并发症</li>
+</ul>
+<h2>特殊情况的处理</h2>
+<h3>高出血风险暂缓抗凝</h3>
+<ol>
+<li>严密观察 <strong>2周</strong>（每周超声复查）</li>
+<li>若发现血栓向大腿方向蔓延 → 立即评估出血风险</li>
+<li>出血风险可控 → 立即启动抗凝</li>
+</ol>
+<h3>下腔静脉滤器（IVC filter）</h3>
+<p>指征：</p>
+<ul>
+<li>明确抗凝禁忌证</li>
+<li>反复发生肺栓塞的高危患者</li>
+</ul>
+<blockquote>
+<p>滤器如&quot;网兜&quot;放在下腔静脉里，拦截万一脱落的血栓，防止致命肺栓塞。但不作为常规推荐。</p>
+</blockquote>
+<h2>规范化诊疗全景图</h2>
+<pre><code>风险评估 → 患者分层 → 精准抗凝 → 动态超声
+     ↑                                  |
+     ←────── 持续循环优化 ←──────────────
+</code></pre>
+<p><strong>四步循环</strong>：风险评估（侦探摸案）→ 患者分层 → 精准抗凝策略 → 动态超声监测（贯穿始终）</p>
+<blockquote>
+<p><strong>临床铁律</strong>：精准评估 + 个体化治疗 + 动态监测</p>
+</blockquote>
+<h2>相关条目</h2>
+<ul>
+<li><a href="#">急性肠系膜缺血——急诊与ICU的腹部刺客</a> — 静脉血栓相关，肠系膜静脉血栓同属深静脉血栓范畴</li>
+<li><a href="#">D二聚体升高的12种常见原因解析</a> — D-二聚体作为CMVT风险分层的重要指标</li>
+<li><a href="#">休克早期识别的6个隐匿信号</a> — 肺栓塞相关，PE是CMVT最严重的并发症</li>
+</ul>
+<hr>
+<p><em>视频来源：抖音-心血管科普（ID: 7636747169220463891）</em><br><em>时长：9分57秒 | H.264 1440×1080 | 152段字幕</em></p>
+<p><a href="#">笔记列表</a></p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

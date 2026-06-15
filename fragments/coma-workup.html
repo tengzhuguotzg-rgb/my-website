@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>未知原因昏迷的阶梯式临床诊断策略 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>急腹症</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">急腹症</div>
+<h1>未知原因昏迷的阶梯式临床诊断策略</h1>
+<p class="lede">2026年Intensive Care Medicine发表述评，系统提出基于昏迷病理生理机制的阶梯式诊断算法，整合床旁查体、EEG、神经影像、实验室检查，强调早期识别可逆性病因和规律再评估。</p>
+</section>
+
+<article class="article">
+<h2>文献信息</h2>
+<ul>
+<li><strong>作者</strong>：Stein Silva, Miriam Treggiari, Giuseppe Citerio, Robert David Stevens, Marzia De Lucia, Virginia Newcombe 等</li>
+<li><strong>期刊</strong>：Intensive Care Medicine, 2026</li>
+<li><strong>DOI</strong>：<a href="https://doi.org/10.1007/s00134-026-08418-1">10.1007/s00134-026-08418-1</a></li>
+<li><strong>类型</strong>：Narrative Review（2026年发表）</li>
+<li><strong>发表</strong>：© 2026 The Author(s)</li>
+</ul>
+<hr>
+<h2>核心 Take-home Message</h2>
+<blockquote><p>核心结论<br>未知原因昏迷的评估需要一个<strong>结构化、时间敏感的阶梯式诊断流程</strong>，从床旁查体出发，整合 EEG、神经影像、实验室检查，逐步定位病因，规律再评估。</p></blockquote>
+<p><strong>6大关键原则</strong>：</p>
+<p>1. 神经系统查体是早期定位的<strong>基石</strong>，整合脑干反射与运动模式</p>
+<p>2. CT 是<strong>一线神经影像</strong>，但正常 CT 不能排除严重病因；MRI 提供更优的结构敏感性</p>
+<p>3. 所有不明原因昏迷患者应<strong>尽早行 EEG</strong>，排查非惊厥性癫痫并评估丘脑皮层网络功能</p>
+<p>4. 实验室检查优先筛查<strong>代谢急症、血氨、内分泌异常、毒理学因素</strong></p>
+<p>5. <strong>规律再评估</strong>是强制要求——昏迷是动态过程，临床路径可能迅速改变</p>
+<p>6.  Emerging：高级 MRI、连续 EEG 分析、CMD 检测、AI 辅助解读</p>
+<hr>
+<h2>1. 病理生理基础</h2>
+<h3>意识的两维度模型</h3>
+<table><tr><th>维度</th><th>定义</th><th>神经解剖基础</th></tr><tr><td><strong>觉醒（Arousal）</strong></td><td>醒觉水平</td><td>ARAS（上行网状激活系统）：胆碱能、谷氨酸能、5-HT 能神经元</td></tr><tr><td><strong>觉知（Awareness）</strong></td><td>感知自身与环境的能力</td><td>前额叶-顶叶网络 + 丘脑皮层连接</td></tr></table>
+<h3>Mesocircuit 前额叶-顶叶模型</h3>
+<ul>
+<li>正常：兴奋性丘脑皮层投射经由前额叶皮层维持正常意识</li>
+<li>昏迷：前额叶皮层到抑制性丘脑神经元的反馈中断 → 丘脑活动低下 → 觉醒和觉知均受损</li>
+</ul>
+<blockquote><p>临床关联<br>理解 mesocircuit 模型有助于理解为何单纯提升皮层兴奋性不能改善昏迷——需要恢复丘脑皮层网络的完整性。</p></blockquote>
+<hr>
+<h2>2. 床旁靶向评估</h2>
+<h3>病史与初始评估</h3>
+<ul>
+<li>昏迷发生的急缓、诱因（外伤、药物、中毒）</li>
+<li>既往史（癫痫、糖尿病、肝病、肾病）</li>
+<li>近期用药史、毒物接触史</li>
+</ul>
+<h3>神经系统查体（核心）</h3>
+<p><strong>脑干反射</strong>：</p>
+<ul>
+<li>瞳孔反射、角膜反射、眼头反射（OCR）、眼前庭反射（OOVR）</li>
+<li>评估脑干完整性和网状激活系统功能</li>
+</ul>
+<p><strong>运动模式</strong>：</p>
+<ul>
+<li>疼痛刺激下的运动反应（定位、屈曲、伸直、无反应）</li>
+<li>异常运动模式提示特定解剖部位损伤</li>
+</ul>
+<p><strong>临床评分</strong>：</p>
+<ul>
+<li>GCS（Glasgow Coma Scale）</li>
+<li>FOUR Score（比 GCS 更适合 ICU，含脑干反射评估）</li>
+</ul>
+<blockquote><p>关键原则<br>神经系统查体是<strong>基石</strong>，所有影像和实验室检查都不能替代床旁查体。</p></blockquote>
+<hr>
+<h2>3. 电生理检查</h2>
+<h3>EEG 在昏迷评估中的价值</h3>
+<p>1. <strong>排查非惊厥性癫痫持续状态（NCSE）</strong> — 昏迷的重要可逆性病因</p>
+<p>2. <strong>评估丘脑皮层网络完整性</strong> — 特定 EEG 模式提示特定预后</p>
+<p>3. <strong>预后评估</strong> — 特定 EEG 签名与预后相关</p>
+<h3>脑电图表型（EEG Signatures）</h3>
+<table><tr><th>EEG 表现</th><th>临床意义</th></tr><tr><td>全面性周期性放电（GPD）</td><td>代谢/中毒性脑病提示，潜在可逆</td></tr><tr><td>爆发-抑制（burst-suppression）</td><td>严重脑损伤，预后差</td></tr><tr><td>α昏迷模式</td><td>脑干/丘脑损伤，预后极差</td></tr><tr><td>连续性 θ/δ 活动</td><td>代谢性或药物相关，预后相对好</td></tr></table>
+<hr>
+<h2>4. 神经影像</h2>
+<h3>CT vs MRI：何时选哪个</h3>
+<table><tr><th>模态</th><th>适用场景</th></tr><tr><td><strong>CT（一线）</strong></td><td>急性颅内出血、颅骨骨折、脑疝早期——快速排除手术急症</td></tr><tr><td><strong>MRI</strong></td><td>CT 正常但临床高度怀疑结构性病因；后颅窝病变；微小梗死</td></tr></table>
+<blockquote><p>关键陷阱<br><strong>正常 CT 不能排除严重病因</strong>——缺血性卒中（尤其后颅窝）、早期脑梗死、皮层损伤，MRI 比 CT 敏感得多。</p></blockquote>
+<h3>MRI 进阶方向（未来）</h3>
+<ul>
+<li>扩散张量成像（DTI）评估意识网络的结构性连接</li>
+<li>功能 MRI（fMRI）探测隐蔽意识（covert consciousness）</li>
+<li>MRS（磁共振波谱）用于代谢评估</li>
+</ul>
+<hr>
+<h2>5. 实验室检查策略</h2>
+<h3>优先筛查顺序</h3>
+<p>1. <strong>代谢急症</strong>：血糖（低血糖/高血糖）、电解质（Na/K/Ca/Mg）</p>
+<p>2. <strong>血氨</strong>：肝性脑病、尿素循环障碍</p>
+<p>3. <strong>内分泌</strong>：甲状腺功能、肾上腺皮质功能</p>
+<p>4. <strong>毒理学</strong>：药物筛查（镇静药、抗抑郁药、毒品）</p>
+<p>5. <strong>感染指标</strong>：PCT、CRP、血培养</p>
+<h3>腰椎穿刺与 CSF 分析</h3>
+<p><strong>腰穿指征</strong>：</p>
+<ul>
+<li>怀疑 CNS 感染（脑膜炎/脑炎）</li>
+<li>排除蛛网膜下腔出血（CT 阴性时）</li>
+<li>疑似自家免疫性脑炎</li>
+</ul>
+<blockquote><p>CSF 分析要点<br>细胞数、蛋白、糖（同步血糖）、 Gram 染色 + 培养 + NGS（病原不明时）</p></blockquote>
+<hr>
+<h2>6. 可逆性病因的系统识别</h2>
+<h3>常见可逆性昏迷病因（STOP 新分类）</h3>
+<table><tr><th>分类</th><th>病因</th></tr><tr><td><strong>S</strong>tructural</td><td>颅内出血、脑梗死、脑疝</td></tr><tr><td><strong>T</strong>oxic/Metabolic</td><td>低血糖、高血糖、电解质紊乱、肝性脑病、尿毒症</td></tr><tr><td><strong>O</strong>xygenation</td><td>缺氧性脑损伤、低氧血症</td></tr><tr><td><strong>P</strong>sychogenic</td><td>精神性无反应（类昏迷）</td></tr></table>
+<blockquote><p>临床提示<br>所有昏迷患者首先排查上述可逆性病因，影像检查不能替代床旁评估。</p></blockquote>
+<hr>
+<h2>7. 未来方向</h2>
+<h3>新兴技术</h3>
+<table><tr><th>技术</th><th>潜在价值</th></tr><tr><td><strong>高级 MRI（DTI/fMRI/MRS）</strong></td><td>从结构到功能的深度评估，探测隐蔽意识</td></tr><tr><td><strong>连续 EEG 监测</strong></td><td>实时捕捉非惊厥性癫痫，动态评估预后</td></tr><tr><td><strong>CMD（皮质-皮质耦合动力学）检测</strong></td><td>探测意识光谱中隐藏的认知-运动分离</td></tr><tr><td><strong>AI 辅助解读</strong></td><td>将多维数据整合为可操作的分型（phenotype→endotype）</td></tr></table>
+<h3>从表型到内型的转变</h3>
+<ul>
+<li>当前主流：基于临床表现的<strong>表型</strong>分类</li>
+<li>未来方向：基于机制（神经回路、分子通路）的<strong>内型</strong>分类</li>
+<li>目的：从"描述性评估"转向"机制导向的精准干预"</li>
+</ul>
+<hr>
+<h2>相关条目</h2>
+<ul>
+<li>急性肠系膜缺血——急诊与ICU的腹部刺客 — 急腹症鉴别诊断（腹痛相关昏迷的排查思路）</li>
+<li>液体管理PPV避雷指南 — ICU 内环境紊乱（电解质/代谢急症）的评估</li>
+<li>HFNC在重症的应用与ROX指数 — 缺氧性呼吸衰竭的评估框架</li>
+</ul>
+<p>index</p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

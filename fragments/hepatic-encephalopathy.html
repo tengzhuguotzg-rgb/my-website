@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>肝性脑病：定义分类、发病机制、诊疗与预防 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>急腹症</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">急腹症</div>
+<h1>肝性脑病：定义分类、发病机制、诊疗与预防</h1>
+<p class="lede">肝性脑病（HE）分为A/B/C三型，发病机制涉及氨中毒/假神经递质/氨基酸失衡/GABA，West-Haven四期分级，治疗核心是去除诱因，降氨首选乳果糖，营养支持强调植物蛋白优先。</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> 飞书20260511-001711.mp4（14分42秒）</p>
+<p><strong>处理时间：</strong> 2026年05月11日</p>
+<h2>视频总结</h2>
+<h3>主题</h3>
+<p>肝性脑病（HE）是由严重慢性肝病或门体分流引起的、以代谢紊乱为基础的中枢神经系统功能异常综合征。</p>
+<h3>分型（A/B/C型）</h3>
+<table><tr><th>类型</th><th>机制</th><th>特点</th></tr><tr><td><strong>A型</strong>（急性肝衰竭型）</td><td>急性肝细胞坏死，大量肝细胞短时间内坏死</td><td>肝病发病后2周内出现脑病，无明显诱因</td></tr><tr><td><strong>B型</strong>（门体分流型）</td><td>门体侧支循环形成，肝细胞本身无明显病理改变</td><td>先天性血管畸形、门静脉高压分流术后、TIPS术后</td></tr><tr><td><strong>C型</strong>（肝硬化型）</td><td>肝硬化基础上伴门脉高压或侧支循环</td><td><strong>最常见</strong>，占比>70%，常有明确诱因</td></tr></table>
+<blockquote><p>命名说明<br>- "肝昏迷"现已废弃，特指HE最严重阶段（West-Haven 4期）<br>- "轻微肝性脑病（MHE）"曾用名"亚临床肝性脑病"，需神经心理学测试才能发现</p></blockquote>
+<hr>
+<h2>发病机制</h2>
+<h3>四大学说</h3>
+<h4>1. 氨中毒学说（核心）</h4>
+<p><strong>血氨增高的来源：</strong></p>
+<ul>
+<li><strong>清除减少</strong>：鸟氨酸循环障碍 + 门体侧支循环形成</li>
+<li><strong>来源增加</strong>：肠道蛋白质分解代谢 + 尿素肠肝循环</li>
+</ul>
+<p><strong>氨的毒性形式是非离子型NH₃</strong>，可自由通过血脑屏障：</p>
+<ul>
+<li><strong>碱性环境</strong>：NH₄⁺ → NH₃，易中毒</li>
+<li><strong>酸性环境</strong>：NH₃ → NH₄⁺，毒性降低</li>
+</ul>
+<p><strong>氨对大脑的毒性机制：</strong></p>
+<p>1. <strong>干扰能量代谢</strong>：大量消耗ATP和α-酮戊二酸 → 大脑能量严重不足</p>
+<p>2. <strong>诱发脑水肿</strong>：促使星形胶质细胞合成大量<strong>谷氨酰胺</strong> → 细胞内渗透压升高 → 细胞肿胀</p>
+<h4>2. 假神经递质学说</h4>
+<p>肝功能衰竭时，肠道中的<strong>色氨酸和酪氨酸</strong>不能被肝脏清除，进入脑内转变为<strong>苯乙醇胺和章胺</strong>（假神经递质），取代正常神经递质 → 干扰神经冲动传导。</p>
+<h4>3. 氨基酸失衡学说</h4>
+<ul>
+<li><strong>支链氨基酸（BCAA）↓</strong>（缬氨酸/亮氨酸/异亮氨酸）</li>
+<li><strong>芳香氨基酸（AAA）↑</strong>（苯丙氨酸/酪氨酸/色氨酸）</li>
+<li><strong>BCAA/AAA比值↓</strong> → 促进假神经递质生成</li>
+</ul>
+<h4>4. GABA学说</h4>
+<ul>
+<li>GABA是CNS主要抑制性神经递质</li>
+<li>肝功能衰竭时GABA不能被肝脏清除 → 脑内大量蓄积</li>
+<li>GABA与突触后受体结合 → Cl⁻内流增加 → 神经元超级化 → 抑制神经传导 → 意识障碍</li>
+</ul>
+<blockquote><p>临床警示<br>肝性脑病患者对镇静催眠药极度敏感，使用时须极其谨慎</p></blockquote>
+<hr>
+<h2>常见诱因</h2>
+<table><tr><th>诱因</th><th>机制</th></tr><tr><td><strong>高蛋白饮食</strong></td><td>肠道细菌分解蛋白质产氨↑（最常见诱因）</td></tr><tr><td><strong>消化道出血</strong></td><td>血液在肠道分解产氨 + 循环血量减少→肝缺血缺氧</td></tr><tr><td><strong>低钾性碱中毒</strong></td><td>促进NH₄⁺→NH₃，NH₃更易透过血脑屏障</td></tr><tr><td><strong>低血容量/缺氧</strong></td><td>大量放腹水、过度利尿、呕吐→肾前性氮质血症及肝缺氧</td></tr><tr><td><strong>便秘</strong></td><td>粪便在肠道停留时间延长→产氨和氨吸收均增加</td></tr><tr><td><strong>感染</strong></td><td>组织分解代谢加快→内源性产氨↑ + 发热增加耗氧量</td></tr><tr><td>其他</td><td>镇静催眠药、低血糖、TIPS术后</td></tr></table>
+<hr>
+<h2>临床表现：核心体征</h2>
+<h3>扑翼样震颤（Asterixis）</h3>
+<p><strong>检查方法</strong>：患者双臂前伸、手掌向下、手指分开时，出现不自主、不规则的"扑翼样"快速抖动。</p>
+<p><strong>临床意义</strong>：肝性脑病特征性体征，<strong>在1期和2期最为明显</strong>。</p>
+<p>其他神经系统体征：腱反射亢进、肌张力增高、踝阵挛阳性、巴氏征(Babinski)阳性。</p>
+<hr>
+<h2>West-Haven临床分期</h2>
+<table><tr><th>分期</th><th>名称</th><th>认知与行为异常</th><th>神经系统体征</th></tr><tr><td><strong>1期</strong></td><td>前驱期</td><td>轻度性格改变、行为异常，<strong>睡眠倒错</strong>为典型特征</td><td>扑翼样震颤可能出现，尚无明显病理反射</td></tr><tr><td><strong>2期</strong></td><td>昏迷前期</td><td>睡眠障碍和精神错乱为主，定向力、计算力<strong>显著减退</strong></td><td>扑翼样震颤<strong>明显</strong>，腱反射亢进，巴氏征(+)</td></tr><tr><td><strong>3期</strong></td><td>昏睡期</td><td>昏睡和精神错乱为主，但可被唤醒，醒时尚能应答</td><td>扑翼样震颤持续存在，锥体束征(+)，肌张力增高</td></tr><tr><td><strong>4期</strong></td><td>昏迷期</td><td>神志完全丧失，不能被唤醒</td><td>浅昏迷对痛刺激有反应；深昏迷各种反射消失，肌张力↓</td></tr></table>
+<hr>
+<h2>辅助诊断：神经心理学测试</h2>
+<p><strong>临床价值</strong>：早期发现轻微肝性脑病（MHE）与1期HE的关键手段，可识别常规检查无法发现的亚临床认知功能损害。</p>
+<p><strong>推荐测试组合</strong>：</p>
+<ul>
+<li>经典纸笔：数字连接试验A和B、数字符号试验、轨迹描绘试验</li>
+<li>智能筛查：Stroop色词干扰测试、EncephalAPP手机端快速评估</li>
+</ul>
+<p><strong>MHE判定</strong>：传统神经心理测试组合中<strong>任意2项</strong>异常即可诊断</p>
+<hr>
+<h2>治疗总则：去除诱因</h2>
+<table><tr><th>处理</th><th>具体措施</th></tr><tr><td><strong>控制感染</strong></td><td>怀疑感染应尽早经验性抗感染治疗，快速阻断感染源</td></tr><tr><td><strong>控制消化道出血</strong></td><td>积极止血 + 生理盐水/弱酸液灌肠彻底清除肠道积血</td></tr><tr><td><strong>纠正水电解质紊乱</strong></td><td>暂停排钾利尿剂、补充白蛋白、纠正低钾低钠碱中毒</td></tr><tr><td><strong>处理其他诱因</strong></td><td>监测血糖、避免镇静催眠药、保持大便通畅</td></tr><tr><td><strong>重症对症支持</strong>（3-4期）</td><td>脱水降颅压、保护脑功能</td></tr></table>
+<hr>
+<h2>降氨药物</h2>
+<h3>一线药物</h3>
+<table><tr><th>药物</th><th>机制</th></tr><tr><td><strong>乳果糖/拉克替醇</strong></td><td>①酸化肠道→NH₃变NH₄⁺（不易吸收）②渗透性导泻→加快肠道排空③调节肠道菌群→抑制产氨菌生长</td></tr><tr><td><strong>利福昔明</strong></td><td>不吸收性抗生素，专门抑制肠道产氨菌，与乳果糖联用效果更佳</td></tr></table>
+<h3>静脉降氨药物</h3>
+<table><tr><th>药物</th><th>作用</th></tr><tr><td><strong>门冬氨酸鸟氨酸</strong></td><td>提供鸟氨酸循环底物，促进氨代谢</td></tr><tr><td><strong>精氨酸/谷氨酸</strong></td><td>帮助尿素合成，排氨；有助于纠正代谢性碱中毒</td></tr></table>
+<p><strong>乳果糖用法</strong>：口服或鼻饲，根据大便情况调整（每天2-3次软便为最佳）</p>
+<hr>
+<h2>营养支持</h2>
+<table><tr><th>项目</th><th>推荐</th></tr><tr><td><strong>热量</strong></td><td>35-40 kcal/kg/d</td></tr><tr><td><strong>蛋白质</strong></td><td><strong>1.2-1.5 g/kg/d，优先选择植物蛋白</strong>（产氨少+富含纤维素）</td></tr><tr><td><strong>BCAA补充</strong></td><td>纠正氨基酸失衡，促进蛋白质合成，改善氮平衡</td></tr><tr><td><strong>微量营养素</strong></td><td>补锌（参与尿素循环）、维生素B族/C/K</td></tr></table>
+<blockquote><p>原则<br>既不能过度限制蛋白质（加重营养不良和肝损伤），也不能过量（诱发HE）</p></blockquote>
+<hr>
+<h2>肝移植</h2>
+<ul>
+<li>肝移植是<strong>唯一能够彻底治愈中末期肝病的手段</strong></li>
+<li><strong>MELD评分系统</strong>：根据血液检查结果量化病情严重程度，预测等待肝源期间的死亡风险，决定肝移植优先权</li>
+<li><strong>人工肝支持系统</strong>：通过体外循环清除体内毒素、暂时替代肝脏功能，帮助患者过渡到肝移植</li>
+</ul>
+<hr>
+<h2>预防</h2>
+<h3>一级预防（病因预防）</h3>
+<ul>
+<li>积极治疗原发肝脏疾病（病毒性肝炎抗病毒、酒精性肝病戒酒、避免肝损药物）</li>
+<li>保证营养，特别是优质蛋白摄入，维持电解质平衡，延缓肝病进展</li>
+</ul>
+<h3>二级预防（针对有HE发作史者）</h3>
+<ul>
+<li>让患者和家属了解HE诱因及急救措施</li>
+<li>限制蛋白质过量摄入、保持大便通畅、预防感染</li>
+<li><strong>长期口服乳果糖或拉克替醇</strong>减少HE复发，提高生活质量</li>
+</ul>
+<hr>
+<h2>相关条目</h2>
+<p>index</p>
+<p>容量管理_利尿剂用够不等于用到干体重 — 利尿剂（呋塞米/氢氯噻嗪）和大量放腹水是肝性脑病的常见诱因（低血容量/电解质紊乱），容量管理理念与肝性脑病水电解质管理高度相关</p>
+<p>低镁血症_ICU隐形杀手 — 约40%低镁患者合并低钾，且低镁抑制钠钾泵导致低钾难补；低钾性碱中毒是肝性脑病的重要诱因（促进NH₄⁺→NH₃）</p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

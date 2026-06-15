@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>机械通气驱动压与跨肺压 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>呼吸通气</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">呼吸通气</div>
+<h1>机械通气驱动压与跨肺压</h1>
+<p class="lede">驱动压（ΔP）和跨肺压（PL）两个核心压力指标如何帮助实现个体化肺保护性通气</p>
+</section>
+
+<article class="article">
+<p><strong>时长：</strong> 7:10</p>
+<p><strong>处理时间：</strong> 2026年04月29日</p>
+<p><strong>模型：</strong> Whisper（音频）+ MiniMax VL（帧分析）</p>
+<hr>
+<h2>视频信息</h2>
+<ul>
+<li><strong>来源：</strong> VID_545.mp4</li>
+<li><strong>核心主题：</strong> 机械通气中两个关键压力指标——驱动压（ΔP）和跨肺压（PL）的临床应用</li>
+<li><strong>时长：</strong> 7分10秒</li>
+</ul>
+<hr>
+<h2>核心内容</h2>
+<h3>一、呼吸机相关肺损伤（VILI）</h3>
+<p>VILI 是 ICU 最棘手的问题之一，两种主要形式：</p>
+<ul>
+<li><strong>容量伤</strong>：肺泡被撑得过大而受损（过度膨胀）</li>
+<li><strong>应力伤（萎陷伤）</strong>：肺泡在每次呼吸中反复经历张开-塌陷的过程，如同反复弯曲的铁丝最终会断裂</li>
+</ul>
+<blockquote><p>核心矛盾<br>一台用来救命的机器，反过来可能伤害它本该保护的肺。</p></blockquote>
+<hr>
+<h3>二、驱动压（ΔP = Delta P）</h3>
+<h4>定义与计算</h4>
+<p><strong>驱动压 = 平台压 − PEEP（呼气末正压）</strong></p>
+<ul>
+<li>平台压：吸气末保持的压力（代表整个呼吸系统——肺+胸壁）</li>
+<li>PEEP：呼气末仍保留在气道内的机械压力</li>
+<li>两者相减 = 驱动压</li>
+</ul>
+<h4>关键阈值：14 cmH₂O</h4>
+<p>大量研究证实，驱动压超过 <strong>14 cmH₂O</strong> 时，ARDS 患者死亡率显著上升。</p>
+<p>2015年 NEJM 里程碑分析：在所有变量中，驱动压与 ARDS 患者死亡率相关性最强。</p>
+<blockquote><p>驱动压阈值<br>驱动压超过 <strong>14 cmH₂O</strong> 时，ARDS患者死亡率显著上升。2015年 NEJM里程碑分析：在所有变量中，驱动压与ARDS患者死亡率相关性最强。</p></blockquote>
+<h4>优点</h4>
+<ul>
+<li>床边容易计算</li>
+<li>提供整体宏观印象</li>
+</ul>
+<h4>局限</h4>
+<ul>
+<li><strong>无法区分肺和胸壁</strong>：如果患者胸壁僵硬（重度肥胖、腹压高），驱动压升高不一定代表肺本身承受过大压力</li>
+<li><strong>无法防止肺泡塌陷</strong>（萎陷伤）</li>
+</ul>
+<hr>
+<h3>三、跨肺压（PL）</h3>
+<h4>为什么需要跨肺压</h4>
+<blockquote><p>跨肺压的必要性<br>驱动压测的是"整个盒子（肺+胸壁）"的压力，临床真正关心的是"里面那个气球（肺）"自己承受了多大压力。跨肺压解决了这个问题。</p></blockquote>
+<h4>定义与计算</h4>
+<p><strong>跨肺压 = 气道内压力 − 胸腔内压力（胸膜腔压）</strong></p>
+<ul>
+<li>通过食管球囊导管间接测量胸膜腔压力</li>
+<li>精确排除胸壁干扰，直接测量肺本身的受力情况</li>
+</ul>
+<h4>临床目标值（具体数值）</h4>
+<table><tr><th>时机</th><th>跨肺压目标</th></tr><tr><td>吸气末</td><td><strong>≤ 20–22</strong> cmH₂O（防止肺泡过度膨胀/撑破）</td></tr><tr><td>呼气末</td><td><strong>≥ 5</strong> cmH₂O（维持肺泡开放，防止萎陷）</td></tr></table>
+<h4>优点</h4>
+<ul>
+<li>精准测量肺本身受力</li>
+<li>同时防止过度膨胀 AND 肺泡塌陷</li>
+</ul>
+<h4>代价</h4>
+<ul>
+<li><strong>有创操作</strong>（需放置食管球囊导管）</li>
+<li>对操作者技术要求高，位置放置准确才能保证测量准确</li>
+</ul>
+<hr>
+<h3>四、两者对比与协同</h3>
+<table><tr><th>特性</th><th>驱动压（ΔP）</th><th>跨肺压（PL）</th></tr><tr><td>测量对象</td><td>整个呼吸系统（肺+胸壁）</td><td>仅作用于肺组织</td></tr><tr><td>主要目标</td><td>防止过度膨胀</td><td>防止过度膨胀 + 防止肺泡塌陷</td></tr><tr><td>最适用</td><td>所有 ARDS 患者（容易测量）</td><td>胸壁情况特殊的患者（重度肥胖、腹压高）</td></tr><tr><td>操作</td><td>无创，床旁直接计算</td><td>有创，需食管球囊导管</td></tr></table>
+<h4>协同作战逻辑</h4>
+<ul>
+<li><strong>驱动压</strong> → 帮助为肺定制每次呼吸的大小（潮气量）</li>
+<li><strong>跨肺压</strong> → 帮助找到合适的 PEEP（机选压力），保证肺泡在两次呼吸之间保持张开</li>
+</ul>
+<hr>
+<h3>五、关键数字速记</h3>
+<table><tr><th>数字</th><th>意义</th></tr><tr><td><strong>14 cmH₂O</strong></td><td>驱动压上限，超过则 ARDS 死亡率明显上升</td></tr><tr><td><strong>20–22 cmH₂O</strong></td><td>吸气末跨肺压上限，防止肺泡撑破</td></tr><tr><td><strong>≥ 5 cmH₂O</strong></td><td>呼气末跨肺压下限，防止肺泡塌陷</td></tr></table>
+<hr>
+<h2>关键结论</h2>
+<p><strong>驱动压和跨肺压是实现真正个体化肺保护性通气的两个互补工具。</strong></p>
+<ul>
+<li>驱动压管"每次吹进去的气有多大"（潮气量）</li>
+<li>跨肺压管"两次呼吸之间肺被撑得多开"（PEEP 设置）</li>
+</ul>
+<p>两者结合，也许就是未来重症监护的方向。</p>
+<hr>
+<h2>关键帧</h2>
+<table><tr><th>时间</th><th>内容</th></tr><tr><td>5:00</td><td>驱动压 vs 跨肺压对比表格（测量对象/主要目标/最适用场景）</td></tr><tr><td>5:32</td><td>吸气末跨肺压目标 ≤ 20-22（红色警示区示意图）</td></tr><tr><td>5:42</td><td>呼气末跨肺压目标 ≥ 5（绿色安全区+肺泡开放状态）</td></tr><tr><td>5:55</td><td>呼气末跨肺压目标维持（肺健康状态指示器）</td></tr><tr><td>5:58</td><td>临床目标值（肺部警示标识+大脑图标）</td></tr></table>
+<hr>
+<h2>相关条目</h2>
+<ul>
+<li>病例讨论-郭金凤-气肿型肾盂肾炎</li>
+<li>HFNC在重症的应用与ROX指数 — 呼吸支持与驱动压间接相关，均为肺保护性通气相关主题</li>
+<li>CRT上机后低血压六大原因 — 机械通气相关血流动力学波动，同为ICU呼吸支持主题</li>
+<li>病例讨论-张宏义-ARDS重度重症肺炎 — ARDS患者驱动压导向肺保护通气的临床应用</li>
+</ul>
+<p>index</p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>前沿碎片 · Teng.ZG</title>
+<meta name="description" content="ICU 临床小坑与新知。血流动力学、抗凝、感染、电解质、呼吸、急腹症等主题的临床碎片。">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{--bg:#F4F1EA;--bg-2:#EBE5D6;--ink:#1F3D2F;--ink-2:#2D5440;--accent:#E76F2C;--accent-2:#C45A1F;--text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;--line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22)}
+body{font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;color:var(--text);min-height:100vh;background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),radial-gradient(900px 600px at 50% 92%,rgba(31,61,47,0.04) 0%,transparent 60%),linear-gradient(135deg,var(--bg) 0%,var(--bg-2) 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent)}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-faint)}
+.hero{max-width:1100px;margin:0 auto;padding:72px 32px 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.hero-desc{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:720px;margin:0}
+.controls{max-width:1100px;margin:32px auto 0;padding:0 32px;display:flex;flex-direction:column;gap:14px}
+.search-wrap{position:relative}
+.search-input{width:100%;padding:12px 40px 12px 18px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;font:inherit;font-size:14px;color:var(--text);outline:none;transition:all .2s}
+.search-input::placeholder{color:var(--text-faint)}
+.search-input:focus{border-color:var(--ink-2);box-shadow:0 0 0 3px rgba(31,61,47,0.08);background:rgba(244,241,234,0.95)}
+.search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:24px;height:24px;border:none;border-radius:50%;background:transparent;color:var(--text-faint);font-size:16px;line-height:1;cursor:pointer;display:none;transition:color .15s}
+.search-clear:hover{color:var(--ink)}
+.search-clear.show{display:grid;place-items:center}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:7px 14px;background:rgba(244,241,234,0.65);border:1px solid var(--line);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--ink-2);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.tag:hover{border-color:var(--ink-2)}
+.tag.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tag .count{font-size:10px;opacity:.6;font-weight:400}
+.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.section-title{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;margin:0;color:var(--ink)}
+.section-meta{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-faint)}
+.list{max-width:1100px;margin:40px auto 0;padding:0 32px 64px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.card-link{display:block;text-decoration:none;color:inherit}
+.card{position:relative;background:rgba(255,255,255,0.55);border:1px solid var(--line);border-radius:16px;padding:24px 22px 22px;transition:all .3s ease;overflow:hidden;display:flex;flex-direction:column;height:220px}
+.card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.card-link:hover .card{background:rgba(255,255,255,0.85);border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 12px 32px rgba(31,61,47,0.08)}
+.card-link:hover .card::before{transform:scaleY(1)}
+.card-tag{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--accent);background:rgba(231,111,44,0.08);border:1px solid rgba(231,111,44,0.20);border-radius:999px;padding:3px 10px;margin-bottom:12px;align-self:flex-start}
+.card h3{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:var(--ink);line-height:1.35;margin:0 0 8px}
+.card .desc{font-family:'Noto Serif SC',serif;font-size:13px;line-height:1.65;color:var(--text-dim);margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;flex-wrap:wrap;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--text-faint);letter-spacing:0.5px;padding-top:12px;margin-top:12px;border-top:1px dashed var(--line)}
+.card-arrow{position:absolute;bottom:20px;right:20px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;color:var(--accent);transition:transform .3s ease}
+.card-link:hover .card-arrow{transform:translateX(4px)}
+.empty{grid-column:1/-1;text-align:center;padding:48px 24px;color:var(--text-faint);font-family:'Noto Serif SC',serif;font-size:14px}
+footer.foot{border-top:1px solid var(--line);padding:28px 32px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:0.5px;color:var(--text-faint)}
+footer.foot a{color:var(--text-dim)}
+@media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.hero{padding:48px 18px 16px}.controls,.list{padding-left:18px;padding-right:18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}.card .desc{min-height:0;-webkit-line-clamp:2}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="index.html" class="brand" aria-label="返回首页">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb" aria-label="面包屑"><span>前沿碎片</span></nav>
+<a href="index.html" class="home-pill">← 返回首页</a>
+</div>
+</header>
+<section class="hero">
+<div class="eyebrow">Clinical Fragments</div>
+<h1>前沿<span class="dot">.</span>碎片</h1>
+<p class="hero-desc">ICU 临床小坑与新知。每个碎片聚焦一个临床问题：机制、陷阱、证据、操作要点。</p>
+</section>
+<section class="controls">
+<div class="search-wrap">
+<input id="q" class="search-input" type="text" placeholder="搜索碎片 (例: 脓毒症, 乳酸, 肝素, PPV)">
+<button id="qClear" class="search-clear" type="button" aria-label="清空">×</button>
+</div>
+<div class="tag-row" id="tagRow">
+<button class="tag active" data-tag="all">全部<span class="count" id="cntAll"></span></button>
+<button class="tag" data-tag="hemo">血流动力学<span class="count"></span></button>
+<button class="tag" data-tag="coag">抗凝血栓<span class="count"></span></button>
+<button class="tag" data-tag="inf">感染脓毒症<span class="count"></span></button>
+<button class="tag" data-tag="elec">电解质<span class="count"></span></button>
+<button class="tag" data-tag="resp">呼吸通气<span class="count"></span></button>
+<button class="tag" data-tag="abdo">急腹症<span class="count"></span></button>
+</div>
+</section>
+<main class="list">
+<div class="section-head">
+<h2 class="section-title">全部碎片</h2>
+<span class="section-meta">ALL FRAGMENTS</span>
+</div>
+<div class="grid" id="grid">
+
+<a href="fragments/shock-early-signs.html" class="card-link" data-tags="hemo" data-name="休克早期识别六个隐匿信号 皮肤花斑 CRT 休克指数 桡动脉 尿量 意识">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>休克早期识别的 6 个隐匿信号</h3>
+<p class="desc">休克 = 组织缺氧 ≠ 低血压。血压正常时身体已喊救命的 6 个信号：皮肤花斑、CRT>3s、休克指数>0.8、桡动脉减弱、尿量不足、意识改变。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/hemo-5p5a.html" class="card-link" data-tags="hemo" data-name="血流动力学治疗 5P5A 原则 MAP CVP">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>血流动力学治疗 5P5A 原则</h3>
+<p class="desc">ICU 临床思维框架：5P 目标原则 + 5A 安全原则。MAP 65mmHg 起始目标，CVP 越低越好的核心理念。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/vr-starling.html" class="card-link" data-tags="hemo" data-name="静脉回流 Starling 曲线 Guyton 心输出量 VR CO">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>静脉回流与 Starling 曲线</h3>
+<p class="desc">基于 Guyton 模型，VR 曲线与 CO Starling 曲线的关系。输液/正性肌力药/缩血管药对 VR/CO 的影响，四种休克类型的血流动力学特征。</p>
+<div class="card-meta"><span>幻灯片笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/ppv-guide.html" class="card-link" data-tags="hemo" data-name="液体管理 PPV 避雷指南 脉压变异度 容量反应性 SVV">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>液体管理 PPV 避雷指南</h3>
+<p class="desc">脉压变异度 PPV 在 ICU 液体管理中的应用、四大失效条件和替代评估方法。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/volume-diuretics.html" class="card-link" data-tags="hemo" data-name="容量管理 利尿剂用够不等于用到干体重 心衰 前负荷">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>容量管理——利尿剂用够 ≠ 用到干体重</h3>
+<p class="desc">心衰患者过度利尿危害极大，容量管理目标是"正常容量"而非"最低容量"，核心是维持适度前负荷。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/methylene-blue-shock.html" class="card-link" data-tags="hemo" data-name="亚甲蓝抗休克 NO sGC 血管麻痹 脓毒性休克 G6PD">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>亚甲蓝抗休克的 5 大核心问题</h3>
+<p class="desc">病例驱动：脓毒性休克 NE 到天花板加用亚甲蓝。双重抑制 NO-sGC 通路克服血管麻痹，6 项 RCT 死亡风险↓34%。两步走给药方案，G6PD/SSRI 两大禁忌。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/crt-hypotension.html" class="card-link" data-tags="hemo" data-name="CRT 上机后低血压六大原因 CRRT 血压骤降">
+<article class="card">
+<div class="card-tag">血流动力学</div>
+<h3>CRT 上机后低血压六大原因</h3>
+<p class="desc">71 岁脓毒性休克患者上机后血压骤降案例，详解六大原因 + 四步紧急处理。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/heparin-at3.html" class="card-link" data-tags="coag" data-name="肝素 AT3 抗凝机制 抗凝血酶III">
+<article class="card">
+<div class="card-tag">抗凝血栓</div>
+<h3>肝素与 AT3 抗凝机制</h3>
+<p class="desc">肝素本身不直接抗凝，需与 AT3 结合才能发挥作用。AT3 缺乏时即使大剂量肝素也抗凝失效，核心解决思路是补充 AT3。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/cmvt-anticoagulation.html" class="card-link" data-tags="coag" data-name="肌间静脉血栓 抗凝 观察 风险分层 DOAC LMWH ESC ACCP">
+<article class="card">
+<div class="card-tag">抗凝血栓</div>
+<h3>肌间静脉血栓——抗凝还是观察？</h3>
+<p class="desc">CMVT 风险分层：高风险立即抗凝（DOAC/LMWH），低风险先观察但需动态超声。溶栓不常规。ESC 2022/ACCP 2021 共识。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/sepsis-coagulopathy.html" class="card-link" data-tags="coag inf" data-name="脓毒症凝血病 抗凝 SIC 评分 三抗一防">
+<article class="card">
+<div class="card-tag">抗凝血栓</div>
+<h3>脓毒症凝血病要不要抗凝</h3>
+<p class="desc">2024 版中国专家共识：SIC 评分≥4 分立即启动抗凝，三抗一防原则，100/4/1.5 三个核心数字。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/sepsis-6-traps.html" class="card-link" data-tags="inf" data-name="脓毒症早期识别 六个临床陷阱 SIRS qSOFA 乳酸">
+<article class="card">
+<div class="card-tag">感染脓毒症</div>
+<h3>脓毒症早期识别：六个临床陷阱</h3>
+<p class="desc">脓毒症不是"重一点的感染"，是感染引起的器官功能障碍。六个陷阱：发热可不典型、心率快是代偿、呼吸快查乳酸、意识改变别当老糊涂、血压正常≠无休克。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/sepsis-source-7steps.html" class="card-link" data-tags="inf" data-name="脓毒症找源七步法 De Waele 感染源">
+<article class="card">
+<div class="card-tag">感染脓毒症</div>
+<h3>脓毒症找源七步法</h3>
+<p class="desc">De Waele 在 Critical Care 发表述评，提出 ICU 脓毒症患者寻找感染源的 7 步分步方法。</p>
+<div class="card-meta"><span>网页笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/refractory-sepsis-2026.html" class="card-link" data-tags="inf" data-name="难治性脓毒性休克 定义 SCCM ESICM 2026 共识 NEE">
+<article class="card">
+<div class="card-tag">感染脓毒症</div>
+<h3>难治性脓毒性休克定义（2026 共识）</h3>
+<p class="desc">2026 年 SCCM 与 ESICM 联合 Delphi 共识，13 条临床标准定义难治性脓毒性休克（NEE>0.5µg/kg/min + 乳酸/CRT + 液体无反应 + CCUS）。</p>
+<div class="card-meta"><span>网页笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/anti-mrsa-4drugs.html" class="card-link" data-tags="inf" data-name="抗 MRSA 四药全解 万古霉素 替考拉宁 达托霉素 利奈唑胺 PK PD">
+<article class="card">
+<div class="card-tag">感染脓毒症</div>
+<h3>抗 MRSA 四药全解</h3>
+<p class="desc">详解万古霉素、替考拉宁、达托霉素、利奈唑胺四大抗 MRSA 药物的作用机制、PK/PD 靶标、耐药谱、临床应用场景与安全性。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/antibiotic-optimization.html" class="card-link" data-tags="inf" data-name="ICU 抗生素优化使用 综述 PK PD 降阶梯 抗菌管理">
+<article class="card">
+<div class="card-tag">感染脓毒症</div>
+<h3>ICU 抗生素优化使用综述</h3>
+<p class="desc">2025 年 ICU 抗生素优化使用综述：经验性治疗/联合用药、PK/PD 优化、降阶梯策略、感染预防、生物标志物辅助、AI 辅助决策等 8 个核心主题。</p>
+<div class="card-meta"><span>网页笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/calcium-ionized.html" class="card-link" data-tags="elec" data-name="游离钙 总钙 ICU 银行资产骗局 低白蛋白 酸中毒">
+<article class="card">
+<div class="card-tag">电解质</div>
+<h3>游离钙和总钙——ICU 里的银行资产骗局</h3>
+<p class="desc">总钙 = 银行库存数字，离子钙 = 钱包现金。五个陷阱（低白蛋白/酸中毒/输血/胰腺炎/CRRT）。临床铁律：怀疑钙代谢异常时直接查离子钙。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/hypomagnesemia.html" class="card-link" data-tags="elec" data-name="低镁血症 ICU 隐形杀手 中国专家共识 2026">
+<article class="card">
+<div class="card-tag">电解质</div>
+<h3>低镁血症——ICU 隐形杀手</h3>
+<p class="desc">2026 年 3 月中国首部《低镁血症诊断与治疗专家共识》发布，ICU 发生率 20%-65% 但 90% 医生不查。五个致命坑及五步避坑法。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/high-ag-metacid.html" class="card-link" data-tags="elec" data-name="高 AG 代谢性酸中毒 五大坑 阴离子间隙 euDKA SGLT2i D-乳酸">
+<article class="card">
+<div class="card-tag">电解质</div>
+<h3>高 AG 代谢性酸中毒五大坑</h3>
+<p class="desc">血气 pH 正常 ≠ 无酸中毒！详解高 AG 代谢性酸中毒五大诊断陷阱，附 2025 MSD 指南更新。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/ddimer-12causes.html" class="card-link" data-tags="elec" data-name="D-二聚体 升高 12 种常见原因 鉴别 动态监测">
+<article class="card">
+<div class="card-tag">电解质</div>
+<h3>D-二聚体升高的 12 种常见原因</h3>
+<p class="desc">以 68 岁老张术后 D-二聚体 5000µg/L 为主线，系统讲解 12 种常见原因、鉴别要点及动态监测原则。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/infection-markers.html" class="card-link" data-tags="elec inf" data-name="四大感染标志物 IL-6 PCT CRP ESR 临床对比">
+<article class="card">
+<div class="card-tag">电解质</div>
+<h3>四大感染标志物 IL-6/PCT/CRP/ESR 临床对比</h3>
+<p class="desc">科普视频详解四大感染标志物的升高时间、鉴别诊断阈值、临床应用场景及抗生素停药指导。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/driving-transpulmonary.html" class="card-link" data-tags="resp" data-name="机械通气 驱动压 跨肺压 肺保护性通气">
+<article class="card">
+<div class="card-tag">呼吸通气</div>
+<h3>机械通气驱动压与跨肺压</h3>
+<p class="desc">驱动压（ΔP）和跨肺压（PL）两个核心压力指标如何帮助实现个体化肺保护性通气。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/hfnc-rox.html" class="card-link" data-tags="resp" data-name="HFNC 重症 ROX 指数 高流量鼻导管 I 型 II 型呼衰">
+<article class="card">
+<div class="card-tag">呼吸通气</div>
+<h3>HFNC 在重症的应用与 ROX 指数</h3>
+<p class="desc">29 岁重症哮喘病例分享。HFNC 四大机制、I/II 型呼衰参数对比、ROX 指数三时点阈值。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/venous-blood-gas.html" class="card-link" data-tags="resp" data-name="静脉血气分析 ICU 应用综述 VBG ABG">
+<article class="card">
+<div class="card-tag">呼吸通气</div>
+<h3>静脉血气分析在 ICU 中的应用综述</h3>
+<p class="desc">2025 年 Narrative Review，系统评估 VBG 与 ABG 的相关性、临床应用场景和局限性，提出 VBG 在特定场景下可替代或补充 ABG。</p>
+<div class="card-meta"><span>网页笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/ami-abdominal-ambush.html" class="card-link" data-tags="abdo" data-name="急性肠系膜缺血 急诊 ICU 腹部刺客 乳酸 CT">
+<article class="card">
+<div class="card-tag">急腹症</div>
+<h3>急性肠系膜缺血——腹部刺客</h3>
+<p class="desc">急性肠系膜缺血（AMI）80% 死亡率。从病因（动脉 vs 静脉）、CT 影像特征、治疗原则、四大临床坑全面讲解。乳酸正常不能排除早期 AMI。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/tetanus-lockjaw.html" class="card-link" data-tags="abdo" data-name="破伤风 铁锈锁链勒紧肌肉 痉挛素 呼吸肌">
+<article class="card">
+<div class="card-tag">急腹症</div>
+<h3>破伤风——铁锈锁链勒紧肌肉</h3>
+<p class="desc">破伤风痉挛素腐蚀"关门按钮"独立电路，肌肉只能收缩不能放松。三部曲（牙关紧闭→苦笑面容→角弓反张）。呼吸肌锁死是主要死因。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/anaphylaxis-sop.html" class="card-link" data-tags="abdo" data-name="过敏性休克 抢救 全流程 SOP 肾上腺素 一线">
+<article class="card">
+<div class="card-tag">急腹症</div>
+<h3>过敏性休克抢救全流程 SOP</h3>
+<p class="desc">完整 SOP：阻断触发源→肌注肾上腺素（唯一一线，无绝对禁忌）→同步氧疗+快速补液→二线药物→难治性升压→CPR+ACLS→分级留观防双相反应。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/liver-function-5steps.html" class="card-link" data-tags="abdo elec" data-name="肝功能报告 五步分析法 ICU R 值 AST ALT MELD Child-Pugh">
+<article class="card">
+<div class="card-tag">急腹症</div>
+<h3>肝功能报告五步分析法</h3>
+<p class="desc">用 R 值、AST/ALT 比值、MELD/Child-Pugh 五步法系统读懂肝功能报告，识别 ICU 常见坑。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/hepatic-encephalopathy.html" class="card-link" data-tags="abdo elec" data-name="肝性脑病 分类 发病机制 诊疗 氨中毒 乳果糖">
+<article class="card">
+<div class="card-tag">急腹症</div>
+<h3>肝性脑病</h3>
+<p class="desc">肝性脑病（HE）分为 A/B/C 三型，氨中毒/假神经递质/氨基酸失衡/GABA 四大学说，West-Haven 四期分级。治疗核心是去除诱因，降氨首选乳果糖。</p>
+<div class="card-meta"><span>视频笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<a href="fragments/coma-workup.html" class="card-link" data-tags="abdo" data-name="未知原因昏迷 阶梯式诊断策略 EEG 神经影像">
+<article class="card">
+<div class="card-tag">急腹症</div>
+<h3>未知原因昏迷的阶梯式诊断策略</h3>
+<p class="desc">2026 年 ICM 发表述评，基于昏迷病理生理机制的阶梯式诊断算法，整合床旁查体、EEG、神经影像、实验室检查，强调早期识别可逆性病因。</p>
+<div class="card-meta"><span>网页笔记</span></div>
+<span class="card-arrow">→</span>
+</article>
+</a>
+
+<div class="empty" id="emptyMsg" style="display:none;">未找到匹配的碎片。试试: 脓毒症, 乳酸, 肝素, PPV, 破伤风…</div>
+</div>
+</main>
+<footer class="foot">
+© 2026 · Teng.ZG · 前沿碎片板块
+&nbsp;·&nbsp;
+<a href="index.html">返回首页</a>
+</footer>
+<script>
+(function(){
+var q=document.getElementById('q'),clear=document.getElementById('qClear'),tags=document.querySelectorAll('.tag'),cards=document.querySelectorAll('.card-link[data-tags]'),empty=document.getElementById('emptyMsg'),activeTag='all';
+function updateCounts(){var all=cards.length;document.querySelector('.tag[data-tag="all"] .count').textContent=all;tags.forEach(function(t){var tag=t.dataset.tag;if(tag==='all')return;var cnt=document.querySelectorAll('.card-link[data-tags~="'+tag+'"]').length;var span=t.querySelector('.count');if(span)span.textContent=cnt})}
+updateCounts();
+function filter(){var qval=q.value.trim().toLowerCase(),visible=0;cards.forEach(function(c){var matchTag=activeTag==='all'||c.dataset.tags.indexOf(activeTag)!==-1;var name=(c.textContent+' '+(c.dataset.name||'')).toLowerCase();var matchQ=!qval||name.indexOf(qval)!==-1;var show=matchTag&&matchQ;c.style.display=show?'':'none';if(show)visible++});empty.style.display=visible===0?'':'none';clear.classList.toggle('show',qval.length>0)}
+q.addEventListener('input',filter);
+clear.addEventListener('click',function(){q.value='';filter();q.focus()});
+tags.forEach(function(t){t.addEventListener('click',function(){tags.forEach(function(x){x.classList.remove('active')});t.classList.add('active');activeTag=t.dataset.tag;filter()})});
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();q.focus()}});
+})();
+</script>
+</body>
+</html>

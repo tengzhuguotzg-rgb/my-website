@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>容量管理：利尿剂用够不等于用到干体重 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>血流动力学</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">血流动力学</div>
+<h1>容量管理：利尿剂用够不等于用到干体重</h1>
+<p class="lede">心衰患者过度利尿危害极大，容量管理目标是"正常容量"而非"最低容量"，核心是维持适度前负荷。</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> VID_551.mp4
+<strong>时长：</strong> 5分21秒
+<strong>处理时间：</strong> 2026年05月10日</p>
+<h2>视频总结</h2>
+<h3>主题</h3>
+<p>心衰患者利尿剂使用中的核心误区——利尿剂&quot;用够&quot;不等于&quot;用到干体重&quot;，过度利尿反而加重心衰。</p>
+<h3>核心逻辑</h3>
+<ol>
+<li><strong>病例切入</strong>：72岁女性慢性心衰急性加重，给予呋塞米40mg bid×3天，尿量2500-3000ml/天，水肿消退、体重降至干体重以下→第4天出现低血压、心率从80升至180（利尿剂用过头了）</li>
+<li><strong>核心观点</strong>：容量管理的目标是<strong>正常容量</strong>而非<strong>最低容量</strong>——过度利尿导致有效血容量不足、血压下降、肾前性损伤、神经内分泌激活（RAAS/SNS），反而引起水钠潴留反弹，加重心衰</li>
+<li><strong>生理基础</strong>：Frank-Starling曲线——前负荷（容量）与心输出量的关系，适度前负荷才能维持最佳心输出量，过低进入曲线的危险陡坡区</li>
+</ol>
+<h3>关键数据</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>干体重连续监测要求</td>
+<td>±0.5kg，连续2天稳定</td>
+</tr>
+<tr>
+<td>停静脉利尿的血压底线</td>
+<td>收缩压 ≥ 90-100 mmHg</td>
+</tr>
+<tr>
+<td>肌酐升高可接受上限</td>
+<td>不超过基础值30%</td>
+</tr>
+<tr>
+<td>利尿抵抗定义</td>
+<td>呋塞米80mg bid无效，或每4小时尿量&lt;100ml</td>
+</tr>
+<tr>
+<td>静脉转口服重叠给药时间</td>
+<td>6-12小时</td>
+</tr>
+<tr>
+<td>BNP/proBNP有效控制标准</td>
+<td>治疗前后下降 &gt; 30%</td>
+</tr>
+<tr>
+<td>IVC塌陷率提示容量不足</td>
+<td>IVC&lt;1.5cm 且 塌陷率&gt;50%</td>
+</tr>
+</tbody></table>
+<p>---|------|
+| 1:12 | <strong>Frank-Starling曲线</strong>：过度利尿进入危险区间（前负荷过低→心输出量骤降），连锁反应：血流动力学崩盘→神经内分泌激活→电解质危机（低钾低镁→心律失常） |
+| 1:48 | <strong>5个金标准</strong>（缺一不可）：症状（呼吸困难消失）、体征（颈静脉无怒张/肝颈回流阴/双肺无啰音/下肢无水肿）、体重（降至干体重±0.5kg×2天）、血压（≥90-100且无体位性低血压）、肾功能（肌酐稳定或升高&lt;30%） |
+| 2:03 | **辅助检查**：BNP/NT-proBNP下降&gt;30%提示良好；IVC&lt;1.5cm+塌陷率&gt;50%提示容量不足；肺部超声B线减少提示肺水减少；电解质+肾功能每1-2天复查 |
+| 3:55 | <strong>三不要</strong>：①体重达标后不继续&quot;巩固&quot;利尿（会过头）②肌酐升高不停所有利尿剂（可能是心肾综合征）③不只靠尿量判断效果（尿量多≠容量够） |
+| 4:07 | <strong>三要做</strong>：①标准化称重（同一时间/同一秤/同样衣服）②静脉转口服重叠给药6-12小时避免反弹③出现低血压或肌酐升高时先评估容量再决定是否减量 |
+| 5:10 | <strong>记忆口诀</strong>：<code>体重达标停静脉，血压稳定是底线；肌酐翻倍要减量，低血压时别硬干！</code> |</p>
+<hr>
+<h2>核心知识点</h2>
+<ul>
+<li><strong>干体重定义</strong>：无容量超负荷也无容量不足时的体重，但干体重≠最低体重、不是固定值（随病情/营养状态变化）</li>
+<li><strong>干体重理想状态</strong>：无呼吸困难、无水肿、无颈静脉怒张、血压稳定、肾功能正常、无低灌注表现</li>
+<li><strong>利尿剂抵抗的处理</strong>：增加剂量+静脉冻注+联合不同种类利尿剂，或考虑超滤</li>
+<li><strong>低钠血症分型</strong>：稀释性（容量多→限水+托伐普坦）vs 真性（容量少→停利尿剂+补钠）</li>
+<li><strong>辅助检查不能替代临床判断</strong>：机器不能代替医生，查体永远第一位</li>
+<li><strong>出入量记录局限</strong>：隐性失水不准确，每日体重是最敏感指标（变化约等于1L容量变化）</li>
+<li><strong>低血钾/低镁的危害</strong>：极容易诱发致命性心律失常</li>
+</ul>
+<blockquote>
+<p><strong>💡 核心结论</strong>
+容量管理的目标是<strong>正常容量</strong>而非最低容量，利尿剂&quot;用够&quot;不等于&quot;用到干体重&quot;。</p>
+</blockquote>
+<hr>
+<h2>相关条目</h2>
+<p><a href="#">笔记列表</a>
+<a href="#">低镁血症_ICU隐形杀手</a> — 利尿剂（呋塞米/氢氯噻嗪）是药物性低镁的常见原因（第四坑），低钾与低镁常合并出现</p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

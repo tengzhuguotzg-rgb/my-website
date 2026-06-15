@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>肝功能报告五步分析法-ICU必备技能 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>急腹症</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">急腹症</div>
+<h1>肝功能报告五步分析法-ICU必备技能</h1>
+<p class="lede">用R值、AST/ALT比值、MELD/Child-Pugh五步法系统读懂肝功能报告，识别ICU常见坑。</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> 微信视频（时长3分45秒）</p>
+<h2>视频核心信息</h2>
+<table><tr><th>项目</th><th>内容</th></tr><tr><td>主题</td><td>肝功能报告的系统解读方法与常见误区</td></tr><tr><td>开篇病例</td><td>对乙酰氨基酚过量→急性肝衰竭→48h后再入院</td></tr><tr><td>三步诊断法</td><td>R值判损伤模式 → 严重程度 → AST/ALT比值锁死病因</td></tr><tr><td>核心原则</td><td>转氨酶只代表损伤，不代表功能；功能看白蛋白、PT、胆红素</td></tr></table>
+<h2>核心内容</h2>
+<h3>病例警示</h3>
+<p>「一个病人转氨酶正常出院了，结果48小时后因为无意中吃了过量的对乙酰氨基酚，急性肝衰竭回来抢救。这可不是编故事，是真实病例。」</p>
+<p>一张看着没问题的肝功报告背后可能藏着致命的风险。</p>
+<h3>第一步：R值判损伤模式</h3>
+<p>公式：<strong>R = （ALT检测值÷ALT正常上限） ÷ （ALP检测值÷ALP正常上限）</strong></p>
+<table><tr><th>R值</th><th>损伤模式</th><th>常见病因</th></tr><tr><td><strong>> 5</strong></td><td>肝细胞型</td><td>病毒、药物、酒精</td></tr><tr><td><strong>< 2</strong></td><td>胆汁淤积型</td><td>胆道梗阻、原发性胆汁性胆管炎</td></tr><tr><td><strong>2~5</strong></td><td>混合型</td><td>病因多样</td></tr></table>
+<p>「算出来R值大于五，那大概率就是肝细胞型损伤；小于二就得警惕是不是胆道堵了。这么简单一算，就能让你一开始的诊断方向不会跑偏。」</p>
+<h3>第二步：看严重程度</h3>
+<ul>
+<li><strong>轻度升高</strong>：可能只是药肝，问题不大</li>
+<li><strong>中度升高</strong>：脑子里警报得响起来——是不是急性肝炎或自身免疫性肝病在急性发作</li>
+<li><strong>转氨酶一下子标到一万以上</strong>：脑子里第一个闪过的诊断是<strong>缺血性肝炎（休克肝）</strong></li>
+</ul>
+<p>「为什么休克肝这么凶险？，将近八成的病人同时有急性心脏事件，整体病死率非常高。」</p>
+<h3>第三步：AST/ALT比值锁死病因</h3>
+<table><tr><th>AST/ALT比值</th><th>临床意义</th><th>关键背景</th></tr><tr><td><strong>> 2</strong> 且AST<500</td><td><strong>酒精性肝病</strong></td><td>特异性高</td></tr><tr><td><strong>> 1</strong></td><td><strong>肝硬化</strong></td><td>慢性肝炎进展指标</td></tr><tr><td><strong>> 2.2</strong></td><td><strong>威尔逊病</strong></td><td>急性肝衰竭背景下必须排查</td></tr></table>
+<h3>核心原则：转氨酶≠肝功能</h3>
+<p>「AST这些转氨酶升高只代表肝细胞正在受伤，就好像一个房子在冒烟，但是这个房子本身结不结实，会不会塌，你得看肝脏真正的功能——也就是它的合成和排泄能力。看什么？看白蛋白、看凝血酶原时间PT、看胆红素。」</p>
+<p><strong>MELD评分和Child-Pugh评分的公式里压根没有转氨酶的位置——就是因为转氨酶反映损伤，根本不代表功能。</strong></p>
+<h3>ICU五大避坑指南</h3>
+<p><strong>第一坑：转氨酶高+AST>ALT，别一根劲想着病毒性肝炎</strong></p>
+<ul>
+<li>先看看病人血压、摸摸手脚</li>
+<li>想想循环是不是已经衰了——缺血性肝炎可能性</li>
+</ul>
+<p><strong>第二坑：药物性肝损伤的延迟性</strong></p>
+<ul>
+<li>对乙酰氨基酚中毒最阴险的地方在于<strong>延迟性</strong></li>
+<li>病人在中毒后的头一两天，转氨酶完全可以正常——这个正常恰恰是他最危险的伪装</li>
+</ul>
+<p><strong>标准操作流程：</strong></p>
+<p>1. 把用药史翻个底朝天——处方药、中草药、保健品都不能放过</p>
+<p>2. 肝胆超声必做——看看胆道通不通</p>
+<p>3. 原因不清→自身免疫和遗传代谢病</p>
+<p>4. 还搞不明白→考虑肝活检，千万别耽误</p>
+<h2>关键结论</h2>
+<blockquote><p>「从今天起，但下一份糟糕的肝功报告递到你手上的时候，我希望你看到的不再是一个个孤立的上下乱飞的箭头，而是一个病人的完整故事线索，正等着你用专业的眼光一步步揭开谜底。」</p></blockquote>
+<h2>相关条目</h2>
+<ul>
+<li>病例讨论-戴士艇-狼疮肠系膜血管炎 — SLE患者肝功能异常的鉴别诊断</li>
+<li>病例讨论-唐贤芳-弥漫大B细胞淋巴瘤 — 肝功能异常在淋巴瘤患者中的鉴别诊断</li>
+<li>index</li>
+</ul>
+<h2>原始素材</h2>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

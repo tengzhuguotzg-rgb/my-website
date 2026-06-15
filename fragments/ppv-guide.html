@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>液体管理PPV避雷指南 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>血流动力学</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">血流动力学</div>
+<h1>液体管理PPV避雷指南</h1>
+<p class="lede">脉压变异度PPV在ICU液体管理中的应用、四大失效条件和替代评估方法</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> 13422104980126939.mp4
+<strong>时长：</strong> 04:08
+<strong>处理时间：</strong> 2026-05-01 18:30
+<strong>模型：</strong> MiniMax-M2.7（image 工具）+ Whisper（音频）</p>
+<h2>视频总结</h2>
+<h3>主题</h3>
+<p>ICU液体管理中PPV（脉压变异度）阈值的临床应用局限与安全使用条件。</p>
+<h3>核心逻辑</h3>
+<p>以一个58岁休科患者盲目补液导致急性心衰死亡的病例开场，引出PPV这一动态监测指标。通过Frank-Starling定律（心肌前负荷与心输出量的关系）讲解PPV的生理基础：胸腔内压变化→回心血量减少→左室每搏输出量下降→脉压下降。PPV越大说明心脏对容量变化越敏感，补液有效；PPV平稳说明心脏已达极限，补液无益甚至有害。</p>
+<p>关键转折：PPV &gt; 12-13% = 补液的法则被过度简化，存在四大失效条件，任何一条满足则数值完全不可信。</p>
+<blockquote>
+<p><strong>❗ 核心原则</strong>
+治疗的是病人，不是监护仪上的数字。不能仅凭PPV数值决定补液，需综合评估。</p>
+</blockquote>
+<h3>关键数据</h3>
+<ul>
+<li>PPV阈值：&gt; 12-13% 提示容量不足，可补液</li>
+<li>潮气量要求：&gt; 8 mL/kg 理想体重（太小则PPV不准）</li>
+<li>替代方法：被动抬腿实验、下腔静脉/心脏超声</li>
+</ul>
+<h3>视觉补充</h3>
+<p><strong>42s处关键帧：</strong> 一张白板风格插图，中心是巨大的蓝色数字 &quot;&gt; 12-13% ?&quot;（问号醒目），左侧有输液袋、动脉波形图、手臂，右侧有心脏和肺，周围有动态线条。底部黑条白字：&quot;很多医生都背过这么一个法则&quot;。</p>
+<p><strong>60s处关键帧：</strong> 一张深色背景幻灯片式信息图，中央蓝色框标注&quot;弗兰克-斯塔林心脏定律&quot;及其描述（回心血量与射血分数关系），左侧心脏+输液袋图标，右侧肺部+齿轮图标，底部是心输出量与回心血量的坐标曲线（先升后平的Frank-Starling曲线）。</p>
+<h3>结论</h3>
+<blockquote>
+<p><strong>⚠️ 四大失效条件（任何一条均不可信PPV数值）</strong></p>
+<ol>
+<li><strong>自主呼吸存在</strong>：病人必须完全被呼吸机控制  </li>
+<li><strong>心律失常</strong>（如房颤）：每次心跳强度不一致  </li>
+<li><strong>潮气量太小</strong>：&lt; 8 mL/kg 理想体重时胸腔压力变化不够  </li>
+<li><strong>严重右心衰或腹内压高</strong></li>
+</ol>
+</blockquote>
+<p><strong>核心原则：</strong> 治疗的是病人，不是监护仪上的数字。不能仅凭PPV数值决定补液，需综合评估。</p>
+<h2>关键帧（按需）</h2>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>42s</td>
+<td>白板插图：中心数字&quot;&gt; 12-13% ?&quot; + 输液袋 + 心肺简笔画，底部：&quot;很多医生都背过这么一个法则&quot;</td>
+</tr>
+<tr>
+<td>60s</td>
+<td>幻灯片：Frank-Starling定律图解（心脏+输液图标、坐标曲线、肺+齿轮图标）</td>
+</tr>
+</tbody></table>
+<h2>核心知识点</h2>
+<ul>
+<li>Frank-Starling心脏定律：心肌前负荷（回心血量）↑ → 在一定范围内心输出量↑，但达平台期后补液无用</li>
+<li>PPV生理机制：正压通气时胸腔压力↑ → 回心血量↓ → 脉压↓</li>
+<li>PPV &gt; 12-13% 提示容量反应性阳性，补液可能有效</li>
+<li>四大失效条件：自主呼吸、心律失常、潮气量不足、右心衰/腹内压高</li>
+<li>替代评估手段：被动抬腿实验、超声评估</li>
+</ul>
+<h2>相关条目</h2>
+<ul>
+<li><a href="#">血流动力学治疗5P5A原则-ICU临床思维框架</a> — 血流动力学5P5A原则，PPV作为容量反应性评估手段与本文高度相关</li>
+<li><a href="#">脓毒症早期识别：六个临床陷阱</a> — 休克指数&gt;0.8是该视频六部筛查法第三步的核心，与脓毒症早期识别高度相关</li>
+<li><a href="#">静脉回流与Starling曲线</a> — 静脉回流与Starling曲线的关系，PPV的生理学基础</li>
+<li><a href="#">CRT上机后低血压六大原因</a> — 机械通气对血流动力学的影响，PPV在机械通气患者中的应用</li>
+<li><a href="#">呋塞米在SPU危重患者中的失效机制与应对策略</a> — </li>
+<li><a href="#">急性肠系膜缺血——急诊与ICU的腹部刺客</a> — 
+<a href="#">笔记列表</a></li>
+</ul>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

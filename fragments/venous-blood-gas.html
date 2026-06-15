@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>静脉血气分析在ICU中的应用综述 2025 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>呼吸通气</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">呼吸通气</div>
+<h1>静脉血气分析在ICU中的应用综述 2025</h1>
+<p class="lede">2025年Narrative Review，系统评估静脉血气（VBG）与动脉血气（ABG）的相关性、临床应用场景和局限性，提出VBG在特定场景下可替代或补充ABG的观点。</p>
+</section>
+
+<article class="article">
+<h2>文献信息</h2>
+<ul>
+<li><strong>作者</strong>：Dario Giani, Michele Cosimo Santoro 等（意大利 Gemelli 大学医院）</li>
+<li><strong>期刊</strong>：Medicina, 2025; 61: 1337</li>
+<li><strong>DOI</strong>：<a href="https://doi.org/10.3390/medicina61081337">10.3390/medicina61081337</a></li>
+<li><strong>类型</strong>：Narrative Review（叙述性综述）</li>
+<li><strong>收稿日期</strong>：2025-05-27 | <strong>发表</strong>：2025-07-24</li>
+</ul>
+<h2>核心 Take-home Message</h2>
+<blockquote><p>核心结论<br>静脉血气（VBG）分析在<strong>初始评估、疗效监测和指导复苏</strong>方面具有明确价值，并非 ABG 的妥协替代品，而是<strong>互补工具</strong>——在动脉穿刺不必要时或不可行的情况下，VBG 是理想选择。</p></blockquote>
+<p><strong>VBG 与 ABG 的相关性总结</strong>：</p>
+<table><tr><th>参数</th><th>相关性</th></tr><tr><td><strong>pH</strong></td><td>强相关 ✅</td></tr><tr><td><strong>碳酸氢盐 / 碱剩余</strong></td><td>良好相关 ✅</td></tr><tr><td><strong>pCO2</strong></td><td>存在争议 ⚠️</td></tr><tr><td><strong>pO2</strong></td><td>差异显著（动静脉氧耗梯度）❌</td></tr></table>
+<blockquote><p>关键限制<br>pO2 动静脉差异显著（因组织氧耗），VBG 的 pO2 <strong>不能</strong>反映动脉氧合状态。</p></blockquote>
+<hr>
+<h2>1. 动静脉血气参数差异</h2>
+<h3>pH 与酸碱状态</h3>
+<ul>
+<li>VBG 与 ABG 的 pH 值存在<strong>强相关性</strong>，临床可接受</li>
+<li>碳酸氢盐和碱剩余同样相关性良好</li>
+</ul>
+<h3>pCO2 的争议</h3>
+<ul>
+<li>VBG 与 ABG 的 pCO2 相关性<strong>存在争议</strong>，结论不一</li>
+<li>须结合临床背景谨慎解读</li>
+</ul>
+<h3>pO2 的本质差异</h3>
+<ul>
+<li>动脉血反映<strong>肺部气体交换结果</strong></li>
+<li>静脉血反映<strong>组织氧消耗后的血液状态</strong></li>
+<li>两者 pO2 差异显著，不代表氧合功能异常</li>
+</ul>
+<hr>
+<h2>2. 三种静脉血采血部位对比</h2>
+<table><tr><th>部位</th><th>采样位置</th><th>临床意义</th></tr><tr><td><strong>混合静脉血（Mixed Venous）</strong></td><td>肺动脉（SWAN-GANZ导管）</td><td>反映全身组织氧供需平衡的金标准</td></tr><tr><td><strong>中心静脉血（Central Venous）</strong></td><td>上腔静脉/右心房</td><td>可行性优于混合静脉血，临床实用</td></tr><tr><td><strong>外周静脉血（Peripheral Venous）</strong></td><td>任意外周静脉</td><td>最便捷，但仅反映局部灌注</td></tr></table>
+<blockquote><p>临床提示<br>外周静脉血气最易获取，但信息量有限；混合静脉血信息最丰富，但采样有创；中心静脉血是两者之间的平衡点。</p></blockquote>
+<hr>
+<h2>3. 血流动力学血气指标</h2>
+<h3>SvO2（混合静脉血氧饱和度）</h3>
+<ul>
+<li>正常值：<strong>60-75%</strong></li>
+<li>反映全身氧供需平衡</li>
+<li>SvO2 降低：氧输送不足或氧耗增加</li>
+<li>SvO2 升高/正常：线粒体功能障碍（细胞无法利用氧）</li>
+</ul>
+<h3>SvO2 与乳酸的关系</h3>
+<table><tr><th>组合</th><th>临床意义</th></tr><tr><td>SvO2 ↓ + 乳酸 ↑</td><td>氧输送不足（低心排、低氧、低血色素）</td></tr><tr><td>SvO2 正常/↑ + 乳酸 ↑</td><td>线粒体功能障碍（细胞无法利用氧）</td></tr></table>
+<blockquote><p>鉴别要点<br>乳酸升高但 SvO2 正常 → 提示细胞层面利用障碍（非休克性乳酸升高），区别于组织低灌注。</p></blockquote>
+<h3>pCO2 Gap（动静脉二氧化碳分压差）</h3>
+<p><strong>定义</strong>：<code>pCO2 Gap = PvCO2 − PaCO2</code></p>
+<p><strong>生理学基础</strong>：</p>
+<ul>
+<li>反映组织 CO2 产生量与肺清除量的平衡</li>
+<li>pCO2 Gap 升高（> 6 mmHg）→ 提示<strong>组织低灌注</strong>或<strong>无氧代谢</strong></li>
+</ul>
+<p><strong>临床应用</strong>：</p>
+<ul>
+<li>是<strong>组织低灌注的敏感指标</strong>，优于单独乳酸</li>
+<li>动态监测 pCO2 Gap 下降趋势 → 提示复苏有效</li>
+</ul>
+<p><strong>局限性</strong>：</p>
+<ul>
+<li>高代谢状态、过度通气、剧烈寒战可干扰</li>
+<li>非特异性，须结合临床</li>
+</ul>
+<h3>pCO2 Gap / Ca-vO2 比值</h3>
+<ul>
+<li>同时评估组织灌注和组织氧利用</li>
+<li>比值升高 → 提示组织低灌注（血流不足以清除组织产生的 CO2）</li>
+</ul>
+<hr>
+<h2>4. 临床应用场景</h2>
+<table><tr><th>场景</th><th>VBG 适用性</th></tr><tr><td>初始评估（急诊/ICU 入院）</td><td>✅ 适用，可快速获得酸碱状态</td></tr><tr><td>治疗效果监测（复苏期间）</td><td>✅ 适用，动态监测 pCO2 Gap 等指标</td></tr><tr><td>血流动力学监测（休克）</td><td>✅ 适用，SvO2 + pCO2 Gap 联合评估</td></tr><tr><td>长期透析患者规律监测</td><td>✅ 适用，减少反复动脉穿刺</td></tr><tr><td>评估动脉氧合状态</td><td>❌ 不适用（pO2 差异太大）</td></tr><tr><td>需要精确 PaCO2 指导通气参数</td><td>❌ 不适用（pCO2 相关性有争议）</td></tr></table>
+<hr>
+<h2>5. 与 ABG 的互补关系</h2>
+<p>VBG 不是 ABG 的降级替代，而是<strong>互补工具</strong>：</p>
+<ul>
+<li><strong>VBG 擅长</strong>：酸碱总览、组织灌注评估（SvO2、pCO2 Gap）、重复监测</li>
+<li><strong>ABG 擅长</strong>：精确通气参数（PaCO2）、肺气体交换评估（PaO2）</li>
+</ul>
+<blockquote><p>未来方向<br>需要完善 VBG 解读算法，扩大临床研究，挖掘 AI/机器学习辅助解读潜力。</p></blockquote>
+<hr>
+<h2>相关条目</h2>
+<ul>
+<li>高AG代谢性酸中毒五大坑 — 乳酸在代谢性酸中毒鉴别诊断中的作用</li>
+<li>血流动力学治疗5P5A原则-ICU临床思维框架 — 组织灌注与血流动力学评估框架</li>
+<li>液体管理PPV避雷指南 — ICU 液体管理中组织灌注监测的重要性</li>
+</ul>
+<p>index</p>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

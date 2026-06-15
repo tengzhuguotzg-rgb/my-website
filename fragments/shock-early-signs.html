@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>休克早期识别的6个隐匿信号 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>血流动力学</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">血流动力学</div>
+<h1>休克早期识别的6个隐匿信号</h1>
+<p class="lede">视频开篇以蓝白配色 2×2 网格展示硬数据，底部字幕&quot;先看一组数据&quot;：</p>
+</section>
+
+<article class="article">
+<p><strong>来源：</strong> 轻松学重症（视频）
+<strong>时长：</strong> ~8:00
+<strong>处理时间：</strong> 2026年05月14日 22:20
+<strong>处理方式：</strong> Whisper 音频转写 + MiniMax VL-01 关键帧视觉分析（10 帧）</p>
+<h2>视频核心数据页（Frame 1）</h2>
+<p>视频开篇以蓝白配色 2×2 网格展示硬数据，底部字幕&quot;先看一组数据&quot;：</p>
+<table>
+<thead>
+<tr>
+<th>面板</th>
+<th>标题</th>
+<th>核心内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>左上</td>
+<td>2025 ESICM 指南</td>
+<td>休克定义 = <strong>「组织细胞缺氧」</strong>（非「低血压」）</td>
+</tr>
+<tr>
+<td>左下</td>
+<td>住院患者心脏骤停前特征</td>
+<td><strong>80%</strong> 在 24h 内有组织灌注异常，血压可能仍正常</td>
+</tr>
+<tr>
+<td>右上</td>
+<td>2025 最新研究</td>
+<td>皮肤花斑特异性 <strong>0.92</strong> · CRT 延长特异性 <strong>0.89</strong></td>
+</tr>
+<tr>
+<td>右下</td>
+<td>休克指数预测</td>
+<td>休克指数 &gt; 0.8 预测敏感性 <strong>0.77</strong></td>
+</tr>
+</tbody></table>
+<h2>六个隐匿信号</h2>
+<h3>信号一：皮肤花斑——最直观的&quot;休克地图&quot;</h3>
+<p><strong>帧画面（Frame 2）：</strong> 左侧展示真实膝盖皮肤花斑（网状青斑）临床照片，深褐紫色不规则斑块分布在苍白皮肤上，配监护仪图形和红色生物结构示意。底部蓝色半透明框标注 <strong>「皮肤花斑特异性 0.92」</strong>。</p>
+<p><strong>场景：</strong> 70 岁感染患者，血压 130/85，护士发现膝盖周围出现花斑，一块一块。报告医生：&quot;膝盖上花斑一块一块的。&quot; 医生没在意。4 小时后血压掉到 80，乳酸 6.0。</p>
+<p><strong>机制：</strong> 皮肤花斑是微循环灌注障碍的直接表现——血流不够了，皮肤先知道。基于 Mottling Score，花斑范围越大预后越差，花斑出现时乳酸往往已升高。</p>
+<p><strong>数据支撑：</strong> 预测休克<strong>特异性 0.92</strong>，阳性似然比 <strong>4.62</strong></p>
+<p><strong>正确示范：</strong> 护士：&quot;他膝盖有花斑一块一块。&quot; 医生：&quot;查乳酸、查血气、评估容量。&quot;</p>
+<blockquote>
+<p><strong>⚠️ 注意</strong>
+花斑不是皮肤病，是内脏在喊救命。</p>
+</blockquote>
+<h3>信号二：CRT 延长 &gt; 3 秒——最简单的&quot;灌注测试&quot;</h3>
+<p><strong>帧画面（Frame 3）：</strong> 左侧展示医生按压患者大脚趾甲床行 CRT 测试的实际操作照，叠加蓝底趋势折线图（X 轴 0→10，Y 轴 0→60），红色波形曲线与蓝色标注线相交。下方白色大字 <strong>「CRT 延长特异性 0.89」</strong>。</p>
+<p><strong>场景：</strong> 55 岁术后患者，血压 110/70，手指 CRT 需要 5 秒（正常 ≤2 秒）。医生没注意这个细节。当晚尿量减少，肌酐翻倍。</p>
+<p><strong>机制：</strong> CRT 是外周灌注不足的<strong>最早表现</strong>——比乳酸反应更快、更实时。</p>
+<p><strong>数据支撑：</strong> ANDROMEDA-SHOCK 2 试验证实 CRT 导向复苏可改善预后。预测休克<strong>特异性 0.89</strong>，阳性似然比 <strong>4.17</strong>。</p>
+<p><strong>正确示范：</strong> 护士：&quot;按他手指，颜色 5 秒才恢复。&quot; 医生：&quot;评估容量、查乳酸，考虑液体或升压药。&quot;</p>
+<blockquote>
+<p><strong>💡 临床提示</strong>
+CRT 超过 3 秒，身体在说&quot;血不够了&quot;。</p>
+</blockquote>
+<h3>信号三：休克指数 &gt; 0.8——藏在生命体征里的&quot;警报&quot;</h3>
+<p><strong>帧画面（Frame 4）：</strong> 左侧模拟监护仪显示 BP 110/70、HR 100，右侧红色警告框计算 <code>100 ÷ 110 = 0.91</code>。下方血管血流动态模型 + 折线图标注 <strong>「休克指数 &gt; 0.8 敏感性 0.77」</strong>。</p>
+<p><strong>场景：</strong> 60 岁消化道出血患者，血压 110/70，心率 100。休克指数 = 100 ÷ 110 = 0.91，&gt;0.8。医生未在意。两小时后呕血，血压掉到 70。</p>
+<p><strong>公式：</strong> 休克指数 = 心率 ÷ 收缩压</p>
+<ul>
+<li>正常 0.5~0.7</li>
+<li><strong>&gt; 0.8</strong>：提示血容量不足或心功能代偿</li>
+<li><strong>&gt; 1.0</strong>：已经是严重休克</li>
+</ul>
+<p><strong>数据支撑：</strong> 预测休克<strong>敏感性 0.77</strong>，特异性 0.64——10 个隐性休克中将近 8 个该指标先亮红灯。</p>
+<p><strong>正确示范：</strong> &quot;血压 110，心率 100，休克指数 0.91——这是隐匿性失血的信号。查血常规、评估容量、备血。&quot;</p>
+<blockquote>
+<p><strong>💡 临床提示</strong>
+休克指数 &gt; 0.8，别等血压掉。</p>
+</blockquote>
+<h3>信号四：桡动脉搏动减弱——最容易被忽略的&quot;手动监测&quot;</h3>
+<p><strong>帧画面（Frame 5）：</strong> 左侧白大褂医生俯身触诊患者桡动脉的特写，背景监护仪显示 HR 60。红色脉冲波形叠加从腕部向外辐射，标注 <strong>「血压正常」</strong>（但脉搏已细弱）。底部大字 <strong>「第四个信号 桡动脉搏动减弱」</strong>。</p>
+<p><strong>场景：</strong> 50 岁胰腺炎患者，血压 115/75，但桡动脉细弱、感觉要摸不到。医生心想血压正常没事。3 小时后血压垮了，进 ICU。</p>
+<p><strong>机制：</strong> 桡动脉搏动是心输出量的&quot;手动监测&quot;——搏动有力说明每搏量够，细弱说明每搏量下降、外周血管已在拼命收缩代偿。无创、随时可查。</p>
+<p><strong>数据支撑：</strong> 预测休克<strong>特异性 0.79</strong>，阳性似然比 <strong>2.88</strong>。</p>
+<p><strong>正确示范：</strong> &quot;桡动脉很细、几乎摸不到——这是心输出量下降的信号。做心脏超声、评估容量、查乳酸。&quot;</p>
+<blockquote>
+<p><strong>💡 临床提示</strong>
+手指头比监护仪更早知道血流不够。</p>
+</blockquote>
+<h3>信号五：尿量减少（&lt; 0.5 ml/kg/h）——肾脏的&quot;实话实说&quot;</h3>
+<p><strong>帧画面（Frame 6）：</strong> 左侧醒目展示输液袋 + 量尿杯，红色三角警告符标注 <strong>「每小时尿量 20ml」</strong>。肾动脉解剖图发蓝光框内，箭头指向底部时间轴：0h → 3h → 6h → 肌酐升高。</p>
+<p><strong>场景：</strong> 65 岁心衰患者，血压 130/85，看起来稳定。护士记录连续 4 小时每小时尿量 &lt; 20ml。医生：&quot;血压正常，再观察。&quot; 第二天肌酐从 80 涨到 200。</p>
+<p><strong>机制：</strong> 肾脏对血流减少最敏感——血压正常时肾血流可能已下降。<strong>尿量是实时监测，肌酐是滞后指标。</strong> 等肌酐升高，肾损伤已发生。</p>
+<p><strong>预警阈值：</strong> &lt; 0.5 ml/kg/h，持续 ≥ 2 小时</p>
+<p><strong>正确示范：</strong> &quot;血压正常，但 4 小时尿量不到 100ml——肾脏在喊&#39;血不够&#39;。评估容量、查乳酸，考虑液体或利尿剂。&quot;</p>
+<blockquote>
+<p><strong>⚠️ 注意</strong>
+肾脏不会说谎，尿量少就是血流不够。</p>
+</blockquote>
+<h3>信号六：意识改变——大脑的&quot;最后通牒&quot;</h3>
+<p><strong>帧画面（Frame 7）：</strong> 分日/夜两半：白天病床上的老年患者眼神呆滞、反应迟钝；夜间转为昏迷状态。脑图插图标注 <strong>「灌注不足 → 神经元功能异常」</strong>，恶化路径：烦躁 → 嗜睡 → 昏迷。</p>
+<p><strong>场景：</strong> 80 岁感染患者，血压 120/80。家属说&quot;今天不爱说话，叫他反应慢&quot;。医生：&quot;年纪大了正常。&quot; 当晚患者叫不醒了，乳酸 5.0。</p>
+<p><strong>机制：</strong> 大脑对低灌注最敏感——血压还没掉，脑细胞先报警。</p>
+<blockquote>
+<p><strong>⚠️ 注意</strong>
+家属说&quot;和平时不一样&quot;就是警报。反应慢不是&quot;老了&quot;，是脑灌注不足。不是老了，是脑子在喊救命。</p>
+</blockquote>
+<p><strong>正确示范：</strong> &quot;反应迟钝不是老了，是脑子灌注不够。查血糖、查血气、评估脑灌注压。&quot;</p>
+<hr>
+<h2>六步筛查法（2 分钟完成）</h2>
+<blockquote>
+<p>帧画面（Frame 8）以<strong>横向 6 栏信息图</strong>展示，每栏蓝底标题 + 配图 + 阳性标准：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>检查内容</th>
+<th>时间</th>
+<th>阳性标准</th>
+<th>画面元素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>①</td>
+<td><strong>看皮肤</strong>——有无花斑</td>
+<td>10s</td>
+<td>有花斑 → 立刻评估休克</td>
+<td>红色斑驳皮肤照</td>
+</tr>
+<tr>
+<td>②</td>
+<td><strong>测 CRT</strong>——按压手指</td>
+<td>10s</td>
+<td>&gt; 3s → 外周灌注不足</td>
+<td>双手按压指甲 CRT 测试</td>
+</tr>
+<tr>
+<td>③</td>
+<td><strong>算指数</strong>——心率 ÷ 收缩压</td>
+<td>5s</td>
+<td>&gt; 0.8 → 隐匿性休克可能</td>
+<td>计算器 + 公式对话框</td>
+</tr>
+<tr>
+<td>④</td>
+<td><strong>摸桡动脉</strong>——搏动力度</td>
+<td>5s</td>
+<td>细弱 → 每搏量下降</td>
+<td>手触诊腕部脉搏</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td><strong>看尿量</strong>——每小时记录</td>
+<td>1min</td>
+<td>&lt; 0.5 ml/kg/h × 2h → 肾脏报警</td>
+<td>输液袋连接量杯</td>
+</tr>
+<tr>
+<td>⑥</td>
+<td><strong>问神志</strong>——和平常比</td>
+<td>30s</td>
+<td>不一样 → 大脑报警</td>
+<td>医生与患者对话</td>
+</tr>
+</tbody></table>
+<p>底部蓝色横幅：<strong>「以上六步，有任何一项阳性——评估容量，考虑干预」</strong></p>
+<blockquote>
+<p><strong>❗ 关键结论</strong>
+任何一项阳性 → 别等 → <strong>查乳酸、查血气、评估容量、考虑干预。</strong></p>
+</blockquote>
+<hr>
+<h2>三个致命错觉</h2>
+<blockquote>
+<p>帧画面（Frame 9）以三个蓝头白底卡片 + 右侧列表并列展示：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>错觉</th>
+<th>真相</th>
+<th>纠正</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>错觉 1：血压正常 = 灌注正常</strong></td>
+<td>血压可能是代偿——心率快、血管收缩在硬撑，撑不住了才掉</td>
+<td>看灌注指标：CRT、尿量、神志</td>
+</tr>
+<tr>
+<td><strong>错觉 2：患者没喊难受 = 不严重</strong></td>
+<td>隐匿性休克患者往往&quot;不难受&quot;，等他喊难受已经晚了</td>
+<td><strong>观察比询问重要</strong></td>
+</tr>
+<tr>
+<td><strong>错觉 3：等血压掉了再处理</strong></td>
+<td>血压掉是休克晚期，等掉了再处理，器官已经损伤</td>
+<td>在血压正常时揪出休克，才是真功夫</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>总结（速记口诀）</h2>
+<blockquote>
+<p>帧画面（Frame 10）为淡蓝背景 + 白色卡片，左侧六行口诀带编号，右侧&quot;同行互动&quot;区邀请评论区分享经验：</p>
+</blockquote>
+<blockquote>
+<p>① 花斑先看皮肤上，② CRT 超三要紧张
+③ 休克指数别过八，④ 桡动脉弱心输出降
+⑤ 尿量少是肾报警，⑥ 神志变脑子喊救命
+<strong>血压正常别大意，六步筛查保平安</strong></p>
+</blockquote>
+<hr>
+<h2>视觉内容摘要</h2>
+<p>本视频采用<strong>高质量医学教学信息图风格</strong>，每页统一蓝白配色、左图右文布局：</p>
+<ul>
+<li><strong>数据页</strong>：2×2 网格卡片，每卡片蓝色表头 + 渐变背景 + 图标</li>
+<li><strong>信号页</strong>（Frame 2-7）：左侧为临床场景照片/插图（真实病例照、监护仪模拟、解剖示意图），右侧为病例 + 机制 + 数据 + 正确示范</li>
+<li><strong>六步筛查</strong>（Frame 8）：横向 6 栏信息图，每栏独立配图</li>
+<li><strong>错觉页</strong>（Frame 9）：三张并列卡片，每卡带图标 + 真相 + 纠正</li>
+<li><strong>总结页</strong>（Frame 10）：淡蓝底白色卡片，口诀 + 互动区</li>
+</ul>
+<hr>
+<h2>相关条目</h2>
+<ul>
+<li><a href="#">笔记列表</a></li>
+<li><a href="#">脓毒症早期识别：六个临床陷阱</a> — 本视频的隐匿性休克（陷阱5）与该页面「隐匿性休克」完全对应；皮肤花斑/CRT/休克指数等早期信号在该页面有系统性梳理</li>
+<li><a href="#">垂体危象</a> — 垂体危象的顽固性低血压（补液不升压）是隐匿性休克的重要病因之一；碰到难治性休克+低体温+低血糖+低血钠四低并存，要想到垂体危象这条隐匿原因</li>
+</ul>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

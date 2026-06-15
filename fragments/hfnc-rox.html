@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>HFNC在重症的应用与ROX指数 · Teng.ZG</title>
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F1EA;--bg-2:#EBE5D6;
+  --ink:#1F3D2F;--ink-2:#2D5440;
+  --accent:#E76F2C;--accent-2:#C45A1F;
+  --text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;
+  --line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22);
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:'Noto Serif SC','Space Grotesk',serif;
+  color:var(--text);line-height:1.75;font-size:16px;
+  min-height:100vh;
+  background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var(--accent)}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+
+.doc{max-width:920px;margin:0 auto;padding:0 32px}
+.hero{padding:72px 0 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,64px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{color:var(--accent)}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
+.meta-row{display:flex;flex-wrap:wrap;gap:18px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1px;color:var(--text-faint);text-transform:uppercase}
+.meta-row b{color:var(--ink);font-weight:600}
+
+.article h2{font-family:'Noto Serif SC',serif;font-size:24px;font-weight:700;color:var(--ink);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.article h3{font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;color:var(--ink);margin:32px 0 12px}
+.article h4{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:var(--ink);margin:24px 0 8px}
+.article p{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px}
+.article ul,.article ol{font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.8;color:var(--text-dim);margin:0 0 16px;padding-left:24px}
+.article li{margin-bottom:6px}
+.article strong{color:var(--ink);font-weight:600}
+.article em{color:var(--accent-2);font-style:normal;font-weight:600}
+.article blockquote{margin:20px 0;padding:16px 20px;border-left:3px solid var(--accent);background:rgba(231,111,44,0.04);border-radius:0 10px 10px 0;font-family:'Noto Serif SC',serif;font-size:14px;color:var(--text-dim);line-height:1.7}
+.article blockquote p{margin-bottom:6px}
+.article blockquote p:last-child{margin-bottom:0}
+.article code{font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(31,61,47,0.05);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.article pre{background:rgba(31,61,47,0.04);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:20px 0;border:1px solid var(--line)}
+.article pre code{background:none;padding:0;font-size:13px;line-height:1.6}
+.article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px}
+.article th,.article td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+.article th{background:rgba(31,61,47,0.04);font-weight:600;color:var(--ink)}
+.article tr:nth-child(even){background:rgba(31,61,47,0.02)}
+.article hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+
+.footer{max-width:920px;margin:64px auto 0;padding:32px 32px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;letter-spacing:0.5px}
+.footer a{color:var(--ink-2)}.footer a:hover{color:var(--accent)}
+
+@media(max-width:560px){.hero{padding:48px 0 16px}.doc{padding:0 18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a href="../index.html" class="brand">
+<div class="brand-mark">T</div>
+<div class="brand-info"><div class="brand-name">Teng.ZG</div><div class="brand-sub">重症医学科 · 遂宁市中医院</div></div>
+</a>
+<div class="topbar-right">
+<nav class="crumb"><a href="../fragments.html">前沿碎片</a><span class="sep">/</span><span>呼吸通气</span></nav>
+<a href="../fragments.html" class="home-pill">&larr; 返回碎片</a>
+</div>
+</header>
+
+<div class="doc">
+<section class="hero">
+<div class="eyebrow">呼吸通气</div>
+<h1>HFNC在重症的应用与ROX指数</h1>
+<p class="lede">29岁重症哮喘病例分享，HFNC四大机制、I/II型呼衰参数对比、ROX指数三时点阈值</p>
+</section>
+
+<article class="article">
+<p><strong>时长：</strong> 3:56</p>
+<p><strong>处理时间：</strong> 2026年4月28日</p>
+<p><strong>模型：</strong> Whisper（音频）+ MiniMax VL（帧分析）</p>
+<hr>
+<h2>视频总结</h2>
+<h3>病例引入</h3>
+<p>29岁男性，重症哮喘持续状态，pH 7.00，PaCO₂ 124 mmHg。按教科书标准应立即气管插管，但值班医生选择了 HFNC（50L/min + FiO₂ 80%），6天后顺利转出ICU。</p>
+<h3>HFNC四大机制</h3>
+<table><tr><th>机制</th><th>说明</th></tr><tr><td><strong>精准给氧</strong></td><td>60-70L/min气流形成保护罩，隔离周围空气，设定的FiO₂无损吸收</td></tr><tr><td><strong>冲刷死腔</strong></td><td>类似持续工作的吹风机，持续吹出呼出气中的CO₂，提高每次吸入气体的新鲜度</td></tr><tr><td><strong>PEEP效应</strong></td><td>流量每增加10L/min约产生1cmH₂O呼气末正压，防止肺泡塌陷</td></tr><tr><td><strong>加温加湿</strong></td><td>37°C、100%相对湿度的温湿气体保护气道黏膜，维持纤毛正常摆动</td></tr></table>
+<h3>I型 vs II型呼吸衰竭参数对比</h3>
+<table><tr><th>参数</th><th>I型（低氧性）</th><th>II型（高碳酸性）</th></tr><tr><td>流量</td><td>40-60 L/min</td><td>50-60 L/min</td></tr><tr><td>氧浓度/目标</td><td>FiO₂ 100%</td><td>目标SpO₂ 88-92%</td></tr><tr><td>温度</td><td>37°C</td><td>37°C</td></tr></table>
+<blockquote><p>II型呼吸衰竭注意<br>氧浓度不能给太高，会抑制呼吸中枢。</p></blockquote>
+<h3>ROX指数</h3>
+<p><strong>公式：</strong> ROX指数 = (SpO₂ / FiO₂) / 呼吸频率</p>
+<p><strong>三时点失败阈值：</strong></p>
+<table><tr><th>时间</th><th>ROX指数</th><th>意义</th></tr><tr><td>2小时后</td><td>< 2.85</td><td>警惕，密切监测</td></tr><tr><td>6小时后</td><td>< 3.47</td><td>失败风险高</td></tr><tr><td>12小时后</td><td>< 3.85</td><td>明确失败，果断升级呼吸支持</td></tr></table>
+<h3>核心观点</h3>
+<blockquote><p>核心观点<br>HFNC是个好东西，但绝对不是万能药。必须清楚什么时候该放手，及时升级呼吸支持（无创或有创气管插管），这是对病人生命安全的底线。</p></blockquote>
+<hr>
+<h2>关键帧</h2>
+<table><tr><th>时间</th><th>内容</th></tr><tr><td>20s</td><td>pH 7.00 血气分析，ICU蒋医生讲解酸中毒危险性</td></tr><tr><td>58s</td><td>HFNC参数表：50L/min + FiO₂ 80%，无创通气策略</td></tr><tr><td>143s</td><td>I型 vs II型呼吸衰竭参数对比表（流量、氧浓度、温度）</td></tr><tr><td>181s</td><td>ROX指数公式：ROX = (SpO₂/FiO₂)÷RR</td></tr><tr><td>191s</td><td>ROX指数三时点失败阈值时间轴（2h/6h/12h）</td></tr></table>
+<hr>
+<h2>核心知识点</h2>
+<ul>
+<li>重症哮喘pH 7.00、PaCO₂ 124 mmHg并非插管绝对指征</li>
+<li>HFNC四大机制：精准给氧、冲刷死腔、PEEP效应、加温加湿</li>
+<li>I型呼衰：目标快准狠（FiO₂ 100%，流量40-60L/min）</li>
+<li>II型呼衰：目标要低（SpO₂ 88-92%），避免抑制呼吸中枢</li>
+<li>ROX指数：判断HFNC是否有效的晴雨表，三时点阈值2.85/3.47/3.85</li>
+<li>HFNC失败时必须果断升级呼吸支持，不能抱残守缺</li>
+</ul>
+<h2>相关条目</h2>
+<ul>
+<li>病例讨论-张宏义-ARDS重度重症肺炎 — HFNC在重症ARDS中的应用与ROX指数评估时机</li>
+<li>机械通气驱动压与跨肺压 — HFNC作为过渡到有创通气的桥梁，驱动压概念在HFNC中的应用</li>
+</ul>
+<p>index</p>
+<h2>原始素材</h2>
+<ul>
+<li>原视频：<code>raw/微信视频2026-04-26_183520_671.mp4</code></li>
+<li>归档视频：<code>wiki/视频/HFNC在重症的应用与ROX指数.mp4</code></li>
+</ul>
+</article>
+</div>
+
+<footer class="footer">
+<div>&copy; 2026 · Teng.ZG · 临床工具仅供参考,以实际诊疗为准</div>
+<a href="../fragments.html">&larr; 返回前沿碎片</a>
+</footer>
+</body>
+</html>

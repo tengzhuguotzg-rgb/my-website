@@ -1456,7 +1456,7 @@
       <div class="meta">
         <div class="meta-card span-2">
           <h4>Instructions 用法</h4>
-          <p><strong>动脉血气必填</strong>(pH / PaCO₂ / HCO₃⁻ 为酸碱核心, 另需 Na⁺、Cl⁻ 计算 AG), <strong>静脉血气可选</strong>(展开折叠块, 缺氧分型与呼吸商需动静脉配对)。<br>酸碱判断按 <strong>6 步</strong>: ① H-H 校验 → ② pH 定性 → ③ 方向规则定原发 → ④ 代偿公式验证 → ⑤ AG/潜在 HCO₃⁻ 判 TABD → ⑥ 代酸分型 (电中和原理)。每栏(① 酸碱 / ② 氧合 / ③ 缺氧分型 / ④ 呼吸商 / ⑤ 危急值 / ⑥ 异常总览)内容均重要, 全部平铺展示, 滚动浏览不互相遮挡。</p>
+          <p><strong>动脉血气必填</strong>(pH / PaCO₂ / HCO₃⁻ 为酸碱核心, 另需 Na⁺、Cl⁻ 计算 AG), <strong>静脉血气可选</strong>(展开折叠块, 缺氧分型与呼吸商需动静脉配对)。<br>酸碱判断按 <strong>6 步</strong>: ① H-H 校验 → ② pH 定性 → ③ 方向规则定原发 → ④ 代偿公式验证 → ⑤ AG/潜在 HCO₃⁻ 判 TABD → ⑥ 代酸分型 (三值比较法, |ΔHCO₃| vs ΔAG/ΔCl 比大小)。每栏(① 酸碱 / ② 氧合 / ③ 缺氧分型 / ④ 呼吸商 / ⑤ 危急值 / ⑥ 异常总览)内容均重要, 全部平铺展示, 滚动浏览不互相遮挡。</p>
         </div>
         <div class="meta-card span-2">
           <h4>酸碱失衡 · 决策树与计算方法</h4>
@@ -1526,17 +1526,19 @@
             </div>
 
             <div class="dt-step">
-              <div class="dt-head"><span class="dt-no">5</span>代酸分型 (高 AG / 高氯性 / 复合型, 电中和原理)</div>
-              <p>当代酸确诊且有 Na⁺、Cl⁻ 时, 进一步分型。依据电中和原理: <code>|△HCO₃⁻| ≈ △AG + △Cl⁻</code>。</p>
+              <div class="dt-head"><span class="dt-no">5</span>代酸分型 (高 AG / 高氯性 / 复合型, 三值比较法)</div>
+              <p>代酸确诊且有 Na⁺、Cl⁻ 时, 进一步分型。教材《实用重症医学》第三篇给出三个纯态公式: 高AG型 <code>|△HCO₃⁻|=△AG</code>、高氯型 <code>|△HCO₃⁻|=△Cl⁻</code>、复合型 <code>|△HCO₃⁻|=△AG+△Cl⁻</code>。注意第三个等式是 AG 定义的数学恒等式(Na 稳定时必然成立), <u>不具判别力</u>——不能直接拿它当复合型判据。教材真正的判据是<strong>三值大小比较</strong>:</p>
               <ul>
-                <li><strong>电中和优先</strong>: 若 <code>△AG ≥ 2</code> 且 <code>△Cl⁻ &gt; 1</code> 且 <code>||△HCO₃⁻| − (△AG + △Cl⁻)| ≤ 3</code> → <em>复合型代酸</em> (高 AG + 高氯性, 教材例16: AG=18 临界区据此判出复合型; △AG≥2 排除测量误差)。</li>
-                <li><strong>AG ≥ 20</strong> (ΔCl 未显著参与): <em>单纯高 AG 型代酸</em> (AG&gt;30 确诊, 20-30 提示)。</li>
-                <li><strong>AG 正常/临界 + Cl⁻ &gt; 108</strong>: <em>高氯性代酸 (正常 AG 型)</em>, Cl⁻ 升高代偿了 HCO₃⁻ 下降。</li>
-                <li>正常参考: <code>HCO₃⁻ = 24</code>, <code>Cl⁻ = 100</code>, <code>△ = 实测 − 正常</code>。</li>
+                <li><strong>先认成分</strong> (对称松下限, 排除测量误差): <code>高AG成分 = △AG ≥ 2</code>、<code>高氯成分 = △Cl⁻ ≥ 2</code>。两者各自需超噪声才计为有意义的参与(教材例9 △AG=1 据此忽略, 仍判单纯代酸)。</li>
+                <li><strong>① 高AG + 高氯都有</strong> → <em>复合型代酸 (高AG+高氯)</em>。教材L1884原话: "一旦出现 AG 升高伴 |△HCO₃⁻| > △AG 或 |△HCO₃⁻| > |△Cl⁻| 时应考虑到复合型"; 教材例16 (AG=18, △AG=2, △Cl=8, |△HCO₃|=10) 据此判复合型。</li>
+                <li><strong>② 只有高AG</strong>: 若 <code>|△HCO₃⁻| &lt; △AG − 2</code> → <em>高AG代酸 + 代碱</em> (课件slide63原话: "AG升高数大于 HCO₃⁻ 下降数"); 否则 <em>单纯高AG型代酸</em> (|△HCO₃⁻| ≈ △AG, AG&gt;30确诊, 20-30提示)。</li>
+                <li><strong>③ 只有高氯</strong> → <em>高氯性代酸 (正常AG型)</em>。Cl⁻ 升高代偿了 HCO₃⁻ 下降, AG 正常(腹泻/RTA/输尿管造口/过多含氯酸等)。</li>
+                <li><strong>④ 两者均无</strong> → AG/Cl 均不显著, 需结合临床。</li>
+                <li>正常参考: <code>HCO₃⁻ = 24</code>, <code>Cl⁻ = 102</code> (正常范围 98-106 的中位, 临床基准), <code>AG = Na⁺ − (Cl⁻ + HCO₃⁻)</code> 正常 8-16, △AG 用 <code>AG − 16</code> (教材口径, 复现例16 △AG=2), △Cl⁻ 用 <code>Cl⁻ − 102</code> (与 △AG 对称取"正常范围中位", 避免 Cl 正常偏高被误触发"高氯参与"; 教材举例16 沿用 100 算 ΔCl=8 仍可正确判复合型)。</li>
               </ul>
             </div>
 
-            <div class="dt-flow">完整流程:  H-H校验(失败则全停) → pH定性(以7.40为界, &lt;7.40走酸/&gt;7.40走碱/=7.40判混合) → 方向规则(对向=混合/同向=套公式) → 代偿公式(有效范围=公式±容差 ∩ 生理极限) → AG(≥20?) → 潜在HCO₃⁻ → TABD → 代酸分型(电中和优先)</div>
+            <div class="dt-flow">完整流程:  H-H校验(失败则全停) → pH定性(以7.40为界, &lt;7.40走酸/&gt;7.40走碱/=7.40判混合) → 方向规则(对向=混合/同向=套公式) → 代偿公式(有效范围=公式±容差 ∩ 生理极限) → AG(≥20?) → 潜在HCO₃⁻ → TABD → 代酸分型(三值比较: △AG≥2 且 △Cl≥2 各自认成分, |△HCO₃| vs △AG/△Cl 比大小)</div>
           </div>
         </div>
 
@@ -1576,6 +1578,7 @@
                 <li><strong>呼碱 + 代碱</strong> (slide 58/59): 双重碱化, pH&gt;7.60 死亡率 65%, &gt;7.64 达 90% — 氧离曲线左移致组织缺氧, 预后极差。</li>
                 <li><strong>呼碱 + 代酸</strong> (slide 61): 脓毒败血症、肺栓塞合并肾衰、肺心病呼吸机不当(排 CO₂ 过多) + 缺氧产酸。</li>
                 <li><strong>代酸 + 代碱</strong> (slide 62/63): 高 AG 代酸 + 代碱, 血气 pH/HCO₃⁻/PaCO₂ 可看似正常, <em>必须算 AG 才不漏诊</em>。</li>
+                <li><strong>复合型代酸</strong> (教材L1884+例16): 高 AG + 高氯性代酸同时存在, 即 |△HCO₃⁻| &gt; △AG 且 &gt; △Cl⁻。常见于<em>糖尿病酮症酸中毒伴腹泻</em>、肾功能不全患者。</li>
                 <li><strong>TABD 三重</strong> (slide 65-68): 呼碱型/呼酸型, 多见于多脏衰、脓毒症、重症胰腺炎、复杂治疗叠加。</li>
               </ul>
             </div>
@@ -2237,33 +2240,54 @@ function calcBg() {
     }
   }
 
-  // 代酸分型检查 (教材例16 L1886: AG临界区也做电中和)
-  // 代酸确诊 + 有 Na/Cl 时, 分高AG型/高氯性/复合型
-  // 判据: 电中和(|ΔHCO₃⁻|≈ΔAG+ΔCl⁻) → 复合型 (不论AG在哪个区间);
-  //        否则 AG≥20 → 高AG型; AG正常+Cl↑ → 高氯性
+  // 代酸分型检查 (三值比较法, 教材《实用重症医学》第三篇L1825-1829+L1884+举例16/9/13)
+  // 代酸确诊 + 有 Na/Cl 时, 分高AG型/高氯性/复合型/代酸+代碱
+  // 关键认知: |ΔHCO₃⁻| = ΔAG + ΔCl⁻ 是 AG 定义的数学恒等式(Na稳定时必然成立),
+  //           不具判别力。教材真正的判据是「三值大小比较」, 不是恒等式。
+  // 判据 (代酸确诊后):
+  //   高AG成分 = ΔAG ≥ 2   (排除测量误差; 教材例9 ΔAG=1 据此忽略, 判单纯)
+  //   高氯成分 = ΔCl⁻ ≥ 2  (对称下限, 与ΔAG同一把尺子)
+  //   ① 高AG + 高氯          → 复合型代酸 (教材L1884: |ΔHCO₃⁻|>ΔAG 且 >ΔCl; 例16)
+  //   ② 高AG 无高氯:
+  //        |ΔHCO₃⁻| < ΔAG−2  → 高AG代酸+代碱 (slide63: AG升高数>HCO₃下降数)
+  //        否则               → 单纯高AG型 (|ΔHCO₃⁻|≈ΔAG)
+  //   ③ 无高AG + 高氯         → 单纯高氯性 (正常AG型)
+  //   ④ 两者均无             → AG/Cl均不显著, 需结合临床
+  let metabolicSubType = '';                     // 给 getCause 用的分型标签
   if (na !== null && cl !== null && /代酸|代谢性酸中毒/.test(primary)) {
     const ag = na - (cl + hco3);
-    const dAG = Math.max(0, ag - 16);         // ΔAG (AG 正常上限 16)
-    const dCl = Math.max(0, cl - 100);         // ΔCl⁻ (Cl 正常值 100, 教材例16原文: 108-100=8)
+    const dAG = ag - 16;                       // ΔAG (教材口径 AG−16; 复现教材例16 ΔAG=2)
+    const dCl = cl - 102;                      // ΔCl⁻ (Cl 正常范围 98-106 中位 102, 临床基准; 旧用 100 偏严, 会让"Cl 正常偏高"误触发"高氯参与")
     const absDHCO3 = Math.abs(24 - hco3);      // |ΔHCO₃⁻| (HCO₃ 正常 24)
+    const agPart = dAG >= 2;                   // 高AG成分有意义
+    const clPart = dCl >= 2;                   // 高氯成分有意义
+    const tol = 2;                             // 容差 (沿用代偿公式±2)
     let acidType = '';
-    // 电中和验证: ΔAG 有临床意义(≥2, 排除测量误差) 且 ΔCl 参与(>1) 且 |ΔHCO₃⁻| ≈ ΔAG+ΔCl (容差±3) → 复合型
-    if (dAG >= 2 && dCl > 1 && Math.abs(absDHCO3 - (dAG + dCl)) <= 3) {
-      const agNote = ag >= 20 ? (ag > 30 ? 'AG确诊高AG' : 'AG提示高AG') : 'AG临界区';
-      acidType = `复合型代酸 (高AG + 高氯性), ΔAG=${dAG.toFixed(0)} + ΔCl⁻=${dCl.toFixed(0)} ≈ |ΔHCO₃⁻|=${absDHCO3.toFixed(0)} (${agNote})`;
-    } else if (ag >= 20) {
-      // AG 达提示阈值, ΔCl 未显著参与 → 单纯高AG型
-      acidType = `高AG型代酸, AG=${ag.toFixed(0)}(≥20${ag > 30 ? ', 确诊' : ', 提示'}), ΔAG=${dAG.toFixed(0)}`;
-    } else if (cl > 108) {
-      // AG 正常/临界, Cl 升高主导 → 高氯性
-      acidType = `高氯性代酸 (正常AG型), Cl=${cl.toFixed(0)}(>108), ΔCl⁻=${dCl.toFixed(0)}`;
-    } else if (ag > 16) {
-      // AG 临界(16-20), Cl 未明显升高, 无电中和匹配 → 提示临界高AG
-      acidType = `临界高AG (AG=${ag.toFixed(0)}, 16-20区间仅20%有酸中毒), 需结合临床`;
+    if (agPart && clPart) {
+      // ① 两种成分都有 → 复合型
+      const agNote = ag >= 20 ? (ag > 30 ? 'AG确诊高AG' : 'AG提示高AG') : (ag > 16 ? 'AG临界区' : 'AG正常');
+      acidType = `复合型代酸 (高AG + 高氯性), |ΔHCO₃⁻|=${absDHCO3.toFixed(0)} > ΔAG=${dAG.toFixed(0)} 且 > ΔCl⁻=${dCl.toFixed(0)} (${agNote})`;
+      metabolicSubType = 'mixed';
+    } else if (agPart && !clPart) {
+      // ② 高AG成分主导, 高氯未参与
+      if (absDHCO3 < dAG - tol) {
+        // AG升高数 > HCO₃下降数 → 被代碱抬高 → 高AG代酸+代碱
+        acidType = `高AG型代酸 + 代碱, AG升高数(ΔAG=${dAG.toFixed(0)}) > HCO₃⁻下降数(|ΔHCO₃⁻|=${absDHCO3.toFixed(0)}), ΔCl⁻=${dCl.toFixed(0)}(无高氯)`;
+        metabolicSubType = 'highAG+alk';
+      } else {
+        acidType = `高AG型代酸, AG=${ag.toFixed(0)}(≥20${ag > 30 ? ', 确诊' : ', 提示'}), |ΔHCO₃⁻|=${absDHCO3.toFixed(0)} ≈ ΔAG=${dAG.toFixed(0)}`;
+        metabolicSubType = 'highAG';
+      }
+    } else if (!agPart && clPart) {
+      // ③ AG正常/临界, 高氯主导
+      acidType = `高氯性代酸 (正常AG型), Cl=${cl.toFixed(0)}(↑), |ΔHCO₃⁻|=${absDHCO3.toFixed(0)} ≈ ΔCl⁻=${dCl.toFixed(0)}`;
+      metabolicSubType = 'highCl';
+    } else {
+      // ④ 两者均不显著
+      acidType = `代酸分型不明确, AG=${ag.toFixed(0)}(ΔAG=${dAG.toFixed(0)}<2) 且 Cl=${cl.toFixed(0)}(ΔCl⁻=${dCl.toFixed(0)}<2) 均不显著, 需结合临床`;
+      metabolicSubType = 'unclear';
     }
-    if (acidType) {
-      tabdText += `<br><strong>代酸分型:</strong> AG=${ag.toFixed(0)}, ${acidType}。<br><span style="color:var(--text-faint)">ΔAG=${dAG.toFixed(0)}, ΔCl⁻=${dCl.toFixed(0)}, |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}。</span>`;
-    }
+    tabdText += `<br><strong>代酸分型:</strong> AG=${ag.toFixed(0)}, ${acidType}。<br><span style="color:var(--text-faint)">ΔAG=${dAG.toFixed(0)} (基准AG−16), ΔCl⁻=${dCl.toFixed(0)} (基准Cl−102), |ΔHCO₃⁻|=${absDHCO3.toFixed(0)}; 高AG成分${agPart?'有':'无'}, 高氯成分${clPart?'有':'无'}。</span>`;
   }
 
   // 汇总酸碱
@@ -2443,8 +2467,19 @@ function calcBg() {
     else if (/呼吸性碱中毒/.test(diag)) causes.push(CAUSE_SINGLE['呼吸性碱中毒']);
     else if (/代谢性碱中毒/.test(diag)) causes.push(CAUSE_SINGLE['代谢性碱中毒']);
     else if (/代谢性酸中毒|代酸/.test(diag)) {
-      // 代酸按 AG 分型
-      if (na !== null && cl !== null) {
+      // 代酸按三值比较法分型 (优先用上面已算好的 metabolicSubType)
+      if (metabolicSubType === 'highAG') {
+        causes.push('高AG型: 乳酸酸中毒(休克/缺氧)、酮症(DKA)、肾衰、中毒(甲醇/乙二醇)');
+      } else if (metabolicSubType === 'highCl') {
+        causes.push('高氯性: 腹泻(最常见)、肾小管酸中毒、过多含氯液体');
+      } else if (metabolicSubType === 'mixed') {
+        causes.push('复合型(高AG+高氯): 糖尿病酮症酸中毒伴腹泻、肾功能不全 (教材L1884)');
+      } else if (metabolicSubType === 'highAG+alk') {
+        causes.push('高AG代酸+代碱: 糖尿病酮症酸中毒不适当补碱、呕吐合并酮症');
+      } else if (metabolicSubType === 'unclear') {
+        causes.push('分型不明确(AG/Cl均不显著), 需结合临床');
+      } else if (na !== null && cl !== null) {
+        // 兜底: 分型变量未被设置(理论不该到这)
         const agTmp = na - (cl + hco3);
         causes.push(agTmp >= 20
           ? '高AG型: 乳酸酸中毒(休克/缺氧)、酮症(DKA)、肾衰、中毒(甲醇/乙二醇)'

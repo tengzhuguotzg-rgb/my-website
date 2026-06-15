@@ -526,6 +526,7 @@
     .layout { grid-template-columns: 1fr; padding: 0 20px 60px; gap: 20px; }
     .sidebar {
       position: static;
+      min-width: 0;            /* 关键: 让 flex/grid 子项能收缩到比内容窄 */
       padding: 0;
       border-bottom: 1px solid var(--line);
       background: rgba(244, 241, 234, 0.5);
@@ -538,6 +539,7 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      min-width: 0;            /* 兜底 */
       padding: 12px 16px;
       gap: 6px;
     }
@@ -551,20 +553,69 @@
       font-size: 12px;
       white-space: nowrap;
     }
-    .cat.active { border-color: var(--accent); }
+    .cat.active {
+      border-color: var(--accent);
+      background: rgba(231, 111, 44, 0.08);
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
     .cat .cnt { margin-left: 6px; }
     .side-foot { display: none; }
   }
 
   @media (max-width: 720px) {
-    .res { grid-template-columns: 60px 1fr; gap: 14px; padding: 18px 18px; }
-    .res-type { width: 60px; height: 60px; font-size: 14px; }
-    .res-type .ext { font-size: 9px; }
-    .res .dl-btn { grid-column: 1 / -1; justify-content: center; margin-top: 4px; }
+    /* ① 通用内边距对齐 — 补 .search 漏改 */
     .hero { padding: 24px 18px 8px; }
+    .search { padding: 0 18px; }
     .list, .rule, .footer { padding-left: 18px; padding-right: 18px; }
-    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+
+    /* ② topbar 收紧 */
+    .topbar { margin: 10px 10px 0; padding: 10px 14px; gap: 10px; }
+    .brand-mark { width: 34px; height: 34px; font-size: 16px; }
+    .brand-name { font-size: 14px; }
+    .brand-sub  { font-size: 11px; }
+    .home-pill  { padding: 7px 12px; font-size: 12px; }
     .crumb { display: none; }
+
+    /* ③ 资源卡 — 保持横向,但修溢出 */
+    .res { grid-template-columns: 60px 1fr; gap: 14px; padding: 16px 16px; }
+
+    /* ④ 关键修复: .res-type 不再被文字撑开 */
+    .res-type {
+      width: 60px; height: 60px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0;
+      overflow: hidden; max-width: 100%;
+    }
+    .res-type .ext {
+      font-size: 8px; letter-spacing: 0.8px; margin-top: 1px;
+      white-space: nowrap; overflow: hidden; text-overflow: clip;
+    }
+
+    /* ⑤ main 区字号微调,避免长标题/长 meta 换行后过高 */
+    .res-name { font-size: 16px; line-height: 1.35; }
+    .res-desc { font-size: 12.5px; }
+    .res-meta { gap: 8px 10px; font-size: 10.5px; }
+
+    /* ⑥ 下载按钮 — 跨行满宽 */
+    .res .dl-btn {
+      grid-column: 1 / -1;
+      justify-content: center;
+      margin-top: 6px;
+      padding: 10px 18px;
+      font-size: 11.5px;
+    }
+
+    /* ⑦ 侧栏分类胶囊 — 已被 880px 段覆盖,这里微调 */
+    .cats { padding: 10px 14px; }
+    .cat  { padding: 6px 12px; font-size: 11.5px; }
+  }
+
+  /* ⑧ 极小屏补丁 (≤360px) — topbar 进一步收 */
+  @media (max-width: 360px) {
+    .topbar { margin: 8px 8px 0; padding: 9px 12px; gap: 8px; }
+    .brand-mark { width: 30px; height: 30px; font-size: 14px; }
+    .brand-name { font-size: 13px; }
+    .brand-sub  { display: none; }
+    .home-pill  { padding: 6px 10px; font-size: 11px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

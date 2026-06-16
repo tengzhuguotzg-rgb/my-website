@@ -2562,10 +2562,25 @@ function calcBg() {
   }
 
   // --- 汇总输出 ---
+  // 修 BUG: 旧逻辑 abnormals.length===0 直接说"电解质在正常范围", 但 Na/Cl 未填时 abnormals 也空,
+  //   会造成"未查的电解质被判正常"的假阴性。改为根据实际填了哪些项动态生成结论。
   let sumConclusion, sumDetail;
   if (abnormals.length === 0) {
-    sumConclusion = '酸碱、氧合、电解质均在正常范围';
-    sumDetail = '未见超出阈值的异常项。';
+    // 列出已查项 vs 未查项, 避免"未查"被误报"正常"
+    const checked = [];
+    const unchecked = [];
+    checked.push('酸碱');
+    if (pao2 !== null || paco2 !== null) checked.push('氧合'); else unchecked.push('氧合');
+    if (k !== null || na !== null || cl !== null) checked.push('电解质'); else unchecked.push('电解质');
+    if (lac !== null) checked.push('乳酸'); else unchecked.push('乳酸');
+    if (hgb !== null) checked.push('血红蛋白'); else unchecked.push('血红蛋白');
+    const checkedStr = checked.join('、');
+    sumConclusion = unchecked.length === 0
+      ? `${checkedStr}均在正常范围`
+      : `${checkedStr}在正常范围 (其余未查)`;
+    sumDetail = unchecked.length === 0
+      ? '未见超出阈值的异常项。'
+      : `未见超出阈值的异常项。<br><span style="color:var(--text-faint)">⚠ 未查: ${unchecked.join('、')}</span>`;
   } else {
     const dangerCount = abnormals.filter(a => a.cls === 'tier-danger').length;
     sumConclusion = `共 ${abnormals.length} 项异常${dangerCount > 0 ? ` (其中 ${dangerCount} 项危急)` : ''}`;

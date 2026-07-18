@@ -6,17 +6,22 @@
 <title>Teng.ZG · 重症医学</title>
 <meta name="description" content="重症医学科 · 遂宁市中医院。知识地图、病例讨论、文献指南、前沿碎片、教案管理、资源下载。">
 <meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teng.ZG · 重症医学">
+<meta property="og:description" content="重症医学科医师的知识网络：知识地图、病例复盘、文献指南、前沿碎片、教案与资源下载。">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
 <style>
   /* ═══════════════════════════════════════════
-     Teng.ZG v4.1 — 墨绿 + 暖橘
+     Teng.ZG v5.0 — 墨绿 + 暖橘 · 编辑风格
      字体:Space Grotesk(拉丁) + Noto Serif SC(中文)
      配色:墨绿 #1F3D2F / 暖橘 #E76F2C / 米白 #F4F1EA
      ═══════════════════════════════════════════ */
   *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   html, body { margin: 0; padding: 0; }
   :root {
     --bg: #F4F1EA;
@@ -29,9 +34,13 @@
     --text-dim: #4A5247;    /* 文字弱 */
     --text-faint: #7A8074;  /* 文字微 */
     --line: rgba(31, 61, 47, 0.12);
+    --ease: cubic-bezier(.2,.8,.2,1);
+    /* 中文落 Noto Serif SC(Google Fonts 失败时回退系统宋体),西文/数字用 Space Grotesk */
+    --font-serif: 'Space Grotesk', 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+    --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   }
   body {
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-family: var(--font-serif);
     color: var(--text);
     min-height: 100vh;
     background:
@@ -43,11 +52,17 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
-  /* 中文用 Noto Serif SC,西文用 Space Grotesk */
-  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
+  /* 纸面颗粒质感 */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 1;
+    pointer-events: none; opacity: .04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  }
   a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   a:hover { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
+  ::selection { background: rgba(231, 111, 44, 0.22); color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
   /* ── Top bar ── */
   .topbar {
@@ -61,6 +76,11 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+    transition: box-shadow .3s var(--ease), border-color .3s var(--ease);
+  }
+  .topbar.scrolled {
+    box-shadow: 0 10px 32px rgba(31, 61, 47, 0.10);
+    border-color: rgba(31, 61, 47, 0.18);
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
@@ -68,42 +88,50 @@
     border-radius: 50%;
     background: var(--ink);
     display: grid; place-items: center;
-    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
+    color: var(--bg); font-family: var(--font-sans);
     font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
     box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
   }
   .brand-info { display: flex; flex-direction: column; }
   .brand-name {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
     color: var(--ink);
   }
   .brand-sub  {
     font-size: 12px; color: var(--text-faint); margin-top: 1px;
-    font-family: 'Noto Serif SC', serif;
+    font-family: var(--font-serif);
     letter-spacing: 0.5px;
   }
   .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .topnav { display: flex; gap: 20px; margin-right: 6px; }
+  .topnav a {
+    font-family: var(--font-sans);
+    font-size: 13px; letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+  .topnav a:hover { color: var(--accent); }
   .home-pill {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 8px 16px;
     background: var(--ink); color: var(--bg);
     border-radius: 999px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: 13px; font-weight: 500;
     text-decoration: none;
-    transition: background .2s;
+    transition: all .25s var(--ease);
   }
-  .home-pill:hover { background: var(--accent); color: var(--bg); }
+  .home-pill:hover { background: var(--accent); color: var(--bg); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(231, 111, 44, 0.3); }
 
   /* ── Hero ── */
   .hero {
+    position: relative;
     max-width: 1100px; margin: 0 auto;
-    padding: 96px 32px 24px;
+    padding: 104px 32px 24px;
   }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: 12px; font-weight: 500;
     color: var(--accent);
     letter-spacing: 2.5px; text-transform: uppercase;
@@ -114,7 +142,7 @@
     background: var(--accent);
   }
   h1 {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: clamp(56px, 9vw, 112px);
     font-weight: 600; line-height: 0.92;
     margin: 0 0 24px; letter-spacing: -3px;
@@ -135,32 +163,50 @@
     0%, 100% { transform: scale(1);   }
     50%      { transform: scale(1.15); }
   }
-  @media (prefers-reduced-motion: reduce) {
-    h1 .dot { animation: none; }
-  }
   .hero-desc {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 17px; color: var(--text-dim);
-    line-height: 1.7; max-width: 640px;
+    position: relative; z-index: 1;
+    font-family: var(--font-serif);
+    font-size: 18px; color: var(--text-dim);
+    line-height: 1.8; max-width: 600px;
     margin: 0;
   }
-
-  /* ── 分割线 ── */
-  .rule {
-    max-width: 1100px; margin: 56px auto 0;
-    padding: 0 32px;
-    display: flex; align-items: center; gap: 16px;
+  /* ECG 监护波形装饰 */
+  .ecg {
+    position: absolute; right: 32px; top: 56%;
+    transform: translateY(-50%);
+    width: min(44vw, 540px); height: auto;
+    pointer-events: none;
   }
-  .rule hr { flex: 1; border: 0; height: 1px; background: var(--line); }
-  .rule .label {
-    font-family: 'Space Grotesk', sans-serif;
+  .ecg-base { stroke: rgba(31, 61, 47, 0.20); stroke-width: 1.5; }
+  .ecg-run {
+    stroke: var(--accent); stroke-width: 2; stroke-linecap: round;
+    stroke-dasharray: 90 710;
+    animation: ecgRun 4s linear infinite;
+  }
+  @keyframes ecgRun { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -800; } }
+
+  /* ── 版块标题 ── */
+  .sec-head {
+    max-width: 1100px; margin: 88px auto 0;
+    padding: 0 32px 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    scroll-margin-top: 110px;
+  }
+  .sec-head .en {
+    font-family: var(--font-sans);
     font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); font-weight: 500;
+  }
+  .sec-head .zh {
+    font-family: var(--font-serif);
+    font-size: 14px; letter-spacing: 2px;
     color: var(--text-faint);
   }
 
   /* ── Grid(板块) ── */
   .grid {
-    max-width: 1100px; margin: 36px auto 0;
+    max-width: 1100px; margin: 24px auto 0;
     padding: 0 32px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -170,17 +216,17 @@
     --mx: 50%; --my: 50%;
     position: relative;
     display: flex; flex-direction: column;
+    min-height: 190px;
     text-align: left;
-    padding: 28px 24px 24px;
+    text-decoration: none; color: inherit;
+    padding: 26px 24px 22px;
     background: rgba(244, 241, 234, 0.65);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border: 1px solid var(--line);
     border-radius: 18px;
-    transition: all .3s cubic-bezier(.2,.8,.2,1);
+    transition: all .3s var(--ease);
     overflow: hidden;
-    opacity: 0; transform: translateY(16px);
-    animation: cardUp .6s cubic-bezier(.2,.8,.2,1) forwards;
     font-family: inherit;
   }
   .card::before {
@@ -189,20 +235,50 @@
       rgba(231, 111, 44, 0.10), transparent 55%);
     opacity: 0; transition: opacity .3s ease; pointer-events: none;
   }
-  .card:hover { background: rgba(244, 241, 234, 0.92); transform: translateY(-3px); border-color: rgba(31, 61, 47, 0.25); box-shadow: 0 14px 40px rgba(31, 61, 47, 0.08); }
+  .card:hover { background: rgba(244, 241, 234, 0.92); transform: translateY(-4px); border-color: rgba(31, 61, 47, 0.28); box-shadow: 0 18px 44px rgba(31, 61, 47, 0.10); }
   .card:hover::before { opacity: 1; }
-  .card:hover .card-arrow { color: var(--accent); transform: translateX(4px); }
   .card:hover .card-num { color: var(--accent); }
+  .card:hover .ghost { color: rgba(231, 111, 44, 0.10); }
 
+  .card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
   .card-num {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: 11px; letter-spacing: 2px; color: var(--text-faint);
-    margin-bottom: 16px;
     font-weight: 500;
     transition: color .3s ease;
   }
+  .card-badge {
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(231, 111, 44, 0.35);
+    background: rgba(231, 111, 44, 0.08);
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-size: 10px; font-weight: 500; letter-spacing: 2px;
+  }
+  .ext-chip {
+    width: 26px; height: 26px; flex: none;
+    border-radius: 8px;
+    background: rgba(31, 61, 47, 0.08);
+    color: var(--ink);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 600;
+    transition: all .25s var(--ease);
+  }
+  .card:hover .ext-chip { background: var(--accent); color: var(--bg); }
+  .ghost {
+    position: absolute; top: 12px; right: 18px;
+    font-family: var(--font-sans);
+    font-size: 54px; font-weight: 700; line-height: 1;
+    letter-spacing: -2px;
+    color: rgba(31, 61, 47, 0.05);
+    pointer-events: none;
+    transition: color .3s ease;
+  }
+  .ghost.small { font-size: 40px; top: 16px; }
   .card-title {
-    font-family: 'Noto Serif SC', serif;
+    font-family: var(--font-serif);
     font-size: 22px; font-weight: 700;
     margin: 0 0 8px; color: var(--ink);
     letter-spacing: 0.5px;
@@ -213,51 +289,78 @@
   }
   .card-arrow {
     margin-top: auto; align-self: flex-end;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px; color: var(--text-faint);
-    transition: all .25s ease;
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 50%;
+    font-family: var(--font-sans);
+    font-size: 15px; color: var(--text-faint);
+    transition: all .25s var(--ease);
   }
+  .card:hover .card-arrow {
+    background: var(--accent); border-color: var(--accent); color: var(--bg);
+    transform: rotate(-45deg);
+  }
+  .card:hover .card-arrow.ext { transform: none; }
 
-  .card:nth-child(1) { animation-delay: .15s; }
-  .card:nth-child(2) { animation-delay: .22s; }
-  .card:nth-child(3) { animation-delay: .29s; }
-  .card:nth-child(4) { animation-delay: .36s; }
-  .card:nth-child(5) { animation-delay: .43s; }
-  .card:nth-child(6) { animation-delay: .50s; }
+  /* 首屏 6 卡的入场 stagger */
+  .grid-main .card { opacity: 0; transform: translateY(16px); animation: cardUp .6s var(--ease) forwards; }
+  .grid-main .card:nth-child(1) { animation-delay: .15s; }
+  .grid-main .card:nth-child(2) { animation-delay: .22s; }
+  .grid-main .card:nth-child(3) { animation-delay: .29s; }
+  .grid-main .card:nth-child(4) { animation-delay: .36s; }
+  .grid-main .card:nth-child(5) { animation-delay: .43s; }
+  .grid-main .card:nth-child(6) { animation-delay: .50s; }
   @keyframes cardUp { to { opacity: 1; transform: translateY(0); } }
 
-  /* ── 底部信息条 ── */
+  /* 外部资源:7 张卡,末张通栏避免落单 */
+  .grid-ext .card:last-child { grid-column: 1 / -1; min-height: 0; }
+
+  /* 滚动显现 */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ── 数据带(深色) ── */
   .stats {
-    max-width: 1100px; margin: 64px auto 0;
-    padding: 32px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    position: relative; overflow: hidden;
+    max-width: 1036px; margin: 88px auto 0;
+    padding: 48px 36px;
+    background: linear-gradient(135deg, var(--ink) 0%, #274A38 100%);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(31, 61, 47, 0.20);
     display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
+  .stats::before {
+    content: ''; position: absolute;
+    width: 420px; height: 420px; right: -140px; top: -220px;
+    background: radial-gradient(circle, rgba(231, 111, 44, 0.20), transparent 60%);
+    pointer-events: none;
+  }
   .stat {
-    display: flex; flex-direction: column; gap: 4px;
+    position: relative;
+    display: flex; flex-direction: column; gap: 6px;
     align-items: center; text-align: center;
   }
   .stat .v {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 36px; font-weight: 500; line-height: 1;
-    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 44px; font-weight: 500; line-height: 1;
+    color: var(--bg);
     letter-spacing: -1px;
   }
+  .stat .v::after { content: '.'; color: var(--accent); }
   .stat .k {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-faint);
+    color: rgba(244, 241, 234, 0.55);
   }
 
   /* ── Footer ── */
   .footer {
     max-width: 1100px; margin: 0 auto;
-    padding: 40px 32px 56px;
+    padding: 48px 32px 56px;
     display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
     font-size: 12px; color: var(--text-faint);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     letter-spacing: 0.5px;
   }
   .footer a { color: var(--ink-2); }
@@ -285,15 +388,15 @@
     border-radius: 18px;
     box-shadow: 0 30px 80px rgba(31, 61, 47, 0.25);
     text-align: left;
-    animation: scaleIn .3s cubic-bezier(.2,.8,.2,1) forwards;
+    animation: scaleIn .3s var(--ease) forwards;
   }
   .modal-eyebrow {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--accent); margin-bottom: 8px;
   }
   .modal-title {
-    font-family: 'Noto Serif SC', serif;
+    font-family: var(--font-serif);
     font-size: 22px; font-weight: 700; margin: 0 0 14px; color: var(--ink);
   }
   .modal-body {
@@ -304,7 +407,7 @@
     padding: 10px 24px;
     background: var(--ink); color: var(--bg);
     border: none; border-radius: 999px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-sans);
     font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
     text-transform: uppercase;
     box-shadow: 0 4px 14px rgba(31, 61, 47, 0.25);
@@ -315,24 +418,37 @@
   @keyframes scaleIn { from { opacity: 0; transform: scale(.94) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
   /* ── 响应式 ── */
+  @media (max-width: 1100px) {
+    .stats { margin: 88px 32px 0; }
+  }
   @media (max-width: 860px) {
-
     .grid { grid-template-columns: repeat(2, 1fr); }
     .stats { grid-template-columns: repeat(2, 1fr); }
+    .ecg { position: static; transform: none; width: 100%; margin-top: 32px; opacity: .8; }
+    .hero { padding-top: 72px; }
+  }
+  @media (max-width: 640px) {
+    .topnav { display: none; }
   }
   @media (max-width: 560px) {
     .grid { grid-template-columns: 1fr; }
     .hero { padding: 56px 18px 16px; }
     .grid { padding: 0 18px; }
-    .rule, .stats, .footer { padding-left: 18px; padding-right: 18px; }
+    .sec-head { margin-top: 64px; padding-left: 18px; padding-right: 18px; }
+    .stats { margin: 64px 18px 0; padding: 32px 22px; }
+    .stat .v { font-size: 34px; }
+    .footer { padding-left: 18px; padding-right: 18px; }
     .topbar { margin: 12px 12px 0; padding: 12px 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     *, *::before, *::after {
       animation-duration: .01ms !important;
       transition-duration: .01ms !important;
     }
-    .card { opacity: 1 !important; transform: none !important; }
+    .ecg-run { display: none; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .grid-main .card { opacity: 1 !important; transform: none !important; }
   }
 </style>
 </head>
@@ -348,6 +464,10 @@
       </div>
     </div>
     <div class="topbar-right">
+      <nav class="topnav" aria-label="页内导航">
+        <a href="#sections">板块</a>
+        <a href="#external">资源</a>
+      </nav>
       <a href="calculators.html" class="home-pill">医学计算器</a>
     </div>
   </header>
@@ -355,55 +475,69 @@
   <!-- Hero -->
   <section class="hero">
     <div class="eyebrow">Critical Care Medicine</div>
-    <h1>Teng<span class="dot">.</span>ZG</h1>
-    <p class="hero-desc">重症医学科医师。把每个 ICU 早晨的临床判断,沉淀成可复用、可索引、可被检索的知识网络。</p>
+    <h1>Teng<span class="dot" aria-hidden="true">.</span>ZG</h1>
+    <p class="hero-desc">重症医学科医师。把每个 ICU 早晨的临床判断，沉淀成可复用、可索引、可被检索的知识网络。</p>
+    <svg class="ecg" viewBox="0 0 600 140" fill="none" aria-hidden="true">
+      <path class="ecg-base" d="M0 70 H96 l10-9 10 9 H152 l8-38 13 72 11-46 7 12 H264 l12-10 12 10 H330 l8-38 13 72 11-46 7 12 H600"/>
+      <path class="ecg-run" pathLength="800" d="M0 70 H96 l10-9 10 9 H152 l8-38 13 72 11-46 7 12 H264 l12-10 12 10 H330 l8-38 13 72 11-46 7 12 H600"/>
+    </svg>
   </section>
 
-  <!-- 分割线 -->
-  <div class="rule">
-    <hr><span class="label">SECTIONS</span><hr>
+  <!-- 站内板块标题 -->
+  <div class="sec-head" id="sections">
+    <span class="en">01 — Sections</span>
+    <span class="zh">站内板块 · 6 个栏目</span>
   </div>
 
   <!-- 6 板块 -->
-  <main class="grid">
+  <main class="grid grid-main">
 
-    <a class="card" data-index="0" href="knowledge-map.html" aria-label="知识地图" style="text-decoration:none;color:inherit;">
-      <div class="card-num">— 01 / SIX</div>
+    <a class="card" href="knowledge-map.html" aria-label="知识地图">
+      <div class="card-top"><div class="card-num">— 01 / SIX</div></div>
+      <span class="ghost" aria-hidden="true">01</span>
       <h2 class="card-title">知识地图</h2>
       <p class="card-desc">40 个重症主题 · 临床梳理与个人心得</p>
       <span class="card-arrow" aria-hidden="true">→</span>
     </a>
 
-    <a class="card" data-index="1" href="cases.html" aria-label="病例讨论" style="text-decoration:none;color:inherit;">
-      <div class="card-num">— 02 / SIX</div>
+    <a class="card" href="cases.html" aria-label="病例讨论">
+      <div class="card-top"><div class="card-num">— 02 / SIX</div></div>
+      <span class="ghost" aria-hidden="true">02</span>
       <h2 class="card-title">病例讨论</h2>
-      <p class="card-desc">临床决策复盘 · 思路沉淀</p>
+      <p class="card-desc">18 例临床决策复盘 · 思路沉淀</p>
       <span class="card-arrow" aria-hidden="true">→</span>
     </a>
 
-    <button class="card" data-index="2" aria-label="文献指南">
-      <div class="card-num">— 03 / SIX</div>
+    <button class="card" type="button" data-index="2" aria-label="文献指南(建设中)">
+      <div class="card-top">
+        <div class="card-num">— 03 / SIX</div>
+        <span class="card-badge">建设中</span>
+      </div>
+      <span class="ghost" aria-hidden="true">03</span>
       <h2 class="card-title">文献指南</h2>
-      <p class="card-desc">原始指南 · 共识 · 临床证据</p>
+      <p class="card-desc">117 篇 · 原始指南 / 共识 / 临床证据</p>
       <span class="card-arrow" aria-hidden="true">→</span>
     </button>
 
-    <a class="card" data-index="3" href="fragments.html" aria-label="前沿碎片" style="text-decoration:none;color:inherit;">
-      <div class="card-num">— 04 / SIX</div>
+    <a class="card" href="fragments.html" aria-label="前沿碎片">
+      <div class="card-top"><div class="card-num">— 04 / SIX</div></div>
+      <span class="ghost" aria-hidden="true">04</span>
       <h2 class="card-title">前沿碎片</h2>
       <p class="card-desc">29 篇文章 · 临床小坑与新知</p>
       <span class="card-arrow" aria-hidden="true">→</span>
     </a>
 
-    <a class="card" data-index="4" href="courses.html" aria-label="教案管理" style="text-decoration:none;color:inherit;">
-      <div class="card-num">— 05 / SIX</div>
+    <a class="card" href="courses.html" aria-label="教案管理">
+      <div class="card-top"><div class="card-num">— 05 / SIX</div></div>
+      <span class="ghost" aria-hidden="true">05</span>
       <h2 class="card-title">教案管理</h2>
       <p class="card-desc">CRRT 教学手册 · 12 章 · 持续更新</p>
       <span class="card-arrow" aria-hidden="true">→</span>
     </a>
 
-    <a class="card" data-index="5" href="downloads.html" aria-label="资源下载" style="text-decoration:none;color:inherit;">
-      <div class="card-num">— 06 / SIX</div>
+    <a class="card" href="downloads.html" aria-label="资源下载">
+      <div class="card-top"><div class="card-num">— 06 / SIX</div></div>
+      <span class="ghost" aria-hidden="true">06</span>
       <h2 class="card-title">资源下载</h2>
       <p class="card-desc">实用重症医学 · 26 张图解 · PPT</p>
       <span class="card-arrow" aria-hidden="true">→</span>
@@ -411,64 +545,65 @@
 
   </main>
 
-  <!-- 外部资源 -->
-  <div class="rule">
-    <hr><span class="label">EXTERNAL</span><hr>
+  <!-- 外部资源标题 -->
+  <div class="sec-head reveal" id="external">
+    <span class="en">02 — External</span>
+    <span class="zh">常用工具与数据库</span>
   </div>
 
-  <main class="grid">
-    <a class="card" href="https://www.mdcalc.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">MDCALC.COM</div>
+  <section class="grid grid-ext reveal">
+    <a class="card" href="https://www.mdcalc.com/" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">M</span><div class="card-num">MDCALC.COM</div></div>
       <h2 class="card-title">MDCalc</h2>
       <p class="card-desc">医学计算器</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
 
-    <a class="card" href="https://www.cards-lab.org/ecg-gpt" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">CARDS-LAB.ORG</div>
+    <a class="card" href="https://www.cards-lab.org/ecg-gpt" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">E</span><div class="card-num">CARDS-LAB.ORG</div></div>
       <h2 class="card-title">ECG-GPT</h2>
       <p class="card-desc">心电图自动识别报告</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
 
-    <a class="card" href="https://www.msdmanuals.cn/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">MSDMANUALS.CN</div>
+    <a class="card" href="https://www.msdmanuals.cn/" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">M</span><div class="card-num">MSDMANUALS.CN</div></div>
       <h2 class="card-title">MSD Manuals</h2>
       <p class="card-desc">默沙东诊疗手册</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
 
-    <a class="card" href="https://www.icuguideline.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">ICUGUIDELINE.COM</div>
+    <a class="card" href="https://www.icuguideline.com/" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">I</span><div class="card-num">ICUGUIDELINE.COM</div></div>
       <h2 class="card-title">ICUGuideline</h2>
       <p class="card-desc">专门收录重症、感染、呼吸等指南</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
 
-    <a class="card" href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">PUBMED.NCBI.NLM.NIH.GOV</div>
+    <a class="card" href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">P</span><div class="card-num">PUBMED.NCBI.NLM.NIH.GOV</div></div>
       <h2 class="card-title">PubMed</h2>
       <p class="card-desc">文献检索基础</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
 
-    <a class="card" href="https://bestpractice.bmj.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">BESTPRACTICE.BMJ.COM</div>
+    <a class="card" href="https://bestpractice.bmj.com/" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">B</span><div class="card-num">BESTPRACTICE.BMJ.COM</div></div>
       <h2 class="card-title">BMJ Best Practice</h2>
       <p class="card-desc">英国版临床决策</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
 
-    <a class="card" href="https://glass.health/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-      <div class="card-num">GLASS.HEALTH</div>
+    <a class="card" href="https://glass.health/" target="_blank" rel="noopener noreferrer">
+      <div class="card-top"><span class="ext-chip" aria-hidden="true">G</span><div class="card-num">GLASS.HEALTH</div></div>
       <h2 class="card-title">Glass Health</h2>
-      <p class="card-desc">临床决策 AI，2026 排名第一，含 AI 鉴别诊断 + 实时问诊辅助，USMLE/JAMA/NEJM 评测 70% 准确率</p>
-      <span class="card-arrow" aria-hidden="true">↗</span>
+      <p class="card-desc">临床决策 AI，含 AI 鉴别诊断 + 实时问诊辅助</p>
+      <span class="card-arrow ext" aria-hidden="true">↗</span>
     </a>
-  </main>
+  </section>
 
-  <!-- 数字信息条 -->
-  <section class="stats">
+  <!-- 数据带 -->
+  <section class="stats reveal">
     <div class="stat">
       <div class="v">40</div>
       <div class="k">Topics</div>
@@ -490,99 +625,103 @@
   <!-- Footer -->
   <footer class="footer">
     <div>
-      Tengzhuguotzg@gmail.com
+      <a href="mailto:Tengzhuguotzg@gmail.com">Tengzhuguotzg@gmail.com</a>
       &nbsp;·&nbsp;
       <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
     </div>
     <div>© 2026 · Teng.ZG · Critical Care Medicine</div>
   </footer>
 
-  <!-- Modals -->
-  <div class="modal" id="m0" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-panel" role="document">
-      <div class="modal-eyebrow">SECTION 01 / 06</div>
-      <h3 class="modal-title">知识地图 · 建设中</h3>
-      <p class="modal-body">40 个重症主题,按器官系统分组(循环/呼吸/感染/神经/消化/营养/...)。<br>每张卡:定义、病理生理、诊断、治疗、争议、个人心得。</p>
-      <button class="modal-close" data-close>CLOSE</button>
-    </div>
-  </div>
-  <div class="modal" id="m1" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-panel" role="document">
-      <div class="modal-eyebrow">SECTION 02 / 06</div>
-      <h3 class="modal-title">病例讨论</h3>
-      <p class="modal-body">教学病例的结构化复盘：诊断思路、决策关键点、临床争议与个人心得。原始病例数据受伦理与隐私约束不公开，本板块展示方法论。</p>
-      <button class="modal-close" data-close>CLOSE</button>
-    </div>
-  </div>
-  <div class="modal" id="m2" role="dialog" aria-modal="true" aria-hidden="true">
+  <!-- Modal:仅「文献指南」仍在建设中,保留弹窗 -->
+  <div class="modal" id="m2" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="m2-title">
     <div class="modal-backdrop" data-close></div>
     <div class="modal-panel" role="document">
       <div class="modal-eyebrow">SECTION 03 / 06</div>
-      <h3 class="modal-title">文献指南 · 建设中</h3>
+      <h3 class="modal-title" id="m2-title">文献指南 · 建设中</h3>
       <p class="modal-body">SSC 2021、ARDSNet、Boston 输血、KDIGO AKI、SCCM-ESICM 难治性脓毒性休克等。</p>
-      <button class="modal-close" data-close>CLOSE</button>
+      <button class="modal-close" type="button" data-close>CLOSE</button>
     </div>
   </div>
-  <div class="modal" id="m3" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-panel" role="document">
-      <div class="modal-eyebrow">SECTION 04 / 06</div>
-      <h3 class="modal-title">前沿碎片</h3>
-      <p class="modal-body"><a href="fragments.html" style="color:var(--accent);">进入碎片板块 →</a><br><br>29 篇临床小坑与新知。血流动力学、抗凝血栓、感染脓毒症、电解质、呼吸通气、急腹症六大分类。</p>
-      <button class="modal-close" data-close>CLOSE</button>
-    </div>
-  </div>
-  <div class="modal" id="m4" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-panel" role="document">
-      <div class="modal-eyebrow">SECTION 05 / 06</div>
-      <h3 class="modal-title">教案管理</h3>
-      <p class="modal-body"><a href="courses.html" style="color:var(--accent);">进入教案板块 →</a><br><br>日常教学讲义归档 · 已发布 CRRT 教学手册(12 章系统梳理:原理、模式、时机、容量、抗凝、置换液、剂量),更多主题持续更新。</p>
-      <button class="modal-close" data-close>CLOSE</button>
-    </div>
-  </div>
-  <!-- m5 已下线:资源下载卡片直接跳转 downloads.html -->
 
 <script>
-  /* 卡片:鼠标光斑 + 弹 modal */
+  /* 卡片鼠标光斑(所有卡片) */
   document.querySelectorAll('.card').forEach(c => {
     c.addEventListener('mousemove', e => {
       const r = c.getBoundingClientRect();
       c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
       c.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
-    c.addEventListener('click', (e) => {
-      // 资源下载(index=5)改成 a,直接跳转,跳过 modal
-      if (c.tagName === 'A' || c.dataset.index === '5') return;
+  });
+
+  /* 顶栏滚动加深 */
+  const bar = document.querySelector('.topbar');
+  addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+  /* 弹窗:仅 button 卡片(文献指南)触发,关闭后焦点还给触发卡片 */
+  let lastTrigger = null;
+  const openModal = (m, trigger) => {
+    lastTrigger = trigger;
+    m.classList.add('open');
+    m.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => m.querySelector('.modal-close')?.focus(), 50);
+  };
+  const closeModal = m => {
+    m.classList.remove('open');
+    m.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastTrigger) { lastTrigger.focus(); lastTrigger = null; }
+  };
+  document.querySelectorAll('button.card[data-index]').forEach(c => {
+    c.addEventListener('click', () => {
       const m = document.getElementById('m' + c.dataset.index);
-      if (m) {
-        m.classList.add('open');
-        m.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => m.querySelector('.modal-close')?.focus(), 50);
-      }
+      if (m) openModal(m, c);
     });
   });
   document.querySelectorAll('.modal').forEach(m => {
     m.addEventListener('click', e => {
-      if (e.target.matches('[data-close]')) {
-        m.classList.remove('open');
-        m.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
+      if (e.target.matches('[data-close]')) closeModal(m);
     });
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.modal.open').forEach(m => {
-        m.classList.remove('open');
-        m.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      });
-    }
+    if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal);
   });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 滚动显现 */
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const rio = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in');
+        rio.unobserve(en.target);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => rio.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  /* 统计数字滚动动画(尊重 reduced-motion) */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        const el = en.target, target = parseInt(el.textContent, 10);
+        if (isNaN(target)) return;
+        const dur = 900, t0 = performance.now();
+        const tick = now => {
+          const p = Math.min((now - t0) / dur, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.stat .v').forEach(el => io.observe(el));
+  }
 </script>
 </body>
 </html>

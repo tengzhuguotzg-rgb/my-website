@@ -8,7 +8,7 @@
 ## 目录结构
 
 ```
-/ → 首页 index.html（v3.0，滕老师定的最终版）
+/ → 首页 index.html（v5.0，编辑风格 + ECG 装饰 + 卡片光斑 + 数字滚动）
 /病例讨论/
    case-凌正秀.html → 第一个成品病例讨论 PPT 式 HTML
 /其它知识地图、课件等 → 其他页面
@@ -108,9 +108,14 @@ body (flex column, 100vh)
 ## 其他页面说明
 
 ### 首页（index.html）
-- v3.0 最终版，滕老师定的
-- 四个入口卡片：病例讨论 / 灌注知识地图 / 期刊简报 / 课件
-- 圆角 + 灰绿配色
+- v5.0 编辑风格（kimi.HTML 同步而来）
+- 配色：墨绿 #1F3D2F + 暖橘 #E76F2C + 米白 #F4F1EA
+- 6 个站内板块卡片（知识地图 / 病例讨论 / 文献指南·建设中 / 前沿碎片 / 教案管理 / 资源下载）
+- 7 个外部资源卡（MDCalc / ECG-GPT / MSD Manuals / ICUGuideline / PubMed / BMJ Best Practice / Glass Health）
+- Hero 配 ECG 监护波形动画；卡片鼠标光斑 / 入场 stagger / 滚动 reveal
+- 数据带 40 / 18 / 29 / 117 滚动到视口时从 0 滚动到目标值
+- 「文献指南」用 Modal 占位（建设中）
+- `prefers-reduced-motion` 完整尊重
 
 ### 知识地图、课件、期刊简报等
 - 单独 HTML，有各自的功能

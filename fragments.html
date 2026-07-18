@@ -6,6 +6,10 @@
 <title>前沿碎片 · Teng.ZG</title>
 <meta name="description" content="ICU 临床小坑与新知。血流动力学、抗凝、感染、电解质、呼吸、急腹症等主题的临床碎片。">
 <meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="前沿碎片 · Teng.ZG">
+<meta property="og:description" content="ICU 临床小坑与新知 · 29 篇文章。">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -18,7 +22,10 @@ body{font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'PingFang SC',
 :lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
 a{color:var(--ink-2);text-decoration:none;transition:color .2s}
 a:hover{color:var(--accent)}
-.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04);transition:box-shadow .3s ease,border-color .3s ease}
+.topbar.scrolled{box-shadow:0 10px 32px rgba(31,61,47,0.10);border-color:rgba(31,61,47,0.18)}
 .brand{display:flex;align-items:center;gap:12px}
 .brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
 .brand-info{display:flex;flex-direction:column}
@@ -31,8 +38,9 @@ a:hover{color:var(--accent)}
 .hero{max-width:1100px;margin:0 auto;padding:72px 32px 24px}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
 .eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
-h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6vw,72px);font-weight:600;line-height:1;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
-h1 .dot{color:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,5.6vw,68px);font-weight:600;line-height:.95;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{display:inline-block;width:.18em;height:.18em;background:var(--accent);border-radius:50%;color:transparent;vertical-align:middle;animation:heartbeat .8s ease-in-out infinite;position:relative;top:-.03em;margin:0 .15em}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .hero-desc{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:720px;margin:0}
 .controls{max-width:1100px;margin:32px auto 0;padding:0 32px;display:flex;flex-direction:column;gap:14px}
 .search-wrap{position:relative}
@@ -68,7 +76,7 @@ footer.foot{border-top:1px solid var(--line);padding:28px 32px;text-align:center
 footer.foot a{color:var(--text-dim)}
 @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.grid{grid-template-columns:1fr}.hero{padding:48px 18px 16px}.controls,.list{padding-left:18px;padding-right:18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}.card .desc{min-height:0;-webkit-line-clamp:2}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
@@ -403,9 +411,10 @@ footer.foot a{color:var(--text-dim)}
 </div>
 </main>
 <footer class="foot">
-© 2026 · Teng.ZG · 前沿碎片板块
+<a href="mailto:Tengzhuguotzg@gmail.com">Tengzhuguotzg@gmail.com</a>
 &nbsp;·&nbsp;
 <a href="index.html">返回首页</a>
+&nbsp;·&nbsp; © 2026 · Teng.ZG · 前沿碎片板块
 </footer>
 <script>
 (function(){
@@ -418,6 +427,10 @@ clear.addEventListener('click',function(){q.value='';filter();q.focus()});
 tags.forEach(function(t){t.addEventListener('click',function(){tags.forEach(function(x){x.classList.remove('active')});t.classList.add('active');activeTag=t.dataset.tag;filter()})});
 document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();q.focus()}});
 })();
+
+/* 顶栏滚动加深 */
+var _bar=document.querySelector('.topbar');
+addEventListener('scroll',function(){_bar.classList.toggle('scrolled',scrollY>8)},{passive:true});
 </script>
 </body>
 </html>

@@ -6,6 +6,10 @@
 <title>知识地图 · Teng.ZG</title>
 <meta name="description" content="重症医学科 · 40 个主题, 按器官系统分组, 每个主题: 定义、病理生理、诊断、治疗、争议、个人心得。">
 <meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="知识地图 · Teng.ZG">
+<meta property="og:description" content="重症医学科医师的知识网络 · 41 个主题 · 按器官系统分组">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
@@ -42,6 +46,11 @@
   a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   a:hover { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* 滚动显现(与首页一致) */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
 
   /* ── Top bar (与首页同款) ── */
   .topbar {
@@ -55,6 +64,11 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+    transition: box-shadow .3s ease, border-color .3s ease;
+  }
+  .topbar.scrolled {
+    box-shadow: 0 10px 32px rgba(31, 61, 47, 0.10);
+    border-color: rgba(31, 61, 47, 0.18);
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
@@ -114,12 +128,27 @@
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
-    font-size: clamp(48px, 7vw, 88px);
+    font-size: clamp(40px, 5.6vw, 68px);
     font-weight: 600; line-height: 0.95;
-    margin: 0 0 16px; letter-spacing: -2.5px;
+    margin: 0 0 16px; letter-spacing: -2px;
     color: var(--ink);
   }
-  h1 .dot { color: var(--accent); }
+  h1 .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+    margin: 0 0.15em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
     font-size: 16px; color: var(--text-dim);
@@ -300,7 +329,11 @@
     .crumb { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition-duration: .01ms !important; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+    .reveal { opacity: 1 !important; transform: none !important; }
   }
 </style>
 </head>
@@ -350,7 +383,7 @@
   <!-- 器官系统区块 -->
   <main id="map">
 
-    <section class="block" data-block="circ">
+    <section class="block reveal" data-block="circ">
       <div class="block-head">
         <span class="block-num">— 01 / SIX</span>
         <h2 class="block-title">循环</h2>
@@ -385,7 +418,7 @@
       </div>
     </section>
 
-    <section class="block" data-block="resp">
+    <section class="block reveal" data-block="resp">
       <div class="block-head">
         <span class="block-num">— 02 / SIX</span>
         <h2 class="block-title">呼吸</h2>
@@ -410,7 +443,7 @@
       </div>
     </section>
 
-    <section class="block" data-block="inf">
+    <section class="block reveal" data-block="inf">
       <div class="block-head">
         <span class="block-num">— 03 / SIX</span>
         <h2 class="block-title">感染</h2>
@@ -435,7 +468,7 @@
       </div>
     </section>
 
-    <section class="block" data-block="neur">
+    <section class="block reveal" data-block="neur">
       <div class="block-head">
         <span class="block-num">— 04 / SIX</span>
         <h2 class="block-title">神经</h2>
@@ -455,7 +488,7 @@
       </div>
     </section>
 
-    <section class="block" data-block="rend">
+    <section class="block reveal" data-block="rend">
       <div class="block-head">
         <span class="block-num">— 05 / SIX</span>
         <h2 class="block-title">肾脏</h2>
@@ -475,7 +508,7 @@
       </div>
     </section>
 
-    <section class="block" data-block="meta">
+    <section class="block reveal" data-block="meta">
       <div class="block-head">
         <span class="block-num">— 06 / SIX</span>
         <h2 class="block-title">代谢 / 内分泌</h2>
@@ -502,7 +535,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div>
-      Tengzhuguotzg@gmail.com
+      <a href="mailto:Tengzhuguotzg@gmail.com">Tengzhuguotzg@gmail.com</a>
       &nbsp;·&nbsp;
       <a href="https://github.com/tengzhuguotzg-rgb" target="_blank" rel="noopener">GitHub</a>
     </div>
@@ -559,6 +592,25 @@
     currentTag = btn.dataset.tag;
     applyFilter();
   });
+
+  /* 顶栏滚动加深 */
+  const bar = document.querySelector('.topbar');
+  addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+  /* 滚动显现(尊重 reduced-motion) */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const rio = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in');
+        rio.unobserve(en.target);
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => rio.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
 </script>
 </body>
 </html>

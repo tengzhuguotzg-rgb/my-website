@@ -7,6 +7,10 @@
 <title>Teng.ZG · 资源下载</title>
 <meta content="实用重症医学第 2 版 OCR 完整版、26 张图解、教学 PPT、临床工具。" name="description"/>
 <meta content="#F4F1EA" name="theme-color"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="资源下载 · Teng.ZG"/>
+<meta property="og:description" content="实用重症医学第 2 版 OCR 完整版、26 张图解、教学 PPT、临床工具。"/>
+<meta name="twitter:card" content="summary"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Serif+SC:wght@500;700&amp;display=swap" rel="stylesheet"/>
@@ -48,6 +52,7 @@
   a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   a:hover { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
   /* Top bar */
   .topbar {
@@ -61,6 +66,11 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+    transition: box-shadow .3s ease, border-color .3s ease;
+  }
+  .topbar.scrolled {
+    box-shadow: 0 10px 32px rgba(31, 61, 47, 0.10);
+    border-color: rgba(31, 61, 47, 0.18);
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
@@ -109,12 +119,27 @@
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
-    font-size: clamp(48px, 7vw, 88px);
+    font-size: clamp(40px, 5.6vw, 68px);
     font-weight: 600; line-height: 0.95;
-    margin: 0 0 16px; letter-spacing: -2.5px;
+    margin: 0 0 16px; letter-spacing: -2px;
     color: var(--ink);
   }
-  h1 .dot { color: var(--accent); }
+  h1 .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+    margin: 0 0.15em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
     font-size: 16px; color: var(--text-dim);
@@ -1942,4 +1967,10 @@
     /* ── 初始 ── */
     apply();
   })();
-</script></body></html>
+</script>
+<script>
+  /* 顶栏滚动加深 */
+  const _bar = document.querySelector('.topbar');
+  addEventListener('scroll', () => _bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
+</script>
+</body></html>

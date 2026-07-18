@@ -6,6 +6,10 @@
 <title>医学计算器 · Teng.ZG</title>
 <meta name="description" content="ICU 床旁常用医学计算器: 肌酐清除率、eGFR、平均动脉压、氧合指数、校正血钠、SOFA 评分。">
 <meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="医学计算器 · Teng.ZG">
+<meta property="og:description" content="ICU 床旁常用医学计算器 · 血气、酸碱、氧合、SOFA 等。">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
@@ -50,6 +54,7 @@
   a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   a:hover { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
   .num { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
 
   /* ── Top bar (与首页同款) ── */
@@ -64,6 +69,11 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+    transition: box-shadow .3s ease, border-color .3s ease;
+  }
+  .topbar.scrolled {
+    box-shadow: 0 10px 32px rgba(31, 61, 47, 0.10);
+    border-color: rgba(31, 61, 47, 0.18);
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
@@ -115,12 +125,27 @@
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(40px, 6vw, 72px);
-    font-weight: 600; line-height: 1;
+    font-size: clamp(40px, 5.6vw, 68px);
+    font-weight: 600; line-height: 0.95;
     margin: 0 0 16px; letter-spacing: -2px;
     color: var(--ink);
   }
-  h1 .dot { color: var(--accent); }
+  h1 .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+    margin: 0 0.15em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
     font-size: 16px; color: var(--text-dim);
@@ -655,7 +680,10 @@
     .result-actions button svg { width: 17px; height: 17px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition-duration: .01ms !important; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
   }
 </style>
 </head>
@@ -2740,6 +2768,19 @@ function recompute(which) {
   const h = location.hash.slice(1);
   window.__activateCalc(VALID.includes(h) ? h : 'crcl', false);
 })();
+
+/* 顶栏滚动加深 */
+(function() {
+  const _bar = document.querySelector('.topbar');
+  if (_bar) addEventListener('scroll', () => _bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
+})();
 </script>
+
+<footer class="foot" style="text-align:center;padding:32px;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--text-faint);letter-spacing:.5px;border-top:1px solid var(--line);">
+  <a href="mailto:Tengzhuguotzg@gmail.com" style="color:var(--ink-2);text-decoration:none;">Tengzhuguotzg@gmail.com</a>
+  &nbsp;·&nbsp;
+  <a href="index.html" style="color:var(--ink-2);text-decoration:none;">返回首页</a>
+  &nbsp;·&nbsp; © 2026 · Teng.ZG · 医学计算器
+</footer>
 </body>
 </html>

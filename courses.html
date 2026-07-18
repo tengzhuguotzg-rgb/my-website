@@ -6,6 +6,10 @@
 <title>教案管理 · Teng.ZG</title>
 <meta name="description" content="日常教学讲义 · 按主题归档 · 持续更新。">
 <meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="教案管理 · Teng.ZG">
+<meta property="og:description" content="重症医学日常教学讲义 · 按主题归档 · 持续更新。">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -43,6 +47,7 @@
   a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   a:hover { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
   /* Topbar —— 与其他页面同款 */
   .topbar {
@@ -56,6 +61,11 @@
     border: 1px solid var(--line);
     border-radius: 999px;
     box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
+    transition: box-shadow .3s ease, border-color .3s ease;
+  }
+  .topbar.scrolled {
+    box-shadow: 0 10px 32px rgba(31, 61, 47, 0.10);
+    border-color: rgba(31, 61, 47, 0.18);
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
@@ -115,12 +125,27 @@
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
-    font-size: clamp(48px, 7vw, 88px);
+    font-size: clamp(40px, 5.6vw, 68px);
     font-weight: 600; line-height: 0.95;
-    margin: 0 0 16px; letter-spacing: -2.5px;
+    margin: 0 0 16px; letter-spacing: -2px;
     color: var(--ink);
   }
-  h1 .dot { color: var(--accent); }
+  h1 .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+    margin: 0 0.15em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
   .hero-desc {
     font-family: 'Noto Serif SC', serif;
     font-size: 16px; color: var(--text-dim);
@@ -277,6 +302,12 @@
     .card .desc { min-height: 0; }
     .crumb { display: none; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -362,10 +393,17 @@
 </main>
 
 <footer class="foot">
-  © 2026 · Teng.ZG · 教案管理板块
+  <a href="mailto:Tengzhuguotzg@gmail.com">Tengzhuguotzg@gmail.com</a>
   &nbsp;·&nbsp;
   <a href="index.html">返回首页</a>
+  &nbsp;·&nbsp; © 2026 · Teng.ZG · 教案管理板块
 </footer>
+
+<script>
+  /* 顶栏滚动加深 */
+  const bar = document.querySelector('.topbar');
+  addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
+</script>
 
 </body>
 </html>

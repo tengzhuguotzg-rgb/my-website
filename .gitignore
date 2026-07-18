@@ -13,6 +13,10 @@ nul
 *.tmp
 *.bak
 
+# ── 本地开发工程(非站点内容) ──
+blood-gas-exe/
+node_modules/
+
 # ── Cloudflare Pages 单文件 25 MiB 限制 ──
 # 安装包/二进制/大文件不放 git,改用外部托管(蓝奏/百度网盘/R2)
 *.exe

@@ -1,0 +1,29 @@
+# ── OS / 编辑器 ──
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# ── 临时 / 调试 ──
+nul
+*.log
+*.tmp
+*.bak
+
+# ── Cloudflare Pages 单文件 25 MiB 限制 ──
+# 安装包/二进制/大文件不放 git,改用外部托管(蓝奏/百度网盘/R2)
+*.exe
+*.dmg
+*.pkg
+*.iso
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.mp4
+*.mov
+*.avi

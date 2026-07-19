@@ -498,14 +498,14 @@
   .ring-item {
     position: absolute;
     top: 50%; left: 50%;
-    width: 165px;           /* 由 220 → 165,缩 1/4 */
-    min-height: 168px;      /* 高度同步收紧 */
+    width: 220px;           /* 宽度保持原值 */
+    min-height: 126px;      /* 高度由 168 改为 ×3/4 */
     display: flex;
     flex-direction: column;
     text-align: left;
     text-decoration: none;
     color: inherit;
-    padding: 26px 24px 22px;
+    padding: 14px 20px 14px;  /* 高度变 3/4 后,内距同步压缩,避免内容溢出 */
     background: rgba(244, 241, 234, 0.65);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -940,8 +940,8 @@
     const N = items.length;
     let angle = 0;
     let velocity = 0;
-    let radiusX = 360;    // 桌面初始值,fit() 会按容器重算
-    let radiusY = 95;     // 环更扁,初始调低
+    let radiusX = 440;    // 桌面初始值,fit() 会按容器重算
+    let radiusY = 110;    // 环更扁,初始调低
     const FRICTION      = 0.93;   // 摩擦力较小,减速曲线拉长,看得到优雅衰减
     const VEL_THRESHOLD = 0.015;  // 减速到极小再停,不要硬切
     const FOLLOW_GAIN   = 0.22;   // 拖动期间:环从当前角度平滑逼近手指期望角度,产生"加速度"视觉
@@ -951,16 +951,15 @@
     function fit() {
       const w = wrap.clientWidth;
       const h = wrap.clientHeight;
-      const cardW = items[0]?.offsetWidth ?? 165;   // 卡片 220 → 165
+      const cardW = items[0]?.offsetWidth ?? 220;   // 卡片宽度回到 220,仅高度变 3/4
 
       // ── 横半径 (radiusX) ──
-      // 环本身收窄:不再撑满 wrap,只占 32%,且上限硬封顶 360
-      const gap = 24;
+      const gap = 28;
       const minByGeometry = ((cardW + gap) / 2) / Math.sin(Math.PI / N);   // 防重叠下限
-      radiusX = Math.max(minByGeometry, Math.min(w * 0.32, 360));           // 比之前更窄
+      radiusX = Math.max(minByGeometry, Math.min(w * 0.46, 540));          // 与初版贴近
 
       // ── 纵半径 (radiusY) ──
-      radiusY = Math.max(60, Math.min(h * 0.18, 110));  // 更扁
+      radiusY = Math.max(80, Math.min(h * 0.22, 140));  // 与初版贴近
     }
 
     // 渲染

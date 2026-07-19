@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>资源环 · Teng.ZG</title>
+<meta name="description" content="外部权威重症医学资源合集：MDCalc、ECG-GPT、MSD Manuals、ICUGuideline、PubMed、BMJ Best Practice、Glass Health。">
+<meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="资源环 · Teng.ZG · 重症医学">
+<meta property="og:description" content="外部权威重症医学资源合集 · 拖动旋转 · 点击跳转">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk, sans-serif' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
+<style>
+  /* ═══════════════════════════════════════════
+     Teng.ZG v5.0 — 资源环
+     复用全站 token,只新增 ring 相关样式
+     ═══════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  :root {
+    --bg: #F4F1EA;
+    --bg-2: #EBE5D6;
+    --ink: #1F3D2F;
+    --ink-2: #2D5440;
+    --accent: #E76F2C;
+    --accent-2: #C45A1F;
+    --text: #1F2421;
+    --text-dim: #4A5247;
+    --text-faint: #7A8074;
+    --line: rgba(31, 61, 47, 0.12);
+    --ease: cubic-bezier(.2,.8,.2,1);
+    --font-serif: 'Space Grotesk', 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+    --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Topbar ── 复用 knowledge-map / cases 的形态 */
+  .topbar {
+    position: sticky; top: 12px; z-index: 100;
+    margin: 12px auto 0; max-width: 1200px;
+    padding: 12px 20px;
+    background: rgba(244, 241, 234, 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: box-shadow .3s var(--ease), border-color .3s var(--ease);
+  }
+  .topbar.scrolled {
+    box-shadow: 0 10px 40px -12px rgba(31, 61, 47, .18);
+    border-color: rgba(31, 61, 47, .2);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--ink); color: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--font-serif);
+    font-weight: 600; font-size: 20px; letter-spacing: -.02em;
+  }
+  .brand-name {
+    font-family: var(--font-serif);
+    font-weight: 600; font-size: 16px; line-height: 1.1;
+    color: var(--ink);
+  }
+  .brand-sub { font-size: 11px; color: var(--text-faint); margin-top: 2px; letter-spacing: .02em; }
+
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .crumb {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .crumb span { color: var(--ink); font-weight: 500; }
+  .home-pill {
+    font-family: var(--font-serif);
+    font-size: 13px; font-weight: 500;
+    color: var(--ink);
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .home-pill:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .home-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* Hero ── 与其他二级页一致的 eb / h1 / hero-desc */
+  .hero {
+    max-width: 1200px; margin: 0 auto;
+    padding: 96px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(40px, 5.6vw, 68px);
+    font-weight: 600; line-height: 0.95;
+    margin: 0 0 16px; letter-spacing: -2px;
+    color: var(--ink);
+  }
+  .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+    margin: 0 0.08em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
+
+  .hero-desc {
+    font-size: 17px; line-height: 1.6; max-width: 720px;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .rule { max-width: 1200px; margin: 32px auto 0; padding: 0 32px; }
+  .rule hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+  .rule { display: flex; align-items: center; gap: 16px; }
+  .rule hr { flex: 1; }
+  .rule .label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; font-weight: 500;
+    color: var(--text-faint);
+    letter-spacing: 3px; text-transform: uppercase;
+  }
+
+  /* ───────── 资源环 ───────── */
+  .ring-stage {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    padding: 56px 32px 24px;
+    text-align: center;
+  }
+
+  .ring-hint {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--text-faint);
+    margin: 0 0 32px;
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+  }
+  .ring-hint .kbd {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 11px;
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    color: var(--ink);
+    background: rgba(31, 61, 47, 0.04);
+  }
+
+  .ring-wrap {
+    position: relative;
+    width: 100%;
+    /* 自适应高度:跟随视口但有上下限 */
+    height: clamp(380px, 56vh, 560px);
+    display: grid;
+    place-items: center;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;          /* 触屏允许垂直滚动,但夺回水平拖动 */
+    overflow: visible;
+  }
+  .ring-wrap.dragging { cursor: grabbing; }
+
+  /* 中心焦点环 — 仅装饰,表示当前朝向正面 */
+  .ring-core {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: .3;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .ring-axis {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: clamp(280px, 70%, 720px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .ring-item {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: clamp(140px, 18vw, 180px);
+    min-height: 100px;
+    background: #fff;
+    border-radius: 12px;
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: center;
+    text-align: left;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: 0 4px 18px rgba(31, 61, 47, .08);
+    border: 1px solid rgba(31, 61, 47, .06);
+    will-change: transform, filter, opacity;
+    /* 允许卡内文字复制 */
+    -webkit-user-drag: none;
+    transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+  }
+  .ring-item:hover {
+    box-shadow: 0 16px 36px -8px rgba(231, 111, 44, .22);
+    border-color: rgba(231, 111, 44, .35);
+  }
+  .ring-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    z-index: 999 !important;
+  }
+  .ring-item:hover .card-title { color: var(--accent); }
+
+  .card-domain {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    /* 重要:允许复制 */
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 15px; font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+    transition: color .2s var(--ease);
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  .card-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.45;
+    margin-top: 8px;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  /* 当前正前方的"主卡片":显示描述 + 略加大 */
+  .ring-item.is-front .card-desc { display: block; }
+  .ring-item:not(.is-front) .card-desc { display: none; }
+  .ring-item.is-front .card-title { font-size: 17px; }
+
+  /* ───────── 列表式回退:屏幕太小/无 JS 时 ───────── */
+  .fallback-list {
+    display: none;
+    max-width: 720px; margin: 32px auto 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fallback-list li {
+    border-top: 1px solid var(--line);
+  }
+  .fallback-list li:last-child { border-bottom: 1px solid var(--line); }
+  .fallback-list a {
+    display: block;
+    padding: 16px 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .fallback-list .card-domain {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .fallback-list .card-title { font-size: 16px; font-weight: 600; }
+
+  @media (max-width: 720px) {
+    .ring-wrap { display: none; }
+    .fallback-list { display: block; }
+    .topbar { margin: 12px 12px 0; padding: 12px 16px; }
+    .brand-sub { display: none; }
+    .hero { padding: 72px 20px 16px; }
+    .ring-stage { padding: 40px 20px 16px; }
+    .ring-hint { font-size: 12px; gap: 10px; }
+  }
+
+  /* 底部 footer,与其他页一致 */
+  footer {
+    max-width: 1200px;
+    margin: 80px auto 32px;
+    padding: 32px 32px 16px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  footer .credit { font-family: var(--font-serif); }
+  footer a { color: var(--ink); text-decoration: none; transition: color .2s var(--ease); }
+  footer a:hover { color: var(--accent); }
+
+  /* 无障碍:关闭心跳、关闭环旋转动画 */
+  @media (prefers-reduced-motion: reduce) {
+    .dot { animation: none; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html" style="text-decoration:none;color:inherit;">
+    <div class="brand-mark">T</div>
+    <div class="brand-info">
+      <div class="brand-name">Teng.ZG</div>
+      <div class="brand-sub">重症医学 · 临床知识门户</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <nav class="crumb" aria-label="面包屑">
+      <a href="downloads.html">资源下载</a> · <span>资源环</span>
+    </nav>
+    <a href="index.html" class="home-pill">← 返回首页</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Section · External Ring</div>
+  <h1>资源<span class="dot">.</span>环</h1>
+  <p class="hero-desc">外部权威重症医学资源合集。拖动旋转轮盘,或用键盘 ← / → 切换,正面卡片点击直达。</p>
+</section>
+
+<div class="rule">
+  <hr/><span class="label">EXTERNAL RESOURCES</span><hr/>
+</div>
+
+<section class="ring-stage">
+  <p class="ring-hint">
+    <span>拖动旋转</span> · <span class="kbd">←</span> <span class="kbd">→</span> 切换 · <span>点击正面卡片直达</span>
+  </p>
+
+  <div class="ring-wrap" id="ringWrap" role="region" aria-label="资源环,可拖动旋转" tabindex="0">
+    <div class="ring-axis" aria-hidden="true"></div>
+    <div class="ring-core" aria-hidden="true"></div>
+    <!-- 卡片由 JS 注入 -->
+  </div>
+
+  <noscript>
+    <ul class="fallback-list" style="display:block;">
+      <li><a href="https://www.mdcalc.com/"><div class="card-domain">MMDCALC.COM</div><div class="card-title">MDCalc · 医学计算器</div></a></li>
+      <li><a href="https://www.cards-lab.org/ecg-gpt"><div class="card-domain">ECARDS-LAB.ORG</div><div class="card-title">ECG-GPT · 心电图自动识别</div></a></li>
+      <li><a href="https://www.msdmanuals.cn/"><div class="card-domain">MMSDMANUALS.CN</div><div class="card-title">MSD Manuals · 默沙东诊疗手册</div></a></li>
+      <li><a href="https://www.icuguideline.com/"><div class="card-domain">IICUGUIDELINE.COM</div><div class="card-title">ICUGuideline · 重症感染呼吸指南</div></a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/"><div class="card-domain">PPUBMED.NCBI.NLM.NIH.GOV</div><div class="card-title">PubMed · 文献检索基础</div></a></li>
+      <li><a href="https://bestpractice.bmj.com/"><div class="card-domain">BBESTPRACTICE.BMJ.COM</div><div class="card-title">BMJ Best Practice · 英国版临床决策</div></a></li>
+      <li><a href="https://glass.health/"><div class="card-domain">GGLASS.HEALTH</div><div class="card-title">Glass Health · AI 鉴别诊断</div></a></li>
+    </ul>
+  </noscript>
+
+  <ul class="fallback-list" id="fallbackList"></ul>
+</section>
+
+<footer>
+  <div class="credit">Teng.ZG · 重症医学科 · 遂宁市中医院</div>
+  <div>
+    <a href="mailto:tengzhuguotzg-rgb@example.com">联系我们</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+
+  const resources = [
+    { domain: 'MMDCALC.COM',                   name: 'MDCalc',           desc: '医学计算器',                  url: 'https://www.mdcalc.com/' },
+    { domain: 'ECARDS-LAB.ORG',               name: 'ECG-GPT',          desc: '心电图自动识别报告',         url: 'https://www.cards-lab.org/ecg-gpt' },
+    { domain: 'MMSDMANUALS.CN',               name: 'MSD Manuals',      desc: '默沙东诊疗手册',             url: 'https://www.msdmanuals.cn/' },
+    { domain: 'IICUGUIDELINE.COM',            name: 'ICUGuideline',     desc: '重症感染呼吸等指南合集',    url: 'https://www.icuguideline.com/' },
+    { domain: 'PPUBMED.NCBI.NLM.NIH.GOV',     name: 'PubMed',           desc: '文献检索基础',               url: 'https://pubmed.ncbi.nlm.nih.gov/' },
+    { domain: 'BBESTPRACTICE.BMJ.COM',        name: 'BMJ Best Practice', desc: '英国版临床决策',             url: 'https://bestpractice.bmj.com/' },
+    { domain: 'GGLASS.HEALTH',                name: 'Glass Health',     desc: 'AI 鉴别诊断',                url: 'https://glass.health/' }
+  ];
+
+  const wrap = document.getElementById('ringWrap');
+  const fallback = document.getElementById('fallbackList');
+  if (!wrap) return;
+
+  // ── 列表式回退(屏幕窄 / 无交互环境) ──
+  resources.forEach(res => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = res.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.innerHTML = `<div class="card-domain">${res.domain}</div><div class="card-title">${res.name} · ${res.desc}</div>`;
+    li.appendChild(a);
+    fallback.appendChild(li);
+  });
+
+  // ── 渲染卡片 ──
+  const items = resources.map((res, i) => {
+    const a = document.createElement('a');
+    a.className = 'ring-item';
+    a.href = res.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.draggable = false;
+    a.setAttribute('aria-label', `${res.name} · ${res.desc}`);
+    a.tabIndex = 0;
+    a.dataset.index = i;
+    a.innerHTML = `
+      <div class="card-domain">${res.domain}</div>
+      <div class="card-title">${res.name}</div>
+      <div class="card-desc">${res.desc}</div>
+    `;
+    wrap.appendChild(a);
+    return a;
+  });
+
+  const N = items.length;
+
+  // ── 状态 ──
+  let angle = 0;          // 当前轮盘朝向角(度)
+  let velocity = 0;       // 拖动产生的角速度(度/帧),松手后衰减
+  let radiusX = 320;
+  let radiusY = 110;
+  const FRICTION = 0.94;  // 每帧衰减
+  const VEL_THRESHOLD = 0.05;
+
+  // ── 自适应半径 ──
+  function fit() {
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    // X 半径留 18% 边距,Y 半径留上下余地
+    // 同时根据卡片宽度,保证邻居不重叠(角度间隔 = 360/N,留半张卡宽)
+    const cardW = items[0]?.offsetWidth ?? 160;
+    const neededX = (cardW * N) / (2 * Math.PI) * 1.35;
+    radiusX = Math.max(160, Math.min(w * 0.42, neededX));
+    radiusY = Math.max(70, Math.min(h * 0.32, 140));
+  }
+
+  // ── 渲染 ──
+  function render() {
+    items.forEach((el, i) => {
+      const theta = (360 / N) * i + angle;
+      const rad = theta * Math.PI / 180;
+
+      const x = radiusX * Math.cos(rad);
+      const y = radiusY * Math.sin(rad);
+
+      // 归一化到 [-1,1]:y 越大越靠前
+      const progress = (y + radiusY) / (2 * radiusY);  // 0=最远,1=最近
+      // 缩放:0.55 ~ 1.1,前大后小,但最远不消失
+      const scale = 0.55 + progress * 0.55;
+      const blur  = (1 - progress) * 1.5;             // 0 ~ 1.5px,远处略糊
+      const opacity = 0.55 + progress * 0.45;         // 0.55 ~ 1
+      const z = Math.round(progress * 100);
+
+      el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
+      el.style.filter = `blur(${blur}px)`;
+      el.style.opacity = opacity.toFixed(2);
+      el.style.zIndex = z;
+
+      // 正前方卡片(y 越靠近 +radiusY 越正):取 sin 最接近 1 的那张
+      if (Math.sin(rad) > 0.85) {
+        if (!el.classList.contains('is-front')) el.classList.add('is-front');
+      } else {
+        el.classList.remove('is-front');
+      }
+    });
+  }
+
+  function tick() {
+    if (Math.abs(velocity) > VEL_THRESHOLD) {
+      angle += velocity;
+      velocity *= FRICTION;
+      render();
+    } else if (velocity !== 0) {
+      velocity = 0;
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ── 拖动 / 触摸(指针统一) ──
+  let isDragging = false;
+  let startX = 0;
+  let startAngle = 0;
+  let hasMoved = false;
+  const DRAG_PIXEL_TO_DEG = 0.35;   // 每像素对应多少度
+  const DRAG_THRESHOLD = 5;         // 阈值
+
+  function onDown(e) {
+    isDragging = true;
+    hasMoved = false;
+    startX = e.clientX;
+    startAngle = angle;
+    velocity = 0;                   // 用户接管,清掉惯性
+    wrap.classList.add('dragging');
+    // 让 pointer 在 wrap 外仍能 move/up,挂到 document
+    wrap.setPointerCapture?.(e.pointerId);
+  }
+  function onMove(e) {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > DRAG_THRESHOLD) {
+      hasMoved = true;
+      // 横向 dx 决定整圈轮盘的旋转方向(像拨轮盘)
+      const prev = angle;
+      angle = startAngle - dx * DRAG_PIXEL_TO_DEG;
+      velocity = angle - prev;       // 当前帧增量,作为惯性初速
+      render();
+    }
+  }
+  function onUp(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    wrap.classList.remove('dragging');
+    wrap.releasePointerCapture?.(e.pointerId);
+    // 不重置 hasMoved — click 拦截后会消费它
+  }
+  function onClick(e) {
+    // 拖动后阻止跳转;正面卡片点击才放行
+    if (hasMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+      hasMoved = false;             // 一次性消费
+    }
+  }
+
+  wrap.addEventListener('pointerdown', onDown);
+  wrap.addEventListener('pointermove', onMove);
+  wrap.addEventListener('pointerup', onUp);
+  wrap.addEventListener('pointercancel', onUp);
+  wrap.addEventListener('lostpointercapture', () => { isDragging = false; wrap.classList.remove('dragging'); });
+  // click 用捕获阶段,在链接跳转前判断
+  wrap.addEventListener('click', onClick, true);
+
+  // ── 键盘交互 ──
+  wrap.addEventListener('keydown', (e) => {
+    const step = 360 / N;  // 一次转一格
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      angle += step;
+      render();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      angle -= step;
+      render();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      angle = 0;
+      render();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      // 让正面卡片打开
+      e.preventDefault();
+      const front = items.find(el => el.classList.contains('is-front'));
+      if (front) window.open(front.href, '_blank', 'noopener,noreferrer');
+    }
+  });
+
+  // ── ResizeObserver 自适应 ──
+  if (typeof ResizeObserver !== 'undefined') {
+    const ro = new ResizeObserver(() => { fit(); render(); });
+    ro.observe(wrap);
+  } else {
+    window.addEventListener('resize', () => { fit(); render(); });
+  }
+
+  // ── 顶栏滚动样式 ──
+  const bar = document.querySelector('.topbar');
+  if (bar) {
+    const onScroll = () => {
+      bar.classList.toggle('scrolled', window.scrollY > 20);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // ── 启动 ──
+  fit();
+  render();
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

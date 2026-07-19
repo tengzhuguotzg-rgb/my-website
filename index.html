@@ -21,7 +21,7 @@
      配色:墨绿 #1F3D2F / 暖橘 #E76F2C / 米白 #F4F1EA
      ═══════════════════════════════════════════ */
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(31,61,47,.25) transparent; }
   html, body { margin: 0; padding: 0; }
   :root {
     --bg: #F4F1EA;
@@ -62,6 +62,11 @@
   a:hover { color: var(--accent); }
   button { font: inherit; color: inherit; cursor: pointer; }
   ::selection { background: rgba(231, 111, 44, 0.22); color: var(--ink); }
+  /* 主题色细滚动条(webkit;Firefox 走 html 上的 scrollbar-*) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(31, 61, 47, 0.20); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(31, 61, 47, 0.35); border: 2px solid transparent; background-clip: padding-box; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
   /* ── Top bar ── */
@@ -109,8 +114,12 @@
     font-family: var(--font-sans);
     font-size: 13px; letter-spacing: 1px;
     color: var(--text-dim);
+    padding-bottom: 2px;
+    /* 下划线从左滑入(背景渐变模拟,不占布局) */
+    background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+    transition: color .2s, background-size .3s var(--ease);
   }
-  .topnav a:hover { color: var(--accent); }
+  .topnav a:hover { color: var(--accent); background-size: 100% 1px; }
   .home-pill {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 8px 16px;
@@ -164,6 +173,13 @@
     0%, 100% { transform: scale(1);   }
     50%      { transform: scale(1.15); }
   }
+  /* 首屏入场:一次性淡入上移,逐项错开 ~80ms(ECG 有自身 transform,只淡入) */
+  @keyframes heroUp   { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes heroFade { from { opacity: 0; } to { opacity: 1; } }
+  .hero .eyebrow   { animation: heroUp .7s var(--ease) .05s both; }
+  .hero h1         { animation: heroUp .7s var(--ease) .13s both; }
+  .hero .hero-desc { animation: heroUp .7s var(--ease) .21s both; }
+  .hero .ecg       { animation: heroFade .9s ease .30s both; }
   .hero-desc {
     position: relative; z-index: 1;
     font-family: var(--font-serif);
@@ -183,17 +199,26 @@
     stroke: var(--accent); stroke-width: 2; stroke-linecap: round;
     stroke-dasharray: 90 710;
     animation: ecgRun 4s linear infinite;
+    filter: drop-shadow(0 0 6px rgba(231, 111, 44, 0.55));   /* 监护仪余辉,压得很低 */
   }
   @keyframes ecgRun { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -800; } }
 
   /* ── 版块标题 ── */
   .sec-head {
+    position: relative;
     max-width: 1100px; margin: 88px auto 0;
     padding: 0 32px 16px;
-    border-bottom: 1px solid var(--line);
     display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
     scroll-margin-top: 110px;
   }
+  /* 分割线随 reveal 从左向右"画"出来(替代原静态 border-bottom) */
+  .sec-head::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: var(--line);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .9s var(--ease) .15s;
+  }
+  .sec-head.in::after { transform: scaleX(1); }
   /* 02 — External 区块紧贴环(只针对这一个,不破坏其他板块) */
   .sec-head#external {
     padding-bottom: 0;       /* 砍掉标题下留白,贴到分割线 */
@@ -340,6 +365,7 @@
     font-size: 44px; font-weight: 500; line-height: 1;
     color: var(--bg);
     letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;   /* 数字滚动时宽度不抖 */
   }
   .stat .v::after { content: '.'; color: var(--accent); }
   .stat .k {
@@ -356,9 +382,15 @@
     font-size: 12px; color: var(--text-faint);
     font-family: var(--font-sans);
     letter-spacing: 0.5px;
+    border-top: 1px solid var(--line);   /* 页面正式收尾 */
   }
-  .footer a { color: var(--ink-2); }
-  .footer a:hover { color: var(--accent); }
+  .footer a {
+    color: var(--ink-2);
+    padding-bottom: 2px;
+    background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+    transition: color .2s, background-size .3s var(--ease);
+  }
+  .footer a:hover { color: var(--accent); background-size: 100% 1px; }
 
   /* ── Modal ── */
   .modal {
@@ -458,7 +490,7 @@
   .ring-wrap {
     position: relative;
     width: 100%;
-    height: clamp(560px, 72vh, 760px);
+    height: clamp(440px, 58vh, 620px);
     display: grid;
     place-items: center;
     cursor: grab;
@@ -466,6 +498,12 @@
     -webkit-user-select: none;
     touch-action: pan-y;
     overflow: visible;
+    /* 两侧渐隐:卡片转到最左/最右时溶进背景(键盘操作时取下 mask,保焦点框) */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+  .ring-wrap:focus-visible, .ring-wrap:focus-within {
+    -webkit-mask-image: none; mask-image: none;
   }
   .ring-wrap.dragging { cursor: grabbing; }
   .ring-wrap:focus-visible {
@@ -556,8 +594,6 @@
     font-size: 11px; letter-spacing: 2px; color: var(--text-faint);
     font-weight: 500;
     transition: color .3s ease;
-    user-select: text;
-    -webkit-user-select: text;
   }
 
   /* ghost 大字规则删了 — 用户要求去掉选项卡首字母 */
@@ -567,14 +603,10 @@
     font-size: 22px; font-weight: 700;
     margin: 0 0 8px; color: var(--ink);
     letter-spacing: 0.5px;
-    user-select: text;
-    -webkit-user-select: text;
   }
   .ring-item .card-desc {
     font-size: 13.5px; color: var(--text-dim);
     margin: 0 0 16px; line-height: 1.6;
-    user-select: text;
-    -webkit-user-select: text;
   }
 
   .ring-item .card-arrow {
@@ -618,6 +650,11 @@
     .fallback-list { display: block; }
   }
 </style>
+<noscript><style>
+  /* 无 JS 兜底:reveal 与分割线绘制都靠 JS 触发,这里直接显示终态 */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .sec-head::after { transform: scaleX(1) !important; }
+</style></noscript>
 </head>
 <body>
 
@@ -645,13 +682,13 @@
     <h1>Teng<span class="dot" aria-hidden="true">.</span>ZG</h1>
     <p class="hero-desc">重症医学科医师。把每个 ICU 早晨的临床判断，沉淀成可复用、可索引、可被检索的知识网络。</p>
     <svg class="ecg" viewBox="0 0 600 140" fill="none" aria-hidden="true">
-      <path class="ecg-base" d="M0 70 H96 l10-9 10 9 H152 l8-38 13 72 11-46 7 12 H264 l12-10 12 10 H330 l8-38 13 72 11-46 7 12 H600"/>
-      <path class="ecg-run" pathLength="800" d="M0 70 H96 l10-9 10 9 H152 l8-38 13 72 11-46 7 12 H264 l12-10 12 10 H330 l8-38 13 72 11-46 7 12 H600"/>
+      <path class="ecg-base" d="M0 70 H60 c8-12 16-12 24 0 H120 l4 5 8-58 9 62 6-9 H180 c14-20 28-20 42 0 H300 c8-12 16-12 24 0 H360 l4 5 8-58 9 62 6-9 H420 c14-20 28-20 42 0 H600"/>
+      <path class="ecg-run" pathLength="800" d="M0 70 H60 c8-12 16-12 24 0 H120 l4 5 8-58 9 62 6-9 H180 c14-20 28-20 42 0 H300 c8-12 16-12 24 0 H360 l4 5 8-58 9 62 6-9 H420 c14-20 28-20 42 0 H600"/>
     </svg>
   </section>
 
-  <!-- 站内板块标题 -->
-  <div class="sec-head" id="sections">
+  <!-- 站内板块标题(reveal:让分割线也参与入场绘制) -->
+  <div class="sec-head reveal" id="sections">
     <span class="en">01 — Sections</span>
     <span class="zh">站内板块 · 6 个栏目</span>
   </div>
@@ -728,13 +765,13 @@
 
     <noscript>
       <ul class="fallback-list" style="display:block;">
-        <li><a href="https://www.mdcalc.com/"><div class="card-num">MMDCALC.COM</div><div class="card-title">MDCalc</div><p class="card-desc">医学计算器</p></a></li>
-        <li><a href="https://www.cards-lab.org/ecg-gpt"><div class="card-num">ECARDS-LAB.ORG</div><div class="card-title">ECG-GPT</div><p class="card-desc">心电图自动识别报告</p></a></li>
-        <li><a href="https://www.msdmanuals.cn/"><div class="card-num">MMSDMANUALS.CN</div><div class="card-title">MSD Manuals</div><p class="card-desc">默沙东诊疗手册</p></a></li>
-        <li><a href="https://www.icuguideline.com/"><div class="card-num">IICUGUIDELINE.COM</div><div class="card-title">ICUGuideline</div><p class="card-desc">重症感染呼吸等指南合集</p></a></li>
-        <li><a href="https://pubmed.ncbi.nlm.nih.gov/"><div class="card-num">PPUBMED.NCBI.NLM.NIH.GOV</div><div class="card-title">PubMed</div><p class="card-desc">文献检索基础</p></a></li>
-        <li><a href="https://bestpractice.bmj.com/"><div class="card-num">BBESTPRACTICE.BMJ.COM</div><div class="card-title">BMJ Best Practice</div><p class="card-desc">英国版临床决策</p></a></li>
-        <li><a href="https://glass.health/"><div class="card-num">GGLASS.HEALTH</div><div class="card-title">Glass Health</div><p class="card-desc">AI 鉴别诊断 + 实时问诊辅助</p></a></li>
+        <li><a href="https://www.mdcalc.com/"><div class="card-num">MDCALC.COM</div><div class="card-title">MDCalc</div><p class="card-desc">医学计算器</p></a></li>
+        <li><a href="https://www.cards-lab.org/ecg-gpt"><div class="card-num">CARDS-LAB.ORG</div><div class="card-title">ECG-GPT</div><p class="card-desc">心电图自动识别报告</p></a></li>
+        <li><a href="https://www.msdmanuals.cn/"><div class="card-num">MSDMANUALS.CN</div><div class="card-title">MSD Manuals</div><p class="card-desc">默沙东诊疗手册</p></a></li>
+        <li><a href="https://www.icuguideline.com/"><div class="card-num">ICUGUIDELINE.COM</div><div class="card-title">ICUGuideline</div><p class="card-desc">重症感染呼吸等指南合集</p></a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/"><div class="card-num">PUBMED.NCBI.NLM.NIH.GOV</div><div class="card-title">PubMed</div><p class="card-desc">文献检索基础</p></a></li>
+        <li><a href="https://bestpractice.bmj.com/"><div class="card-num">BESTPRACTICE.BMJ.COM</div><div class="card-title">BMJ Best Practice</div><p class="card-desc">英国版临床决策</p></a></li>
+        <li><a href="https://glass.health/"><div class="card-num">GLASS.HEALTH</div><div class="card-title">Glass Health</div><p class="card-desc">AI 鉴别诊断 + 实时问诊辅助</p></a></li>
       </ul>
     </noscript>
 
@@ -824,6 +861,17 @@
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') document.querySelectorAll('.modal.open').forEach(closeModal);
+    // focus trap:Tab 在弹窗内循环,不跑出遮罩
+    if (e.key === 'Tab') {
+      const m = document.querySelector('.modal.open');
+      if (!m) return;
+      const f = [...m.querySelectorAll('button, a[href]')];
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      const outside = !m.contains(document.activeElement);
+      if (e.shiftKey && (document.activeElement === first || outside)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (document.activeElement === last || outside)) { e.preventDefault(); first.focus(); }
+    }
   });
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -871,13 +919,13 @@
     if (document.getElementById('ringWrap') === null) return;
 
     const resources = [
-      { domain: 'MMDCALC.COM',               name: 'MDCalc',           desc: '医学计算器',                url: 'https://www.mdcalc.com/' },
-      { domain: 'ECARDS-LAB.ORG',           name: 'ECG-GPT',          desc: '心电图自动识别报告',       url: 'https://www.cards-lab.org/ecg-gpt' },
-      { domain: 'MMSDMANUALS.CN',           name: 'MSD Manuals',      desc: '默沙东诊疗手册',           url: 'https://www.msdmanuals.cn/' },
-      { domain: 'IICUGUIDELINE.COM',        name: 'ICUGuideline',     desc: '重症、感染、呼吸等指南合集',url: 'https://www.icuguideline.com/' },
-      { domain: 'PPUBMED.NCBI.NLM.NIH.GOV', name: 'PubMed',           desc: '文献检索基础',             url: 'https://pubmed.ncbi.nlm.nih.gov/' },
-      { domain: 'BBESTPRACTICE.BMJ.COM',    name: 'BMJ Best Practice',desc: '英国版临床决策',            url: 'https://bestpractice.bmj.com/' },
-      { domain: 'GGLASS.HEALTH',            name: 'Glass Health',     desc: 'AI 鉴别诊断 + 实时问诊辅助',url: 'https://glass.health/' }
+      { domain: 'MDCALC.COM',              name: 'MDCalc',           desc: '医学计算器',                url: 'https://www.mdcalc.com/' },
+      { domain: 'CARDS-LAB.ORG',           name: 'ECG-GPT',          desc: '心电图自动识别报告',       url: 'https://www.cards-lab.org/ecg-gpt' },
+      { domain: 'MSDMANUALS.CN',           name: 'MSD Manuals',      desc: '默沙东诊疗手册',           url: 'https://www.msdmanuals.cn/' },
+      { domain: 'ICUGUIDELINE.COM',        name: 'ICUGuideline',     desc: '重症、感染、呼吸等指南合集',url: 'https://www.icuguideline.com/' },
+      { domain: 'PUBMED.NCBI.NLM.NIH.GOV', name: 'PubMed',           desc: '文献检索基础',             url: 'https://pubmed.ncbi.nlm.nih.gov/' },
+      { domain: 'BESTPRACTICE.BMJ.COM',    name: 'BMJ Best Practice',desc: '英国版临床决策',            url: 'https://bestpractice.bmj.com/' },
+      { domain: 'GLASS.HEALTH',            name: 'Glass Health',     desc: 'AI 鉴别诊断 + 实时问诊辅助',url: 'https://glass.health/' }
     ];
 
     const wrap = document.getElementById('ringWrap');
@@ -935,10 +983,13 @@
       // ── 横半径 (radiusX) ──
       const gap = 28;
       const minByGeometry = ((cardW + gap) / 2) / Math.sin(Math.PI / N);   // 防重叠下限
-      radiusX = Math.max(minByGeometry, Math.min(w * 0.46, 540));          // 与初版贴近
+      // 视口安全上限:卡片伸出容器可以,但不许被视口裁掉(≤720px 走列表降级,几何下限兜底)
+      const vwCap = (window.innerWidth - cardW) / 2 - 16;
+      radiusX = Math.max(minByGeometry, Math.min(w * 0.46, 540, vwCap));
 
       // ── 纵半径 (radiusY) ──
-      radiusY = Math.max(80, Math.min(h * 0.22, 140));  // 与初版贴近
+      // 容器压扁后(440–620px)同步抬比例,环顶卡片距标题 ~45–85px,不再留大空档
+      radiusY = Math.max(80, Math.min(h * 0.26, 160));
     }
 
     // 渲染
@@ -972,18 +1023,21 @@
       });
     }
 
-    // 惯性 tick(rAF 循环)
+    // 惯性 tick:有速度才跑,静止不挂 rAF(省电)
+    let rafId = 0;
     function tick() {
       if (Math.abs(velocity) > VEL_THRESHOLD) {
         angle += velocity;
         velocity *= FRICTION;
         render();
-      } else if (velocity !== 0) {
+        rafId = requestAnimationFrame(tick);
+      } else {
         velocity = 0;
+        rafId = 0;
         render();
       }
-      requestAnimationFrame(tick);
     }
+    function kick() { if (!rafId) rafId = requestAnimationFrame(tick); }
 
     // ── 鼠标光斑(沿用原 .card 的 ::before 径向渐变) ──
     // 注意:这里只针对 .ring-item,不影响 .card
@@ -1077,6 +1131,7 @@
       }
       // 拖动松手后,如果停顿超过 60ms,清零速度(避免最后那次 onMove 污染)
       if (now - lastMoveT > 60) velocity = 0;
+      kick();   // 有残余速度则启动惯性循环
 
       dragging = false;
       wrap.classList.remove('dragging');
@@ -1122,7 +1177,7 @@
 
     fit();
     render();
-    requestAnimationFrame(tick);
+    // 不常驻 rAF:惯性由 onUp 里的 kick() 按需启动
   })();
 </script>
 </body>

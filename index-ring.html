@@ -447,7 +447,7 @@
 
   /* ═══════════════════════════════════════════
      资源环(嵌入 02 External 区块)
-     视觉对齐:复用原 .card 玻璃拟态 + 圆角 18px + ghost 大字 + ext 箭头
+     视觉对齐:复用原 .card 玻璃拟态 + 圆角 18px + ext 箭头(大字母已按需删除)
      ═══════════════════════════════════════════ */
   .ring-stage {
     max-width: 1100px;        /* 与全站 hero/sec-head 宽度对齐 */
@@ -536,7 +536,7 @@
   }
   .ring-item:hover::before { opacity: 1; }
   .ring-item:hover .card-num { color: var(--accent); }
-  .ring-item:hover .ghost { color: rgba(231, 111, 44, 0.10); }
+  /* .ring-item:hover .ghost 删了 — 大字母不再渲染 */
 
   /* 键盘 focus */
   .ring-item:focus-visible {
@@ -549,17 +549,7 @@
   .ring-item .card-top {
     display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
   }
-  .ring-item .ext-chip {
-    width: 26px; height: 26px; flex: none;
-    border-radius: 8px;
-    background: rgba(31, 61, 47, 0.08);
-    color: var(--ink);
-    display: grid; place-items: center;
-    font-family: var(--font-sans);
-    font-size: 12px; font-weight: 600;
-    transition: all .25s var(--ease);
-  }
-  .ring-item:hover .ext-chip { background: var(--accent); color: var(--bg); }
+  /* .ext-chip 删了 — 用户要求去掉选项卡首字母 */
 
   .ring-item .card-num {
     font-family: var(--font-sans);
@@ -570,16 +560,7 @@
     -webkit-user-select: text;
   }
 
-  /* ghost 大字 — 给环上一个字母(资源首字母),对齐原卡 ghost 字 */
-  .ring-item .ghost {
-    position: absolute; top: 12px; right: 18px;
-    font-family: var(--font-sans);
-    font-size: 54px; font-weight: 700; line-height: 1;
-    letter-spacing: -2px;
-    color: rgba(31, 61, 47, 0.05);
-    pointer-events: none;
-    transition: color .3s ease;
-  }
+  /* ghost 大字规则删了 — 用户要求去掉选项卡首字母 */
 
   .ring-item .card-title {
     font-family: var(--font-serif);
@@ -616,7 +597,7 @@
     border-color: rgba(231, 111, 44, 0.35);
     box-shadow: 0 22px 56px -10px rgba(31, 61, 47, 0.18);
   }
-  /* 背面卡:弱化描述,只露 title + ghost */
+  /* 背面卡:只露 title,弱化描述与箭头 */
   .ring-item:not(.is-front) .card-desc { display: none; }
   .ring-item:not(.is-front) .card-arrow { display: none; }
   .ring-item:not(.is-front) { padding-bottom: 22px; }
@@ -890,13 +871,13 @@
     if (document.getElementById('ringWrap') === null) return;
 
     const resources = [
-      { domain: 'MMDCALC.COM',               name: 'MDCalc',           desc: '医学计算器',                letter: 'M', url: 'https://www.mdcalc.com/' },
-      { domain: 'ECARDS-LAB.ORG',           name: 'ECG-GPT',          desc: '心电图自动识别报告',       letter: 'E', url: 'https://www.cards-lab.org/ecg-gpt' },
-      { domain: 'MMSDMANUALS.CN',           name: 'MSD Manuals',      desc: '默沙东诊疗手册',           letter: 'M', url: 'https://www.msdmanuals.cn/' },
-      { domain: 'IICUGUIDELINE.COM',        name: 'ICUGuideline',     desc: '重症、感染、呼吸等指南合集',letter: 'I', url: 'https://www.icuguideline.com/' },
-      { domain: 'PPUBMED.NCBI.NLM.NIH.GOV', name: 'PubMed',           desc: '文献检索基础',             letter: 'P', url: 'https://pubmed.ncbi.nlm.nih.gov/' },
-      { domain: 'BBESTPRACTICE.BMJ.COM',    name: 'BMJ Best Practice',desc: '英国版临床决策',            letter: 'B', url: 'https://bestpractice.bmj.com/' },
-      { domain: 'GGLASS.HEALTH',            name: 'Glass Health',     desc: 'AI 鉴别诊断 + 实时问诊辅助',letter: 'G', url: 'https://glass.health/' }
+      { domain: 'MMDCALC.COM',               name: 'MDCalc',           desc: '医学计算器',                url: 'https://www.mdcalc.com/' },
+      { domain: 'ECARDS-LAB.ORG',           name: 'ECG-GPT',          desc: '心电图自动识别报告',       url: 'https://www.cards-lab.org/ecg-gpt' },
+      { domain: 'MMSDMANUALS.CN',           name: 'MSD Manuals',      desc: '默沙东诊疗手册',           url: 'https://www.msdmanuals.cn/' },
+      { domain: 'IICUGUIDELINE.COM',        name: 'ICUGuideline',     desc: '重症、感染、呼吸等指南合集',url: 'https://www.icuguideline.com/' },
+      { domain: 'PPUBMED.NCBI.NLM.NIH.GOV', name: 'PubMed',           desc: '文献检索基础',             url: 'https://pubmed.ncbi.nlm.nih.gov/' },
+      { domain: 'BBESTPRACTICE.BMJ.COM',    name: 'BMJ Best Practice',desc: '英国版临床决策',            url: 'https://bestpractice.bmj.com/' },
+      { domain: 'GGLASS.HEALTH',            name: 'Glass Health',     desc: 'AI 鉴别诊断 + 实时问诊辅助',url: 'https://glass.health/' }
     ];
 
     const wrap = document.getElementById('ringWrap');
@@ -925,10 +906,8 @@
       a.dataset.index = i;
       a.innerHTML = `
         <div class="card-top">
-          <span class="ext-chip" aria-hidden="true">${res.letter}</span>
           <div class="card-num">${res.domain}</div>
         </div>
-        <span class="ghost" aria-hidden="true">${res.letter}</span>
         <h3 class="card-title">${res.name}</h3>
         <p class="card-desc">${res.desc}</p>
         <span class="card-arrow" aria-hidden="true">↗</span>

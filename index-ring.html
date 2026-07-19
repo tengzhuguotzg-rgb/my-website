@@ -498,8 +498,8 @@
   .ring-item {
     position: absolute;
     top: 50%; left: 50%;
-    width: 220px;
-    min-height: 200px;
+    width: 165px;           /* 由 220 → 165,缩 1/4 */
+    min-height: 168px;      /* 高度同步收紧 */
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -940,8 +940,8 @@
     const N = items.length;
     let angle = 0;
     let velocity = 0;
-    let radiusX = 440;    // 桌面初始值,fit() 会按容器重算
-    let radiusY = 110;    // 环更扁,初始调低
+    let radiusX = 360;    // 桌面初始值,fit() 会按容器重算
+    let radiusY = 95;     // 环更扁,初始调低
     const FRICTION      = 0.93;   // 摩擦力较小,减速曲线拉长,看得到优雅衰减
     const VEL_THRESHOLD = 0.015;  // 减速到极小再停,不要硬切
     const FOLLOW_GAIN   = 0.22;   // 拖动期间:环从当前角度平滑逼近手指期望角度,产生"加速度"视觉
@@ -951,19 +951,16 @@
     function fit() {
       const w = wrap.clientWidth;
       const h = wrap.clientHeight;
-      const cardW = items[0]?.offsetWidth ?? 220;
+      const cardW = items[0]?.offsetWidth ?? 165;   // 卡片 220 → 165
 
       // ── 横半径 (radiusX) ──
-      // 上限:让最外侧卡片中心 ≈ w/2 - 卡片宽/2 - 安全边距,把环撑开但不出框
-      // 下限:卡间弦长 = 2·r·sin(180°/N) 至少 >= cardW + gap,避免重叠
-      const gap = 28;                                            // 期望卡间间距(像素)
-      const maxX = Math.max(280, (w / 2) - cardW / 2 - 16);       // 撑满 02 区块,留 16px 边距
-      const minByGeometry = ((cardW + gap) / 2) / Math.sin(Math.PI / N);  // 防重叠下限
-      radiusX = Math.max(minByGeometry, Math.min(maxX, w * 0.46));
+      // 环本身收窄:不再撑满 wrap,只占 32%,且上限硬封顶 360
+      const gap = 24;
+      const minByGeometry = ((cardW + gap) / 2) / Math.sin(Math.PI / N);   // 防重叠下限
+      radiusX = Math.max(minByGeometry, Math.min(w * 0.32, 360));           // 比之前更窄
 
       // ── 纵半径 (radiusY) ──
-      // 环更扁:容器高的 0.22,上限 140(更接近一线水平椭圆)
-      radiusY = Math.max(80, Math.min(h * 0.22, 140));
+      radiusY = Math.max(60, Math.min(h * 0.18, 110));  // 更扁
     }
 
     // 渲染

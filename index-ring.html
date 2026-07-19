@@ -443,36 +443,37 @@
 
   /* ═══════════════════════════════════════════
      资源环(嵌入 02 External 区块)
-     复用全站 token,只新增 ring 样式
+     视觉对齐:复用原 .card 玻璃拟态 + 圆角 18px + ghost 大字 + ext 箭头
      ═══════════════════════════════════════════ */
   .ring-stage {
     max-width: 1200px;
     margin: 24px auto 0;
-    padding: 24px 32px 24px;
+    padding: 32px 32px 24px;
     text-align: center;
   }
   .ring-hint {
-    font-family: var(--font-serif);
-    font-size: 13px;
+    font-family: var(--font-sans);
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--text-faint);
-    margin: 0 0 20px;
+    margin: 0 0 24px;
     display: flex; align-items: center; justify-content: center; gap: 14px;
     flex-wrap: wrap;
   }
   .ring-hint .kbd {
     font-family: 'Space Grotesk', monospace;
     font-size: 11px;
-    padding: 3px 7px;
+    padding: 3px 8px;
     border: 1px solid var(--line);
     border-bottom-width: 2px;
     border-radius: 6px;
     color: var(--ink);
     background: rgba(31, 61, 47, 0.04);
   }
+
   .ring-wrap {
     position: relative;
     width: 100%;
-    height: clamp(380px, 56vh, 540px);
+    height: clamp(560px, 72vh, 760px);
     display: grid;
     place-items: center;
     cursor: grab;
@@ -482,10 +483,16 @@
     overflow: visible;
   }
   .ring-wrap.dragging { cursor: grabbing; }
+  .ring-wrap:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 8px;
+    border-radius: 12px;
+  }
+
   .ring-axis {
     position: absolute;
     top: 50%; left: 50%;
-    width: clamp(280px, 70%, 720px);
+    width: clamp(420px, 70%, 860px);
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--line), transparent);
     transform: translate(-50%, -50%);
@@ -493,73 +500,142 @@
   }
   .ring-core {
     position: absolute;
-    width: 6px; height: 6px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--accent);
-    opacity: .3;
+    opacity: .35;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
+
+  /* ── 卡片(对齐 .card 原 02 区形态) ── */
   .ring-item {
     position: absolute;
     top: 50%; left: 50%;
-    width: clamp(150px, 18vw, 184px);
-    min-height: 104px;
-    background: #fff;
-    border-radius: 12px;
-    display: flex; flex-direction: column;
-    align-items: flex-start; justify-content: center;
+    width: 220px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
     text-align: left;
-    padding: 14px 16px;
     text-decoration: none;
-    color: var(--text);
-    box-shadow: 0 4px 18px rgba(31, 61, 47, .08);
-    border: 1px solid rgba(31, 61, 47, .06);
+    color: inherit;
+    padding: 26px 24px 22px;
+    background: rgba(244, 241, 234, 0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    font-family: inherit;
+    /* 性能:只动 transform/blur,不动其他属性 */
     will-change: transform, filter, opacity;
     -webkit-user-drag: none;
-    transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+    /* 默认相对静止时的形变 = 0,JS 接管 transform */
+    transform-origin: center;
+    transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
   }
+  /* 鼠标光斑 — 复用原 .card 的 ::before 径向渐变 */
+  .ring-item::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(231, 111, 44, 0.10), transparent 55%);
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+    border-radius: inherit;
+  }
+  /* hover 抬升 */
   .ring-item:hover {
-    box-shadow: 0 16px 36px -8px rgba(231, 111, 44, .22);
-    border-color: rgba(231, 111, 44, .35);
+    background: rgba(244, 241, 234, 0.92);
+    border-color: rgba(31, 61, 47, 0.28);
+    box-shadow: 0 18px 44px rgba(31, 61, 47, 0.10);
   }
+  .ring-item:hover::before { opacity: 1; }
+  .ring-item:hover .card-num { color: var(--accent); }
+  .ring-item:hover .ghost { color: rgba(231, 111, 44, 0.10); }
+
+  /* 键盘 focus */
   .ring-item:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     z-index: 999 !important;
   }
-  .ring-item:hover .card-title { color: var(--accent); }
-  .card-domain {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 10px; font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--text-faint);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    user-select: text;
-    -webkit-user-select: text;
+
+  /* ── 卡内排版(对齐原 .card 的命名) ── */
+  .ring-item .card-top {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
   }
-  .card-title {
-    font-family: var(--font-serif);
-    font-size: 15px; font-weight: 600;
+  .ring-item .ext-chip {
+    width: 26px; height: 26px; flex: none;
+    border-radius: 8px;
+    background: rgba(31, 61, 47, 0.08);
     color: var(--ink);
-    line-height: 1.25;
-    transition: color .2s var(--ease);
+    display: grid; place-items: center;
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 600;
+    transition: all .25s var(--ease);
+  }
+  .ring-item:hover .ext-chip { background: var(--accent); color: var(--bg); }
+
+  .ring-item .card-num {
+    font-family: var(--font-sans);
+    font-size: 11px; letter-spacing: 2px; color: var(--text-faint);
+    font-weight: 500;
+    transition: color .3s ease;
     user-select: text;
     -webkit-user-select: text;
   }
-  .card-desc {
-    font-size: 12px;
-    color: var(--text-dim);
-    line-height: 1.45;
-    margin-top: 8px;
+
+  /* ghost 大字 — 给环上一个字母(资源首字母),对齐原卡 ghost 字 */
+  .ring-item .ghost {
+    position: absolute; top: 12px; right: 18px;
+    font-family: var(--font-sans);
+    font-size: 54px; font-weight: 700; line-height: 1;
+    letter-spacing: -2px;
+    color: rgba(31, 61, 47, 0.05);
+    pointer-events: none;
+    transition: color .3s ease;
+  }
+
+  .ring-item .card-title {
+    font-family: var(--font-serif);
+    font-size: 22px; font-weight: 700;
+    margin: 0 0 8px; color: var(--ink);
+    letter-spacing: 0.5px;
     user-select: text;
     -webkit-user-select: text;
   }
-  .ring-item.is-front .card-desc { display: block; }
+  .ring-item .card-desc {
+    font-size: 13.5px; color: var(--text-dim);
+    margin: 0 0 16px; line-height: 1.6;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .ring-item .card-arrow {
+    margin-top: auto; align-self: flex-end;
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 50%;
+    font-family: var(--font-sans);
+    font-size: 15px; color: var(--text-faint);
+    transition: all .25s var(--ease);
+    pointer-events: none;     /* 整张卡接 click,不挡链接 */
+  }
+  .ring-item:hover .card-arrow {
+    background: var(--accent); border-color: var(--accent); color: var(--bg);
+    transform: rotate(0deg);  /* ext 不旋转,与原 .ext 行为一致 */
+  }
+
+  /* ── 正前方卡片(更高 z、更亮、显示描述) ── */
+  .ring-item.is-front {
+    border-color: rgba(231, 111, 44, 0.35);
+    box-shadow: 0 22px 56px -10px rgba(31, 61, 47, 0.18);
+  }
+  /* 背面卡:弱化描述,只露 title + ghost */
   .ring-item:not(.is-front) .card-desc { display: none; }
-  .ring-item.is-front .card-title { font-size: 17px; }
+  .ring-item:not(.is-front) .card-arrow { display: none; }
+  .ring-item:not(.is-front) { padding-bottom: 22px; }
+  .ring-item:not(.is-front) .card-title { font-size: 18px; }
 
   /* 屏幕窄/无 JS 时降级为列表 */
   .fallback-list { display: none; max-width: 720px; margin: 24px auto 0; padding: 0; list-style: none; }
@@ -569,12 +645,7 @@
     display: block; padding: 16px 8px;
     text-decoration: none; color: var(--ink);
   }
-  .fallback-list .card-domain {
-    color: var(--accent);
-    letter-spacing: 1.5px; text-transform: uppercase;
-    font-size: 11px; font-weight: 500;
-    margin-bottom: 4px;
-  }
+  .fallback-list .card-num { color: var(--accent); font-size: 11px; letter-spacing: 2px; margin-bottom: 4px; }
   .fallback-list .card-title { font-size: 16px; font-weight: 600; }
   @media (max-width: 720px) {
     .ring-wrap { display: none; }
@@ -695,13 +766,13 @@
 
     <noscript>
       <ul class="fallback-list" style="display:block;">
-        <li><a href="https://www.mdcalc.com/"><div class="card-domain">MMDCALC.COM</div><div class="card-title">MDCalc · 医学计算器</div></a></li>
-        <li><a href="https://www.cards-lab.org/ecg-gpt"><div class="card-domain">ECARDS-LAB.ORG</div><div class="card-title">ECG-GPT · 心电图自动识别</div></a></li>
-        <li><a href="https://www.msdmanuals.cn/"><div class="card-domain">MMSDMANUALS.CN</div><div class="card-title">MSD Manuals · 默沙东诊疗手册</div></a></li>
-        <li><a href="https://www.icuguideline.com/"><div class="card-domain">IICUGUIDELINE.COM</div><div class="card-title">ICUGuideline · 重症指南</div></a></li>
-        <li><a href="https://pubmed.ncbi.nlm.nih.gov/"><div class="card-domain">PPUBMED.NCBI.NLM.NIH.GOV</div><div class="card-title">PubMed · 文献检索</div></a></li>
-        <li><a href="https://bestpractice.bmj.com/"><div class="card-domain">BBESTPRACTICE.BMJ.COM</div><div class="card-title">BMJ Best Practice</div></a></li>
-        <li><a href="https://glass.health/"><div class="card-domain">GGLASS.HEALTH</div><div class="card-title">Glass Health · AI 鉴别诊断</div></a></li>
+        <li><a href="https://www.mdcalc.com/"><div class="card-num">MMDCALC.COM</div><div class="card-title">MDCalc</div><p class="card-desc">医学计算器</p></a></li>
+        <li><a href="https://www.cards-lab.org/ecg-gpt"><div class="card-num">ECARDS-LAB.ORG</div><div class="card-title">ECG-GPT</div><p class="card-desc">心电图自动识别报告</p></a></li>
+        <li><a href="https://www.msdmanuals.cn/"><div class="card-num">MMSDMANUALS.CN</div><div class="card-title">MSD Manuals</div><p class="card-desc">默沙东诊疗手册</p></a></li>
+        <li><a href="https://www.icuguideline.com/"><div class="card-num">IICUGUIDELINE.COM</div><div class="card-title">ICUGuideline</div><p class="card-desc">重症感染呼吸等指南合集</p></a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/"><div class="card-num">PPUBMED.NCBI.NLM.NIH.GOV</div><div class="card-title">PubMed</div><p class="card-desc">文献检索基础</p></a></li>
+        <li><a href="https://bestpractice.bmj.com/"><div class="card-num">BBESTPRACTICE.BMJ.COM</div><div class="card-title">BMJ Best Practice</div><p class="card-desc">英国版临床决策</p></a></li>
+        <li><a href="https://glass.health/"><div class="card-num">GGLASS.HEALTH</div><div class="card-title">Glass Health</div><p class="card-desc">AI 鉴别诊断 + 实时问诊辅助</p></a></li>
       </ul>
     </noscript>
 
@@ -838,29 +909,29 @@
     if (document.getElementById('ringWrap') === null) return;
 
     const resources = [
-      { domain: 'MMDCALC.COM',                name: 'MDCalc',           desc: '医学计算器',                  url: 'https://www.mdcalc.com/' },
-      { domain: 'ECARDS-LAB.ORG',            name: 'ECG-GPT',          desc: '心电图自动识别报告',         url: 'https://www.cards-lab.org/ecg-gpt' },
-      { domain: 'MMSDMANUALS.CN',            name: 'MSD Manuals',      desc: '默沙东诊疗手册',             url: 'https://www.msdmanuals.cn/' },
-      { domain: 'IICUGUIDELINE.COM',         name: 'ICUGuideline',     desc: '重症感染呼吸等指南合集',    url: 'https://www.icuguideline.com/' },
-      { domain: 'PPUBMED.NCBI.NLM.NIH.GOV',  name: 'PubMed',           desc: '文献检索基础',               url: 'https://pubmed.ncbi.nlm.nih.gov/' },
-      { domain: 'BBESTPRACTICE.BMJ.COM',     name: 'BMJ Best Practice', desc: '英国版临床决策',             url: 'https://bestpractice.bmj.com/' },
-      { domain: 'GGLASS.HEALTH',             name: 'Glass Health',     desc: 'AI 鉴别诊断 + 实时问诊辅助', url: 'https://glass.health/' }
+      { domain: 'MMDCALC.COM',               name: 'MDCalc',           desc: '医学计算器',                letter: 'M', url: 'https://www.mdcalc.com/' },
+      { domain: 'ECARDS-LAB.ORG',           name: 'ECG-GPT',          desc: '心电图自动识别报告',       letter: 'E', url: 'https://www.cards-lab.org/ecg-gpt' },
+      { domain: 'MMSDMANUALS.CN',           name: 'MSD Manuals',      desc: '默沙东诊疗手册',           letter: 'M', url: 'https://www.msdmanuals.cn/' },
+      { domain: 'IICUGUIDELINE.COM',        name: 'ICUGuideline',     desc: '重症、感染、呼吸等指南合集',letter: 'I', url: 'https://www.icuguideline.com/' },
+      { domain: 'PPUBMED.NCBI.NLM.NIH.GOV', name: 'PubMed',           desc: '文献检索基础',             letter: 'P', url: 'https://pubmed.ncbi.nlm.nih.gov/' },
+      { domain: 'BBESTPRACTICE.BMJ.COM',    name: 'BMJ Best Practice',desc: '英国版临床决策',            letter: 'B', url: 'https://bestpractice.bmj.com/' },
+      { domain: 'GGLASS.HEALTH',            name: 'Glass Health',     desc: 'AI 鉴别诊断 + 实时问诊辅助',letter: 'G', url: 'https://glass.health/' }
     ];
 
-    const wrap  = document.getElementById('ringWrap');
-    const fb    = document.getElementById('fallbackList');
+    const wrap = document.getElementById('ringWrap');
+    const fb   = document.getElementById('fallbackList');
 
-    // 列表式回退
+    // ── 列表式回退(对齐原 .card 命名) ──
     resources.forEach(res => {
       const li = document.createElement('li');
       const a  = document.createElement('a');
       a.href = res.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-      a.innerHTML = `<div class="card-domain">${res.domain}</div><div class="card-title">${res.name} · ${res.desc}</div>`;
+      a.innerHTML = `<div class="card-num">${res.domain}</div><div class="card-title">${res.name}</div><p class="card-desc">${res.desc}</p>`;
       li.appendChild(a);
       fb.appendChild(li);
     });
 
-    // 注入卡片
+    // ── 注入环卡片(对齐 .card 原 02 区结构) ──
     const items = resources.map((res, i) => {
       const a = document.createElement('a');
       a.className = 'ring-item';
@@ -872,9 +943,14 @@
       a.tabIndex = 0;
       a.dataset.index = i;
       a.innerHTML = `
-        <div class="card-domain">${res.domain}</div>
-        <div class="card-title">${res.name}</div>
-        <div class="card-desc">${res.desc}</div>
+        <div class="card-top">
+          <span class="ext-chip" aria-hidden="true">${res.letter}</span>
+          <div class="card-num">${res.domain}</div>
+        </div>
+        <span class="ghost" aria-hidden="true">${res.letter}</span>
+        <h3 class="card-title">${res.name}</h3>
+        <p class="card-desc">${res.desc}</p>
+        <span class="card-arrow" aria-hidden="true">↗</span>
       `;
       wrap.appendChild(a);
       return a;
@@ -883,40 +959,55 @@
     const N = items.length;
     let angle = 0;
     let velocity = 0;
-    let radiusX = 320;
-    let radiusY = 110;
+    let radiusX = 360;
+    let radiusY = 160;
     const FRICTION      = 0.94;
     const VEL_THRESHOLD = 0.05;
 
+    // 自适应 radius:卡片固定 220px,按容器宽高算环
     function fit() {
       const w = wrap.clientWidth;
       const h = wrap.clientHeight;
-      const cardW = items[0]?.offsetWidth ?? 160;
-      const neededX = (cardW * N) / (2 * Math.PI) * 1.35;
-      radiusX = Math.max(160, Math.min(w * 0.42, neededX));
-      radiusY = Math.max(70, Math.min(h * 0.32, 140));
+      // 横:容器宽的 0.45,且 ≥ 卡片周长需要的最小值,避免重叠
+      const cardW = items[0]?.offsetWidth ?? 220;
+      const minByCircumference = (cardW * N) / (2 * Math.PI) * 1.15;
+      radiusX = Math.max(280, Math.min(w * 0.45, minByCircumference));
+      // 纵:容器高的 0.30(留上下余地),上限 200
+      radiusY = Math.max(110, Math.min(h * 0.30, 200));
     }
 
+    // 渲染
     function render() {
       items.forEach((el, i) => {
         const theta = (360 / N) * i + angle;
         const rad   = theta * Math.PI / 180;
-        const x     = radiusX * Math.cos(rad);
-        const y     = radiusY * Math.sin(rad);
-        const progress = (y + radiusY) / (2 * radiusY);   // 0=最远,1=最近
-        const scale  = 0.55 + progress * 0.55;
-        const blur   = (1 - progress) * 1.5;
+        const x = radiusX * Math.cos(rad);
+        const y = radiusY * Math.sin(rad);
+
+        // 归一化到 0(最远)→ 1(最近)
+        const progress = (y + radiusY) / (2 * radiusY);
+        // 缩放 0.55 → 1.0:远小近大,最远仍可见
+        const scale   = 0.55 + progress * 0.45;
+        // 远端 blur 0 → 1.5px,避免糊成一片
+        const blur    = (1 - progress) * 1.5;
+        // 远端透明度 0.55 → 1
         const opacity = 0.55 + progress * 0.45;
-        const z      = Math.round(progress * 100);
+        // 越靠前 z 越大
+        const z = Math.round(progress * 100);
+
         el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
         el.style.filter    = `blur(${blur}px)`;
         el.style.opacity   = opacity.toFixed(2);
         el.style.zIndex    = z;
-        if (Math.sin(rad) > 0.85) el.classList.add('is-front');
+
+        // 正前方判断:sin(θ) 越接近 1 越正前
+        // 用窗口 [0.92, 1.0] 让至多 1 张卡被标记
+        if (Math.sin(rad) > 0.92) el.classList.add('is-front');
         else                      el.classList.remove('is-front');
       });
     }
 
+    // 惯性 tick(rAF 循环)
     function tick() {
       if (Math.abs(velocity) > VEL_THRESHOLD) {
         angle += velocity;
@@ -929,31 +1020,52 @@
       requestAnimationFrame(tick);
     }
 
-    // 拖动 / 触摸
-    let dragging = false;
-    let startX = 0;
+    // ── 鼠标光斑(沿用原 .card 的 ::before 径向渐变) ──
+    // 注意:这里只针对 .ring-item,不影响 .card
+    items.forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top)  + 'px');
+      });
+    });
+
+    // ── 拖动 / 触摸(pointer 统一接口) ──
+    let dragging  = false;
+    let startX    = 0;
     let startAngle = 0;
-    let hasMoved = false;
+    // 关键:hasMoved 必须 pair 到 mousedown/mouseup 周期内,且 click 拦截后清零
+    let hasMoved  = false;
+    let downAt    = 0;
     const DRAG_PX_TO_DEG = 0.35;
-    const DRAG_THRESHOLD = 5;
+    const DRAG_THRESHOLD = 6;
+    const CLICK_TIME_LIMIT = 350;  // ms:按下到松开的最大间隔才算 click
 
     function onDown(e) {
-      dragging  = true;
-      hasMoved  = false;
-      startX    = e.clientX;
+      // 只响应主指针(左键 / 第一指)
+      if (e.button !== undefined && e.button !== 0) return;
+      dragging   = true;
+      hasMoved   = false;
+      downAt     = performance.now();
+      startX     = e.clientX;
       startAngle = angle;
-      velocity  = 0;
+      velocity   = 0;             // 用户接管,清掉惯性
       wrap.classList.add('dragging');
       wrap.setPointerCapture?.(e.pointerId);
     }
     function onMove(e) {
       if (!dragging) return;
       const dx = e.clientX - startX;
+      // 阈值判断:超 6px 才算"动"
       if (Math.abs(dx) > DRAG_THRESHOLD) {
-        hasMoved = true;
+        if (!hasMoved) {
+          hasMoved = true;
+          // e.preventDefault 必须在 hasMoved 后调用,否则首次点击会被吞
+          e.preventDefault?.();
+        }
         const prev = angle;
         angle = startAngle - dx * DRAG_PX_TO_DEG;
-        velocity = angle - prev;
+        velocity = angle - prev;     // 这一帧增量 = 下一次惯性初速
         render();
       }
     }
@@ -962,35 +1074,43 @@
       dragging = false;
       wrap.classList.remove('dragging');
       wrap.releasePointerCapture?.(e.pointerId);
+      // 不重置 hasMoved — 让 click 拦截消费后清零
     }
+    // 拦截:拖动过的 click 不允许触发链接跳转
+    // 注意:用捕获阶段,确保在浏览器默认的 <a> 行为之前
     function onClick(e) {
       if (hasMoved) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation?.();
         hasMoved = false;
       }
     }
-    wrap.addEventListener('pointerdown', onDown);
-    wrap.addEventListener('pointermove', onMove);
-    wrap.addEventListener('pointerup', onUp);
+    wrap.addEventListener('pointerdown',   onDown);
+    wrap.addEventListener('pointermove',   onMove);
+    wrap.addEventListener('pointerup',     onUp);
     wrap.addEventListener('pointercancel', onUp);
-    wrap.addEventListener('lostpointercapture', () => { dragging = false; wrap.classList.remove('dragging'); });
+    wrap.addEventListener('lostpointercapture',
+      () => { dragging = false; wrap.classList.remove('dragging'); });
     wrap.addEventListener('click', onClick, true);
 
-    // 键盘
+    // ── 键盘(在 wrap 上聚焦时) ──
     wrap.addEventListener('keydown', e => {
       const step = 360 / N;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); angle += step; render(); }
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); angle -= step; render(); }
-      else if (e.key === 'Home') { e.preventDefault(); angle = 0; render(); }
-      else if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault(); angle += step; render();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault(); angle -= step; render();
+      } else if (e.key === 'Home') {
+        e.preventDefault(); angle = 0;    render();
+      } else if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const front = items.find(el => el.classList.contains('is-front'));
-        if (front) window.open(front.href, '_blank', 'noopener,noreferrer');
+        if (front) front.click();
       }
     });
 
-    // ResizeObserver
+    // ── ResizeObserver 自适应 ──
     if (typeof ResizeObserver !== 'undefined') {
       new ResizeObserver(() => { fit(); render(); }).observe(wrap);
     } else {

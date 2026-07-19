@@ -1019,103 +1019,100 @@
     let dragging  = false;
     let startX    = 0;
     let startAngle = 0;
-    // 关键:hasMoved 必须 pair 到 mousedown/mouseup 周期内,且 click 拦截后清零
-    let hasMoved  = false;
     let downAt    = 0;
     const DRAG_PX_TO_DEG  = 0.35;
-    const DRAG_THRESHOLD  = 6;
-    const MAX_VELOCITY    = 12;    // 每帧最大角速度(度)。超出后衰减到不再自转。
-    const DECAY_MS        = 60;    // 在按下→松开 60ms 后,才把最后一帧当作"惯性来源"
-    // 防止"松手瞬间"被高频上报污染导致的甩飞
+    const CLICK_MAX_MOVE  = 10;     // pointerdown→up 累计移动 < 10px 视为点击
+    const CLICK_MAX_TIME  = 600;    // < 600ms 视为点击(防长按)
+    const MAX_VELOCITY    = 12;     // 每帧最大角速度(度),封顶
 
-    // 用于"像素/秒"计算
-    let lastMoveX  = 0;
-    let lastMoveT  = 0;
-    let lastDx     = 0;           // 最新一次 onMove 的 dx,供松手采样
-    let lastDxT    = 0;           // 最新一次 dx 的时间戳
-    let moveCount  = 0;           // onMove 累计次数,用于首次/末次采样
+    // 用于点/拖 状态
+    let downX = 0, downY = 0, downT = 0;
+    let maxDist = 0;                // pointerdown→up 累计最大位移
+    let lastMoveX = 0, lastMoveT = 0;
 
     function onDown(e) {
-      // 只响应主指针(左键 / 第一指)
       if (e.button !== undefined && e.button !== 0) return;
       dragging   = true;
-      hasMoved   = false;
-      downAt     = performance.now();
+      downX      = e.clientX;
+      downY      = e.clientY;
+      downT      = performance.now();
+      maxDist    = 0;
       startX     = e.clientX;
       startAngle = angle;
       velocity   = 0;
       lastMoveX  = e.clientX;
       lastMoveT  = performance.now();
-      lastDx     = 0;
-      lastDxT    = 0;
-      moveCount  = 0;
       wrap.classList.add('dragging');
       wrap.setPointerCapture?.(e.pointerId);
     }
     function onMove(e) {
       if (!dragging) return;
-      const now   = performance.now();
-      const dx    = e.clientX - startX;
+      const now = performance.now();
+      // 累加最大位移(用作点/拖判定)
+      const ddx = Math.abs(e.clientX - downX);
+      const ddy = Math.abs(e.clientY - downY);
+      if (ddx > maxDist) maxDist = ddx;
+      if (ddy > maxDist) maxDist = ddy;
+
+      const dx = e.clientX - startX;
+      // 跟手感:跟着 dx 转
+      angle = startAngle - dx * DRAG_PX_TO_DEG;
+      render();
+
+      // 速度(像素/秒),封顶
       const deltaT = now - lastMoveT;
-
-      // 阈值判断:超 6px 才算"动"
-      if (Math.abs(dx) > DRAG_THRESHOLD) {
-        if (!hasMoved) {
-          hasMoved = true;
-          e.preventDefault?.();
+      if (deltaT > 0) {
+        const instPxPerSec = (e.clientX - lastMoveX) / (deltaT / 1000);
+        const v = -(instPxPerSec * DRAG_PX_TO_DEG) / 60;
+        if (Math.abs(instPxPerSec) < 4000) {
+          velocity = clamp(v, -MAX_VELOCITY, MAX_VELOCITY);
         }
-        // 角度:跟手感
-        angle = startAngle - dx * DRAG_PX_TO_DEG;
-        render();
-
-        // 速度:用最近两次 pointermove 之间的时间差算 "像素/秒"
-        // 这能避免指针高频上报导致的角度增量被错误当速度
-        if (deltaT > 0) {
-          const instPxPerSec = (e.clientX - lastMoveX) / (deltaT / 1000);
-          const v = -(instPxPerSec * DRAG_PX_TO_DEG) / 60;   // 像素/秒 → 度/帧
-          // 边界:首次或抖动较大时不要写大值
-          if (Math.abs(instPxPerSec) < 4000) {
-            lastDx  = dx;
-            lastDxT = now;
-            velocity = clamp(v, -MAX_VELOCITY, MAX_VELOCITY);
-          }
-        }
-        lastMoveX = e.clientX;
-        lastMoveT = now;
-        moveCount++;
       }
+      lastMoveX = e.clientX;
+      lastMoveT = now;
     }
     function onUp(e) {
       if (!dragging) return;
       const now = performance.now();
-      // 关键修复:若松手时距最后一次 onMove 超过 DECAY_MS,
-      // 那"速度"是用更早的 px/s 算的(用户已经停顿),不要当成惯性初速度。
-      if (now - lastDxT > DECAY_MS) {
-        velocity = 0;
+      const elapsed = now - downT;
+      const wasDrag = maxDist >= CLICK_MAX_MOVE || elapsed >= CLICK_MAX_TIME;
+
+      // 关键:不信任浏览器原生 click 流程。
+      // 在 pointerup 这一帧,主动判断点/拖:
+      //   - 点:在松手坐标查 elementFromPoint,找到被点中的卡片,主动 .click() 跳转
+      //   - 拖:什么都不做,让惯性 tick 自然接管
+      if (!wasDrag) {
+        const target = document.elementFromPoint(e.clientX, e.clientY);
+        if (target) {
+          // 找到最近的 .ring-item 祖先(用户在卡片留白处也允许跳转)
+          const card = target.closest && target.closest('.ring-item');
+          if (card) {
+            e.preventDefault?.();   // 阻止合成 click 在 <a> 上再次触发
+            card.click();
+          }
+        }
       }
+      // 拖动松手后,如果停顿超过 60ms,清零速度(避免最后那次 onMove 污染)
+      if (now - lastMoveT > 60) velocity = 0;
+
       dragging = false;
       wrap.classList.remove('dragging');
       wrap.releasePointerCapture?.(e.pointerId);
     }
-    // 工具:夹值
     function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
-    // 拦截:拖动过的 click 不允许触发链接跳转
-    // 注意:用捕获阶段,确保在浏览器默认的 <a> 行为之前
-    function onClick(e) {
-      if (hasMoved) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation?.();
-        hasMoved = false;
-      }
-    }
+
     wrap.addEventListener('pointerdown',   onDown);
     wrap.addEventListener('pointermove',   onMove);
     wrap.addEventListener('pointerup',     onUp);
     wrap.addEventListener('pointercancel', onUp);
     wrap.addEventListener('lostpointercapture',
       () => { dragging = false; wrap.classList.remove('dragging'); });
-    wrap.addEventListener('click', onClick, true);
+
+    // 注意:不再监听 click。
+    // 之前用 click 捕获阶段拦截 drag-click 会引起:
+    //   - 触屏上手指抬起后 click 可能没触发(浏览器有时候不发 click 给非交互元素容器)
+    //   - capture 阶段 + preventDefault 会阻止某些 a 的默认跳转
+    // 现在由 pointerup 主动 .click() 接管,行为稳定。
 
     // ── 键盘(在 wrap 上聚焦时) ──
     wrap.addEventListener('keydown', e => {

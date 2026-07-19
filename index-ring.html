@@ -446,7 +446,7 @@
      视觉对齐:复用原 .card 玻璃拟态 + 圆角 18px + ghost 大字 + ext 箭头
      ═══════════════════════════════════════════ */
   .ring-stage {
-    max-width: 1200px;
+    max-width: 1100px;        /* 与全站 hero/sec-head 宽度对齐 */
     margin: 24px auto 0;
     padding: 32px 32px 24px;
     text-align: center;
@@ -959,21 +959,29 @@
     const N = items.length;
     let angle = 0;
     let velocity = 0;
-    let radiusX = 360;
-    let radiusY = 160;
+    let radiusX = 440;    // 桌面初始值,fit() 会按容器重算
+    let radiusY = 180;
     const FRICTION      = 0.94;
     const VEL_THRESHOLD = 0.05;
 
     // 自适应 radius:卡片固定 220px,按容器宽高算环
+    // 目标:让环尽可能撑满 02 区块,但保证 7 张卡之间至少有视觉间隔
     function fit() {
       const w = wrap.clientWidth;
       const h = wrap.clientHeight;
-      // 横:容器宽的 0.45,且 ≥ 卡片周长需要的最小值,避免重叠
       const cardW = items[0]?.offsetWidth ?? 220;
-      const minByCircumference = (cardW * N) / (2 * Math.PI) * 1.15;
-      radiusX = Math.max(280, Math.min(w * 0.45, minByCircumference));
-      // 纵:容器高的 0.30(留上下余地),上限 200
-      radiusY = Math.max(110, Math.min(h * 0.30, 200));
+
+      // ── 横半径 (radiusX) ──
+      // 上限:让最外侧卡片中心 ≈ w/2 - 卡片宽/2 - 安全边距,把环撑开但不出框
+      // 下限:卡间弦长 = 2·r·sin(180°/N) 至少 >= cardW + gap,避免重叠
+      const gap = 28;                                            // 期望卡间间距(像素)
+      const maxX = Math.max(280, (w / 2) - cardW / 2 - 16);       // 撑满 02 区块,留 16px 边距
+      const minByGeometry = ((cardW + gap) / 2) / Math.sin(Math.PI / N);  // 防重叠下限
+      radiusX = Math.max(minByGeometry, Math.min(maxX, w * 0.46));
+
+      // ── 纵半径 (radiusY) ──
+      // 让环在高度上也有立体感:容器高的 0.34,上限 240(避免超出容器被裁)
+      radiusY = Math.max(120, Math.min(h * 0.34, 240));
     }
 
     // 渲染

@@ -942,8 +942,9 @@
     let velocity = 0;
     let radiusX = 440;    // 桌面初始值,fit() 会按容器重算
     let radiusY = 110;    // 环更扁,初始调低
-    const FRICTION      = 0.88;   // 摩擦力更大,停下更快
-    const VEL_THRESHOLD = 0.02;
+    const FRICTION      = 0.93;   // 摩擦力较小,减速曲线拉长,看得到优雅衰减
+    const VEL_THRESHOLD = 0.015;  // 减速到极小再停,不要硬切
+    const FOLLOW_GAIN   = 0.22;   // 拖动期间:环从当前角度平滑逼近手指期望角度,产生"加速度"视觉
 
     // 自适应 radius:卡片固定 220px,按容器宽高算环
     // 目标:让环尽可能撑满 02 区块,但保证 7 张卡之间至少有视觉间隔
@@ -1059,8 +1060,11 @@
       if (ddy > maxDist) maxDist = ddy;
 
       const dx = e.clientX - startX;
-      // 跟手感:跟着 dx 转
-      angle = startAngle - dx * DRAG_PX_TO_DEG;
+      // 手指期望角度(瞬时)
+      const target = startAngle - dx * DRAG_PX_TO_DEG;
+      // 渐进跟手:环从当前角度平滑逼近手指期望角度
+      // FOLLOW_GAIN ~ 0.22 让"加速感"可见:刚开始角度滞后 → 逐步追上
+      angle += (target - angle) * FOLLOW_GAIN;
       render();
 
       // 速度(像素/秒),封顶

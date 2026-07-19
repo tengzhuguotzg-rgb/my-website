@@ -196,7 +196,7 @@
   }
   /* 02 — External 区块紧贴环(只针对这一个,不破坏其他板块) */
   .sec-head#external {
-    padding-bottom: 4px;     /* 砍掉标题下的常规 16px 留白 */
+    padding-bottom: 0;       /* 砍掉标题下留白,贴到分割线 */
   }
   .sec-head .en {
     font-family: var(--font-sans);
@@ -452,7 +452,7 @@
   .ring-stage {
     max-width: 1100px;        /* 与全站 hero/sec-head 宽度对齐 */
     margin: 0 auto;           /* 贴靠上方 .sec-head,不再留空 */
-    padding: 16px 32px 24px;  /* 顶部压到 16px,保留视觉呼吸 */
+    padding: 14px 32px 24px;  /* 顶部 14px,与上方分割线合计 15px */
     text-align: center;
   }
   .ring-wrap {

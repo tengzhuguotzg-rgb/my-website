@@ -451,25 +451,6 @@
     padding: 32px 32px 24px;
     text-align: center;
   }
-  .ring-hint {
-    font-family: var(--font-sans);
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-faint);
-    margin: 0 0 24px;
-    display: flex; align-items: center; justify-content: center; gap: 14px;
-    flex-wrap: wrap;
-  }
-  .ring-hint .kbd {
-    font-family: 'Space Grotesk', monospace;
-    font-size: 11px;
-    padding: 3px 8px;
-    border: 1px solid var(--line);
-    border-bottom-width: 2px;
-    border-radius: 6px;
-    color: var(--ink);
-    background: rgba(31, 61, 47, 0.04);
-  }
-
   .ring-wrap {
     position: relative;
     width: 100%;
@@ -754,10 +735,6 @@
 
   <!-- 资源环(轮盘) -->
   <section class="ring-stage reveal">
-    <p class="ring-hint">
-      <span>拖动旋转</span> · <span class="kbd">←</span> <span class="kbd">→</span> 切换 · <span>正面卡片点击直达</span>
-    </p>
-
     <div class="ring-wrap" id="ringWrap" role="region" aria-label="资源环,可拖动旋转" tabindex="0">
       <div class="ring-axis" aria-hidden="true"></div>
       <div class="ring-core" aria-hidden="true"></div>
@@ -960,9 +937,9 @@
     let angle = 0;
     let velocity = 0;
     let radiusX = 440;    // 桌面初始值,fit() 会按容器重算
-    let radiusY = 180;
-    const FRICTION      = 0.94;
-    const VEL_THRESHOLD = 0.05;
+    let radiusY = 110;    // 环更扁,初始调低
+    const FRICTION      = 0.88;   // 摩擦力更大,停下更快
+    const VEL_THRESHOLD = 0.02;
 
     // 自适应 radius:卡片固定 220px,按容器宽高算环
     // 目标:让环尽可能撑满 02 区块,但保证 7 张卡之间至少有视觉间隔
@@ -980,8 +957,8 @@
       radiusX = Math.max(minByGeometry, Math.min(maxX, w * 0.46));
 
       // ── 纵半径 (radiusY) ──
-      // 让环在高度上也有立体感:容器高的 0.34,上限 240(避免超出容器被裁)
-      radiusY = Math.max(120, Math.min(h * 0.34, 240));
+      // 环更扁:容器高的 0.22,上限 140(更接近一线水平椭圆)
+      radiusY = Math.max(80, Math.min(h * 0.22, 140));
     }
 
     // 渲染
@@ -1045,9 +1022,18 @@
     // 关键:hasMoved 必须 pair 到 mousedown/mouseup 周期内,且 click 拦截后清零
     let hasMoved  = false;
     let downAt    = 0;
-    const DRAG_PX_TO_DEG = 0.35;
-    const DRAG_THRESHOLD = 6;
-    const CLICK_TIME_LIMIT = 350;  // ms:按下到松开的最大间隔才算 click
+    const DRAG_PX_TO_DEG  = 0.35;
+    const DRAG_THRESHOLD  = 6;
+    const MAX_VELOCITY    = 12;    // 每帧最大角速度(度)。超出后衰减到不再自转。
+    const DECAY_MS        = 60;    // 在按下→松开 60ms 后,才把最后一帧当作"惯性来源"
+    // 防止"松手瞬间"被高频上报污染导致的甩飞
+
+    // 用于"像素/秒"计算
+    let lastMoveX  = 0;
+    let lastMoveT  = 0;
+    let lastDx     = 0;           // 最新一次 onMove 的 dx,供松手采样
+    let lastDxT    = 0;           // 最新一次 dx 的时间戳
+    let moveCount  = 0;           // onMove 累计次数,用于首次/末次采样
 
     function onDown(e) {
       // 只响应主指针(左键 / 第一指)
@@ -1057,33 +1043,62 @@
       downAt     = performance.now();
       startX     = e.clientX;
       startAngle = angle;
-      velocity   = 0;             // 用户接管,清掉惯性
+      velocity   = 0;
+      lastMoveX  = e.clientX;
+      lastMoveT  = performance.now();
+      lastDx     = 0;
+      lastDxT    = 0;
+      moveCount  = 0;
       wrap.classList.add('dragging');
       wrap.setPointerCapture?.(e.pointerId);
     }
     function onMove(e) {
       if (!dragging) return;
-      const dx = e.clientX - startX;
+      const now   = performance.now();
+      const dx    = e.clientX - startX;
+      const deltaT = now - lastMoveT;
+
       // 阈值判断:超 6px 才算"动"
       if (Math.abs(dx) > DRAG_THRESHOLD) {
         if (!hasMoved) {
           hasMoved = true;
-          // e.preventDefault 必须在 hasMoved 后调用,否则首次点击会被吞
           e.preventDefault?.();
         }
-        const prev = angle;
+        // 角度:跟手感
         angle = startAngle - dx * DRAG_PX_TO_DEG;
-        velocity = angle - prev;     // 这一帧增量 = 下一次惯性初速
         render();
+
+        // 速度:用最近两次 pointermove 之间的时间差算 "像素/秒"
+        // 这能避免指针高频上报导致的角度增量被错误当速度
+        if (deltaT > 0) {
+          const instPxPerSec = (e.clientX - lastMoveX) / (deltaT / 1000);
+          const v = -(instPxPerSec * DRAG_PX_TO_DEG) / 60;   // 像素/秒 → 度/帧
+          // 边界:首次或抖动较大时不要写大值
+          if (Math.abs(instPxPerSec) < 4000) {
+            lastDx  = dx;
+            lastDxT = now;
+            velocity = clamp(v, -MAX_VELOCITY, MAX_VELOCITY);
+          }
+        }
+        lastMoveX = e.clientX;
+        lastMoveT = now;
+        moveCount++;
       }
     }
     function onUp(e) {
       if (!dragging) return;
+      const now = performance.now();
+      // 关键修复:若松手时距最后一次 onMove 超过 DECAY_MS,
+      // 那"速度"是用更早的 px/s 算的(用户已经停顿),不要当成惯性初速度。
+      if (now - lastDxT > DECAY_MS) {
+        velocity = 0;
+      }
       dragging = false;
       wrap.classList.remove('dragging');
       wrap.releasePointerCapture?.(e.pointerId);
-      // 不重置 hasMoved — 让 click 拦截消费后清零
     }
+    // 工具:夹值
+    function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
     // 拦截:拖动过的 click 不允许触发链接跳转
     // 注意:用捕获阶段,确保在浏览器默认的 <a> 行为之前
     function onClick(e) {

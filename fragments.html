@@ -71,6 +71,8 @@ h1 .dot{display:inline-block;width:.18em;height:.18em;background:var(--accent);b
 .card-meta{display:flex;flex-wrap:wrap;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--text-faint);letter-spacing:0.5px;padding-top:12px;margin-top:12px;border-top:1px dashed var(--line)}
 .card-arrow{position:absolute;bottom:20px;right:20px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;color:var(--accent);transition:transform .3s ease}
 .card-link:hover .card-arrow{transform:translateX(4px)}
+.card-link.card-soon{pointer-events:none;cursor:default;opacity:.55}
+.card-link.card-soon:hover .card{background:rgba(244,241,234,0.65);border-color:var(--line);transform:none;box-shadow:none}
 .empty{grid-column:1/-1;text-align:center;padding:48px 24px;color:var(--text-faint);font-family:'Noto Serif SC',serif;font-size:14px}
 footer.foot{border-top:1px solid var(--line);padding:28px 32px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:0.5px;color:var(--text-faint)}
 footer.foot a{color:var(--text-dim)}
@@ -247,15 +249,14 @@ footer.foot a{color:var(--text-dim)}
 </article>
 </a>
 
-<a href="fragments/anti-mrsa-4drugs.html" class="card-link" data-tags="inf" data-name="抗 MRSA 四药全解 万古霉素 替考拉宁 达托霉素 利奈唑胺 PK PD">
+<div class="card-link card-soon" aria-disabled="true" data-tags="inf" data-name="">
 <article class="card">
-<div class="card-tag">感染脓毒症</div>
+<div class="card-tag" style="background:var(--text-faint);border-color:var(--text-faint);">即将上线</div>
 <h3>抗 MRSA 四药全解</h3>
 <p class="desc">详解万古霉素、替考拉宁、达托霉素、利奈唑胺四大抗 MRSA 药物的作用机制、PK/PD 靶标、耐药谱、临床应用场景与安全性。</p>
-<div class="card-meta"><span>视频笔记</span></div>
-<span class="card-arrow">→</span>
+<div class="card-meta"><span>编写中</span></div>
 </article>
-</a>
+</div>
 
 <a href="fragments/antibiotic-optimization.html" class="card-link" data-tags="inf" data-name="ICU 抗生素优化使用 综述 PK PD 降阶梯 抗菌管理">
 <article class="card">

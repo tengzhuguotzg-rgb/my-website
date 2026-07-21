@@ -122,12 +122,27 @@
   }
   .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
   h1 {
-    font-size: clamp(48px, 7vw, 88px);
+    font-size: clamp(40px, 5.6vw, 68px);
     font-weight: 600; line-height: 0.95;
-    margin: 0 0 16px; letter-spacing: -2.5px;
+    margin: 0 0 16px; letter-spacing: -2px;
     color: var(--ink);
   }
-  h1 .dot { color: var(--accent); }
+  h1 .dot {
+    display: inline-block;
+    width: 0.18em; height: 0.18em;
+    background: var(--accent);
+    border-radius: 50%;
+    color: transparent;
+    vertical-align: middle;
+    animation: heartbeat 0.8s ease-in-out infinite;
+    position: relative;
+    top: -0.03em;
+    margin: 0 0.15em;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.15); }
+  }
   .hero-meta {
     display: flex; flex-wrap: wrap; gap: 18px;
     font-family: 'Space Grotesk', sans-serif;
@@ -500,7 +515,7 @@
   <!-- Hero -->
   <section class="hero">
     <div class="eyebrow">循环 · 01 — 灌注评估</div>
-    <h1>灌注<span class="dot">.</span>评估</h1>
+    <h1>灌注<span class="dot"></span>评估</h1>
     <div class="hero-meta">
       <span>章节<strong>第21章 + 第22章 + 第10章</strong></span>
       <span>来源<strong>《实用重症医学》刘大为主编 第2版</strong></span>

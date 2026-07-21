@@ -51,8 +51,9 @@ a{color:var(--ink-2);text-decoration:none;transition:color .2s}a:hover{color:var
 .hero{max-width:1100px;margin:0 auto;padding:72px 32px 24px}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
 .eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
-h1{font-size:clamp(48px,7vw,88px);font-weight:600;line-height:0.95;margin:0 0 16px;letter-spacing:-2.5px;color:var(--ink)}
-h1 .dot{color:var(--accent)}
+h1{font-size:clamp(40px,5.6vw,68px);font-weight:600;line-height:0.95;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{display:inline-block;width:0.18em;height:0.18em;background:var(--accent);border-radius:50%;color:transparent;vertical-align:middle;animation:heartbeat 0.8s ease-in-out infinite;position:relative;top:-0.03em;margin:0 0.15em}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .hero-meta{display:flex;flex-wrap:wrap;gap:18px;font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:1.2px;color:var(--text-faint);margin-top:10px}
 .hero-meta span strong{color:var(--ink);font-weight:600;margin-left:4px}
 .hero-desc{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:640px;margin:0}
@@ -141,7 +142,7 @@ h1 .dot{color:var(--accent)}
 
 <section class="hero">
 <div class="eyebrow">循环 · 02 — 血流动力学</div>
-<h1>血流动力学<span class="dot">.</span>基础理论</h1>
+<h1>血流动力学<span class="dot"></span>基础理论</h1>
 <div class="hero-meta">
 <span>章节<strong>第 21 章 (9 节)</strong></span>
 <span>来源<strong>《实用重症医学》刘大为主编 第 2 版</strong></span>

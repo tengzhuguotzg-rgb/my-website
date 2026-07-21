@@ -15,299 +15,60 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231F3D2F'/><text y='.9em' font-size='62' x='28' font-family='Space Grotesk' font-weight='600' fill='%23F4F1EA'>T</text></svg>">
 <style>
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  :root {
-    --bg: #F4F1EA;
-    --bg-2: #EBE5D6;
-    --ink: #1F3D2F;
-    --ink-2: #2D5440;
-    --accent: #E76F2C;
-    --accent-2: #C45A1F;
-    --text: #1F2421;
-    --text-dim: #4A5247;
-    --text-faint: #7A8074;
-    --line: rgba(31, 61, 47, 0.12);
-    --line-strong: rgba(31, 61, 47, 0.20);
-  }
-  body {
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    color: var(--text);
-    min-height: 100vh;
-    background:
-      radial-gradient(1200px 800px at 12% 8%,  rgba(31, 61, 47, 0.06) 0%, transparent 55%),
-      radial-gradient(1000px 700px at 92% 18%, rgba(231, 111, 44, 0.05) 0%, transparent 55%),
-      radial-gradient(900px  600px at 50% 92%, rgba(31, 61, 47, 0.04) 0%, transparent 60%),
-      linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-  }
-  :lang(zh-CN), .cjk { font-family: 'Noto Serif SC', 'Space Grotesk', serif; }
-  a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
-  a:hover { color: var(--accent); }
-  button { font: inherit; color: inherit; cursor: pointer; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
-
-  /* Topbar —— 与其他页面同款 */
-  .topbar {
-    position: sticky; top: 0; z-index: 20;
-    display: flex; align-items: center; justify-content: space-between;
-    margin: 18px 18px 0;
-    padding: 14px 22px;
-    background: rgba(244, 241, 234, 0.75);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    box-shadow: 0 4px 20px rgba(31, 61, 47, 0.04);
-    transition: box-shadow .3s ease, border-color .3s ease;
-  }
-  .topbar.scrolled {
-    box-shadow: 0 10px 32px rgba(31, 61, 47, 0.10);
-    border-color: rgba(31, 61, 47, 0.18);
-  }
-  .brand { display: flex; align-items: center; gap: 12px; }
-  .brand-mark {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    background: var(--ink);
-    display: grid; place-items: center;
-    color: var(--bg); font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px; font-weight: 600; letter-spacing: -0.5px;
-    box-shadow: 0 2px 8px rgba(31, 61, 47, 0.25);
-  }
-  .brand-info { display: flex; flex-direction: column; }
-  .brand-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600; font-size: 15px; letter-spacing: 0.2px;
-    color: var(--ink);
-  }
-  .brand-sub  {
-    font-size: 12px; color: var(--text-faint); margin-top: 1px;
-    font-family: 'Noto Serif SC', serif;
-    letter-spacing: 0.5px;
-  }
-  .topbar-right { display: flex; align-items: center; gap: 14px; }
-  .crumb {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px; color: var(--text-dim);
-    letter-spacing: 0.3px;
-  }
-  .crumb a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
-  .crumb a:hover { color: var(--accent); }
-  .crumb .sep { opacity: .4; }
-  .home-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 16px;
-    background: var(--ink); color: var(--bg);
-    border-radius: 999px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px; font-weight: 500;
-    text-decoration: none;
-    transition: background .2s;
-  }
-  .home-pill:hover { background: var(--accent); color: var(--bg); }
-
-  /* Hero */
-  .hero {
-    max-width: 1100px; margin: 0 auto;
-    padding: 72px 32px 24px;
-  }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; font-weight: 500;
-    color: var(--accent);
-    letter-spacing: 2.5px; text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
-  h1 {
-    font-size: clamp(40px, 5.6vw, 68px);
-    font-weight: 600; line-height: 0.95;
-    margin: 0 0 16px; letter-spacing: -2px;
-    color: var(--ink);
-  }
-  h1 .dot {
-    display: inline-block;
-    width: 0.18em; height: 0.18em;
-    background: var(--accent);
-    border-radius: 50%;
-    color: transparent;
-    vertical-align: middle;
-    animation: heartbeat 0.8s ease-in-out infinite;
-    position: relative;
-    top: -0.03em;
-    margin: 0 0.15em;
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1);   }
-    50%      { transform: scale(1.15); }
-  }
-  .hero-desc {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 16px; color: var(--text-dim);
-    line-height: 1.7; max-width: 640px;
-    margin: 0 0 0;
-  }
-
-  /* Section */
-  section.list {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 32px 80px;
-  }
-  .section-head {
-    display: flex; align-items: baseline; justify-content: space-between;
-    margin-bottom: 28px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--line);
-  }
-  .section-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 22px; font-weight: 700;
-    color: var(--ink);
-  }
-  .section-meta {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; letter-spacing: 2px;
-    color: var(--text-faint);
-    text-transform: uppercase;
-  }
-
-  /* 病例卡片网格 */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-  }
-  .card-link {
-    display: block;
-    text-decoration: none; color: inherit;
-  }
-  .card {
-    position: relative;
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 28px 26px 24px;
-    transition: all .3s ease;
-    overflow: hidden;
-  }
-  .card::before {
-    content: "";
-    position: absolute; top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: var(--accent);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform .35s ease;
-  }
-  .card-link:hover .card {
-    background: rgba(255, 255, 255, 0.85);
-    border-color: var(--line-strong);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(31, 61, 47, 0.08);
-  }
-  .card-link:hover .card::before { transform: scaleY(1); }
-
-  .card-tag {
-    display: inline-block;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px; letter-spacing: 1.5px;
-    color: var(--accent);
-    background: rgba(231, 111, 44, 0.08);
-    border: 1px solid rgba(231, 111, 44, 0.20);
-    border-radius: 999px;
-    padding: 4px 12px;
-    margin-bottom: 16px;
-  }
-  .card h3 {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 22px; font-weight: 700;
-    color: var(--ink);
-    line-height: 1.3;
-    margin: 0 0 10px;
-  }
-  .card .desc {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 14px; line-height: 1.7;
-    color: var(--text-dim);
-    margin: 0 0 20px;
-    min-height: 48px;
-  }
-  .card-meta {
-    display: flex; flex-wrap: wrap; gap: 14px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    color: var(--text-faint);
-    letter-spacing: 0.5px;
-    padding-top: 16px;
-    border-top: 1px dashed var(--line);
-  }
-  .card-meta span { display: inline-flex; align-items: center; gap: 5px; }
-  .card-meta .v { color: var(--ink); font-weight: 500; }
-  .card-arrow {
-    position: absolute;
-    bottom: 26px; right: 24px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px; font-weight: 500;
-    color: var(--accent);
-    transition: transform .3s ease;
-  }
-  .card-link:hover .card-arrow { transform: translateX(4px); }
-
-  /* 即将添加占位 */
-  .placeholder {
-    background: rgba(255, 255, 255, 0.30);
-    border: 1px dashed var(--line);
-    border-radius: 18px;
-    padding: 36px 26px;
-    text-align: center;
-    color: var(--text-faint);
-  }
-  .placeholder .ph-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-    color: var(--accent);
-    opacity: 0.5;
-  }
-  .placeholder .ph-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 15px;
-    color: var(--text-dim);
-    margin-bottom: 6px;
-  }
-  .placeholder .ph-sub {
-    font-size: 12px;
-    color: var(--text-faint);
-  }
-
-  /* Footer */
-  footer.foot {
-    border-top: 1px solid var(--line);
-    padding: 28px 32px;
-    text-align: center;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px; letter-spacing: 0.5px;
-    color: var(--text-faint);
-  }
-  footer.foot a { color: var(--text-dim); }
-
-  @media (max-width: 560px) {
-    .hero { padding: 48px 18px 16px; }
-    .grid { grid-template-columns: 1fr; }
-    .card .desc { min-height: 0; }
-    .crumb { display: none; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: .01ms !important;
-      transition-duration: .01ms !important;
-    }
-  }
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{--bg:#F4F1EA;--bg-2:#EBE5D6;--ink:#1F3D2F;--ink-2:#2D5440;--accent:#E76F2C;--accent-2:#C45A1F;--text:#1F2421;--text-dim:#4A5247;--text-faint:#7A8074;--line:rgba(31,61,47,0.12);--line-strong:rgba(31,61,47,0.22)}
+body{font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;color:var(--text);min-height:100vh;background:radial-gradient(1200px 800px at 12% 8%,rgba(31,61,47,0.06) 0%,transparent 55%),radial-gradient(1000px 700px at 92% 18%,rgba(231,111,44,0.05) 0%,transparent 55%),radial-gradient(900px 600px at 50% 92%,rgba(31,61,47,0.04) 0%,transparent 60%),linear-gradient(135deg,var(--bg) 0%,var(--bg-2) 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+:lang(zh-CN),.cjk{font-family:'Noto Serif SC','Space Grotesk',serif}
+a{color:var(--ink-2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;margin:18px 18px 0;padding:14px 22px;background:rgba(244,241,234,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border:1px solid var(--line);border-radius:999px;box-shadow:0 4px 20px rgba(31,61,47,0.04);transition:box-shadow .3s ease,border-color .3s ease}
+.topbar.scrolled{box-shadow:0 10px 32px rgba(31,61,47,0.10);border-color:rgba(31,61,47,0.18)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:var(--bg);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;letter-spacing:-0.5px;box-shadow:0 2px 8px rgba(31,61,47,0.25)}
+.brand-info{display:flex;flex-direction:column}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.2px;color:var(--ink)}
+.brand-sub{font-size:12px;color:var(--text-faint);margin-top:1px;font-family:'Noto Serif SC',serif;letter-spacing:0.5px}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.crumb{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--text-dim);letter-spacing:0.3px}
+.crumb a{color:var(--ink-2);text-decoration:none;transition:color .2s}
+.crumb a:hover{color:var(--accent)}
+.crumb .sep{opacity:.4}
+.home-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--ink);color:var(--bg);border-radius:999px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:background .2s}
+.home-pill:hover{background:var(--accent);color:var(--bg)}
+.hero{max-width:1100px;margin:0 auto;padding:72px 32px 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--accent)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,5.6vw,68px);font-weight:600;line-height:.95;margin:0 0 16px;letter-spacing:-2px;color:var(--ink)}
+h1 .dot{display:inline-block;width:.18em;height:.18em;background:var(--accent);border-radius:50%;color:transparent;vertical-align:middle;animation:heartbeat .8s ease-in-out infinite;position:relative;top:-.03em;margin:0 .15em}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.lede{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--text-dim);line-height:1.7;max-width:720px;margin:0}
+section.list{max-width:1100px;margin:0 auto;padding:40px 32px 80px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.section-title{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin:0;color:var(--ink)}
+.section-meta{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-faint)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:20px}
+.card-link{display:block;text-decoration:none;color:inherit}
+.card{position:relative;background:rgba(244,241,234,0.65);border:1px solid var(--line);border-radius:16px;padding:24px 22px 22px;transition:all .3s ease;overflow:hidden;display:flex;flex-direction:column;height:220px}
+.card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.card-link:hover .card{background:rgba(244,241,234,0.92);border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 12px 32px rgba(31,61,47,0.08)}
+.card-link:hover .card::before{transform:scaleY(1)}
+.card-tag{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--accent);background:rgba(231,111,44,0.08);border:1px solid rgba(231,111,44,0.20);border-radius:999px;padding:3px 10px;margin-bottom:12px;align-self:flex-start}
+.card h3{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;color:var(--ink);line-height:1.35;margin:0 0 8px}
+.card .desc{font-family:'Noto Serif SC',serif;font-size:13px;line-height:1.65;color:var(--text-dim);margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;flex-wrap:wrap;gap:10px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--text-faint);letter-spacing:0.5px;padding-top:12px;margin-top:12px;border-top:1px dashed var(--line)}
+.card-meta .v{color:var(--ink);font-weight:500}
+.card-arrow{position:absolute;bottom:20px;right:20px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;color:var(--accent);transition:transform .3s ease}
+.card-link:hover .card-arrow{transform:translateX(4px)}
+.card-link.card-soon{pointer-events:none;cursor:default;opacity:.55}
+.card-link.card-soon:hover .card{background:rgba(244,241,234,0.65);border-color:var(--line);transform:none;box-shadow:none}
+footer.foot{border-top:1px solid var(--line);padding:28px 32px;text-align:center;font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:0.5px;color:var(--text-faint)}
+footer.foot a{color:var(--text-dim)}
+@media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.hero{padding:48px 18px 16px}section.list{padding-left:18px;padding-right:18px}.topbar{margin:12px 12px 0;padding:12px 16px}.brand-sub{display:none}.crumb{display:none}.card .desc{min-height:0;-webkit-line-clamp:2}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
@@ -332,7 +93,7 @@
   <section class="hero">
     <div class="eyebrow">Case Discussion</div>
     <h1>病例<span class="dot">.</span>讨论</h1>
-    <p class="hero-desc">教学病例的结构化复盘 · 诊断思路 · 决策关键点 · 临床争议。原始病例数据受伦理与隐私约束不公开。</p>
+    <p class="lede">教学病例的结构化复盘 · 诊断思路 · 决策关键点 · 临床争议。原始病例数据受伦理与隐私约束不公开。</p>
   </section>
 
   <section class="list">
